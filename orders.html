@@ -1,116 +1,1668 @@
--- ==========================================
--- AVIPRINT ORDERS TABLE
--- ==========================================
+<!DOCTYPE html>
+<html lang="en">
 
-create table if not exists public.orders (
+<head>
 
-    id uuid primary key default gen_random_uuid(),
+    <meta charset="UTF-8">
 
-    order_number text not null unique,
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    user_id uuid not null
-        references auth.users(id)
-        on delete cascade,
+    <meta name="description"
+        content="View and manage your AviPrint printing orders.">
 
-    service_name text not null,
+    <title>My Orders | AviPrint Portal</title>
 
-    service_details text,
+    <link rel="stylesheet"
+        href="css/style.css">
 
-    order_date timestamptz
-        not null default now(),
 
-    status text
-        not null default 'Pending'
-        check (
-            status in (
-                'Pending',
-                'Processing',
-                'Completed',
-                'Cancelled'
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+
+
+    <style>
+
+        /* =========================
+           ORDERS PAGE
+        ========================= */
+
+        .orders-page {
+            min-height: calc(100vh - 72px);
+            background: #f8fafc;
+            padding: 45px 0 70px;
+        }
+
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .orders-header h1 {
+            font-size: 36px;
+            margin: 10px 0 8px;
+            color: #111827;
+        }
+
+        .orders-header p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+
+        /* SEARCH */
+
+        .orders-toolbar {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 420px;
+        }
+
+        .search-box span {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 46px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 0 15px 0 42px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, .08);
+        }
+
+        .order-count {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+
+        /* TABLE */
+
+        .orders-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, .05);
+        }
+
+        .orders-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        .orders-table th {
+            background: #f8fafc;
+            color: #6b7280;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            text-align: left;
+            padding: 17px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .orders-table td {
+            padding: 19px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+            color: #374151;
+        }
+
+        .orders-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .order-id {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .service-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+        }
+
+        .service-name strong {
+            display: block;
+            color: #111827;
+            margin-bottom: 3px;
+        }
+
+        .service-name small {
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+
+        /* STATUS */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status.pending {
+            color: #92400e;
+            background: #fef3c7;
+        }
+
+        .status.processing {
+            color: #1d4ed8;
+            background: #dbeafe;
+        }
+
+        .status.completed {
+            color: #166534;
+            background: #dcfce7;
+        }
+
+        .status.cancelled {
+            color: #991b1b;
+            background: #fee2e2;
+        }
+
+        .amount {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .view-btn {
+            border: 1px solid #dbeafe;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .view-btn:hover {
+            background: #dbeafe;
+        }
+
+
+        /* EMPTY STATE */
+
+        .empty-orders {
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .empty-orders.hidden {
+            display: none;
+        }
+
+        .empty-orders .empty-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: #eff6ff;
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+        }
+
+        .empty-orders h2 {
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .empty-orders p {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+
+        /* LOADING */
+
+        .loading-orders {
+            text-align: center;
+            padding: 70px 20px;
+            color: #6b7280;
+        }
+
+        .loading-orders.hidden {
+            display: none;
+        }
+
+
+        /* ERROR */
+
+        .orders-error {
+            text-align: center;
+            padding: 50px 20px;
+            color: #b91c1c;
+        }
+
+        .orders-error.hidden {
+            display: none;
+        }
+
+
+        /* MODAL */
+
+        .order-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        .order-modal.show {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(500px, 100%);
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 25px 80px rgba(0,0,0,.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .modal-header h2 {
+            font-size: 21px;
+        }
+
+        .modal-close {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 8px;
+            background: #f3f4f6;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .modal-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+        }
+
+        .modal-row span {
+            color: #6b7280;
+        }
+
+        .modal-row strong {
+            color: #111827;
+            text-align: right;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .orders-page {
+                padding: 30px 0 50px;
+            }
+
+            .orders-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .orders-header h1 {
+                font-size: 29px;
+            }
+
+            .orders-toolbar {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+
+        <a href="index.html"
+            class="logo">
+
+            <span class="logo-icon">
+                A
+            </span>
+
+            <span>
+                Avi<span>Print</span>
+            </span>
+
+        </a>
+
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="services.html">
+                Services
+            </a>
+
+            <a href="orders.html"
+                style="color:#2563eb;">
+                My Orders
+            </a>
+
+        </nav>
+
+
+        <div class="nav-buttons">
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="login-btn"
+                style="
+                    border:none;
+                    background:transparent;
+                    cursor:pointer;
+                ">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     ORDERS
+========================= -->
+
+<main class="orders-page">
+
+    <div class="container">
+
+
+        <!-- HEADER -->
+
+        <div class="orders-header">
+
+            <div>
+
+                <span class="section-label">
+                    ORDER MANAGEMENT
+                </span>
+
+                <h1>
+                    My Orders
+                </h1>
+
+                <p>
+                    Track and manage your printing orders.
+                </p>
+
+            </div>
+
+
+            <a href="services.html"
+                class="primary-btn">
+
+                + New Print
+
+            </a>
+
+        </div>
+
+
+
+        <!-- TOOLBAR -->
+
+        <div class="orders-toolbar">
+
+            <div class="search-box">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchOrders"
+                    placeholder="Search by order ID or service...">
+
+            </div>
+
+
+            <div class="order-count">
+
+                Showing
+                <strong id="orderCount">
+                    0
+                </strong>
+                orders
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ORDERS CARD -->
+
+        <div class="orders-card">
+
+
+            <!-- LOADING -->
+
+            <div
+                class="loading-orders"
+                id="loadingOrders">
+
+                Loading your orders...
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                class="orders-error hidden"
+                id="ordersError">
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div
+                class="orders-table-wrapper hidden"
+                id="ordersTableWrapper">
+
+                <table class="orders-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Service
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="ordersBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- EMPTY -->
+
+            <div
+                class="empty-orders hidden"
+                id="emptyOrders">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h2>
+                    No Orders Yet
+                </h2>
+
+                <p>
+                    You haven't placed any printing orders yet.
+                </p>
+
+                <a
+                    href="services.html"
+                    class="primary-btn">
+
+                    Create New Order
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================
+     ORDER DETAILS MODAL
+========================= -->
+
+<div
+    class="order-modal"
+    id="orderModal">
+
+
+    <div class="modal-card">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Order Details
+            </h2>
+
+            <button
+                class="modal-close"
+                id="modalCloseButton"
+                type="button">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="modal-details"
+            id="modalDetails">
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+
+        /* =========================
+           ELEMENTS
+        ========================= */
+
+        const ordersBody =
+            document.getElementById(
+                "ordersBody"
+            );
+
+        const ordersTableWrapper =
+            document.getElementById(
+                "ordersTableWrapper"
+            );
+
+        const loadingOrders =
+            document.getElementById(
+                "loadingOrders"
+            );
+
+        const emptyOrders =
+            document.getElementById(
+                "emptyOrders"
+            );
+
+        const ordersError =
+            document.getElementById(
+                "ordersError"
+            );
+
+        const orderCount =
+            document.getElementById(
+                "orderCount"
+            );
+
+        const searchInput =
+            document.getElementById(
+                "searchOrders"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+        const orderModal =
+            document.getElementById(
+                "orderModal"
+            );
+
+        const modalDetails =
+            document.getElementById(
+                "modalDetails"
+            );
+
+        const modalCloseButton =
+            document.getElementById(
+                "modalCloseButton"
+            );
+
+
+        let allOrders = [];
+
+
+
+        /* =========================
+           SUPABASE CHECK
+        ========================= */
+
+        if (
+            typeof window.supabase === "undefined" ||
+            typeof supabaseClient === "undefined" ||
+            !supabaseClient
+        ) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+
+        /* =========================
+           LOAD ORDERS
+        ========================= */
+
+        async function loadOrders() {
+
+            loadingOrders.classList.remove(
+                "hidden"
+            );
+
+            ordersTableWrapper.classList.add(
+                "hidden"
+            );
+
+            emptyOrders.classList.add(
+                "hidden"
+            );
+
+            ordersError.classList.add(
+                "hidden"
+            );
+
+
+            try {
+
+                const {
+                    data: sessionData,
+                    error: sessionError
+                } =
+                    await supabaseClient.auth
+                        .getSession();
+
+
+                if (sessionError) {
+
+                    throw sessionError;
+
+                }
+
+
+                const session =
+                    sessionData.session;
+
+
+                if (
+                    !session ||
+                    !session.user
+                ) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                const user =
+                    session.user;
+
+
+
+                /* =========================
+                   FETCH USER ORDERS
+                ========================= */
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .from("orders")
+                        .select(
+                            `
+                            id,
+                            order_number,
+                            service_name,
+                            service_details,
+                            order_date,
+                            status,
+                            amount,
+                            created_at
+                            `
+                        )
+                        .eq(
+                            "user_id",
+                            user.id
+                        )
+                        .order(
+                            "order_date",
+                            {
+                                ascending: false
+                            }
+                        );
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                allOrders =
+                    data || [];
+
+
+                loadingOrders.classList.add(
+                    "hidden"
+                );
+
+
+                renderOrders(
+                    allOrders
+                );
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Orders loading error:",
+                    error
+                );
+
+
+                loadingOrders.classList.add(
+                    "hidden"
+                );
+
+
+                ordersError.textContent =
+                    "Unable to load orders: " +
+                    (
+                        error.message ||
+                        "Unknown error"
+                    );
+
+
+                ordersError.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================
+           RENDER ORDERS
+        ========================= */
+
+        function renderOrders(
+            orders
+        ) {
+
+            ordersBody.innerHTML = "";
+
+
+            orderCount.textContent =
+                orders.length;
+
+
+            if (!orders.length) {
+
+                ordersTableWrapper.classList.add(
+                    "hidden"
+                );
+
+                emptyOrders.classList.remove(
+                    "hidden"
+                );
+
+                return;
+
+            }
+
+
+            ordersTableWrapper.classList.remove(
+                "hidden"
+            );
+
+            emptyOrders.classList.add(
+                "hidden"
+            );
+
+
+            orders.forEach(
+                function (order) {
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    const serviceIcon =
+                        getServiceIcon(
+                            order.service_name
+                        );
+
+
+                    const statusClass =
+                        getStatusClass(
+                            order.status
+                        );
+
+
+                    const formattedDate =
+                        formatDate(
+                            order.order_date
+                        );
+
+
+                    const amount =
+                        Number(
+                            order.amount || 0
+                        ).toFixed(2);
+
+
+                    row.innerHTML = `
+
+                        <td>
+
+                            <span class="order-id">
+
+                                #${escapeHTML(
+                                    order.order_number ||
+                                    order.id.slice(0, 8)
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="service-name">
+
+                                <div class="service-icon">
+
+                                    ${serviceIcon}
+
+                                </div>
+
+                                <div>
+
+                                    <strong>
+
+                                        ${escapeHTML(
+                                            order.service_name ||
+                                            "Print Service"
+                                        )}
+
+                                    </strong>
+
+                                    <small>
+
+                                        ${escapeHTML(
+                                            order.service_details ||
+                                            "Printing order"
+                                        )}
+
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            ${formattedDate}
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="status ${statusClass}">
+
+                                ●
+                                ${escapeHTML(
+                                    order.status ||
+                                    "Pending"
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="amount">
+
+                                ₹${amount}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                type="button"
+                                class="view-btn"
+                                data-order-id="${escapeHTML(
+                                    order.id
+                                )}">
+
+                                View
+
+                            </button>
+
+                        </td>
+
+                    `;
+
+
+                    ordersBody.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+
+            /* =========================
+               VIEW BUTTON EVENTS
+            ========================= */
+
+            const buttons =
+                ordersBody.querySelectorAll(
+                    ".view-btn"
+                );
+
+
+            buttons.forEach(
+                function (button) {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            const orderId =
+                                button
+                                .getAttribute(
+                                    "data-order-id"
+                                );
+
+
+                            const order =
+                                allOrders.find(
+                                    function (item) {
+
+                                        return (
+                                            item.id ===
+                                            orderId
+                                        );
+
+                                    }
+                                );
+
+
+                            if (order) {
+
+                                viewOrder(
+                                    order
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        searchInput.addEventListener(
+            "input",
+            function () {
+
+                const query =
+                    this.value
+                    .toLowerCase()
+                    .trim();
+
+
+                if (!query) {
+
+                    renderOrders(
+                        allOrders
+                    );
+
+                    return;
+
+                }
+
+
+                const filtered =
+                    allOrders.filter(
+                        function (order) {
+
+                            const orderNumber =
+                                (
+                                    order.order_number ||
+                                    ""
+                                ).toLowerCase();
+
+
+                            const service =
+                                (
+                                    order.service_name ||
+                                    ""
+                                ).toLowerCase();
+
+
+                            const details =
+                                (
+                                    order.service_details ||
+                                    ""
+                                ).toLowerCase();
+
+
+                            const status =
+                                (
+                                    order.status ||
+                                    ""
+                                ).toLowerCase();
+
+
+                            return (
+                                orderNumber.includes(query) ||
+                                service.includes(query) ||
+                                details.includes(query) ||
+                                status.includes(query)
+                            );
+
+                        }
+                    );
+
+
+                renderOrders(
+                    filtered
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           SERVICE ICON
+        ========================= */
+
+        function getServiceIcon(
+            serviceName
+        ) {
+
+            const service =
+                (
+                    serviceName ||
+                    ""
+                ).toLowerCase();
+
+
+            if (
+                service.includes("photo")
+            ) {
+
+                return "🖼️";
+
+            }
+
+
+            if (
+                service.includes("id")
+            ) {
+
+                return "🪪";
+
+            }
+
+
+            if (
+                service.includes("pdf")
+            ) {
+
+                return "📑";
+
+            }
+
+
+            return "📄";
+
+        }
+
+
+
+        /* =========================
+           STATUS CLASS
+        ========================= */
+
+        function getStatusClass(
+            status
+        ) {
+
+            const value =
+                (
+                    status ||
+                    "Pending"
+                ).toLowerCase();
+
+
+            if (
+                value === "processing"
+            ) {
+
+                return "processing";
+
+            }
+
+
+            if (
+                value === "completed"
+            ) {
+
+                return "completed";
+
+            }
+
+
+            if (
+                value === "cancelled"
+            ) {
+
+                return "cancelled";
+
+            }
+
+
+            return "pending";
+
+        }
+
+
+
+        /* =========================
+           FORMAT DATE
+        ========================= */
+
+        function formatDate(
+            dateValue
+        ) {
+
+            if (!dateValue) {
+
+                return "-";
+
+            }
+
+
+            const date =
+                new Date(
+                    dateValue
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return "-";
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+
+        /* =========================
+           VIEW ORDER
+        ========================= */
+
+        function viewOrder(
+            order
+        ) {
+
+            const amount =
+                Number(
+                    order.amount || 0
+                ).toFixed(2);
+
+
+            modalDetails.innerHTML = `
+
+                <div class="modal-row">
+
+                    <span>
+                        Order ID
+                    </span>
+
+                    <strong>
+                        #${escapeHTML(
+                            order.order_number ||
+                            order.id
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="modal-row">
+
+                    <span>
+                        Service
+                    </span>
+
+                    <strong>
+                        ${escapeHTML(
+                            order.service_name ||
+                            "-"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="modal-row">
+
+                    <span>
+                        Details
+                    </span>
+
+                    <strong>
+                        ${escapeHTML(
+                            order.service_details ||
+                            "-"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="modal-row">
+
+                    <span>
+                        Order Date
+                    </span>
+
+                    <strong>
+                        ${formatDate(
+                            order.order_date
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="modal-row">
+
+                    <span>
+                        Status
+                    </span>
+
+                    <strong>
+                        ${escapeHTML(
+                            order.status ||
+                            "Pending"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="modal-row">
+
+                    <span>
+                        Amount
+                    </span>
+
+                    <strong>
+                        ₹${amount}
+                    </strong>
+
+                </div>
+
+            `;
+
+
+            orderModal.classList.add(
+                "show"
+            );
+
+        }
+
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================= */
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ?? ""
             )
-        ),
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
 
-    amount numeric(10,2)
-        not null default 0
-        check (amount >= 0),
+        }
 
-    created_at timestamptz
-        not null default now()
+
+
+        /* =========================
+           CLOSE MODAL
+        ========================= */
+
+        modalCloseButton.addEventListener(
+            "click",
+            function () {
+
+                orderModal.classList.remove(
+                    "show"
+                );
+
+            }
+        );
+
+
+        orderModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    orderModal
+                ) {
+
+                    orderModal.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           LOGOUT
+        ========================= */
+
+        logoutButton.addEventListener(
+            "click",
+            async function () {
+
+                logoutButton.disabled =
+                    true;
+
+                logoutButton.textContent =
+                    "Logging out...";
+
+
+                try {
+
+                    const {
+                        error
+                    } =
+                        await supabaseClient.auth
+                            .signOut();
+
+
+                    if (error) {
+
+                        throw error;
+
+                    }
+
+
+                    window.location.href =
+                        "login.html";
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Logout failed. Please try again."
+                    );
+
+
+                    logoutButton.disabled =
+                        false;
+
+                    logoutButton.textContent =
+                        "Logout";
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           START
+        ========================= */
+
+        await loadOrders();
+
+    }
 
 );
 
-
--- ==========================================
--- INDEX
--- ==========================================
-
-create index if not exists orders_user_id_idx
-on public.orders(user_id);
+</script>
 
 
--- ==========================================
--- ENABLE ROW LEVEL SECURITY
--- ==========================================
+</body>
 
-alter table public.orders
-enable row level security;
-
-
--- ==========================================
--- DELETE OLD POLICIES IF THEY EXIST
--- ==========================================
-
-drop policy if exists
-"Users can view their own orders"
-on public.orders;
-
-drop policy if exists
-"Users can create their own orders"
-on public.orders;
-
-
--- ==========================================
--- SELECT POLICY
--- USER CAN ONLY SEE OWN ORDERS
--- ==========================================
-
-create policy
-"Users can view their own orders"
-
-on public.orders
-
-for select
-
-to authenticated
-
-using (
-    (select auth.uid()) = user_id
-);
-
-
--- ==========================================
--- INSERT POLICY
--- USER CAN ONLY CREATE OWN ORDERS
--- ==========================================
-
-create policy
-"Users can create their own orders"
-
-on public.orders
-
-for insert
-
-to authenticated
-
-with check (
-    (select auth.uid()) = user_id
-);
-
-
--- ==========================================
--- DATA API PERMISSIONS
--- ==========================================
-
-grant select, insert
-on public.orders
-to authenticated;
+</html>
