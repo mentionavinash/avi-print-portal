@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="AviPrint printing services">
+
+    <title>Print Services | AviPrint Portal</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body class="dashboard-page">
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+
+        <a href="index.html"
+           class="logo">
+
+            <span class="logo-icon">
+                A
+            </span>
+
+            <span>
+                Avi<span>Print</span>
+            </span>
+
+        </a>
+
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="services.html"
+               style="color:#2563eb;">
+                Services
+            </a>
+
+            <a href="orders.html">
+                My Orders
+            </a>
+
+        </nav>
+
+
+        <div class="nav-buttons">
+
+            <a href="index.html"
+               class="login-btn">
+
+                Logout
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="services-page">
+
+
+    <div class="container">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="services-header">
+
+            <div>
+
+                <span class="section-label">
+
+                    PRINT SERVICES
+
+                </span>
+
+                <h1>
+
+                    What would you like
+                    <span>to print?</span>
+
+                </h1>
+
+                <p>
+
+                    Select a service and configure
+                    your printing preferences.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SERVICE SELECTOR -->
+
+        <div class="print-layout">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="print-left">
+
+
+                <div class="service-selector-card">
+
+                    <h2>
+                        Select Service
+                    </h2>
+
+                    <p>
+                        Choose what you want to print.
+                    </p>
+
+
+                    <div class="service-options">
+
+
+                        <button
+                            class="service-option active"
+                            data-service="document">
+
+                            <span class="service-option-icon">
+                                📄
+                            </span>
+
+                            <span>
+
+                                <strong>
+                                    Document Print
+                                </strong>
+
+                                <small>
+                                    PDF & documents
+                                </small>
+
+                            </span>
+
+                        </button>
+
+
+
+                        <button
+                            class="service-option"
+                            data-service="photo">
+
+                            <span class="service-option-icon">
+                                🖼️
+                            </span>
+
+                            <span>
+
+                                <strong>
+                                    Photo Print
+                                </strong>
+
+                                <small>
+                                    Photos & images
+                                </small>
+
+                            </span>
+
+                        </button>
+
+
+
+                        <button
+                            class="service-option"
+                            data-service="idcard">
+
+                            <span class="service-option-icon">
+                                🪪
+                            </span>
+
+                            <span>
+
+                                <strong>
+                                    ID Card Print
+                                </strong>
+
+                                <small>
+                                    Eligible documents
+                                </small>
+
+                            </span>
+
+                        </button>
+
+
+
+                        <button
+                            class="service-option"
+                            data-service="pdf">
+
+                            <span class="service-option-icon">
+                                📑
+                            </span>
+
+                            <span>
+
+                                <strong>
+                                    PDF Print
+                                </strong>
+
+                                <small>
+                                    Multi-page PDF
+                                </small>
+
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- UPLOAD -->
+
+                <div class="upload-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h2>
+                                Upload File
+                            </h2>
+
+                            <p>
+                                Select the document you want
+                                to print.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label
+                        class="upload-area"
+                        for="fileInput">
+
+                        <div class="upload-icon">
+                            📤
+                        </div>
+
+                        <strong>
+                            Click to upload
+                        </strong>
+
+                        <span>
+                            PDF, JPG or PNG
+                        </span>
+
+                        <small>
+                            Maximum file size: 10 MB
+                        </small>
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden>
+
+
+                    <div
+                        id="filePreview"
+                        class="file-preview">
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- PRINT SETTINGS -->
+
+                <div class="settings-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h2>
+                                Print Settings
+                            </h2>
+
+                            <p>
+                                Customize your print.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PAPER SIZE -->
+
+                    <div class="setting-group">
+
+                        <label>
+                            Paper Size
+                        </label>
+
+                        <div class="setting-buttons">
+
+                            <button
+                                class="setting-btn active"
+                                data-size="A4">
+
+                                A4
+
+                            </button>
+
+                            <button
+                                class="setting-btn"
+                                data-size="A3">
+
+                                A3
+
+                            </button>
+
+                            <button
+                                class="setting-btn"
+                                data-size="A5">
+
+                                A5
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- COLOR -->
+
+                    <div class="setting-group">
+
+                        <label>
+                            Print Type
+                        </label>
+
+                        <div class="setting-buttons">
+
+                            <button
+                                class="setting-btn active"
+                                data-type="bw">
+
+                                B&W
+
+                            </button>
+
+                            <button
+                                class="setting-btn"
+                                data-type="color">
+
+                                Color
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SIDES -->
+
+                    <div class="setting-group">
+
+                        <label>
+                            Printing Side
+                        </label>
+
+                        <div class="setting-buttons">
+
+                            <button
+                                class="setting-btn active"
+                                data-side="single">
+
+                                Single Side
+
+                            </button>
+
+                            <button
+                                class="setting-btn"
+                                data-side="double">
+
+                                Double Side
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- COPIES -->
+
+                    <div class="setting-group">
+
+                        <label>
+                            Number of Copies
+                        </label>
+
+
+                        <div class="quantity-control">
+
+                            <button
+                                id="minusBtn">
+
+                                −
+
+                            </button>
+
+
+                            <span id="quantity">
+
+                                1
+
+                            </span>
+
+
+                            <button
+                                id="plusBtn">
+
+                                +
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RIGHT SIDE -->
+
+            <aside class="print-summary">
+
+
+                <div class="summary-card">
+
+
+                    <div class="summary-header">
+
+                        <h2>
+                            Order Summary
+                        </h2>
+
+                        <span>
+                            Estimate
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="summary-service">
+
+                        <span class="summary-service-icon">
+                            📄
+                        </span>
+
+                        <div>
+
+                            <strong id="summaryService">
+                                Document Print
+                            </strong>
+
+                            <small id="summaryFile">
+                                No file selected
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="summary-details">
+
+
+                        <div>
+
+                            <span>
+                                Paper
+                            </span>
+
+                            <strong id="summarySize">
+                                A4
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Type
+                            </span>
+
+                            <strong id="summaryType">
+                                B&W
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Side
+                            </span>
+
+                            <strong id="summarySide">
+                                Single
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Copies
+                            </span>
+
+                            <strong id="summaryCopies">
+                                1
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="summary-price">
+
+                        <span>
+                            Estimated Price
+                        </span>
+
+                        <strong id="totalPrice">
+                            ₹2.00
+                        </strong>
+
+                    </div>
+
+
+
+                    <button
+                        class="primary-btn order-btn"
+                        id="orderBtn">
+
+                        Continue to Order
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <p class="price-note">
+
+                        Final price may vary depending
+                        on the final print configuration.
+
+                    </p>
+
+
+                </div>
+
+
+            </aside>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+let quantity = 1;
+
+let selectedSize = "A4";
+
+let selectedType = "bw";
+
+let selectedSide = "single";
+
+let selectedService = "Document Print";
+
+
+const quantityDisplay =
+    document.getElementById("quantity");
+
+const summaryCopies =
+    document.getElementById("summaryCopies");
+
+const totalPrice =
+    document.getElementById("totalPrice");
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const filePreview =
+    document.getElementById("filePreview");
+
+const summaryFile =
+    document.getElementById("summaryFile");
+
+
+/* =========================
+   PRICING
+========================= */
+
+function calculatePrice() {
+
+    let price = 2;
+
+
+    if (selectedType === "color") {
+        price = 10;
+    }
+
+
+    if (selectedSize === "A3") {
+        price += 3;
+    }
+
+
+    if (selectedSize === "A5") {
+        price -= 0.5;
+    }
+
+
+    if (selectedSide === "double") {
+        price += 1;
+    }
+
+
+    price *= quantity;
+
+
+    totalPrice.textContent =
+        "₹" + price.toFixed(2);
+
+}
+
+
+/* =========================
+   SERVICE SELECT
+========================= */
+
+document
+.querySelectorAll(".service-option")
+.forEach(function(button) {
+
+    button.addEventListener(
+        "click",
+        function() {
+
+
+            document
+            .querySelectorAll(".service-option")
+            .forEach(function(item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            this.classList.add("active");
+
+
+            selectedService =
+                this.querySelector("strong")
+                .textContent;
+
+
+            document
+            .getElementById("summaryService")
+            .textContent =
+                selectedService;
+
+        }
+    );
+
+});
+
+
+/* =========================
+   SETTING BUTTONS
+========================= */
+
+document
+.querySelectorAll(".setting-btn")
+.forEach(function(button) {
+
+    button.addEventListener(
+        "click",
+        function() {
+
+
+            const parent =
+                this.parentElement;
+
+
+            parent
+            .querySelectorAll(".setting-btn")
+            .forEach(function(item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            this.classList.add("active");
+
+
+            if (this.dataset.size) {
+
+                selectedSize =
+                    this.dataset.size;
+
+                document
+                .getElementById("summarySize")
+                .textContent =
+                    selectedSize;
+
+            }
+
+
+            if (this.dataset.type) {
+
+                selectedType =
+                    this.dataset.type;
+
+                document
+                .getElementById("summaryType")
+                .textContent =
+                    selectedType === "bw"
+                    ? "B&W"
+                    : "Color";
+
+            }
+
+
+            if (this.dataset.side) {
+
+                selectedSide =
+                    this.dataset.side;
+
+                document
+                .getElementById("summarySide")
+                .textContent =
+                    selectedSide === "single"
+                    ? "Single"
+                    : "Double";
+
+            }
+
+
+            calculatePrice();
+
+        }
+    );
+
+});
+
+
+/* =========================
+   QUANTITY
+========================= */
+
+document
+.getElementById("minusBtn")
+.addEventListener(
+    "click",
+    function() {
+
+        if (quantity > 1) {
+
+            quantity--;
+
+            quantityDisplay.textContent =
+                quantity;
+
+            summaryCopies.textContent =
+                quantity;
+
+            calculatePrice();
+
+        }
+
+    }
+);
+
+
+document
+.getElementById("plusBtn")
+.addEventListener(
+    "click",
+    function() {
+
+        if (quantity < 100) {
+
+            quantity++;
+
+            quantityDisplay.textContent =
+                quantity;
+
+            summaryCopies.textContent =
+                quantity;
+
+            calculatePrice();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   FILE UPLOAD
+========================= */
+
+fileInput.addEventListener(
+    "change",
+    function() {
+
+
+        const file =
+            this.files[0];
+
+
+        if (!file) {
+
+            return;
+
+        }
+
+
+        if (file.size > 10 * 1024 * 1024) {
+
+            alert(
+                "File size must be less than 10 MB."
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+
+        summaryFile.textContent =
+            file.name;
+
+
+        filePreview.innerHTML = `
+
+            <div class="selected-file">
+
+                <span class="selected-file-icon">
+                    📄
+                </span>
+
+                <div>
+
+                    <strong>
+                        ${file.name}
+                    </strong>
+
+                    <small>
+                        ${(file.size / 1024 / 1024).toFixed(2)} MB
+                    </small>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="removeFile">
+
+                    ×
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        document
+        .getElementById("removeFile")
+        .addEventListener(
+            "click",
+            function() {
+
+                fileInput.value = "";
+
+                filePreview.innerHTML = "";
+
+                summaryFile.textContent =
+                    "No file selected";
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================
+   ORDER BUTTON
+========================= */
+
+document
+.getElementById("orderBtn")
+.addEventListener(
+    "click",
+    function() {
+
+
+        if (!fileInput.files.length) {
+
+            alert(
+                "Please upload a file before continuing."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Order system will be connected to the backend in the next phase."
+        );
+
+    }
+);
+
+
+calculatePrice();
+
+</script>
+
+
+</body>
+
+</html>
