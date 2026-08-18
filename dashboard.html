@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="AviPrint User Dashboard">
+
+    <title>Dashboard | AviPrint Portal</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body class="dashboard-page">
+
+
+<!-- =========================
+     TOP NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+
+        <a href="index.html"
+           class="logo">
+
+            <span class="logo-icon">
+                A
+            </span>
+
+            <span>
+                Avi<span>Print</span>
+            </span>
+
+        </a>
+
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html"
+               style="color:#2563eb;">
+
+                Dashboard
+
+            </a>
+
+            <a href="services.html">
+
+                Services
+
+            </a>
+
+            <a href="orders.html">
+
+                My Orders
+
+            </a>
+
+        </nav>
+
+
+        <div class="nav-buttons">
+
+            <a href="index.html"
+               class="login-btn">
+
+                Logout
+
+            </a>
+
+        </div>
+
+
+        <button
+            class="mobile-menu-btn"
+            id="mobileMenuBtn">
+
+            ☰
+
+        </button>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<main class="dashboard-container">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="dashboard-sidebar">
+
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+
+                A
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Welcome, User
+                </strong>
+
+                <span>
+                    user@example.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="dashboard.html"
+                class="active">
+
+                <span>▦</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="services.html">
+
+                <span>🖨️</span>
+
+                Print Services
+
+            </a>
+
+
+            <a href="orders.html">
+
+                <span>📦</span>
+
+                My Orders
+
+            </a>
+
+
+            <a href="#wallet">
+
+                <span>💰</span>
+
+                Wallet
+
+            </a>
+
+
+            <a href="#profile">
+
+                <span>👤</span>
+
+                Profile
+
+            </a>
+
+
+            <a href="#support">
+
+                <span>❓</span>
+
+                Help & Support
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+
+                ← Back to Website
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <section class="dashboard-main">
+
+
+        <!-- MOBILE TOP -->
+
+        <div class="dashboard-mobile-header">
+
+            <button
+                id="sidebarToggle">
+
+                ☰
+
+            </button>
+
+            <strong>
+                Dashboard
+            </strong>
+
+        </div>
+
+
+
+        <!-- HEADER -->
+
+        <div class="dashboard-heading">
+
+
+            <div>
+
+                <span class="section-label">
+
+                    USER DASHBOARD
+
+                </span>
+
+
+                <h1>
+
+                    Welcome back! 👋
+
+                </h1>
+
+
+                <p>
+
+                    Manage your printing services
+                    and orders from here.
+
+                </p>
+
+            </div>
+
+
+            <a
+                href="services.html"
+                class="primary-btn">
+
+                + New Print
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- STAT CARDS -->
+
+        <div class="dashboard-stats">
+
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon blue">
+
+                    📦
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Total Orders
+                    </span>
+
+                    <strong>
+                        0
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon green">
+
+                    ✓
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Completed
+                    </span>
+
+                    <strong>
+                        0
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon orange">
+
+                    ⏳
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Processing
+                    </span>
+
+                    <strong>
+                        0
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon purple">
+
+                    💰
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Wallet Balance
+                    </span>
+
+                    <strong>
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- SERVICES -->
+
+        <div class="dashboard-section">
+
+
+            <div class="section-title-row">
+
+
+                <div>
+
+                    <h2>
+                        Popular Services
+                    </h2>
+
+                    <p>
+                        Start a new printing order
+                    </p>
+
+                </div>
+
+
+                <a href="services.html">
+
+                    View All →
+
+                </a>
+
+
+            </div>
+
+
+
+            <div class="dashboard-service-grid">
+
+
+                <a
+                    href="services.html"
+                    class="dashboard-service-card">
+
+
+                    <div class="dashboard-service-icon">
+
+                        📄
+
+                    </div>
+
+
+                    <strong>
+                        Document Print
+                    </strong>
+
+
+                    <span>
+                        PDF & documents
+                    </span>
+
+
+                </a>
+
+
+
+                <a
+                    href="services.html"
+                    class="dashboard-service-card">
+
+
+                    <div class="dashboard-service-icon">
+
+                        🖼️
+
+                    </div>
+
+
+                    <strong>
+                        Photo Print
+                    </strong>
+
+
+                    <span>
+                        Different sizes
+                    </span>
+
+
+                </a>
+
+
+
+                <a
+                    href="services.html"
+                    class="dashboard-service-card">
+
+
+                    <div class="dashboard-service-icon">
+
+                        🪪
+
+                    </div>
+
+
+                    <strong>
+                        ID Card Print
+                    </strong>
+
+
+                    <span>
+                        Eligible documents
+                    </span>
+
+
+                </a>
+
+
+
+                <a
+                    href="services.html"
+                    class="dashboard-service-card">
+
+
+                    <div class="dashboard-service-icon">
+
+                        📑
+
+                    </div>
+
+
+                    <strong>
+                        PDF Print
+                    </strong>
+
+
+                    <span>
+                        Fast processing
+                    </span>
+
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- RECENT ORDERS -->
+
+        <div class="dashboard-section">
+
+
+            <div class="section-title-row">
+
+
+                <div>
+
+                    <h2>
+                        Recent Orders
+                    </h2>
+
+                    <p>
+                        Track your latest print orders
+                    </p>
+
+                </div>
+
+
+                <a href="orders.html">
+
+                    View All →
+
+                </a>
+
+
+            </div>
+
+
+
+            <div class="orders-empty">
+
+
+                <div class="empty-icon">
+
+                    📦
+
+                </div>
+
+
+                <h3>
+                    No Orders Yet
+                </h3>
+
+
+                <p>
+
+                    Your recent orders will
+                    appear here.
+
+                </p>
+
+
+                <a
+                    href="services.html"
+                    class="primary-btn">
+
+                    Create Your First Order
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================
+     MOBILE SIDEBAR SCRIPT
+========================= -->
+
+<script>
+
+const sidebarToggle =
+    document.getElementById(
+        "sidebarToggle"
+    );
+
+const sidebar =
+    document.querySelector(
+        ".dashboard-sidebar"
+    );
+
+
+if (sidebarToggle) {
+
+    sidebarToggle.addEventListener(
+        "click",
+        function() {
+
+            sidebar.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
