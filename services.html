@@ -16,6 +16,85 @@
     <link rel="stylesheet"
           href="css/style.css">
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+
+    <style>
+
+        .order-message {
+            display: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .order-message.show {
+            display: block;
+        }
+
+        .order-message.error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        .order-message.success {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .order-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .selected-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        .selected-file-icon {
+            font-size: 22px;
+        }
+
+        .selected-file div {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .selected-file strong {
+            display: block;
+            word-break: break-word;
+        }
+
+        .selected-file small {
+            display: block;
+            margin-top: 3px;
+            color: #6b7280;
+        }
+
+        .selected-file button {
+            border: 0;
+            background: #fee2e2;
+            color: #991b1b;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+    </style>
+
 </head>
 
 
@@ -29,7 +108,6 @@
 <header class="navbar">
 
     <div class="container nav-container">
-
 
         <a href="index.html"
            class="logo">
@@ -65,15 +143,21 @@
 
         <div class="nav-buttons">
 
-            <a href="index.html"
-               class="login-btn">
+            <button
+                type="button"
+                id="logoutButton"
+                class="login-btn"
+                style="
+                    border:none;
+                    background:transparent;
+                    cursor:pointer;
+                ">
 
                 Logout
 
-            </a>
+            </button>
 
         </div>
-
 
     </div>
 
@@ -87,7 +171,6 @@
 
 <main class="services-page">
 
-
     <div class="container">
 
 
@@ -98,23 +181,17 @@
             <div>
 
                 <span class="section-label">
-
                     PRINT SERVICES
-
                 </span>
 
                 <h1>
-
                     What would you like
                     <span>to print?</span>
-
                 </h1>
 
                 <p>
-
                     Select a service and configure
                     your printing preferences.
-
                 </p>
 
             </div>
@@ -123,15 +200,19 @@
 
 
 
-        <!-- SERVICE SELECTOR -->
+        <!-- PRINT LAYOUT -->
 
         <div class="print-layout">
 
 
-            <!-- LEFT SIDE -->
+            <!-- =========================
+                 LEFT SIDE
+            ========================= -->
 
             <div class="print-left">
 
+
+                <!-- SERVICE SELECTOR -->
 
                 <div class="service-selector-card">
 
@@ -148,6 +229,7 @@
 
 
                         <button
+                            type="button"
                             class="service-option active"
                             data-service="document">
 
@@ -172,6 +254,7 @@
 
 
                         <button
+                            type="button"
                             class="service-option"
                             data-service="photo">
 
@@ -196,6 +279,7 @@
 
 
                         <button
+                            type="button"
                             class="service-option"
                             data-service="idcard">
 
@@ -220,6 +304,7 @@
 
 
                         <button
+                            type="button"
                             class="service-option"
                             data-service="pdf">
 
@@ -248,7 +333,9 @@
 
 
 
-                <!-- UPLOAD -->
+                <!-- =========================
+                     FILE UPLOAD
+                ========================= -->
 
                 <div class="upload-card">
 
@@ -296,22 +383,21 @@
                     <input
                         type="file"
                         id="fileInput"
-                        accept=".pdf,.jpg,.jpeg,.png"
-                        hidden>
+                        accept=".pdf,.jpg,.jpeg,.png">
 
 
                     <div
                         id="filePreview"
                         class="file-preview">
-
                     </div>
-
 
                 </div>
 
 
 
-                <!-- PRINT SETTINGS -->
+                <!-- =========================
+                     PRINT SETTINGS
+                ========================= -->
 
                 <div class="settings-card">
 
@@ -333,7 +419,7 @@
 
 
 
-                    <!-- PAPER SIZE -->
+                    <!-- PAPER -->
 
                     <div class="setting-group">
 
@@ -344,6 +430,7 @@
                         <div class="setting-buttons">
 
                             <button
+                                type="button"
                                 class="setting-btn active"
                                 data-size="A4">
 
@@ -351,7 +438,9 @@
 
                             </button>
 
+
                             <button
+                                type="button"
                                 class="setting-btn"
                                 data-size="A3">
 
@@ -359,7 +448,9 @@
 
                             </button>
 
+
                             <button
+                                type="button"
                                 class="setting-btn"
                                 data-size="A5">
 
@@ -373,7 +464,7 @@
 
 
 
-                    <!-- COLOR -->
+                    <!-- TYPE -->
 
                     <div class="setting-group">
 
@@ -384,6 +475,7 @@
                         <div class="setting-buttons">
 
                             <button
+                                type="button"
                                 class="setting-btn active"
                                 data-type="bw">
 
@@ -391,7 +483,9 @@
 
                             </button>
 
+
                             <button
+                                type="button"
                                 class="setting-btn"
                                 data-type="color">
 
@@ -405,7 +499,7 @@
 
 
 
-                    <!-- SIDES -->
+                    <!-- SIDE -->
 
                     <div class="setting-group">
 
@@ -416,6 +510,7 @@
                         <div class="setting-buttons">
 
                             <button
+                                type="button"
                                 class="setting-btn active"
                                 data-side="single">
 
@@ -423,7 +518,9 @@
 
                             </button>
 
+
                             <button
+                                type="button"
                                 class="setting-btn"
                                 data-side="double">
 
@@ -445,10 +542,10 @@
                             Number of Copies
                         </label>
 
-
                         <div class="quantity-control">
 
                             <button
+                                type="button"
                                 id="minusBtn">
 
                                 −
@@ -457,13 +554,12 @@
 
 
                             <span id="quantity">
-
                                 1
-
                             </span>
 
 
                             <button
+                                type="button"
                                 id="plusBtn">
 
                                 +
@@ -482,7 +578,9 @@
 
 
 
-            <!-- RIGHT SIDE -->
+            <!-- =========================
+                 RIGHT SIDE
+            ========================= -->
 
             <aside class="print-summary">
 
@@ -503,6 +601,8 @@
                     </div>
 
 
+
+                    <!-- SERVICE -->
 
                     <div class="summary-service">
 
@@ -525,6 +625,8 @@
                     </div>
 
 
+
+                    <!-- DETAILS -->
 
                     <div class="summary-details">
 
@@ -585,6 +687,8 @@
 
 
 
+                    <!-- PRICE -->
+
                     <div class="summary-price">
 
                         <span>
@@ -599,11 +703,23 @@
 
 
 
+                    <!-- MESSAGE -->
+
+                    <div
+                        id="orderMessage"
+                        class="order-message">
+                    </div>
+
+
+
+                    <!-- ORDER BUTTON -->
+
                     <button
+                        type="button"
                         class="primary-btn order-btn"
                         id="orderBtn">
 
-                        Continue to Order
+                        Place Order
 
                         <span>
                             →
@@ -631,7 +747,6 @@
 
     </div>
 
-
 </main>
 
 
@@ -642,368 +757,999 @@
 
 <script>
 
-let quantity = 1;
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
 
-let selectedSize = "A4";
 
-let selectedType = "bw";
+        /* =========================
+           STATE
+        ========================= */
 
-let selectedSide = "single";
+        let quantity = 1;
 
-let selectedService = "Document Print";
+        let selectedSize = "A4";
 
+        let selectedType = "bw";
 
-const quantityDisplay =
-    document.getElementById("quantity");
+        let selectedSide = "single";
 
-const summaryCopies =
-    document.getElementById("summaryCopies");
+        let selectedService = "Document Print";
 
-const totalPrice =
-    document.getElementById("totalPrice");
+        let currentUser = null;
 
-const fileInput =
-    document.getElementById("fileInput");
 
-const filePreview =
-    document.getElementById("filePreview");
 
-const summaryFile =
-    document.getElementById("summaryFile");
+        /* =========================
+           ELEMENTS
+        ========================= */
 
-
-/* =========================
-   PRICING
-========================= */
-
-function calculatePrice() {
-
-    let price = 2;
-
-
-    if (selectedType === "color") {
-        price = 10;
-    }
-
-
-    if (selectedSize === "A3") {
-        price += 3;
-    }
-
-
-    if (selectedSize === "A5") {
-        price -= 0.5;
-    }
-
-
-    if (selectedSide === "double") {
-        price += 1;
-    }
-
-
-    price *= quantity;
-
-
-    totalPrice.textContent =
-        "₹" + price.toFixed(2);
-
-}
-
-
-/* =========================
-   SERVICE SELECT
-========================= */
-
-document
-.querySelectorAll(".service-option")
-.forEach(function(button) {
-
-    button.addEventListener(
-        "click",
-        function() {
-
-
-            document
-            .querySelectorAll(".service-option")
-            .forEach(function(item) {
-
-                item.classList.remove("active");
-
-            });
-
-
-            this.classList.add("active");
-
-
-            selectedService =
-                this.querySelector("strong")
-                .textContent;
-
-
-            document
-            .getElementById("summaryService")
-            .textContent =
-                selectedService;
-
-        }
-    );
-
-});
-
-
-/* =========================
-   SETTING BUTTONS
-========================= */
-
-document
-.querySelectorAll(".setting-btn")
-.forEach(function(button) {
-
-    button.addEventListener(
-        "click",
-        function() {
-
-
-            const parent =
-                this.parentElement;
-
-
-            parent
-            .querySelectorAll(".setting-btn")
-            .forEach(function(item) {
-
-                item.classList.remove("active");
-
-            });
-
-
-            this.classList.add("active");
-
-
-            if (this.dataset.size) {
-
-                selectedSize =
-                    this.dataset.size;
-
-                document
-                .getElementById("summarySize")
-                .textContent =
-                    selectedSize;
-
-            }
-
-
-            if (this.dataset.type) {
-
-                selectedType =
-                    this.dataset.type;
-
-                document
-                .getElementById("summaryType")
-                .textContent =
-                    selectedType === "bw"
-                    ? "B&W"
-                    : "Color";
-
-            }
-
-
-            if (this.dataset.side) {
-
-                selectedSide =
-                    this.dataset.side;
-
-                document
-                .getElementById("summarySide")
-                .textContent =
-                    selectedSide === "single"
-                    ? "Single"
-                    : "Double";
-
-            }
-
-
-            calculatePrice();
-
-        }
-    );
-
-});
-
-
-/* =========================
-   QUANTITY
-========================= */
-
-document
-.getElementById("minusBtn")
-.addEventListener(
-    "click",
-    function() {
-
-        if (quantity > 1) {
-
-            quantity--;
-
-            quantityDisplay.textContent =
-                quantity;
-
-            summaryCopies.textContent =
-                quantity;
-
-            calculatePrice();
-
-        }
-
-    }
-);
-
-
-document
-.getElementById("plusBtn")
-.addEventListener(
-    "click",
-    function() {
-
-        if (quantity < 100) {
-
-            quantity++;
-
-            quantityDisplay.textContent =
-                quantity;
-
-            summaryCopies.textContent =
-                quantity;
-
-            calculatePrice();
-
-        }
-
-    }
-);
-
-
-/* =========================
-   FILE UPLOAD
-========================= */
-
-fileInput.addEventListener(
-    "change",
-    function() {
-
-
-        const file =
-            this.files[0];
-
-
-        if (!file) {
-
-            return;
-
-        }
-
-
-        if (file.size > 10 * 1024 * 1024) {
-
-            alert(
-                "File size must be less than 10 MB."
+        const quantityDisplay =
+            document.getElementById(
+                "quantity"
             );
 
-            this.value = "";
+        const summaryCopies =
+            document.getElementById(
+                "summaryCopies"
+            );
+
+        const totalPrice =
+            document.getElementById(
+                "totalPrice"
+            );
+
+        const fileInput =
+            document.getElementById(
+                "fileInput"
+            );
+
+        const filePreview =
+            document.getElementById(
+                "filePreview"
+            );
+
+        const summaryFile =
+            document.getElementById(
+                "summaryFile"
+            );
+
+        const orderBtn =
+            document.getElementById(
+                "orderBtn"
+            );
+
+        const orderMessage =
+            document.getElementById(
+                "orderMessage"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+
+
+        /* =========================
+           CHECK SUPABASE
+        ========================= */
+
+        if (
+            typeof window.supabase === "undefined" ||
+            typeof supabaseClient === "undefined" ||
+            !supabaseClient
+        ) {
+
+            window.location.href =
+                "login.html";
 
             return;
 
         }
 
 
-        summaryFile.textContent =
-            file.name;
+
+        /* =========================
+           CHECK LOGIN
+        ========================= */
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+            await supabaseClient.auth.getSession();
 
 
-        filePreview.innerHTML = `
+        if (
+            sessionError ||
+            !sessionData.session ||
+            !sessionData.session.user
+        ) {
 
-            <div class="selected-file">
+            window.location.href =
+                "login.html";
 
-                <span class="selected-file-icon">
-                    📄
-                </span>
+            return;
 
-                <div>
+        }
 
-                    <strong>
-                        ${file.name}
-                    </strong>
 
-                    <small>
-                        ${(file.size / 1024 / 1024).toFixed(2)} MB
-                    </small>
+        currentUser =
+            sessionData.session.user;
 
-                </div>
 
-                <button
-                    type="button"
-                    id="removeFile">
 
-                    ×
+        /* =========================
+           MESSAGE
+        ========================= */
 
-                </button>
+        function showMessage(
+            text,
+            type
+        ) {
 
-            </div>
+            orderMessage.textContent =
+                text;
 
-        `;
+            orderMessage.className =
+                "order-message show " +
+                type;
 
+        }
+
+
+        function clearMessage() {
+
+            orderMessage.textContent =
+                "";
+
+            orderMessage.className =
+                "order-message";
+
+        }
+
+
+
+        /* =========================
+           PRICE
+        ========================= */
+
+        function calculatePrice() {
+
+            let price = 2;
+
+
+            if (
+                selectedType === "color"
+            ) {
+
+                price = 10;
+
+            }
+
+
+            if (
+                selectedSize === "A3"
+            ) {
+
+                price += 3;
+
+            }
+
+
+            if (
+                selectedSize === "A5"
+            ) {
+
+                price -= 0.5;
+
+            }
+
+
+            if (
+                selectedSide === "double"
+            ) {
+
+                price += 1;
+
+            }
+
+
+            price *= quantity;
+
+
+            const finalPrice =
+                Number(
+                    price.toFixed(2)
+                );
+
+
+            totalPrice.textContent =
+                "₹" +
+                finalPrice.toFixed(2);
+
+
+            return finalPrice;
+
+        }
+
+
+
+        /* =========================
+           SERVICE SELECTION
+        ========================= */
 
         document
-        .getElementById("removeFile")
-        .addEventListener(
-            "click",
-            function() {
+        .querySelectorAll(
+            ".service-option"
+        )
+        .forEach(
+            function (button) {
 
-                fileInput.value = "";
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                filePreview.innerHTML = "";
+                        document
+                        .querySelectorAll(
+                            ".service-option"
+                        )
+                        .forEach(
+                            function (item) {
 
-                summaryFile.textContent =
-                    "No file selected";
+                                item.classList
+                                    .remove(
+                                        "active"
+                                    );
+
+                            }
+                        );
+
+
+                        this.classList.add(
+                            "active"
+                        );
+
+
+                        selectedService =
+                            this.querySelector(
+                                "strong"
+                            )
+                            .textContent
+                            .trim();
+
+
+                        document
+                        .getElementById(
+                            "summaryService"
+                        )
+                        .textContent =
+                            selectedService;
+
+                    }
+                );
 
             }
         );
 
-    }
-);
 
 
-/* =========================
-   ORDER BUTTON
-========================= */
+        /* =========================
+           SETTINGS
+        ========================= */
 
-document
-.getElementById("orderBtn")
-.addEventListener(
-    "click",
-    function() {
+        document
+        .querySelectorAll(
+            ".setting-btn"
+        )
+        .forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        const parent =
+                            this.parentElement;
 
 
-        if (!fileInput.files.length) {
+                        parent
+                        .querySelectorAll(
+                            ".setting-btn"
+                        )
+                        .forEach(
+                            function (item) {
 
-            alert(
-                "Please upload a file before continuing."
+                                item.classList
+                                    .remove(
+                                        "active"
+                                    );
+
+                            }
+                        );
+
+
+                        this.classList.add(
+                            "active"
+                        );
+
+
+                        if (
+                            this.dataset.size
+                        ) {
+
+                            selectedSize =
+                                this.dataset.size;
+
+
+                            document
+                            .getElementById(
+                                "summarySize"
+                            )
+                            .textContent =
+                                selectedSize;
+
+                        }
+
+
+                        if (
+                            this.dataset.type
+                        ) {
+
+                            selectedType =
+                                this.dataset.type;
+
+
+                            document
+                            .getElementById(
+                                "summaryType"
+                            )
+                            .textContent =
+                                selectedType === "bw"
+                                ? "B&W"
+                                : "Color";
+
+                        }
+
+
+                        if (
+                            this.dataset.side
+                        ) {
+
+                            selectedSide =
+                                this.dataset.side;
+
+
+                            document
+                            .getElementById(
+                                "summarySide"
+                            )
+                            .textContent =
+                                selectedSide === "single"
+                                ? "Single"
+                                : "Double";
+
+                        }
+
+
+                        calculatePrice();
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           MINUS
+        ========================= */
+
+        document
+        .getElementById(
+            "minusBtn"
+        )
+        .addEventListener(
+            "click",
+            function () {
+
+                if (quantity > 1) {
+
+                    quantity--;
+
+                    quantityDisplay.textContent =
+                        quantity;
+
+                    summaryCopies.textContent =
+                        quantity;
+
+                    calculatePrice();
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           PLUS
+        ========================= */
+
+        document
+        .getElementById(
+            "plusBtn"
+        )
+        .addEventListener(
+            "click",
+            function () {
+
+                if (quantity < 100) {
+
+                    quantity++;
+
+                    quantityDisplay.textContent =
+                        quantity;
+
+                    summaryCopies.textContent =
+                        quantity;
+
+                    calculatePrice();
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           FILE SELECTION
+        ========================= */
+
+        fileInput.addEventListener(
+            "change",
+            function () {
+
+                clearMessage();
+
+
+                const file =
+                    this.files[0];
+
+
+                if (!file) {
+
+                    return;
+
+                }
+
+
+                const allowedTypes = [
+                    "application/pdf",
+                    "image/jpeg",
+                    "image/png"
+                ];
+
+
+                if (
+                    !allowedTypes.includes(
+                        file.type
+                    )
+                ) {
+
+                    alert(
+                        "Only PDF, JPG, JPEG or PNG files are allowed."
+                    );
+
+                    this.value =
+                        "";
+
+                    return;
+
+                }
+
+
+                if (
+                    file.size >
+                    10 * 1024 * 1024
+                ) {
+
+                    alert(
+                        "File size must be less than 10 MB."
+                    );
+
+                    this.value =
+                        "";
+
+                    return;
+
+                }
+
+
+                summaryFile.textContent =
+                    file.name;
+
+
+                filePreview.innerHTML = `
+
+                    <div class="selected-file">
+
+                        <span
+                            class="selected-file-icon">
+
+                            📄
+
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                ${escapeHTML(
+                                    file.name
+                                )}
+                            </strong>
+
+                            <small>
+
+                                ${
+                                    (
+                                        file.size /
+                                        1024 /
+                                        1024
+                                    ).toFixed(2)
+                                }
+                                MB
+
+                            </small>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="removeFile">
+
+                            ×
+
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                document
+                .getElementById(
+                    "removeFile"
+                )
+                .addEventListener(
+                    "click",
+                    function () {
+
+                        fileInput.value =
+                            "";
+
+                        filePreview.innerHTML =
+                            "";
+
+                        summaryFile.textContent =
+                            "No file selected";
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           PLACE ORDER
+        ========================= */
+
+        orderBtn.addEventListener(
+            "click",
+            async function () {
+
+                clearMessage();
+
+
+                const file =
+                    fileInput.files[0];
+
+
+                if (!file) {
+
+                    showMessage(
+                        "Please upload a file before placing your order.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!currentUser) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                const price =
+                    calculatePrice();
+
+
+                orderBtn.disabled =
+                    true;
+
+                orderBtn.innerHTML =
+                    "Uploading & Creating Order...";
+
+
+                let uploadedPath =
+                    null;
+
+
+                try {
+
+
+                    /* =========================
+                       ORDER NUMBER
+                    ========================= */
+
+                    const randomPart =
+                        crypto.randomUUID()
+                        .replace(
+                            /-/g,
+                            ""
+                        )
+                        .substring(
+                            0,
+                            8
+                        )
+                        .toUpperCase();
+
+
+                    const orderNumber =
+                        "AP" +
+                        Date.now()
+                        .toString()
+                        .slice(-8) +
+                        randomPart;
+
+
+
+                    /* =========================
+                       FILE EXTENSION
+                    ========================= */
+
+                    const extension =
+                        file.name
+                        .split(".")
+                        .pop()
+                        .toLowerCase();
+
+
+                    const filePath =
+                        currentUser.id +
+                        "/" +
+                        crypto.randomUUID() +
+                        "." +
+                        extension;
+
+
+
+                    /* =========================
+                       UPLOAD
+                    ========================= */
+
+                    const {
+                        data: uploadData,
+                        error: uploadError
+                    } =
+                        await supabaseClient
+                        .storage
+                        .from(
+                            "print-files"
+                        )
+                        .upload(
+                            filePath,
+                            file,
+                            {
+                                cacheControl: "3600",
+                                contentType: file.type,
+                                upsert: false
+                            }
+                        );
+
+
+                    if (uploadError) {
+
+                        throw new Error(
+                            "File upload failed: " +
+                            uploadError.message
+                        );
+
+                    }
+
+
+                    uploadedPath =
+                        uploadData.path;
+
+
+
+                    /* =========================
+                       ORDER DETAILS
+                    ========================= */
+
+                    const serviceDetails =
+                        quantity +
+                        " copies • " +
+                        selectedSize +
+                        " • " +
+                        (
+                            selectedType === "bw"
+                            ? "B&W"
+                            : "Color"
+                        ) +
+                        " • " +
+                        (
+                            selectedSide === "single"
+                            ? "Single Side"
+                            : "Double Side"
+                        );
+
+
+
+                    /* =========================
+                       INSERT ORDER
+                    ========================= */
+
+                    const {
+                        data: orderData,
+                        error: orderError
+                    } =
+                        await supabaseClient
+                        .from(
+                            "orders"
+                        )
+                        .insert({
+
+                            order_number:
+                                orderNumber,
+
+                            user_id:
+                                currentUser.id,
+
+                            service_name:
+                                selectedService,
+
+                            service_details:
+                                serviceDetails,
+
+                            status:
+                                "Pending",
+
+                            amount:
+                                price,
+
+                            file_path:
+                                uploadedPath,
+
+                            file_name:
+                                file.name
+
+                        })
+                        .select()
+                        .single();
+
+
+                    if (orderError) {
+
+                        throw new Error(
+                            "Order creation failed: " +
+                            orderError.message
+                        );
+
+                    }
+
+
+                    console.log(
+                        "Order created:",
+                        orderData
+                    );
+
+
+                    /* =========================
+                       SUCCESS
+                    ========================= */
+
+                    showMessage(
+                        "Order placed successfully! Order ID: #" +
+                        orderNumber,
+                        "success"
+                    );
+
+
+                    orderBtn.innerHTML =
+                        "Order Placed ✓";
+
+
+                    setTimeout(
+                        function () {
+
+                            window.location.href =
+                                "orders.html";
+
+                        },
+                        1200
+                    );
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "Order creation error:",
+                        error
+                    );
+
+
+                    /* =========================
+                       CLEAN UP FILE
+                    ========================= */
+
+                    if (uploadedPath) {
+
+                        try {
+
+                            await supabaseClient
+                            .storage
+                            .from(
+                                "print-files"
+                            )
+                            .remove([
+                                uploadedPath
+                            ]);
+
+                        } catch (
+                            removeError
+                        ) {
+
+                            console.error(
+                                "File cleanup error:",
+                                removeError
+                            );
+
+                        }
+
+                    }
+
+
+                    showMessage(
+                        error.message ||
+                        "Unable to create order.",
+                        "error"
+                    );
+
+
+                    orderBtn.disabled =
+                        false;
+
+                    orderBtn.innerHTML = `
+                        Place Order
+                        <span>→</span>
+                    `;
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           LOGOUT
+        ========================= */
+
+        logoutButton.addEventListener(
+            "click",
+            async function () {
+
+                logoutButton.disabled =
+                    true;
+
+                logoutButton.textContent =
+                    "Logging out...";
+
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                    .auth
+                    .signOut();
+
+
+                if (error) {
+
+                    alert(
+                        "Logout failed: " +
+                        error.message
+                    );
+
+                    logoutButton.disabled =
+                        false;
+
+                    logoutButton.textContent =
+                        "Logout";
+
+                    return;
+
+                }
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================= */
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ?? ""
+            )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
             );
-
-            return;
 
         }
 
 
-        alert(
-            "Order system will be connected to the backend in the next phase."
-        );
+
+        /* =========================
+           INITIAL PRICE
+        ========================= */
+
+        calculatePrice();
 
     }
+
 );
-
-
-calculatePrice();
 
 </script>
 
