@@ -16,6 +16,10 @@
     <link rel="stylesheet"
           href="css/style.css">
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+
 </head>
 
 
@@ -103,9 +107,7 @@
             <div class="form-group">
 
                 <label for="name">
-
                     Full Name
-
                 </label>
 
                 <input
@@ -125,9 +127,7 @@
             <div class="form-group">
 
                 <label for="mobile">
-
                     Mobile Number
-
                 </label>
 
                 <input
@@ -148,9 +148,7 @@
             <div class="form-group">
 
                 <label for="email">
-
                     Email Address
-
                 </label>
 
                 <input
@@ -170,9 +168,7 @@
             <div class="form-group">
 
                 <label for="password">
-
                     Password
-
                 </label>
 
                 <input
@@ -205,9 +201,7 @@
             <div class="form-group">
 
                 <label for="confirmPassword">
-
                     Confirm Password
-
                 </label>
 
                 <input
@@ -248,6 +242,7 @@
                     ">
 
                     I agree to the
+
                     <a
                         href="#"
                         style="
@@ -310,6 +305,8 @@
 
 
 
+        <!-- BACK HOME -->
+
         <a
             href="index.html"
             class="back-home">
@@ -327,7 +324,7 @@
 
 
 <!-- =========================
-     TEMPORARY FORM SCRIPT
+     SUPABASE REGISTRATION
 ========================= -->
 
 <script>
@@ -338,21 +335,62 @@ const registerForm =
 
 registerForm.addEventListener(
     "submit",
-    function(event) {
+    async function(event) {
 
         event.preventDefault();
 
 
+        /* =========================
+           GET FORM VALUES
+        ========================= */
+
+        const name =
+            document.getElementById("name")
+            .value
+            .trim();
+
+
+        const mobile =
+            document.getElementById("mobile")
+            .value
+            .trim();
+
+
+        const email =
+            document.getElementById("email")
+            .value
+            .trim();
+
+
         const password =
-            document.getElementById(
-                "password"
-            ).value;
+            document.getElementById("password")
+            .value;
 
 
         const confirmPassword =
-            document.getElementById(
-                "confirmPassword"
-            ).value;
+            document.getElementById("confirmPassword")
+            .value;
+
+
+        const terms =
+            document.getElementById("terms")
+            .checked;
+
+
+
+        /* =========================
+           VALIDATION
+        ========================= */
+
+        if (!terms) {
+
+            alert(
+                "Please accept the Terms & Privacy Policy."
+            );
+
+            return;
+
+        }
 
 
         if (password !== confirmPassword) {
@@ -366,11 +404,168 @@ registerForm.addEventListener(
         }
 
 
-        alert(
-            "Registration system will be connected to the secure backend in the next phase."
-        );
+        if (
+            mobile.length !== 10 ||
+            !/^[0-9]+$/.test(mobile)
+        ) {
+
+            alert(
+                "Please enter a valid 10-digit mobile number."
+            );
+
+            return;
+
+        }
+
+
+        if (password.length < 8) {
+
+            alert(
+                "Password must be at least 8 characters."
+            );
+
+            return;
+
+        }
+
+
+
+        /* =========================
+           BUTTON LOADING
+        ========================= */
+
+        const submitButton =
+            registerForm.querySelector(
+                "button[type='submit']"
+            );
+
+
+        submitButton.disabled = true;
+
+
+        submitButton.innerHTML =
+            "Creating Account...";
+
+
+
+        /* =========================
+           SUPABASE SIGN UP
+        ========================= */
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabaseClient.auth.signUp({
+
+                email: email,
+
+                password: password,
+
+                options: {
+
+                    data: {
+
+                        full_name: name,
+
+                        mobile: mobile
+
+                    }
+
+                }
+
+            });
+
+
+
+            /* =========================
+               ERROR CHECK
+            ========================= */
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+
+            /* =========================
+               SUCCESS
+            ========================= */
+
+            if (data.user) {
+
+                alert(
+                    "Account created successfully! Please check your email to verify your account."
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+
+        }
+
+
+        /* =========================
+           ERROR HANDLING
+        ========================= */
+
+        catch (error) {
+
+            console.error(
+                "Registration Error:",
+                error
+            );
+
+
+            if (
+                error.message &&
+                error.message
+                    .toLowerCase()
+                    .includes("already registered")
+            ) {
+
+                alert(
+                    "This email is already registered. Please login instead."
+                );
+
+            }
+
+            else {
+
+                alert(
+                    "Registration failed: " +
+                    error.message
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           RESTORE BUTTON
+        ========================= */
+
+        finally {
+
+            submitButton.disabled =
+                false;
+
+
+            submitButton.innerHTML = `
+                Create Account
+                <span>→</span>
+            `;
+
+        }
 
     }
+
 );
 
 </script>
