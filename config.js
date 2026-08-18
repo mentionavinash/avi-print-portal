@@ -2,7 +2,7 @@ const SUPABASE_URL =
     "https://pmqmewceqnxsvlhceeef.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
+    "APNI_NEW_PUBLISHABLE_KEY_YAHAN_PASTE_KARO";
 
 const supabaseClient =
     window.supabase.createClient(
