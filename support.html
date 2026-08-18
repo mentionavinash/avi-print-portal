@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="AviPrint Help and Support Center">
+
+    <title>Help & Support | AviPrint</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <style>
+
+        /* =========================
+           SUPPORT PAGE
+        ========================= */
+
+        .support-page {
+            min-height: calc(100vh - 72px);
+            background: #f8fafc;
+            padding: 45px 0 70px;
+        }
+
+        .support-heading {
+            margin-bottom: 30px;
+        }
+
+        .support-heading h1 {
+            margin: 10px 0 8px;
+            font-size: 36px;
+            color: #111827;
+        }
+
+        .support-heading p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* HERO */
+
+        .support-hero {
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #1d4ed8
+            );
+
+            color: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+
+            overflow: hidden;
+            position: relative;
+        }
+
+        .support-hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.08);
+
+            right: -80px;
+            top: -100px;
+        }
+
+        .support-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .support-hero h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .support-hero p {
+            color: #dbeafe;
+            font-size: 13px;
+            line-height: 1.7;
+            max-width: 600px;
+        }
+
+        .support-hero-icon {
+            width: 80px;
+            height: 80px;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,.13);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 35px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        /* CONTACT CARDS */
+
+        .support-contact-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+        }
+
+        .contact-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 16px;
+
+            padding: 23px;
+
+            text-align: center;
+
+            transition: .2s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 35px
+                rgba(15,23,42,.08);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+
+            margin: 0 auto 13px;
+
+            border-radius: 13px;
+
+            background: #eff6ff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .contact-card h3 {
+            color: #111827;
+
+            font-size: 15px;
+
+            margin-bottom: 6px;
+        }
+
+        .contact-card p {
+            color: #6b7280;
+
+            font-size: 12px;
+
+            margin-bottom: 10px;
+        }
+
+        .contact-card a {
+            color: #2563eb;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        /* MAIN GRID */
+
+        .support-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.2fr .8fr;
+
+            gap: 24px;
+        }
+
+        .support-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(15,23,42,.05);
+        }
+
+        .support-card-header {
+            margin-bottom: 24px;
+        }
+
+        .support-card-header h2 {
+            font-size: 21px;
+
+            color: #111827;
+
+            margin-bottom: 6px;
+        }
+
+        .support-card-header p {
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+
+        /* FAQ */
+
+        .faq-item {
+            border-bottom:
+                1px solid #f1f5f9;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            width: 100%;
+
+            background: none;
+
+            border: none;
+
+            padding: 17px 0;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            text-align: left;
+
+            color: #111827;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .faq-question span:last-child {
+            color: #2563eb;
+
+            font-size: 18px;
+
+            transition: .2s;
+        }
+
+        .faq-answer {
+            display: none;
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+            padding:
+                0 25px 17px 0;
+        }
+
+        .faq-item.open
+        .faq-answer {
+            display: block;
+        }
+
+        .faq-item.open
+        .faq-question
+        span:last-child {
+            transform:
+                rotate(45deg);
+        }
+
+        /* FORM */
+
+        .support-form {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 17px;
+        }
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #374151;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 7px;
+        }
+
+        .form-input {
+            width: 100%;
+
+            height: 45px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 9px;
+
+            padding: 0 12px;
+
+            outline: none;
+
+            font-size: 13px;
+
+            color: #111827;
+
+            background: white;
+        }
+
+        textarea.form-input {
+            height: 105px;
+
+            padding-top: 12px;
+
+            resize: vertical;
+        }
+
+        .form-input:focus {
+            border-color:
+                #2563eb;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(37,99,235,.08);
+        }
+
+        .submit-support {
+            width: 100%;
+
+            height: 47px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .submit-support:hover {
+            background: #1d4ed8;
+
+            transform:
+                translateY(-1px);
+        }
+
+        .support-success {
+            display: none;
+
+            padding: 11px 13px;
+
+            border-radius: 9px;
+
+            background: #f0fdf4;
+
+            border: 1px solid #bbf7d0;
+
+            color: #15803d;
+
+            font-size: 12px;
+        }
+
+        .support-success.show {
+            display: block;
+        }
+
+        /* QUICK LINKS */
+
+        .quick-links {
+            margin-top: 24px;
+        }
+
+        .quick-link {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px 0;
+
+            border-bottom:
+                1px solid #f1f5f9;
+
+            color: #374151;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        .quick-link:last-child {
+            border-bottom: none;
+        }
+
+        .quick-link-icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 9px;
+
+            background: #f3f4f6;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quick-link:hover {
+            color: #2563eb;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+
+            .support-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .support-contact-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .support-page {
+                padding:
+                    30px 0 50px;
+            }
+
+            .support-heading h1 {
+                font-size: 29px;
+            }
+
+            .support-hero {
+                padding: 27px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .support-hero h2 {
+                font-size: 24px;
+            }
+
+            .support-contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .support-card {
+                padding: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+
+        <a href="index.html"
+           class="logo">
+
+            <span class="logo-icon">
+                A
+            </span>
+
+            <span>
+                Avi<span>Print</span>
+            </span>
+
+        </a>
+
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="services.html">
+                Services
+            </a>
+
+            <a href="orders.html">
+                My Orders
+            </a>
+
+        </nav>
+
+
+        <div class="nav-buttons">
+
+            <a href="index.html"
+               class="login-btn">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     SUPPORT PAGE
+========================= -->
+
+<main class="support-page">
+
+    <div class="container">
+
+
+        <div class="support-heading">
+
+            <span class="section-label">
+                CUSTOMER SUPPORT
+            </span>
+
+            <h1>
+                Help & Support
+            </h1>
+
+            <p>
+                Need help with your printing order?
+                We're here to help.
+            </p>
+
+        </div>
+
+
+
+        <!-- HERO -->
+
+        <section class="support-hero">
+
+            <div class="support-hero-content">
+
+                <h2>
+                    How can we help you?
+                </h2>
+
+                <p>
+                    Find answers to common questions
+                    or send us a support request.
+                    Our team will help you with your
+                    printing orders and account.
+                </p>
+
+            </div>
+
+
+            <div class="support-hero-icon">
+
+                🎧
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CONTACT OPTIONS -->
+
+        <div class="support-contact-grid">
+
+
+            <div class="contact-card">
+
+                <div class="contact-icon">
+                    📧
+                </div>
+
+                <h3>
+                    Email Support
+                </h3>
+
+                <p>
+                    Send us your query by email.
+                </p>
+
+                <a href="mailto:support@aviprint.com">
+
+                    support@aviprint.com
+
+                </a>
+
+            </div>
+
+
+
+            <div class="contact-card">
+
+                <div class="contact-icon">
+                    📞
+                </div>
+
+                <h3>
+                    Phone Support
+                </h3>
+
+                <p>
+                    Talk to our support team.
+                </p>
+
+                <a href="tel:+919999999999">
+
+                    +91 99999 99999
+
+                </a>
+
+            </div>
+
+
+
+            <div class="contact-card">
+
+                <div class="contact-icon">
+                    🕐
+                </div>
+
+                <h3>
+                    Support Hours
+                </h3>
+
+                <p>
+                    Monday to Saturday
+                </p>
+
+                <strong>
+                    9:00 AM – 7:00 PM
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FAQ + FORM -->
+
+        <div class="support-grid">
+
+
+            <!-- FAQ -->
+
+            <section class="support-card">
+
+                <div class="support-card-header">
+
+                    <h2>
+                        Frequently Asked Questions
+                    </h2>
+
+                    <p>
+                        Quick answers to common questions.
+                    </p>
+
+                </div>
+
+
+
+                <div class="faq-list">
+
+
+                    <div class="faq-item">
+
+                        <button
+                            class="faq-question"
+                            onclick="toggleFAQ(this)">
+
+                            <span>
+                                How do I place a print order?
+                            </span>
+
+                            <span>
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            Go to the Services page,
+                            select your printing service,
+                            upload your file, choose paper,
+                            color, copies and other options,
+                            then continue to place your order.
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="faq-item">
+
+                        <button
+                            class="faq-question"
+                            onclick="toggleFAQ(this)">
+
+                            <span>
+                                What file formats can I upload?
+                            </span>
+
+                            <span>
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            The current printing interface
+                            supports common PDF and image
+                            files such as JPG, JPEG and PNG.
+                            File restrictions may change when
+                            the backend is connected.
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="faq-item">
+
+                        <button
+                            class="faq-question"
+                            onclick="toggleFAQ(this)">
+
+                            <span>
+                                How can I track my order?
+                            </span>
+
+                            <span>
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            Open the My Orders page from
+                            your dashboard. Your order status
+                            will be displayed there.
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="faq-item">
+
+                        <button
+                            class="faq-question"
+                            onclick="toggleFAQ(this)">
+
+                            <span>
+                                Can I cancel an order?
+                            </span>
+
+                            <span>
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            Order cancellation rules will be
+                            connected to the backend and order
+                            management system later.
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="faq-item">
+
+                        <button
+                            class="faq-question"
+                            onclick="toggleFAQ(this)">
+
+                            <span>
+                                How will payment work?
+                            </span>
+
+                            <span>
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="faq-answer">
+
+                            Payment and wallet functionality
+                            will be connected during the
+                            backend development phase.
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- SUPPORT FORM -->
+
+            <section class="support-card">
+
+                <div class="support-card-header">
+
+                    <h2>
+                        Contact Support
+                    </h2>
+
+                    <p>
+                        Tell us how we can help you.
+                    </p>
+
+                </div>
+
+
+                <form
+                    class="support-form"
+                    id="supportForm">
+
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            class="form-input"
+                            placeholder="Enter your name"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            class="form-input"
+                            placeholder="you@example.com"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="topic">
+                            Support Topic
+                        </label>
+
+                        <select
+                            id="topic"
+                            class="form-input"
+                            required>
+
+                            <option value="">
+                                Select a topic
+                            </option>
+
+                            <option>
+                                Print Order
+                            </option>
+
+                            <option>
+                                File Upload
+                            </option>
+
+                            <option>
+                                Payment / Wallet
+                            </option>
+
+                            <option>
+                                Account
+                            </option>
+
+                            <option>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="message">
+                            Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            class="form-input"
+                            placeholder="Describe your issue..."
+                            required></textarea>
+
+                    </div>
+
+
+                    <div
+                        class="support-success"
+                        id="supportSuccess">
+
+                        ✓ Your support request has been
+                        submitted successfully.
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="submit-support">
+
+                        Send Support Request
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- QUICK LINKS -->
+
+                <div class="quick-links">
+
+                    <a
+                        href="dashboard.html"
+                        class="quick-link">
+
+                        <span class="quick-link-icon">
+                            📊
+                        </span>
+
+                        Back to Dashboard
+
+                    </a>
+
+
+                    <a
+                        href="services.html"
+                        class="quick-link">
+
+                        <span class="quick-link-icon">
+                            🖨️
+                        </span>
+
+                        Browse Print Services
+
+                    </a>
+
+
+                    <a
+                        href="orders.html"
+                        class="quick-link">
+
+                        <span class="quick-link-icon">
+                            📦
+                        </span>
+
+                        View My Orders
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =========================
+   FAQ
+========================= */
+
+function toggleFAQ(button) {
+
+    const item =
+        button.parentElement;
+
+
+    item.classList.toggle(
+        "open"
+    );
+
+}
+
+
+
+/* =========================
+   SUPPORT FORM
+========================= */
+
+const supportForm =
+    document.getElementById(
+        "supportForm"
+    );
+
+
+supportForm.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const success =
+            document.getElementById(
+                "supportSuccess"
+            );
+
+
+        success.classList.add(
+            "show"
+        );
+
+
+        supportForm.reset();
+
+
+        setTimeout(
+            function() {
+
+                success.classList.remove(
+                    "show"
+                );
+
+            },
+            4000
+        );
+
+    }
+);
+
+
+
+/* =========================
+   LOAD EMAIL
+========================= */
+
+const savedEmail =
+    localStorage.getItem(
+        "aviPrintUser"
+    );
+
+
+if (savedEmail) {
+
+    document.getElementById(
+        "email"
+    ).value = savedEmail;
+
+}
+
+</script>
+
+
+</body>
+
+</html>
