@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -33,8 +34,6 @@
             text-decoration: none;
             color: inherit;
         }
-
-        /* NAVBAR */
 
         .login-navbar {
             height: 72px;
@@ -89,8 +88,6 @@
             color: #2563eb;
         }
 
-        /* MAIN */
-
         .login-page {
             min-height: calc(100vh - 72px);
             display: flex;
@@ -109,8 +106,6 @@
             overflow: hidden;
             box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
         }
-
-        /* LEFT PANEL */
 
         .login-info {
             background: linear-gradient(145deg, #2563eb, #1d4ed8);
@@ -209,8 +204,6 @@
             color: #dbeafe;
             font-size: 12px;
         }
-
-        /* LOGIN FORM */
 
         .login-form-section {
             padding: 55px 45px;
@@ -334,12 +327,19 @@
             box-shadow: 0 10px 25px rgba(37, 99, 235, 0.22);
         }
 
+        .login-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .message {
             display: none;
             padding: 11px 13px;
             border-radius: 9px;
             margin-bottom: 18px;
             font-size: 13px;
+            line-height: 1.5;
         }
 
         .message.error {
@@ -374,8 +374,6 @@
             color: #9ca3af;
             font-size: 11px;
         }
-
-        /* MOBILE */
 
         @media (max-width: 800px) {
 
@@ -448,130 +446,128 @@
         }
     </style>
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+
 </head>
 
 
 <body>
 
 
-    <!-- NAVBAR -->
+<header class="login-navbar">
 
-    <header class="login-navbar">
+    <div class="nav-inner">
 
-        <div class="nav-inner">
+        <a href="index.html" class="logo">
 
-            <a href="index.html" class="logo">
+            <span class="logo-icon">
+                A
+            </span>
 
-                <span class="logo-icon">
-                    A
+            <span>
+                Avi<span class="logo-print">Print</span>
+            </span>
+
+        </a>
+
+        <a href="index.html" class="back-home">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<main class="login-page">
+
+    <div class="login-wrapper">
+
+
+        <!-- LEFT PANEL -->
+
+        <section class="login-info">
+
+            <div class="info-content">
+
+                <span class="info-badge">
+                    AVIPRINT PORTAL
                 </span>
 
-                <span>
-                    Avi<span class="logo-print">Print</span>
-                </span>
+                <h1>
+                    Welcome<br>
+                    <span>back.</span>
+                </h1>
 
-            </a>
-
-            <a href="index.html" class="back-home">
-                ← Back to Home
-            </a>
-
-        </div>
-
-    </header>
+                <p>
+                    Login to manage your printing orders,
+                    upload documents and keep track of
+                    everything from one simple portal.
+                </p>
 
 
+                <div class="benefits">
 
-    <!-- LOGIN -->
+                    <div class="benefit">
 
-    <main class="login-page">
+                        <div class="benefit-icon">
+                            ✓
+                        </div>
 
-        <div class="login-wrapper">
+                        <div class="benefit-text">
 
+                            <strong>
+                                Easy Ordering
+                            </strong>
 
-            <!-- LEFT -->
-
-            <section class="login-info">
-
-                <div class="info-content">
-
-                    <span class="info-badge">
-                        AVIPRINT PORTAL
-                    </span>
-
-                    <h1>
-                        Welcome<br>
-                        <span>back.</span>
-                    </h1>
-
-                    <p>
-                        Login to manage your printing orders,
-                        upload documents and keep track of
-                        everything from one simple portal.
-                    </p>
-
-
-                    <div class="benefits">
-
-                        <div class="benefit">
-
-                            <div class="benefit-icon">
-                                ✓
-                            </div>
-
-                            <div class="benefit-text">
-
-                                <strong>
-                                    Easy Ordering
-                                </strong>
-
-                                <span>
-                                    Place print orders easily
-                                </span>
-
-                            </div>
+                            <span>
+                                Place print orders easily
+                            </span>
 
                         </div>
 
+                    </div>
 
-                        <div class="benefit">
 
-                            <div class="benefit-icon">
-                                ⚡
-                            </div>
+                    <div class="benefit">
 
-                            <div class="benefit-text">
+                        <div class="benefit-icon">
+                            ⚡
+                        </div>
 
-                                <strong>
-                                    Fast Processing
-                                </strong>
+                        <div class="benefit-text">
 
-                                <span>
-                                    Simple and quick workflow
-                                </span>
+                            <strong>
+                                Fast Processing
+                            </strong>
 
-                            </div>
+                            <span>
+                                Simple and quick workflow
+                            </span>
 
                         </div>
 
+                    </div>
 
-                        <div class="benefit">
 
-                            <div class="benefit-icon">
-                                📄
-                            </div>
+                    <div class="benefit">
 
-                            <div class="benefit-text">
+                        <div class="benefit-icon">
+                            📄
+                        </div>
 
-                                <strong>
-                                    Manage Documents
-                                </strong>
+                        <div class="benefit-text">
 
-                                <span>
-                                    Keep your printing organized
-                                </span>
+                            <strong>
+                                Manage Documents
+                            </strong>
 
-                            </div>
+                            <span>
+                                Keep your printing organized
+                            </span>
 
                         </div>
 
@@ -579,265 +575,366 @@
 
                 </div>
 
-            </section>
+            </div>
+
+        </section>
 
 
 
-            <!-- FORM -->
+        <!-- LOGIN FORM -->
 
-            <section class="login-form-section">
+        <section class="login-form-section">
 
-                <div class="form-container">
+            <div class="form-container">
 
-                    <div class="form-header">
+                <div class="form-header">
 
-                        <h2>
-                            Login
-                        </h2>
+                    <h2>
+                        Login
+                    </h2>
 
-                        <p>
-                            Enter your account details to continue.
-                        </p>
+                    <p>
+                        Enter your account details to continue.
+                    </p>
+
+                </div>
+
+
+                <div id="message"
+                    class="message">
+                </div>
+
+
+                <form id="loginForm">
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                class="form-input"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required>
+
+                        </div>
 
                     </div>
 
 
-                    <div id="message"
-                        class="message">
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-input"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword">
+
+                                Show
+
+                            </button>
+
+                        </div>
+
                     </div>
 
 
-                    <form id="loginForm">
+
+                    <!-- OPTIONS -->
+
+                    <div class="form-options">
+
+                        <label class="remember">
+
+                            <input
+                                type="checkbox"
+                                id="remember">
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
 
 
-                        <!-- EMAIL -->
+                        <a
+                            href="#"
+                            class="forgot"
+                            id="forgotPassword">
 
-                        <div class="form-group">
+                            Forgot password?
 
-                            <label for="email">
-                                Email Address
-                            </label>
-
-                            <div class="input-wrapper">
-
-                                <span class="input-icon">
-                                    ✉
-                                </span>
-
-                                <input
-                                    type="email"
-                                    id="email"
-                                    class="form-input"
-                                    placeholder="you@example.com"
-                                    autocomplete="email"
-                                    required>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- PASSWORD -->
-
-                        <div class="form-group">
-
-                            <label for="password">
-                                Password
-                            </label>
-
-                            <div class="input-wrapper">
-
-                                <span class="input-icon">
-                                    🔒
-                                </span>
-
-                                <input
-                                    type="password"
-                                    id="password"
-                                    class="form-input"
-                                    placeholder="Enter your password"
-                                    autocomplete="current-password"
-                                    required>
-
-                                <button
-                                    type="button"
-                                    class="password-toggle"
-                                    id="togglePassword">
-
-                                    Show
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- OPTIONS -->
-
-                        <div class="form-options">
-
-                            <label class="remember">
-
-                                <input
-                                    type="checkbox"
-                                    id="remember">
-
-                                <span>
-                                    Remember me
-                                </span>
-
-                            </label>
-
-
-                            <a href="#"
-                                class="forgot"
-                                onclick="forgotPassword(event)">
-
-                                Forgot password?
-
-                            </a>
-
-                        </div>
-
-
-
-                        <!-- BUTTON -->
-
-                        <button
-                            type="submit"
-                            class="login-button">
-
-                            Login to AviPrint
-
-                        </button>
-
-
-                    </form>
-
-
-                    <!-- REGISTER -->
-
-                    <div class="register-text">
-
-                        Don't have an account?
-
-                        <a href="register.html">
-                            Create Account
                         </a>
 
                     </div>
 
 
-                    <div class="security-note">
 
-                        🔒 Your account information is protected.
+                    <!-- LOGIN BUTTON -->
 
-                    </div>
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="loginButton">
+
+                        Login to AviPrint
+
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- REGISTER -->
+
+                <div class="register-text">
+
+                    Don't have an account?
+
+                    <a href="register.html">
+                        Create Account
+                    </a>
 
                 </div>
 
-            </section>
 
-        </div>
+                <div class="security-note">
 
-    </main>
+                    🔒 Your account information is protected.
 
+                </div>
 
+            </div>
 
-    <!-- JAVASCRIPT -->
+        </section>
 
-    <script>
+    </div>
 
-        const passwordInput =
-            document.getElementById("password");
-
-        const togglePassword =
-            document.getElementById("togglePassword");
+</main>
 
 
-        togglePassword.addEventListener(
-            "click",
-            function () {
 
-                if (passwordInput.type === "password") {
+<script>
 
-                    passwordInput.type = "text";
+document.addEventListener("DOMContentLoaded", function () {
 
-                    togglePassword.textContent = "Hide";
+    const loginForm =
+        document.getElementById("loginForm");
 
-                } else {
+    const loginButton =
+        document.getElementById("loginButton");
 
-                    passwordInput.type = "password";
+    const message =
+        document.getElementById("message");
 
-                    togglePassword.textContent = "Show";
+    const passwordInput =
+        document.getElementById("password");
 
-                }
+    const togglePassword =
+        document.getElementById("togglePassword");
 
-            }
+    const forgotPassword =
+        document.getElementById("forgotPassword");
+
+
+    /* =========================
+       CHECK SUPABASE
+    ========================= */
+
+    if (
+        typeof window.supabase === "undefined"
+    ) {
+
+        showMessage(
+            "Supabase library could not be loaded.",
+            "error"
         );
 
+        return;
+
+    }
 
 
-        const loginForm =
-            document.getElementById("loginForm");
+    if (
+        typeof supabaseClient === "undefined" ||
+        !supabaseClient
+    ) {
 
-        const message =
-            document.getElementById("message");
+        showMessage(
+            "Supabase configuration could not be loaded.",
+            "error"
+        );
 
+        return;
 
-        loginForm.addEventListener(
-            "submit",
-            function (event) {
-
-                event.preventDefault();
-
-
-                const email =
-                    document.getElementById("email").value.trim();
-
-                const password =
-                    document.getElementById("password").value;
+    }
 
 
-                message.className = "message";
 
-                message.textContent = "";
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    function showMessage(text, type) {
+
+        message.className =
+            "message " + type;
+
+        message.textContent =
+            text;
+
+    }
 
 
-                if (!email || !password) {
 
-                    message.className =
-                        "message error";
+    /* =========================
+       PASSWORD SHOW/HIDE
+    ========================= */
 
-                    message.textContent =
-                        "Please enter your email and password.";
+    togglePassword.addEventListener(
+        "click",
+        function () {
 
-                    return;
+            if (
+                passwordInput.type === "password"
+            ) {
+
+                passwordInput.type = "text";
+
+                togglePassword.textContent =
+                    "Hide";
+
+            } else {
+
+                passwordInput.type = "password";
+
+                togglePassword.textContent =
+                    "Show";
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    loginForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const email =
+                document.getElementById("email")
+                .value
+                .trim();
+
+
+            const password =
+                document.getElementById("password")
+                .value;
+
+
+            if (!email || !password) {
+
+                showMessage(
+                    "Please enter your email and password.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            loginButton.disabled =
+                true;
+
+            loginButton.textContent =
+                "Logging in...";
+
+
+            message.className =
+                "message";
+
+            message.textContent =
+                "";
+
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient.auth
+                    .signInWithPassword({
+
+                        email:
+                            email,
+
+                        password:
+                            password
+
+                    });
+
+
+                if (error) {
+
+                    throw error;
 
                 }
 
 
-                /*
-                 * FRONTEND TEST LOGIN
-                 *
-                 * GitHub Pages is static hosting.
-                 * Real authentication will be connected later.
-                 */
-
-                localStorage.setItem(
-                    "aviPrintUser",
-                    email
+                console.log(
+                    "Login successful:",
+                    data
                 );
 
 
-                message.className =
-                    "message success";
-
-                message.textContent =
-                    "Login successful. Opening dashboard...";
+                showMessage(
+                    "Login successful. Opening dashboard...",
+                    "success"
+                );
 
 
                 setTimeout(
@@ -851,21 +948,138 @@
                 );
 
             }
-        );
+
+
+            catch (error) {
+
+                console.error(
+                    "Login Error:",
+                    error
+                );
+
+
+                let errorMessage =
+                    error.message ||
+                    "Login failed.";
+
+
+                if (
+                    errorMessage
+                    .toLowerCase()
+                    .includes("invalid login credentials")
+                ) {
+
+                    errorMessage =
+                        "Invalid email or password.";
+
+                }
+
+
+                showMessage(
+                    errorMessage,
+                    "error"
+                );
+
+            }
+
+
+            finally {
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Login to AviPrint";
+
+            }
+
+        }
+    );
 
 
 
-        function forgotPassword(event) {
+    /* =========================
+       FORGOT PASSWORD
+    ========================= */
+
+    forgotPassword.addEventListener(
+        "click",
+        async function (event) {
 
             event.preventDefault();
 
-            alert(
-                "Password recovery will be connected when we add the real authentication system."
-            );
+
+            const email =
+                document.getElementById("email")
+                .value
+                .trim();
+
+
+            if (!email) {
+
+                showMessage(
+                    "Enter your email address first, then click Forgot password.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                const {
+                    error
+                } =
+                    await supabaseClient.auth
+                    .resetPasswordForEmail(
+                        email,
+                        {
+                            redirectTo:
+                                window.location.origin +
+                                "/reset-password.html"
+                        }
+                    );
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                showMessage(
+                    "Password reset email sent. Please check your inbox.",
+                    "success"
+                );
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Password Reset Error:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to send password reset email.",
+                    "error"
+                );
+
+            }
 
         }
+    );
 
-    </script>
+});
+
+</script>
 
 
 </body>
