@@ -2,16 +2,23 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
           content="Manage your AviPrint profile and account information.">
 
     <title>My Profile | AviPrint Portal</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
 
     <style>
 
@@ -48,8 +55,6 @@
             border-radius: 18px;
             box-shadow: 0 8px 30px rgba(15, 23, 42, .05);
         }
-
-        /* LEFT PROFILE */
 
         .profile-summary {
             padding: 30px 25px;
@@ -124,8 +129,6 @@
         .profile-stat strong {
             color: #111827;
         }
-
-        /* RIGHT SIDE */
 
         .profile-details {
             padding: 32px;
@@ -237,6 +240,11 @@
             cursor: pointer;
         }
 
+        .save-btn:disabled {
+            opacity: .7;
+            cursor: not-allowed;
+        }
+
         .cancel-btn {
             border: 1px solid #d1d5db;
             background: #fff;
@@ -248,22 +256,31 @@
             cursor: pointer;
         }
 
-        .success-message {
+        .success-message,
+        .error-message {
             display: none;
             margin-top: 18px;
             padding: 11px 13px;
             border-radius: 9px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #15803d;
             font-size: 12px;
         }
 
-        .success-message.show {
-            display: block;
+        .success-message {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #15803d;
         }
 
-        /* ACCOUNT SECURITY */
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+        }
+
+        .success-message.show,
+        .error-message.show {
+            display: block;
+        }
 
         .security-section {
             margin-top: 24px;
@@ -315,10 +332,6 @@
 
             .profile-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .profile-summary {
-                text-align: center;
             }
 
         }
@@ -374,6 +387,7 @@
 
     <div class="container nav-container">
 
+
         <a href="index.html" class="logo">
 
             <span class="logo-icon">
@@ -406,9 +420,19 @@
 
         <div class="nav-buttons">
 
-            <a href="index.html" class="login-btn">
+            <button
+                type="button"
+                id="logoutButton"
+                class="login-btn"
+                style="
+                    border:none;
+                    background:transparent;
+                    cursor:pointer;
+                ">
+
                 Logout
-            </a>
+
+            </button>
 
         </div>
 
@@ -448,24 +472,28 @@
         <div class="profile-grid">
 
 
-            <!-- LEFT -->
+            <!-- LEFT PROFILE SUMMARY -->
 
             <aside class="profile-card profile-summary">
 
-                <div class="profile-avatar"
-                     id="profileAvatar">
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar">
 
                     A
 
                 </div>
 
+
                 <h2 id="profileName">
                     AviPrint User
                 </h2>
 
+
                 <p id="profileEmail">
                     user@example.com
                 </p>
+
 
                 <span class="profile-status">
                     Active Account
@@ -481,7 +509,7 @@
                         Total Orders
                     </span>
 
-                    <strong>
+                    <strong id="profileTotalOrders">
                         0
                     </strong>
 
@@ -494,7 +522,7 @@
                         Completed
                     </span>
 
-                    <strong>
+                    <strong id="profileCompletedOrders">
                         0
                     </strong>
 
@@ -541,9 +569,9 @@
 
 
                         <button
+                            type="button"
                             class="edit-btn"
-                            id="editBtn"
-                            onclick="enableEditing()">
+                            id="editBtn">
 
                             ✏ Edit Profile
 
@@ -558,6 +586,8 @@
                         id="profileForm">
 
 
+                        <!-- NAME -->
+
                         <div class="form-group">
 
                             <label for="fullName">
@@ -568,11 +598,14 @@
                                 type="text"
                                 id="fullName"
                                 class="form-input"
-                                value="AviPrint User"
+                                placeholder="Enter full name"
                                 disabled>
 
                         </div>
 
+
+
+                        <!-- EMAIL -->
 
                         <div class="form-group">
 
@@ -584,11 +617,13 @@
                                 type="email"
                                 id="email"
                                 class="form-input"
-                                value="user@example.com"
                                 disabled>
 
                         </div>
 
+
+
+                        <!-- MOBILE -->
 
                         <div class="form-group">
 
@@ -600,11 +635,16 @@
                                 type="tel"
                                 id="phone"
                                 class="form-input"
+                                maxlength="10"
+                                inputmode="numeric"
                                 placeholder="Enter mobile number"
                                 disabled>
 
                         </div>
 
+
+
+                        <!-- CITY -->
 
                         <div class="form-group">
 
@@ -621,6 +661,9 @@
 
                         </div>
 
+
+
+                        <!-- ADDRESS -->
 
                         <div class="form-group full">
 
@@ -641,20 +684,23 @@
 
 
 
-                    <div class="save-area"
-                         id="saveArea">
+                    <div
+                        class="save-area"
+                        id="saveArea">
 
                         <button
+                            type="button"
                             class="save-btn"
-                            onclick="saveProfile()">
+                            id="saveButton">
 
                             Save Changes
 
                         </button>
 
                         <button
+                            type="button"
                             class="cancel-btn"
-                            onclick="cancelEditing()">
+                            id="cancelButton">
 
                             Cancel
 
@@ -672,6 +718,13 @@
                     </div>
 
 
+                    <div
+                        class="error-message"
+                        id="errorMessage">
+
+                    </div>
+
+
                 </div>
 
 
@@ -679,6 +732,7 @@
                 <!-- SECURITY -->
 
                 <div class="profile-card security-section">
+
 
                     <div class="profile-section-title">
 
@@ -706,15 +760,16 @@
                             </strong>
 
                             <span>
-                                Keep your account secure with a strong password.
+                                Send a secure password reset link to your email.
                             </span>
 
                         </div>
 
 
                         <button
+                            type="button"
                             class="security-btn"
-                            onclick="changePassword()">
+                            id="changePasswordButton">
 
                             Change Password
 
@@ -744,7 +799,9 @@
 
                     </div>
 
+
                 </div>
+
 
             </section>
 
@@ -762,164 +819,821 @@
 
 <script>
 
-
-/* LOAD USER EMAIL FROM LOGIN */
-
-const savedEmail =
-    localStorage.getItem("aviPrintUser");
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
 
 
-if (savedEmail) {
+        /* =========================
+           ELEMENTS
+        ========================= */
 
-    document.getElementById("email").value =
-        savedEmail;
+        const profileName =
+            document.getElementById(
+                "profileName"
+            );
 
-    document.getElementById("profileEmail").textContent =
-        savedEmail;
+        const profileEmail =
+            document.getElementById(
+                "profileEmail"
+            );
 
-}
+        const profileAvatar =
+            document.getElementById(
+                "profileAvatar"
+            );
+
+        const fullNameInput =
+            document.getElementById(
+                "fullName"
+            );
+
+        const emailInput =
+            document.getElementById(
+                "email"
+            );
+
+        const phoneInput =
+            document.getElementById(
+                "phone"
+            );
+
+        const cityInput =
+            document.getElementById(
+                "city"
+            );
+
+        const addressInput =
+            document.getElementById(
+                "address"
+            );
+
+        const editBtn =
+            document.getElementById(
+                "editBtn"
+            );
+
+        const saveArea =
+            document.getElementById(
+                "saveArea"
+            );
+
+        const saveButton =
+            document.getElementById(
+                "saveButton"
+            );
+
+        const cancelButton =
+            document.getElementById(
+                "cancelButton"
+            );
+
+        const successMessage =
+            document.getElementById(
+                "successMessage"
+            );
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+        const totalOrdersElement =
+            document.getElementById(
+                "profileTotalOrders"
+            );
+
+        const completedOrdersElement =
+            document.getElementById(
+                "profileCompletedOrders"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+        const changePasswordButton =
+            document.getElementById(
+                "changePasswordButton"
+            );
 
 
 
-/* ENABLE EDIT */
+        /* =========================
+           SUPABASE CHECK
+        ========================= */
 
-function enableEditing() {
+        if (
+            typeof window.supabase === "undefined" ||
+            typeof supabaseClient === "undefined" ||
+            !supabaseClient
+        ) {
 
-    const fields =
-        document.querySelectorAll(
-            "#profileForm .form-input"
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+
+        let currentUser = null;
+
+        let originalProfile = null;
+
+
+
+        /* =========================
+           HELPERS
+        ========================= */
+
+        function showSuccess(
+            text
+        ) {
+
+            successMessage.textContent =
+                "✓ " + text;
+
+            successMessage.classList.add(
+                "show"
+            );
+
+            errorMessage.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        function showError(
+            text
+        ) {
+
+            errorMessage.textContent =
+                text;
+
+            errorMessage.classList.add(
+                "show"
+            );
+
+            successMessage.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        function clearMessages() {
+
+            successMessage.classList.remove(
+                "show"
+            );
+
+            errorMessage.classList.remove(
+                "show"
+            );
+
+        }
+
+
+
+        function setEditing(
+            enabled
+        ) {
+
+            fullNameInput.disabled =
+                !enabled;
+
+            phoneInput.disabled =
+                !enabled;
+
+            cityInput.disabled =
+                !enabled;
+
+            addressInput.disabled =
+                !enabled;
+
+
+            if (enabled) {
+
+                saveArea.classList.add(
+                    "show"
+                );
+
+                editBtn.style.display =
+                    "none";
+
+            } else {
+
+                saveArea.classList.remove(
+                    "show"
+                );
+
+                editBtn.style.display =
+                    "block";
+
+            }
+
+        }
+
+
+
+        /* =========================
+           LOAD PROFILE
+        ========================= */
+
+        async function loadProfile() {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .auth
+                    .getSession();
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            if (
+                !data.session ||
+                !data.session.user
+            ) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            currentUser =
+                data.session.user;
+
+
+            const metadata =
+                currentUser.user_metadata || {};
+
+
+            const userName =
+                metadata.full_name ||
+                currentUser.email
+                    ?.split("@")[0] ||
+                "AviPrint User";
+
+
+            const userEmail =
+                currentUser.email ||
+                "";
+
+
+            const userPhone =
+                metadata.mobile ||
+                "";
+
+
+            const userCity =
+                metadata.city ||
+                "";
+
+
+            const userAddress =
+                metadata.address ||
+                "";
+
+
+            originalProfile = {
+
+                full_name:
+                    userName,
+
+                mobile:
+                    userPhone,
+
+                city:
+                    userCity,
+
+                address:
+                    userAddress
+
+            };
+
+
+            /* =========================
+               DISPLAY
+            ========================= */
+
+            profileName.textContent =
+                userName;
+
+
+            profileEmail.textContent =
+                userEmail;
+
+
+            profileAvatar.textContent =
+                userName
+                    .charAt(0)
+                    .toUpperCase();
+
+
+            fullNameInput.value =
+                userName;
+
+
+            emailInput.value =
+                userEmail;
+
+
+            phoneInput.value =
+                userPhone;
+
+
+            cityInput.value =
+                userCity;
+
+
+            addressInput.value =
+                userAddress;
+
+
+
+            /* =========================
+               LOAD USER ORDERS
+            ========================= */
+
+            const {
+                data: orders,
+                error: ordersError
+            } =
+                await supabaseClient
+                    .from("orders")
+                    .select(
+                        "id,status"
+                    )
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    );
+
+
+            if (!ordersError) {
+
+                const userOrders =
+                    orders || [];
+
+
+                const completed =
+                    userOrders.filter(
+                        function (order) {
+
+                            return String(
+                                order.status ||
+                                ""
+                            ).toLowerCase() ===
+                            "completed";
+
+                        }
+                    );
+
+
+                totalOrdersElement.textContent =
+                    userOrders.length;
+
+
+                completedOrdersElement.textContent =
+                    completed.length;
+
+            }
+
+        }
+
+
+
+        /* =========================
+           EDIT
+        ========================= */
+
+        editBtn.addEventListener(
+            "click",
+            function () {
+
+                clearMessages();
+
+                setEditing(true);
+
+            }
         );
 
-    fields.forEach(function(field) {
-
-        field.disabled = false;
-
-    });
 
 
-    document
-        .getElementById("saveArea")
-        .classList.add("show");
+        /* =========================
+           CANCEL
+        ========================= */
+
+        cancelButton.addEventListener(
+            "click",
+            function () {
+
+                clearMessages();
 
 
-    document
-        .getElementById("editBtn")
-        .style.display = "none";
+                if (originalProfile) {
 
-}
+                    fullNameInput.value =
+                        originalProfile.full_name;
 
+                    phoneInput.value =
+                        originalProfile.mobile;
 
+                    cityInput.value =
+                        originalProfile.city;
 
-/* SAVE */
+                    addressInput.value =
+                        originalProfile.address;
 
-function saveProfile() {
-
-    const name =
-        document.getElementById("fullName").value.trim();
-
-    const email =
-        document.getElementById("email").value.trim();
+                }
 
 
-    if (!name) {
+                setEditing(false);
 
-        alert("Please enter your name.");
+            }
+        );
 
-        return;
+
+
+        /* =========================
+           SAVE PROFILE
+        ========================= */
+
+        saveButton.addEventListener(
+            "click",
+            async function () {
+
+                clearMessages();
+
+
+                const name =
+                    fullNameInput.value.trim();
+
+
+                const mobile =
+                    phoneInput.value.trim();
+
+
+                const city =
+                    cityInput.value.trim();
+
+
+                const address =
+                    addressInput.value.trim();
+
+
+                if (!name) {
+
+                    showError(
+                        "Please enter your full name."
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    mobile &&
+                    !/^[0-9]{10}$/.test(
+                        mobile
+                    )
+                ) {
+
+                    showError(
+                        "Please enter a valid 10-digit mobile number."
+                    );
+
+                    return;
+
+                }
+
+
+                saveButton.disabled =
+                    true;
+
+                saveButton.textContent =
+                    "Saving...";
+
+
+                try {
+
+                    const {
+                        data,
+                        error
+                    } =
+                        await supabaseClient
+                            .auth
+                            .updateUser({
+
+                                data: {
+
+                                    full_name:
+                                        name,
+
+                                    mobile:
+                                        mobile,
+
+                                    city:
+                                        city,
+
+                                    address:
+                                        address
+
+                                }
+
+                            });
+
+
+                    if (error) {
+
+                        throw error;
+
+                    }
+
+
+                    const updatedUser =
+                        data.user;
+
+
+                    currentUser =
+                        updatedUser;
+
+
+                    originalProfile = {
+
+                        full_name:
+                            name,
+
+                        mobile:
+                            mobile,
+
+                        city:
+                            city,
+
+                        address:
+                            address
+
+                    };
+
+
+                    profileName.textContent =
+                        name;
+
+
+                    profileEmail.textContent =
+                        updatedUser.email ||
+                        "";
+
+
+                    profileAvatar.textContent =
+                        name
+                            .charAt(0)
+                            .toUpperCase();
+
+
+                    showSuccess(
+                        "Profile updated successfully."
+                    );
+
+
+                    setEditing(false);
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "Profile update error:",
+                        error
+                    );
+
+
+                    showError(
+                        error.message ||
+                        "Unable to update profile."
+                    );
+
+                }
+
+
+                finally {
+
+                    saveButton.disabled =
+                        false;
+
+                    saveButton.textContent =
+                        "Save Changes";
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           CHANGE PASSWORD
+        ========================= */
+
+        changePasswordButton.addEventListener(
+            "click",
+            async function () {
+
+                clearMessages();
+
+
+                const email =
+                    currentUser &&
+                    currentUser.email;
+
+
+                if (!email) {
+
+                    showError(
+                        "Your email address could not be found."
+                    );
+
+                    return;
+
+                }
+
+
+                changePasswordButton.disabled =
+                    true;
+
+                changePasswordButton.textContent =
+                    "Sending...";
+
+
+                try {
+
+                    const {
+                        error
+                    } =
+                        await supabaseClient
+                            .auth
+                            .resetPasswordForEmail(
+                                email,
+                                {
+                                    redirectTo:
+                                        window.location.origin +
+                                        "/reset-password.html"
+                                }
+                            );
+
+
+                    if (error) {
+
+                        throw error;
+
+                    }
+
+
+                    showSuccess(
+                        "Password reset email sent to " +
+                        email
+                    );
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "Password reset error:",
+                        error
+                    );
+
+
+                    showError(
+                        error.message ||
+                        "Unable to send password reset email."
+                    );
+
+                }
+
+
+                finally {
+
+                    changePasswordButton.disabled =
+                        false;
+
+                    changePasswordButton.textContent =
+                        "Change Password";
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           LOGOUT
+        ========================= */
+
+        logoutButton.addEventListener(
+            "click",
+            async function () {
+
+                logoutButton.disabled =
+                    true;
+
+                logoutButton.textContent =
+                    "Logging out...";
+
+
+                try {
+
+                    const {
+                        error
+                    } =
+                        await supabaseClient
+                            .auth
+                            .signOut();
+
+
+                    if (error) {
+
+                        throw error;
+
+                    }
+
+
+                    window.location.href =
+                        "login.html";
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Logout failed. Please try again."
+                    );
+
+
+                    logoutButton.disabled =
+                        false;
+
+                    logoutButton.textContent =
+                        "Logout";
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           INITIAL LOAD
+        ========================= */
+
+        try {
+
+            await loadProfile();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Profile loading error:",
+                error
+            );
+
+            window.location.href =
+                "login.html";
+
+        }
 
     }
 
-
-    document.getElementById("profileName")
-        .textContent = name;
-
-
-    document.getElementById("profileEmail")
-        .textContent = email;
-
-
-    document.getElementById("profileAvatar")
-        .textContent =
-        name.charAt(0).toUpperCase();
-
-
-    localStorage.setItem(
-        "aviPrintUser",
-        email
-    );
-
-
-    disableEditing();
-
-
-    const message =
-        document.getElementById(
-            "successMessage"
-        );
-
-
-    message.classList.add("show");
-
-
-    setTimeout(function() {
-
-        message.classList.remove("show");
-
-    }, 3000);
-
-}
-
-
-
-/* CANCEL */
-
-function cancelEditing() {
-
-    disableEditing();
-
-}
-
-
-
-/* DISABLE */
-
-function disableEditing() {
-
-    const fields =
-        document.querySelectorAll(
-            "#profileForm .form-input"
-        );
-
-
-    fields.forEach(function(field) {
-
-        field.disabled = true;
-
-    });
-
-
-    document
-        .getElementById("saveArea")
-        .classList.remove("show");
-
-
-    document
-        .getElementById("editBtn")
-        .style.display = "block";
-
-}
-
-
-
-/* CHANGE PASSWORD */
-
-function changePassword() {
-
-    alert(
-        "Password change will be connected to the secure backend during the backend phase."
-    );
-
-}
+);
 
 </script>
 
