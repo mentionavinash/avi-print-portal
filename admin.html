@@ -50,8 +50,7 @@
 
             border-radius: 50%;
 
-            animation:
-                spin 1s linear infinite;
+            animation: spin 1s linear infinite;
 
             margin-bottom: 15px;
         }
@@ -71,6 +70,7 @@
         .container {
 
             max-width: 1200px;
+
             margin: auto;
 
             padding: 30px 20px;
@@ -79,6 +79,7 @@
         .header {
 
             background: #111827;
+
             color: white;
 
             padding: 22px;
@@ -87,8 +88,7 @@
 
             display: flex;
 
-            justify-content:
-                space-between;
+            justify-content: space-between;
 
             align-items: center;
 
@@ -102,8 +102,7 @@
 
         .header p {
 
-            margin:
-                7px 0 0;
+            margin: 7px 0 0;
 
             color: #d1d5db;
         }
@@ -111,12 +110,12 @@
         .logout {
 
             background: #ef4444;
+
             color: white;
 
             border: none;
 
-            padding:
-                10px 18px;
+            padding: 10px 18px;
 
             border-radius: 7px;
 
@@ -127,6 +126,21 @@
 
         .logout:hover {
             background: #dc2626;
+        }
+
+        .admin-email {
+
+            margin-top: 20px;
+
+            padding: 13px 16px;
+
+            background: #eff6ff;
+
+            color: #1d4ed8;
+
+            border-radius: 8px;
+
+            font-size: 14px;
         }
 
         .stats {
@@ -212,8 +226,7 @@
 
             color: white;
 
-            padding:
-                9px 15px;
+            padding: 9px 15px;
 
             border-radius: 7px;
 
@@ -224,10 +237,9 @@
 
             width: 100%;
 
-            border-collapse:
-                collapse;
+            border-collapse: collapse;
 
-            min-width: 850px;
+            min-width: 800px;
         }
 
         th,
@@ -246,6 +258,13 @@
             background: #f9fafb;
 
             color: #374151;
+        }
+
+        .email {
+
+            color: #2563eb;
+
+            font-weight: 600;
         }
 
         select {
@@ -272,25 +291,18 @@
 
             border-radius: 8px;
 
-            margin:
-                20px 0;
+            margin-top: 20px;
 
             display: none;
         }
 
-        .admin-email {
+        .empty {
 
-            margin-top: 20px;
+            text-align: center;
 
-            padding: 12px 15px;
+            padding: 30px;
 
-            background: #eff6ff;
-
-            color: #1d4ed8;
-
-            border-radius: 8px;
-
-            font-size: 14px;
+            color: #6b7280;
         }
 
         @media(max-width: 800px) {
@@ -317,9 +329,7 @@
             }
 
             .stats {
-
-                grid-template-columns:
-                    1fr;
+                grid-template-columns: 1fr;
             }
 
             .orders {
@@ -336,9 +346,9 @@
 <body>
 
 
-<!-- ======================================
-     LOADING
-====================================== -->
+<!-- =====================================
+     LOADING SCREEN
+===================================== -->
 
 <div id="loadingScreen">
 
@@ -352,9 +362,9 @@
 
 
 
-<!-- ======================================
+<!-- =====================================
      ADMIN PANEL
-====================================== -->
+===================================== -->
 
 <div id="adminPanel">
 
@@ -390,15 +400,6 @@
 
 
 
-        <!-- MESSAGE -->
-
-        <div
-            id="errorMessage"
-            class="message">
-        </div>
-
-
-
         <!-- ADMIN EMAIL -->
 
         <div class="admin-email">
@@ -409,6 +410,15 @@
                 Loading...
             </strong>
 
+        </div>
+
+
+
+        <!-- ERROR -->
+
+        <div
+            id="errorMessage"
+            class="message">
         </div>
 
 
@@ -485,6 +495,7 @@
                     📦 All Orders
                 </h2>
 
+
                 <button
                     class="refresh"
                     id="refreshBtn">
@@ -508,7 +519,7 @@
                         </th>
 
                         <th>
-                            User ID
+                            User Email
                         </th>
 
                         <th>
@@ -537,7 +548,8 @@
                     <tr>
 
                         <td
-                            colspan="6">
+                            colspan="6"
+                            class="empty">
 
                             Loading orders...
 
@@ -559,19 +571,20 @@
 
 
 
-<!-- ======================================
+<!-- =====================================
      SUPABASE
-====================================== -->
+===================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 
 <script>
 
 
-/* ======================================
+/* =====================================
    SUPABASE CONFIG
-====================================== */
+===================================== */
 
 const SUPABASE_URL =
     "https://pmqmewceqnxsvlhceeef.supabase.co";
@@ -587,15 +600,18 @@ const ADMIN_EMAIL =
 
 const supabaseClient =
     window.supabase.createClient(
+
         SUPABASE_URL,
+
         SUPABASE_PUBLISHABLE_KEY
+
     );
 
 
 
-/* ======================================
+/* =====================================
    ELEMENTS
-====================================== */
+===================================== */
 
 const loadingScreen =
     document.getElementById(
@@ -609,6 +625,12 @@ const adminPanel =
     );
 
 
+const ordersTable =
+    document.getElementById(
+        "ordersTable"
+    );
+
+
 const errorMessage =
     document.getElementById(
         "errorMessage"
@@ -616,9 +638,9 @@ const errorMessage =
 
 
 
-/* ======================================
-   REDIRECT
-====================================== */
+/* =====================================
+   LOGIN REDIRECT
+===================================== */
 
 function redirectToLogin() {
 
@@ -630,9 +652,9 @@ function redirectToLogin() {
 
 
 
-/* ======================================
+/* =====================================
    SHOW ERROR
-====================================== */
+===================================== */
 
 function showError(message) {
 
@@ -646,18 +668,14 @@ function showError(message) {
 
 
 
-/* ======================================
+/* =====================================
    SECURITY CHECK
-====================================== */
+===================================== */
 
 async function securityCheck() {
 
     try {
 
-
-        /* ===============================
-           GET SESSION
-        =============================== */
 
         const {
             data,
@@ -683,10 +701,6 @@ async function securityCheck() {
             data.session;
 
 
-        /* ===============================
-           NO SESSION
-        =============================== */
-
         if (!session) {
 
             redirectToLogin();
@@ -695,10 +709,6 @@ async function securityCheck() {
 
         }
 
-
-        /* ===============================
-           GET USER
-        =============================== */
 
         const user =
             session.user;
@@ -714,7 +724,7 @@ async function securityCheck() {
 
 
         /* ===============================
-           ADMIN EMAIL CHECK
+           ADMIN EMAIL
         =============================== */
 
         if (
@@ -765,7 +775,6 @@ async function securityCheck() {
 
         await loadUsers();
 
-
     }
 
     catch (error) {
@@ -783,9 +792,9 @@ async function securityCheck() {
 
 
 
-/* ======================================
+/* =====================================
    LOAD ORDERS
-====================================== */
+===================================== */
 
 async function loadOrders() {
 
@@ -796,7 +805,7 @@ async function loadOrders() {
     } =
     await supabaseClient
 
-        .from("orders")
+        .from("admin_orders")
 
         .select("*")
 
@@ -816,7 +825,7 @@ async function loadOrders() {
         );
 
         showError(
-            "Orders could not be loaded: "
+            "Unable to load orders: "
             +
             error.message
         );
@@ -863,12 +872,6 @@ async function loadOrders() {
 
 
 
-    const table =
-        document.getElementById(
-            "ordersTable"
-        );
-
-
     /* ===============================
        NO ORDERS
     =============================== */
@@ -877,13 +880,13 @@ async function loadOrders() {
         orders.length === 0
     ) {
 
-        table.innerHTML = `
+        ordersTable.innerHTML = `
 
             <tr>
 
                 <td
                     colspan="6"
-                    style="text-align:center;padding:30px;">
+                    class="empty">
 
                     No orders found.
 
@@ -898,11 +901,12 @@ async function loadOrders() {
     }
 
 
+
     /* ===============================
        TABLE
     =============================== */
 
-    table.innerHTML = "";
+    ordersTable.innerHTML = "";
 
 
     orders.forEach(
@@ -918,26 +922,38 @@ async function loadOrders() {
             row.innerHTML = `
 
                 <td>
-                    ${order.id || "-"}
+
+                    ${order.order_id || "-"}
+
                 </td>
 
-                <td>
-                    ${order.user_id || "-"}
+
+                <td class="email">
+
+                    ${order.user_email || "-"}
+
                 </td>
 
-                <td>
-                    ${order.service || "-"}
-                </td>
 
                 <td>
-                    ${order.quantity || 1}
+
+                    -
+
                 </td>
+
+
+                <td>
+
+                    1
+
+                </td>
+
 
                 <td>
 
                     <select
                         class="statusSelect"
-                        data-id="${order.id}"
+                        data-id="${order.order_id}"
                     >
 
                         <option
@@ -1043,13 +1059,18 @@ async function loadOrders() {
                         .from("orders")
 
                         .update({
+
                             status:
                                 newStatus
+
                         })
 
                         .eq(
+
                             "id",
-                            order.id
+
+                            order.order_id
+
                         );
 
 
@@ -1077,7 +1098,7 @@ async function loadOrders() {
             );
 
 
-            table.appendChild(
+            ordersTable.appendChild(
                 row
             );
 
@@ -1088,12 +1109,17 @@ async function loadOrders() {
 
 
 
-/* ======================================
+/* =====================================
    LOAD USERS
-====================================== */
+===================================== */
 
 async function loadUsers() {
 
+
+    /*
+       Profiles table may contain
+       registered users.
+    */
 
     const {
         data,
@@ -1108,11 +1134,6 @@ async function loadUsers() {
 
     if (error) {
 
-        console.error(
-            "Users error:",
-            error
-        );
-
         document.getElementById(
             "totalUsers"
         ).textContent =
@@ -1126,6 +1147,7 @@ async function loadUsers() {
     document.getElementById(
         "totalUsers"
     ).textContent =
+
         data
             ? data.length
             : 0;
@@ -1134,9 +1156,9 @@ async function loadUsers() {
 
 
 
-/* ======================================
+/* =====================================
    REFRESH
-====================================== */
+===================================== */
 
 document.getElementById(
     "refreshBtn"
@@ -1154,9 +1176,9 @@ document.getElementById(
 
 
 
-/* ======================================
+/* =====================================
    LOGOUT
-====================================== */
+===================================== */
 
 document.getElementById(
     "logoutBtn"
@@ -1196,9 +1218,9 @@ document.getElementById(
 
 
 
-/* ======================================
+/* =====================================
    START
-====================================== */
+===================================== */
 
 securityCheck();
 
