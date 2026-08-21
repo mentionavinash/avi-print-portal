@@ -20,6 +20,135 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="config.js"></script>
 
+    <style>
+
+        /* =========================
+           RECENT ORDER ROWS
+        ========================= */
+
+        .dashboard-recent-orders {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .recent-order-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px;
+            border: 1px solid #eef2f7;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .recent-order-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .recent-order-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .recent-order-info {
+            min-width: 0;
+        }
+
+        .recent-order-info strong {
+            display: block;
+            color: #111827;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .recent-order-info span {
+            display: block;
+            color: #9ca3af;
+            font-size: 11px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .recent-order-right {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .recent-order-amount {
+            display: block;
+            color: #111827;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .recent-order-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .recent-order-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .recent-order-status.processing {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .recent-order-status.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .recent-order-status.cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .recent-loading,
+        .recent-empty,
+        .recent-error {
+            text-align: center;
+            padding: 30px 15px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .recent-error {
+            color: #b91c1c;
+        }
+
+        @media (max-width: 600px) {
+
+            .recent-order-item {
+                align-items: flex-start;
+            }
+
+            .recent-order-right {
+                text-align: right;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
@@ -305,13 +434,9 @@
 
             <div class="stat-card">
 
-
                 <div class="stat-icon blue">
-
                     📦
-
                 </div>
-
 
                 <div>
 
@@ -319,12 +444,11 @@
                         Total Orders
                     </span>
 
-                    <strong>
+                    <strong id="totalOrders">
                         0
                     </strong>
 
                 </div>
-
 
             </div>
 
@@ -332,13 +456,9 @@
 
             <div class="stat-card">
 
-
                 <div class="stat-icon green">
-
                     ✓
-
                 </div>
-
 
                 <div>
 
@@ -346,12 +466,11 @@
                         Completed
                     </span>
 
-                    <strong>
+                    <strong id="completedOrders">
                         0
                     </strong>
 
                 </div>
-
 
             </div>
 
@@ -359,13 +478,9 @@
 
             <div class="stat-card">
 
-
                 <div class="stat-icon orange">
-
                     ⏳
-
                 </div>
-
 
                 <div>
 
@@ -373,12 +488,11 @@
                         Processing
                     </span>
 
-                    <strong>
+                    <strong id="processingOrders">
                         0
                     </strong>
 
                 </div>
-
 
             </div>
 
@@ -386,13 +500,9 @@
 
             <div class="stat-card">
 
-
                 <div class="stat-icon purple">
-
                     💰
-
                 </div>
-
 
                 <div>
 
@@ -400,12 +510,11 @@
                         Wallet Balance
                     </span>
 
-                    <strong>
+                    <strong id="walletBalance">
                         ₹0.00
                     </strong>
 
                 </div>
-
 
             </div>
 
@@ -453,23 +562,17 @@
                     href="services.html"
                     class="dashboard-service-card">
 
-
                     <div class="dashboard-service-icon">
-
                         📄
-
                     </div>
-
 
                     <strong>
                         Document Print
                     </strong>
 
-
                     <span>
                         PDF & documents
                     </span>
-
 
                 </a>
 
@@ -479,23 +582,17 @@
                     href="services.html"
                     class="dashboard-service-card">
 
-
                     <div class="dashboard-service-icon">
-
                         🖼️
-
                     </div>
-
 
                     <strong>
                         Photo Print
                     </strong>
 
-
                     <span>
                         Different sizes
                     </span>
-
 
                 </a>
 
@@ -505,23 +602,17 @@
                     href="services.html"
                     class="dashboard-service-card">
 
-
                     <div class="dashboard-service-icon">
-
                         🪪
-
                     </div>
-
 
                     <strong>
                         ID Card Print
                     </strong>
 
-
                     <span>
                         Eligible documents
                     </span>
-
 
                 </a>
 
@@ -531,23 +622,17 @@
                     href="services.html"
                     class="dashboard-service-card">
 
-
                     <div class="dashboard-service-icon">
-
                         📑
-
                     </div>
-
 
                     <strong>
                         PDF Print
                     </strong>
 
-
                     <span>
                         Fast processing
                     </span>
-
 
                 </a>
 
@@ -591,37 +676,15 @@
 
 
 
-            <div class="orders-empty">
+            <div
+                id="recentOrders"
+                class="dashboard-recent-orders">
 
+                <div class="recent-loading">
 
-                <div class="empty-icon">
-
-                    📦
+                    Loading recent orders...
 
                 </div>
-
-
-                <h3>
-                    No Orders Yet
-                </h3>
-
-
-                <p>
-
-                    Your recent orders will
-                    appear here.
-
-                </p>
-
-
-                <a
-                    href="services.html"
-                    class="primary-btn">
-
-                    Create Your First Order
-
-                </a>
-
 
             </div>
 
@@ -637,7 +700,7 @@
 
 
 <!-- =========================
-     DASHBOARD AUTH SCRIPT
+     DASHBOARD SCRIPT
 ========================= -->
 
 <script>
@@ -648,22 +711,11 @@ document.addEventListener(
 
 
         /* =========================
-           CHECK SUPABASE
+           SUPABASE CHECK
         ========================= */
 
         if (
-            typeof window.supabase === "undefined"
-        ) {
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-
-        if (
+            typeof window.supabase === "undefined" ||
             typeof supabaseClient === "undefined" ||
             !supabaseClient
         ) {
@@ -678,7 +730,58 @@ document.addEventListener(
 
 
         /* =========================
-           GET CURRENT SESSION
+           ELEMENTS
+        ========================= */
+
+        const totalOrders =
+            document.getElementById(
+                "totalOrders"
+            );
+
+        const completedOrders =
+            document.getElementById(
+                "completedOrders"
+            );
+
+        const processingOrders =
+            document.getElementById(
+                "processingOrders"
+            );
+
+        const recentOrders =
+            document.getElementById(
+                "recentOrders"
+            );
+
+        const sidebarUserName =
+            document.getElementById(
+                "sidebarUserName"
+            );
+
+        const sidebarUserEmail =
+            document.getElementById(
+                "sidebarUserEmail"
+            );
+
+        const userAvatar =
+            document.getElementById(
+                "userAvatar"
+            );
+
+        const welcomeHeading =
+            document.getElementById(
+                "welcomeHeading"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+
+
+        /* =========================
+           SESSION
         ========================= */
 
         try {
@@ -687,20 +790,14 @@ document.addEventListener(
                 data,
                 error
             } =
-                await supabaseClient.auth.getSession();
+                await supabaseClient
+                    .auth
+                    .getSession();
 
 
             if (error) {
 
-                console.error(
-                    "Session error:",
-                    error
-                );
-
-                window.location.href =
-                    "login.html";
-
-                return;
+                throw error;
 
             }
 
@@ -709,11 +806,10 @@ document.addEventListener(
                 data.session;
 
 
-            /* =========================
-               NOT LOGGED IN
-            ========================= */
-
-            if (!session || !session.user) {
+            if (
+                !session ||
+                !session.user
+            ) {
 
                 window.location.href =
                     "login.html";
@@ -723,16 +819,18 @@ document.addEventListener(
             }
 
 
-            /* =========================
-               USER DETAILS
-            ========================= */
-
             const user =
                 session.user;
 
 
+
+            /* =========================
+               USER DETAILS
+            ========================= */
+
             const userEmail =
-                user.email || "User";
+                user.email ||
+                "User";
 
 
             const userName =
@@ -748,39 +846,11 @@ document.addEventListener(
                     .toUpperCase();
 
 
-
-            /* =========================
-               UPDATE SIDEBAR
-            ========================= */
-
-            const sidebarUserName =
-                document.getElementById(
-                    "sidebarUserName"
-                );
-
-
-            const sidebarUserEmail =
-                document.getElementById(
-                    "sidebarUserEmail"
-                );
-
-
-            const userAvatar =
-                document.getElementById(
-                    "userAvatar"
-                );
-
-
-            const welcomeHeading =
-                document.getElementById(
-                    "welcomeHeading"
-                );
-
-
             if (sidebarUserName) {
 
                 sidebarUserName.textContent =
-                    "Welcome, " + userName;
+                    "Welcome, " +
+                    userName;
 
             }
 
@@ -813,14 +883,18 @@ document.addEventListener(
 
 
             /* =========================
-               LOGOUT
+               LOAD ORDERS
             ========================= */
 
-            const logoutButton =
-                document.getElementById(
-                    "logoutButton"
-                );
+            await loadDashboardOrders(
+                user.id
+            );
 
+
+
+            /* =========================
+               LOGOUT
+            ========================= */
 
             if (logoutButton) {
 
@@ -858,11 +932,11 @@ document.addEventListener(
                         }
 
 
-                        catch (error) {
+                        catch (logoutError) {
 
                             console.error(
                                 "Logout error:",
-                                error
+                                logoutError
                             );
 
 
@@ -884,20 +958,519 @@ document.addEventListener(
 
             }
 
-
-
         }
+
 
         catch (error) {
 
             console.error(
-                "Dashboard authentication error:",
+                "Dashboard error:",
                 error
             );
 
 
             window.location.href =
                 "login.html";
+
+        }
+
+
+
+        /* =========================
+           LOAD DASHBOARD ORDERS
+        ========================= */
+
+        async function loadDashboardOrders(
+            userId
+        ) {
+
+            try {
+
+                const {
+                    data: orders,
+                    error
+                } =
+                    await supabaseClient
+                        .from("orders")
+                        .select(
+                            `
+                            id,
+                            order_number,
+                            service_name,
+                            service_details,
+                            order_date,
+                            status,
+                            amount
+                            `
+                        )
+                        .eq(
+                            "user_id",
+                            userId
+                        )
+                        .order(
+                            "order_date",
+                            {
+                                ascending: false
+                            }
+                        );
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                const userOrders =
+                    orders || [];
+
+
+                /* =========================
+                   TOTAL
+                ========================= */
+
+                totalOrders.textContent =
+                    userOrders.length;
+
+
+
+                /* =========================
+                   COMPLETED
+                ========================= */
+
+                const completed =
+                    userOrders.filter(
+                        function (order) {
+
+                            return (
+                                String(
+                                    order.status ||
+                                    ""
+                                ).toLowerCase() ===
+                                "completed"
+                            );
+
+                        }
+                    ).length;
+
+
+                completedOrders.textContent =
+                    completed;
+
+
+
+                /* =========================
+                   PROCESSING
+                ========================= */
+
+                const processing =
+                    userOrders.filter(
+                        function (order) {
+
+                            return (
+                                String(
+                                    order.status ||
+                                    ""
+                                ).toLowerCase() ===
+                                "processing"
+                            );
+
+                        }
+                    ).length;
+
+
+                processingOrders.textContent =
+                    processing;
+
+
+
+                /* =========================
+                   RECENT 5 ORDERS
+                ========================= */
+
+                const latestOrders =
+                    userOrders.slice(
+                        0,
+                        5
+                    );
+
+
+                renderRecentOrders(
+                    latestOrders
+                );
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Order loading error:",
+                    error
+                );
+
+
+                recentOrders.innerHTML = `
+
+                    <div class="recent-error">
+
+                        Unable to load recent orders.
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* =========================
+           RENDER RECENT ORDERS
+        ========================= */
+
+        function renderRecentOrders(
+            orders
+        ) {
+
+
+            if (!orders.length) {
+
+                recentOrders.innerHTML = `
+
+                    <div class="recent-empty">
+
+                        No orders yet.
+
+                        <br><br>
+
+                        <a
+                            href="services.html"
+                            class="primary-btn">
+
+                            Create Your First Order
+
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            recentOrders.innerHTML =
+                "";
+
+
+            orders.forEach(
+                function (order) {
+
+                    const serviceIcon =
+                        getServiceIcon(
+                            order.service_name
+                        );
+
+
+                    const status =
+                        order.status ||
+                        "Pending";
+
+
+                    const statusClass =
+                        getStatusClass(
+                            status
+                        );
+
+
+                    const amount =
+                        Number(
+                            order.amount || 0
+                        ).toFixed(2);
+
+
+                    const date =
+                        formatDate(
+                            order.order_date
+                        );
+
+
+                    const orderNumber =
+                        order.order_number ||
+                        order.id.substring(
+                            0,
+                            8
+                        );
+
+
+                    const item =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    item.className =
+                        "recent-order-item";
+
+
+                    item.innerHTML = `
+
+                        <div class="recent-order-left">
+
+                            <div class="recent-order-icon">
+
+                                ${serviceIcon}
+
+                            </div>
+
+                            <div class="recent-order-info">
+
+                                <strong>
+
+                                    #${escapeHTML(
+                                        orderNumber
+                                    )}
+
+                                </strong>
+
+                                <span>
+
+                                    ${escapeHTML(
+                                        order.service_name ||
+                                        "Print Service"
+                                    )}
+
+                                    ${
+                                        order.service_details
+                                            ? " • " +
+                                              escapeHTML(
+                                                order.service_details
+                                              )
+                                            : ""
+                                    }
+
+                                </span>
+
+                                <span>
+
+                                    ${date}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="recent-order-right">
+
+                            <span class="recent-order-amount">
+
+                                ₹${amount}
+
+                            </span>
+
+                            <span
+                                class="recent-order-status ${statusClass}">
+
+                                ${escapeHTML(
+                                    status
+                                )}
+
+                            </span>
+
+                        </div>
+
+                    `;
+
+
+                    recentOrders.appendChild(
+                        item
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =========================
+           SERVICE ICON
+        ========================= */
+
+        function getServiceIcon(
+            service
+        ) {
+
+            const value =
+                String(
+                    service || ""
+                )
+                .toLowerCase();
+
+
+            if (
+                value.includes("photo")
+            ) {
+
+                return "🖼️";
+
+            }
+
+
+            if (
+                value.includes("id")
+            ) {
+
+                return "🪪";
+
+            }
+
+
+            if (
+                value.includes("pdf")
+            ) {
+
+                return "📑";
+
+            }
+
+
+            return "📄";
+
+        }
+
+
+
+        /* =========================
+           STATUS CLASS
+        ========================= */
+
+        function getStatusClass(
+            status
+        ) {
+
+            const value =
+                String(
+                    status || "Pending"
+                )
+                .toLowerCase();
+
+
+            if (
+                value === "processing"
+            ) {
+
+                return "processing";
+
+            }
+
+
+            if (
+                value === "completed"
+            ) {
+
+                return "completed";
+
+            }
+
+
+            if (
+                value === "cancelled"
+            ) {
+
+                return "cancelled";
+
+            }
+
+
+            return "pending";
+
+        }
+
+
+
+        /* =========================
+           DATE
+        ========================= */
+
+        function formatDate(
+            value
+        ) {
+
+            if (!value) {
+
+                return "-";
+
+            }
+
+
+            const date =
+                new Date(
+                    value
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return "-";
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================= */
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ?? ""
+            )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
 
         }
 
@@ -911,7 +1484,6 @@ document.addEventListener(
             document.getElementById(
                 "sidebarToggle"
             );
-
 
         const sidebar =
             document.querySelector(
