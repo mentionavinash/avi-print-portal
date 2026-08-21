@@ -1,403 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Panel | AviPrint Portal</title>
-
-    <link rel="stylesheet" href="css/style.css">
+    <title>Admin Login Required | AviPrint Portal</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f4f6f9;
-            color: #111827;
         }
 
-        .admin-container {
-            max-width: 1250px;
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            background: #111827;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 99999;
+        }
+
+        #adminPanel {
+            display: none;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #374151;
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
             margin: auto;
             padding: 30px 20px;
         }
 
-        /* HEADER */
-
-        .admin-header {
+        .header {
             background: #111827;
             color: white;
-            padding: 22px 25px;
-            border-radius: 14px;
+            padding: 22px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
         }
 
-        .admin-header h1 {
+        .header h1 {
             margin: 0;
-            font-size: 24px;
         }
 
-        .admin-header p {
-            margin: 6px 0 0;
-            color: #d1d5db;
-            font-size: 14px;
-        }
-
-        .logout-btn {
-            background: #ef4444;
+        button {
             border: none;
-            color: white;
-            padding: 11px 20px;
-            border-radius: 8px;
+            padding: 10px 18px;
+            border-radius: 7px;
             cursor: pointer;
-            font-weight: 600;
         }
 
-        .logout-btn:hover {
-            background: #dc2626;
+        .logout {
+            background: #ef4444;
+            color: white;
         }
-
-        /* MESSAGES */
-
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-            line-height: 1.5;
-        }
-
-        .success {
-            background: #dcfce7;
-            color: #166534;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        /* STATS */
 
         .stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin-bottom: 30px;
+            margin: 25px 0;
         }
 
-        .stat-card {
+        .card {
             background: white;
-            padding: 23px;
-            border-radius: 14px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.08);
         }
 
-        .stat-card h3 {
+        .card h3 {
             margin: 0 0 10px;
             color: #6b7280;
-            font-size: 14px;
-            font-weight: 600;
         }
 
-        .stat-card p {
+        .card p {
             margin: 0;
-            font-size: 30px;
-            font-weight: 700;
-            color: #111827;
+            font-size: 28px;
+            font-weight: bold;
         }
 
-        /* ORDERS */
-
-        .orders-section {
+        .orders {
             background: white;
             padding: 25px;
-            border-radius: 14px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
-        }
-
-        .orders-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 15px;
-        }
-
-        .orders-header h2 {
-            margin: 0;
-            font-size: 21px;
-        }
-
-        .refresh-btn {
-            border: none;
-            background: #2563eb;
-            color: white;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .refresh-btn:hover {
-            background: #1d4ed8;
-        }
-
-        /* TABLE */
-
-        .table-wrapper {
-            width: 100%;
+            border-radius: 12px;
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 850px;
+            min-width: 800px;
         }
 
         th,
         td {
-            padding: 14px 12px;
-            border-bottom: 1px solid #e5e7eb;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
             text-align: left;
-            vertical-align: middle;
         }
 
         th {
             background: #f9fafb;
-            color: #374151;
-            font-size: 14px;
         }
 
-        td {
-            font-size: 14px;
-            color: #4b5563;
+        select {
+            padding: 7px;
+            border-radius: 6px;
         }
 
-        .order-id {
-            font-weight: 700;
-            color: #111827;
-        }
-
-        /* STATUS */
-
-        .status-select {
-            padding: 8px 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 7px;
-            background: white;
-            cursor: pointer;
-        }
-
-        .status-select:focus {
-            outline: 2px solid #93c5fd;
-            border-color: #2563eb;
-        }
-
-        /* LOADING */
-
-        .loading {
-            text-align: center;
-            padding: 35px;
-            color: #6b7280;
-        }
-
-        .no-orders {
-            text-align: center;
-            padding: 35px;
-            color: #6b7280;
-        }
-
-        /* ADMIN INFO */
-
-        .admin-info {
-            margin-top: 25px;
-            padding: 15px;
-            background: #eff6ff;
-            border-radius: 10px;
-            color: #1e40af;
-            font-size: 14px;
-        }
-
-        /* MOBILE */
-
-        @media (max-width: 900px) {
+        @media(max-width:700px) {
 
             .stats {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr 1fr;
             }
 
-            .admin-header {
+            .header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
         }
-
-        @media (max-width: 550px) {
-
-            .admin-container {
-                padding: 15px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .orders-section {
-                padding: 18px;
-            }
-
-            .orders-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .admin-header h1 {
-                font-size: 20px;
-            }
-        }
     </style>
 </head>
 
-
 <body>
 
-<div class="admin-container">
+<!-- ================================= -->
+<!-- LOADING SCREEN -->
+<!-- ================================= -->
 
-    <!-- HEADER -->
+<div id="loadingScreen">
 
-    <div class="admin-header">
+    <div class="loader"></div>
 
-        <div>
-
-            <h1>
-                🖨️ AviPrint Admin Panel
-            </h1>
-
-            <p>
-                Manage orders and portal activity
-            </p>
-
-        </div>
-
-        <button
-            class="logout-btn"
-            id="logoutBtn">
-
-            Logout
-
-        </button>
-
+    <div>
+        Checking authentication...
     </div>
 
-
-    <!-- ERROR -->
-
-    <div
-        id="errorMessage"
-        class="error">
-    </div>
+</div>
 
 
-    <!-- SUCCESS -->
+<!-- ================================= -->
+<!-- ADMIN PANEL -->
+<!-- ================================= -->
 
-    <div
-        id="successMessage"
-        class="success">
-    </div>
+<div id="adminPanel">
 
+    <div class="container">
 
-    <!-- STATISTICS -->
+        <div class="header">
 
-    <div class="stats">
+            <div>
 
-        <div class="stat-card">
+                <h1>
+                    🖨️ AviPrint Admin Panel
+                </h1>
 
-            <h3>
-                Total Orders
-            </h3>
+                <p>
+                    Administrator Dashboard
+                </p>
 
-            <p id="totalOrders">
-                0
-            </p>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <h3>
-                Pending Orders
-            </h3>
-
-            <p id="pendingOrders">
-                0
-            </p>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <h3>
-                Completed Orders
-            </h3>
-
-            <p id="completedOrders">
-                0
-            </p>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <h3>
-                Total Users
-            </h3>
-
-            <p id="totalUsers">
-                0
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ORDERS -->
-
-    <div class="orders-section">
-
-        <div class="orders-header">
-
-            <h2>
-                📦 All Orders
-            </h2>
+            </div>
 
             <button
-                class="refresh-btn"
-                id="refreshBtn">
+                class="logout"
+                id="logoutBtn">
 
-                ↻ Refresh
+                Logout
 
             </button>
 
         </div>
 
 
-        <div class="table-wrapper">
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="card">
+
+                <h3>
+                    Total Orders
+                </h3>
+
+                <p id="totalOrders">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    Pending
+                </h3>
+
+                <p id="pendingOrders">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    Completed
+                </h3>
+
+                <p id="completedOrders">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    Total Users
+                </h3>
+
+                <p id="totalUsers">
+                    0
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDERS -->
+
+        <div class="orders">
+
+            <h2>
+                📦 All Orders
+            </h2>
 
             <table>
 
@@ -438,12 +301,8 @@
 
                     <tr>
 
-                        <td
-                            colspan="6"
-                            class="loading">
-
-                            Loading orders...
-
+                        <td colspan="6">
+                            Loading...
                         </td>
 
                     </tr>
@@ -456,182 +315,91 @@
 
     </div>
 
-
-    <!-- ADMIN INFO -->
-
-    <div class="admin-info">
-
-        🔐 Logged in as Admin:
-
-        <strong>
-            aviinformatics@gmail.com
-        </strong>
-
-    </div>
-
 </div>
 
 
-<!-- SUPABASE SCRIPT -->
-
 <script type="module">
 
-    import {
-        createClient
-    } from
-    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+import {
+    createClient
+} from
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 
-    // =========================================
-    // SUPABASE CONFIGURATION
-    // =========================================
+// ==========================================
+// SUPABASE CONFIG
+// ==========================================
 
-    const SUPABASE_URL =
-        "https://pmqmewceqnxsvlhceeef.supabase.co";
-
-
-    const SUPABASE_PUBLISHABLE_KEY =
-        "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
+const SUPABASE_URL =
+"https://pmqmewceqnxsvlhceeef.supabase.co";
 
 
-    // =========================================
-    // ADMIN EMAIL
-    // =========================================
-
-    const ADMIN_EMAIL =
-        "aviinformatics@gmail.com";
+const SUPABASE_KEY =
+"sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
 
 
-    // =========================================
-    // CREATE SUPABASE CLIENT
-    // =========================================
-
-    const supabase =
-        createClient(
-            SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY
-        );
+const ADMIN_EMAIL =
+"aviinformatics@gmail.com";
 
 
-    // =========================================
-    // HTML ELEMENTS
-    // =========================================
-
-    const ordersTable =
-        document.getElementById(
-            "ordersTable"
-        );
+const supabase =
+createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-    const totalOrders =
-        document.getElementById(
-            "totalOrders"
-        );
+// ==========================================
+// ELEMENTS
+// ==========================================
+
+const loadingScreen =
+document.getElementById(
+    "loadingScreen"
+);
+
+const adminPanel =
+document.getElementById(
+    "adminPanel"
+);
 
 
-    const pendingOrders =
-        document.getElementById(
-            "pendingOrders"
-        );
+// ==========================================
+// REDIRECT LOGIN
+// ==========================================
+
+function redirectToLogin() {
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
 
 
-    const completedOrders =
-        document.getElementById(
-            "completedOrders"
-        );
+// ==========================================
+// SECURITY CHECK
+// ==========================================
 
+async function securityCheck() {
 
-    const totalUsers =
-        document.getElementById(
-            "totalUsers"
-        );
+    try {
 
-
-    const errorMessage =
-        document.getElementById(
-            "errorMessage"
-        );
-
-
-    const successMessage =
-        document.getElementById(
-            "successMessage"
-        );
-
-
-    // =========================================
-    // SHOW ERROR
-    // =========================================
-
-    function showError(message) {
-
-        errorMessage.textContent =
-            "Error: " + message;
-
-        errorMessage.style.display =
-            "block";
-
-    }
-
-
-    // =========================================
-    // HIDE ERROR
-    // =========================================
-
-    function hideError() {
-
-        errorMessage.style.display =
-            "none";
-
-    }
-
-
-    // =========================================
-    // SHOW SUCCESS
-    // =========================================
-
-    function showSuccess(message) {
-
-        successMessage.textContent =
-            message;
-
-        successMessage.style.display =
-            "block";
-
-
-        setTimeout(
-            () => {
-
-                successMessage.style.display =
-                    "none";
-
-            },
-            3000
-        );
-
-    }
-
-
-    // =========================================
-    // CHECK LOGIN + ADMIN
-    // =========================================
-
-    async function checkAdmin() {
-
-        hideError();
-
+        // Get current session
 
         const {
-            data,
-            error
-        } = await supabase.auth.getUser();
+            data: {
+                session
+            }
+        } =
+        await supabase.auth.getSession();
 
 
-        if (error) {
+        // NO SESSION
 
-            showError(
-                error.message
-            );
+        if (!session) {
+
+            redirectToLogin();
 
             return;
 
@@ -639,15 +407,14 @@
 
 
         const user =
-            data.user;
+        session.user;
 
 
-        // NOT LOGGED IN
+        // NO USER
 
         if (!user) {
 
-            window.location.href =
-                "login.html";
+            redirectToLogin();
 
             return;
 
@@ -666,99 +433,146 @@
                 "Access denied. Admin only."
             );
 
+            await supabase.auth.signOut();
 
-            window.location.href =
-                "dashboard.html";
+            redirectToLogin();
 
             return;
 
         }
 
 
+        // =================================
         // CHECK ADMIN ROLE
+        // =================================
 
         const {
             data: profile,
-            error: profileError
-        } = await supabase
+            error
+        } =
+        await supabase
 
-            .from("profiles")
+        .from("profiles")
 
-            .select("role")
+        .select("role")
 
-            .eq("id", user.id)
+        .eq(
+            "id",
+            user.id
+        )
 
-            .single();
+        .maybeSingle();
 
 
-        if (profileError) {
+        if (error) {
 
-            showError(
-                "Admin profile check failed: " +
-                profileError.message
+            console.error(
+                error
             );
+
+            alert(
+                "Admin verification failed."
+            );
+
+            await supabase.auth.signOut();
+
+            redirectToLogin();
 
             return;
 
         }
 
+
+        // ROLE NOT ADMIN
 
         if (
             !profile ||
-            profile.role !== "admin"
+            profile.role !==
+            "admin"
         ) {
 
             alert(
-                "You do not have admin permission."
+                "You are not an administrator."
             );
 
+            await supabase.auth.signOut();
 
-            window.location.href =
-                "dashboard.html";
+            redirectToLogin();
 
             return;
 
         }
 
 
-        // ADMIN VERIFIED
+        // =================================
+        // EVERYTHING VERIFIED
+        // =================================
 
-        await loadDashboard();
+        loadingScreen.style.display =
+            "none";
+
+        adminPanel.style.display =
+            "block";
+
+
+        loadOrders();
+
+        loadUsers();
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+        redirectToLogin();
 
     }
 
-
-    // =========================================
-    // LOAD DASHBOARD
-    // =========================================
-
-    async function loadDashboard() {
-
-        await loadOrders();
-
-        await loadUsers();
-
-    }
+}
 
 
-    // =========================================
-    // LOAD ORDERS
-    // =========================================
+// ==========================================
+// LOAD ORDERS
+// ==========================================
 
-    async function loadOrders() {
+async function loadOrders() {
 
-        hideError();
+    const {
+        data,
+        error
+    } =
+    await supabase
+
+    .from("orders")
+
+    .select("*")
+
+    .order(
+        "created_at",
+        {
+            ascending: false
+        }
+    );
 
 
-        ordersTable.innerHTML = `
+    if (error) {
+
+        console.error(
+            error
+        );
+
+        document.getElementById(
+            "ordersTable"
+        ).innerHTML = `
 
             <tr>
 
-                <td
-                    colspan="6"
-                    class="loading">
+                <td colspan="6">
 
-                    Loading orders...
+                    Unable to load orders:
+                    ${error.message}
 
                 </td>
 
@@ -766,517 +580,279 @@
 
         `;
 
-
-        const {
-            data: orders,
-            error
-        } = await supabase
-
-            .from("orders")
-
-            .select("*")
-
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
-
-
-        if (error) {
-
-            ordersTable.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="6"
-                        class="no-orders">
-
-                        Unable to load orders.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-
-            showError(
-                "Orders could not be loaded: " +
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        const orderList =
-            orders || [];
-
-
-        // =====================================
-        // STATISTICS
-        // =====================================
-
-        totalOrders.textContent =
-            orderList.length;
-
-
-        pendingOrders.textContent =
-            orderList.filter(
-                order =>
-                    order.status ===
-                    "pending"
-            ).length;
-
-
-        completedOrders.textContent =
-            orderList.filter(
-                order =>
-                    order.status ===
-                    "completed"
-            ).length;
-
-
-        // =====================================
-        // NO ORDERS
-        // =====================================
-
-        if (
-            orderList.length === 0
-        ) {
-
-            ordersTable.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="6"
-                        class="no-orders">
-
-                        📦 No orders found.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-            return;
-
-        }
-
-
-        // =====================================
-        // DISPLAY ORDERS
-        // =====================================
-
-        ordersTable.innerHTML = "";
-
-
-        orderList.forEach(
-            order => {
-
-                const row =
-                    document.createElement(
-                        "tr"
-                    );
-
-
-                const orderId =
-                    order.id || "-";
-
-
-                const userId =
-                    order.user_id || "-";
-
-
-                const service =
-                    order.service || "-";
-
-
-                const quantity =
-                    order.quantity || 1;
-
-
-                const status =
-                    order.status ||
-                    "pending";
-
-
-                let orderDate =
-                    "-";
-
-
-                if (
-                    order.created_at
-                ) {
-
-                    orderDate =
-                        new Date(
-                            order.created_at
-                        ).toLocaleString();
-
-                }
-
-
-                row.innerHTML = `
-
-                    <td>
-
-                        <span class="order-id">
-
-                            ${escapeHtml(
-                                orderId
-                            )}
-
-                        </span>
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapeHtml(
-                            userId
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapeHtml(
-                            service
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapeHtml(
-                            quantity
-                        )}
-
-                    </td>
-
-
-                    <td>
-
-                        <select
-                            class="status-select"
-                            data-order-id="${escapeHtml(
-                                orderId
-                            )}"
-                        >
-
-                            <option
-                                value="pending"
-                                ${
-                                    status ===
-                                    "pending"
-                                    ? "selected"
-                                    : ""
-                                }
-                            >
-                                Pending
-                            </option>
-
-
-                            <option
-                                value="processing"
-                                ${
-                                    status ===
-                                    "processing"
-                                    ? "selected"
-                                    : ""
-                                }
-                            >
-                                Processing
-                            </option>
-
-
-                            <option
-                                value="printing"
-                                ${
-                                    status ===
-                                    "printing"
-                                    ? "selected"
-                                    : ""
-                                }
-                            >
-                                Printing
-                            </option>
-
-
-                            <option
-                                value="completed"
-                                ${
-                                    status ===
-                                    "completed"
-                                    ? "selected"
-                                    : ""
-                                }
-                            >
-                                Completed
-                            </option>
-
-
-                            <option
-                                value="cancelled"
-                                ${
-                                    status ===
-                                    "cancelled"
-                                    ? "selected"
-                                    : ""
-                                }
-                            >
-                                Cancelled
-                            </option>
-
-                        </select>
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapeHtml(
-                            orderDate
-                        )}
-
-                    </td>
-
-                `;
-
-
-                // STATUS CHANGE
-
-                const select =
-                    row.querySelector(
-                        ".status-select"
-                    );
-
-
-                select.addEventListener(
-                    "change",
-                    async function () {
-
-                        const newStatus =
-                            this.value;
-
-
-                        await updateOrderStatus(
-                            orderId,
-                            newStatus
-                        );
-
-                    }
-                );
-
-
-                ordersTable.appendChild(
-                    row
-                );
-
-            }
-        );
+        return;
 
     }
 
 
-    // =========================================
-    // UPDATE ORDER STATUS
-    // =========================================
+    const orders =
+    data || [];
 
-    async function updateOrderStatus(
-        orderId,
-        newStatus
+
+    document.getElementById(
+        "totalOrders"
+    ).textContent =
+    orders.length;
+
+
+    document.getElementById(
+        "pendingOrders"
+    ).textContent =
+
+    orders.filter(
+        order =>
+        order.status ===
+        "pending"
+    ).length;
+
+
+    document.getElementById(
+        "completedOrders"
+    ).textContent =
+
+    orders.filter(
+        order =>
+        order.status ===
+        "completed"
+    ).length;
+
+
+    const table =
+    document.getElementById(
+        "ordersTable"
+    );
+
+
+    if (
+        orders.length === 0
     ) {
 
-        hideError();
+        table.innerHTML = `
 
+            <tr>
 
-        const {
-            error
-        } = await supabase
+                <td colspan="6">
 
-            .from("orders")
+                    No orders found.
 
-            .update({
+                </td>
 
-                status:
-                    newStatus
+            </tr>
 
-            })
+        `;
 
-            .eq(
-                "id",
-                orderId
-            );
-
-
-        if (error) {
-
-            showError(
-                "Status update failed: " +
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        showSuccess(
-            "Order status updated successfully."
-        );
-
-
-        await loadOrders();
+        return;
 
     }
 
 
-    // =========================================
-    // LOAD USERS
-    // =========================================
-
-    async function loadUsers() {
-
-        const {
-            data,
-            error
-        } = await supabase
-
-            .from("profiles")
-
-            .select("id");
+    table.innerHTML = "";
 
 
-        if (error) {
+    orders.forEach(
+        order => {
 
-            console.log(
-                "User count unavailable:",
-                error.message
+            const row =
+            document.createElement(
+                "tr"
             );
 
 
-            totalUsers.textContent =
-                "—";
+            row.innerHTML = `
+
+                <td>
+                    ${order.id || "-"}
+                </td>
+
+                <td>
+                    ${order.user_id || "-"}
+                </td>
+
+                <td>
+                    ${order.service || "-"}
+                </td>
+
+                <td>
+                    ${order.quantity || 1}
+                </td>
+
+                <td>
+
+                    <select
+                        class="status"
+                        data-id="${order.id}"
+                    >
+
+                        <option value="pending"
+                            ${order.status === "pending" ? "selected" : ""}>
+                            Pending
+                        </option>
+
+                        <option value="processing"
+                            ${order.status === "processing" ? "selected" : ""}>
+                            Processing
+                        </option>
+
+                        <option value="printing"
+                            ${order.status === "printing" ? "selected" : ""}>
+                            Printing
+                        </option>
+
+                        <option value="completed"
+                            ${order.status === "completed" ? "selected" : ""}>
+                            Completed
+                        </option>
+
+                        <option value="cancelled"
+                            ${order.status === "cancelled" ? "selected" : ""}>
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </td>
+
+                <td>
+
+                    ${
+                        order.created_at
+                        ? new Date(
+                            order.created_at
+                        ).toLocaleString()
+                        : "-"
+                    }
+
+                </td>
+
+            `;
 
 
-            return;
+            const select =
+            row.querySelector(
+                ".status"
+            );
+
+
+            select.addEventListener(
+                "change",
+                async function() {
+
+                    const {
+                        error
+                    } =
+                    await supabase
+
+                    .from("orders")
+
+                    .update({
+                        status:
+                        this.value
+                    })
+
+                    .eq(
+                        "id",
+                        order.id
+                    );
+
+
+                    if (error) {
+
+                        alert(
+                            "Update failed: " +
+                            error.message
+                        );
+
+                        return;
+
+                    }
+
+
+                    alert(
+                        "Order status updated."
+                    );
+
+                    loadOrders();
+
+                }
+            );
+
+
+            table.appendChild(
+                row
+            );
 
         }
+    );
+
+}
 
 
-        totalUsers.textContent =
-            data
-                ? data.length
-                : 0;
+// ==========================================
+// LOAD USERS
+// ==========================================
+
+async function loadUsers() {
+
+    const {
+        data,
+        error
+    } =
+    await supabase
+
+    .from("profiles")
+
+    .select("id");
+
+
+    if (error) {
+
+        document.getElementById(
+            "totalUsers"
+        ).textContent =
+        "—";
+
+        return;
 
     }
 
 
-    // =========================================
-    // ESCAPE HTML
-    // =========================================
+    document.getElementById(
+        "totalUsers"
+    ).textContent =
+    data
+    ? data.length
+    : 0;
 
-    function escapeHtml(value) {
-
-        if (
-            value === null ||
-            value === undefined
-        ) {
-
-            return "";
-
-        }
+}
 
 
-        return String(value)
+// ==========================================
+// LOGOUT
+// ==========================================
 
-            .replaceAll(
-                "&",
-                "&amp;"
-            )
+document
+.getElementById(
+    "logoutBtn"
+)
+.addEventListener(
+    "click",
+    async function() {
 
-            .replaceAll(
-                "<",
-                "&lt;"
-            )
+        await supabase.auth.signOut();
 
-            .replaceAll(
-                ">",
-                "&gt;"
-            )
-
-            .replaceAll(
-                '"',
-                "&quot;"
-            )
-
-            .replaceAll(
-                "'",
-                "&#039;"
-            );
+        redirectToLogin();
 
     }
+);
 
 
-    // =========================================
-    // LOGOUT
-    // =========================================
+// ==========================================
+// START SECURITY CHECK
+// ==========================================
 
-    document
-        .getElementById(
-            "logoutBtn"
-        )
-        .addEventListener(
-            "click",
-            async function () {
-
-                await supabase.auth.signOut();
-
-
-                window.location.href =
-                    "login.html";
-
-            }
-        );
-
-
-    // =========================================
-    // REFRESH
-    // =========================================
-
-    document
-        .getElementById(
-            "refreshBtn"
-        )
-        .addEventListener(
-            "click",
-            async function () {
-
-                await loadDashboard();
-
-            }
-        );
-
-
-    // =========================================
-    // START
-    // =========================================
-
-    checkAdmin();
+securityCheck();
 
 </script>
 
 </body>
-
 </html>
