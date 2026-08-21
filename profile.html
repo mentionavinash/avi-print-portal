@@ -256,8 +256,7 @@
             cursor: pointer;
         }
 
-        .success-message,
-        .error-message {
+        .message {
             display: none;
             margin-top: 18px;
             padding: 11px 13px;
@@ -265,21 +264,20 @@
             font-size: 12px;
         }
 
-        .success-message {
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
             color: #15803d;
         }
 
-        .error-message {
+        .message.error {
             background: #fef2f2;
             border: 1px solid #fecaca;
             color: #b91c1c;
-        }
-
-        .success-message.show,
-        .error-message.show {
-            display: block;
         }
 
         .security-section {
@@ -379,10 +377,6 @@
 <body>
 
 
-<!-- =========================
-     NAVBAR
-========================= -->
-
 <header class="navbar">
 
     <div class="container nav-container">
@@ -415,6 +409,11 @@
                 My Orders
             </a>
 
+            <a href="profile.html"
+               style="color:#2563eb;">
+                Profile
+            </a>
+
         </nav>
 
 
@@ -442,10 +441,6 @@
 
 
 
-<!-- =========================
-     PROFILE
-========================= -->
-
 <main class="profile-page">
 
     <div class="container">
@@ -472,7 +467,7 @@
         <div class="profile-grid">
 
 
-            <!-- LEFT PROFILE SUMMARY -->
+            <!-- PROFILE SUMMARY -->
 
             <aside class="profile-card profile-summary">
 
@@ -486,12 +481,12 @@
 
 
                 <h2 id="profileName">
-                    AviPrint User
+                    Loading...
                 </h2>
 
 
                 <p id="profileEmail">
-                    user@example.com
+                    Loading...
                 </p>
 
 
@@ -545,7 +540,7 @@
 
 
 
-            <!-- RIGHT -->
+            <!-- PROFILE DETAILS -->
 
             <section>
 
@@ -581,12 +576,9 @@
 
 
 
-                    <form
-                        class="profile-form"
-                        id="profileForm">
+                    <form id="profileForm"
+                          class="profile-form">
 
-
-                        <!-- NAME -->
 
                         <div class="form-group">
 
@@ -598,14 +590,11 @@
                                 type="text"
                                 id="fullName"
                                 class="form-input"
-                                placeholder="Enter full name"
                                 disabled>
 
                         </div>
 
 
-
-                        <!-- EMAIL -->
 
                         <div class="form-group">
 
@@ -622,8 +611,6 @@
                         </div>
 
 
-
-                        <!-- MOBILE -->
 
                         <div class="form-group">
 
@@ -644,8 +631,6 @@
 
 
 
-                        <!-- CITY -->
-
                         <div class="form-group">
 
                             <label for="city">
@@ -662,8 +647,6 @@
                         </div>
 
 
-
-                        <!-- ADDRESS -->
 
                         <div class="form-group full">
 
@@ -710,16 +693,14 @@
 
 
                     <div
-                        class="success-message"
+                        class="message success"
                         id="successMessage">
-
-                        ✓ Profile updated successfully.
 
                     </div>
 
 
                     <div
-                        class="error-message"
+                        class="message error"
                         id="errorMessage">
 
                     </div>
@@ -799,7 +780,6 @@
 
                     </div>
 
-
                 </div>
 
 
@@ -813,116 +793,66 @@
 
 
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
 <script>
 
 document.addEventListener(
     "DOMContentLoaded",
     async function () {
 
-
-        /* =========================
-           ELEMENTS
-        ========================= */
-
         const profileName =
-            document.getElementById(
-                "profileName"
-            );
+            document.getElementById("profileName");
 
         const profileEmail =
-            document.getElementById(
-                "profileEmail"
-            );
+            document.getElementById("profileEmail");
 
         const profileAvatar =
-            document.getElementById(
-                "profileAvatar"
-            );
+            document.getElementById("profileAvatar");
 
         const fullNameInput =
-            document.getElementById(
-                "fullName"
-            );
+            document.getElementById("fullName");
 
         const emailInput =
-            document.getElementById(
-                "email"
-            );
+            document.getElementById("email");
 
         const phoneInput =
-            document.getElementById(
-                "phone"
-            );
+            document.getElementById("phone");
 
         const cityInput =
-            document.getElementById(
-                "city"
-            );
+            document.getElementById("city");
 
         const addressInput =
-            document.getElementById(
-                "address"
-            );
+            document.getElementById("address");
 
         const editBtn =
-            document.getElementById(
-                "editBtn"
-            );
+            document.getElementById("editBtn");
 
         const saveArea =
-            document.getElementById(
-                "saveArea"
-            );
+            document.getElementById("saveArea");
 
         const saveButton =
-            document.getElementById(
-                "saveButton"
-            );
+            document.getElementById("saveButton");
 
         const cancelButton =
-            document.getElementById(
-                "cancelButton"
-            );
+            document.getElementById("cancelButton");
 
         const successMessage =
-            document.getElementById(
-                "successMessage"
-            );
+            document.getElementById("successMessage");
 
         const errorMessage =
-            document.getElementById(
-                "errorMessage"
-            );
+            document.getElementById("errorMessage");
 
         const totalOrdersElement =
-            document.getElementById(
-                "profileTotalOrders"
-            );
+            document.getElementById("profileTotalOrders");
 
         const completedOrdersElement =
-            document.getElementById(
-                "profileCompletedOrders"
-            );
+            document.getElementById("profileCompletedOrders");
 
         const logoutButton =
-            document.getElementById(
-                "logoutButton"
-            );
+            document.getElementById("logoutButton");
 
         const changePasswordButton =
-            document.getElementById(
-                "changePasswordButton"
-            );
+            document.getElementById("changePasswordButton");
 
-
-
-        /* =========================
-           SUPABASE CHECK
-        ========================= */
 
         if (
             typeof window.supabase === "undefined" ||
@@ -930,13 +860,10 @@ document.addEventListener(
             !supabaseClient
         ) {
 
-            window.location.href =
-                "login.html";
-
+            window.location.href = "login.html";
             return;
 
         }
-
 
 
         let currentUser = null;
@@ -944,105 +871,65 @@ document.addEventListener(
         let originalProfile = null;
 
 
-
-        /* =========================
-           HELPERS
-        ========================= */
-
-        function showSuccess(
-            text
-        ) {
+        function showSuccess(text) {
 
             successMessage.textContent =
                 "✓ " + text;
 
-            successMessage.classList.add(
-                "show"
-            );
+            successMessage.classList.add("show");
 
-            errorMessage.classList.remove(
-                "show"
-            );
+            errorMessage.classList.remove("show");
 
         }
 
 
-        function showError(
-            text
-        ) {
+        function showError(text) {
 
-            errorMessage.textContent =
-                text;
+            errorMessage.textContent = text;
 
-            errorMessage.classList.add(
-                "show"
-            );
+            errorMessage.classList.add("show");
 
-            successMessage.classList.remove(
-                "show"
-            );
+            successMessage.classList.remove("show");
 
         }
 
 
         function clearMessages() {
 
-            successMessage.classList.remove(
-                "show"
-            );
+            successMessage.classList.remove("show");
 
-            errorMessage.classList.remove(
-                "show"
-            );
+            errorMessage.classList.remove("show");
 
         }
 
 
+        function setEditing(enabled) {
 
-        function setEditing(
-            enabled
-        ) {
+            fullNameInput.disabled = !enabled;
 
-            fullNameInput.disabled =
-                !enabled;
+            phoneInput.disabled = !enabled;
 
-            phoneInput.disabled =
-                !enabled;
+            cityInput.disabled = !enabled;
 
-            cityInput.disabled =
-                !enabled;
-
-            addressInput.disabled =
-                !enabled;
+            addressInput.disabled = !enabled;
 
 
             if (enabled) {
 
-                saveArea.classList.add(
-                    "show"
-                );
+                saveArea.classList.add("show");
 
-                editBtn.style.display =
-                    "none";
+                editBtn.style.display = "none";
 
             } else {
 
-                saveArea.classList.remove(
-                    "show"
-                );
+                saveArea.classList.remove("show");
 
-                editBtn.style.display =
-                    "block";
+                editBtn.style.display = "block";
 
             }
 
         }
 
-
-
-        /* =========================
-           LOAD PROFILE
-        ========================= */
 
         async function loadProfile() {
 
@@ -1050,9 +937,7 @@ document.addEventListener(
                 data,
                 error
             } =
-                await supabaseClient
-                    .auth
-                    .getSession();
+                await supabaseClient.auth.getSession();
 
 
             if (error) {
@@ -1067,16 +952,14 @@ document.addEventListener(
                 !data.session.user
             ) {
 
-                window.location.href =
-                    "login.html";
+                window.location.href = "login.html";
 
                 return;
 
             }
 
 
-            currentUser =
-                data.session.user;
+            currentUser = data.session.user;
 
 
             const metadata =
@@ -1085,90 +968,60 @@ document.addEventListener(
 
             const userName =
                 metadata.full_name ||
-                currentUser.email
-                    ?.split("@")[0] ||
+                currentUser.email?.split("@")[0] ||
                 "AviPrint User";
 
 
             const userEmail =
-                currentUser.email ||
-                "";
+                currentUser.email || "";
 
 
             const userPhone =
-                metadata.mobile ||
-                "";
+                metadata.mobile || "";
 
 
             const userCity =
-                metadata.city ||
-                "";
+                metadata.city || "";
 
 
             const userAddress =
-                metadata.address ||
-                "";
+                metadata.address || "";
 
 
             originalProfile = {
 
-                full_name:
-                    userName,
-
-                mobile:
-                    userPhone,
-
-                city:
-                    userCity,
-
-                address:
-                    userAddress
+                full_name: userName,
+                mobile: userPhone,
+                city: userCity,
+                address: userAddress
 
             };
 
 
-            /* =========================
-               DISPLAY
-            ========================= */
-
             profileName.textContent =
                 userName;
-
 
             profileEmail.textContent =
                 userEmail;
 
-
             profileAvatar.textContent =
-                userName
-                    .charAt(0)
-                    .toUpperCase();
-
+                userName.charAt(0).toUpperCase();
 
             fullNameInput.value =
                 userName;
 
-
             emailInput.value =
                 userEmail;
-
 
             phoneInput.value =
                 userPhone;
 
-
             cityInput.value =
                 userCity;
-
 
             addressInput.value =
                 userAddress;
 
-
-
-            /* =========================
-               LOAD USER ORDERS
-            ========================= */
 
             const {
                 data: orders,
@@ -1176,13 +1029,8 @@ document.addEventListener(
             } =
                 await supabaseClient
                     .from("orders")
-                    .select(
-                        "id,status"
-                    )
-                    .eq(
-                        "user_id",
-                        currentUser.id
-                    );
+                    .select("id,status")
+                    .eq("user_id", currentUser.id);
 
 
             if (!ordersError) {
@@ -1193,21 +1041,15 @@ document.addEventListener(
 
                 const completed =
                     userOrders.filter(
-                        function (order) {
-
-                            return String(
-                                order.status ||
-                                ""
-                            ).toLowerCase() ===
-                            "completed";
-
-                        }
+                        order =>
+                            String(order.status || "")
+                                .toLowerCase() ===
+                            "completed"
                     );
 
 
                 totalOrdersElement.textContent =
                     userOrders.length;
-
 
                 completedOrdersElement.textContent =
                     completed.length;
@@ -1216,11 +1058,6 @@ document.addEventListener(
 
         }
 
-
-
-        /* =========================
-           EDIT
-        ========================= */
 
         editBtn.addEventListener(
             "click",
@@ -1234,17 +1071,11 @@ document.addEventListener(
         );
 
 
-
-        /* =========================
-           CANCEL
-        ========================= */
-
         cancelButton.addEventListener(
             "click",
             function () {
 
                 clearMessages();
-
 
                 if (originalProfile) {
 
@@ -1262,17 +1093,11 @@ document.addEventListener(
 
                 }
 
-
                 setEditing(false);
 
             }
         );
 
-
-
-        /* =========================
-           SAVE PROFILE
-        ========================= */
 
         saveButton.addEventListener(
             "click",
@@ -1284,14 +1109,11 @@ document.addEventListener(
                 const name =
                     fullNameInput.value.trim();
 
-
                 const mobile =
                     phoneInput.value.trim();
 
-
                 const city =
                     cityInput.value.trim();
-
 
                 const address =
                     addressInput.value.trim();
@@ -1310,9 +1132,7 @@ document.addEventListener(
 
                 if (
                     mobile &&
-                    !/^[0-9]{10}$/.test(
-                        mobile
-                    )
+                    !/^[0-9]{10}$/.test(mobile)
                 ) {
 
                     showError(
@@ -1324,8 +1144,7 @@ document.addEventListener(
                 }
 
 
-                saveButton.disabled =
-                    true;
+                saveButton.disabled = true;
 
                 saveButton.textContent =
                     "Saving...";
@@ -1337,27 +1156,18 @@ document.addEventListener(
                         data,
                         error
                     } =
-                        await supabaseClient
-                            .auth
-                            .updateUser({
+                        await supabaseClient.auth.updateUser({
 
-                                data: {
+                            data: {
 
-                                    full_name:
-                                        name,
+                                full_name: name,
+                                mobile: mobile,
+                                city: city,
+                                address: address
 
-                                    mobile:
-                                        mobile,
+                            }
 
-                                    city:
-                                        city,
-
-                                    address:
-                                        address
-
-                                }
-
-                            });
+                        });
 
 
                     if (error) {
@@ -1367,27 +1177,16 @@ document.addEventListener(
                     }
 
 
-                    const updatedUser =
-                        data.user;
-
-
                     currentUser =
-                        updatedUser;
+                        data.user;
 
 
                     originalProfile = {
 
-                        full_name:
-                            name,
-
-                        mobile:
-                            mobile,
-
-                        city:
-                            city,
-
-                        address:
-                            address
+                        full_name: name,
+                        mobile: mobile,
+                        city: city,
+                        address: address
 
                     };
 
@@ -1395,16 +1194,11 @@ document.addEventListener(
                     profileName.textContent =
                         name;
 
-
                     profileEmail.textContent =
-                        updatedUser.email ||
-                        "";
-
+                        currentUser.email || "";
 
                     profileAvatar.textContent =
-                        name
-                            .charAt(0)
-                            .toUpperCase();
+                        name.charAt(0).toUpperCase();
 
 
                     showSuccess(
@@ -1435,8 +1229,7 @@ document.addEventListener(
 
                 finally {
 
-                    saveButton.disabled =
-                        false;
+                    saveButton.disabled = false;
 
                     saveButton.textContent =
                         "Save Changes";
@@ -1447,11 +1240,6 @@ document.addEventListener(
         );
 
 
-
-        /* =========================
-           CHANGE PASSWORD
-        ========================= */
-
         changePasswordButton.addEventListener(
             "click",
             async function () {
@@ -1459,12 +1247,7 @@ document.addEventListener(
                 clearMessages();
 
 
-                const email =
-                    currentUser &&
-                    currentUser.email;
-
-
-                if (!email) {
+                if (!currentUser?.email) {
 
                     showError(
                         "Your email address could not be found."
@@ -1475,8 +1258,7 @@ document.addEventListener(
                 }
 
 
-                changePasswordButton.disabled =
-                    true;
+                changePasswordButton.disabled = true;
 
                 changePasswordButton.textContent =
                     "Sending...";
@@ -1487,10 +1269,9 @@ document.addEventListener(
                     const {
                         error
                     } =
-                        await supabaseClient
-                            .auth
+                        await supabaseClient.auth
                             .resetPasswordForEmail(
-                                email,
+                                currentUser.email,
                                 {
                                     redirectTo:
                                         window.location.origin +
@@ -1508,7 +1289,7 @@ document.addEventListener(
 
                     showSuccess(
                         "Password reset email sent to " +
-                        email
+                        currentUser.email
                     );
 
                 }
@@ -1532,8 +1313,7 @@ document.addEventListener(
 
                 finally {
 
-                    changePasswordButton.disabled =
-                        false;
+                    changePasswordButton.disabled = false;
 
                     changePasswordButton.textContent =
                         "Change Password";
@@ -1544,17 +1324,11 @@ document.addEventListener(
         );
 
 
-
-        /* =========================
-           LOGOUT
-        ========================= */
-
         logoutButton.addEventListener(
             "click",
             async function () {
 
-                logoutButton.disabled =
-                    true;
+                logoutButton.disabled = true;
 
                 logoutButton.textContent =
                     "Logging out...";
@@ -1565,9 +1339,7 @@ document.addEventListener(
                     const {
                         error
                     } =
-                        await supabaseClient
-                            .auth
-                            .signOut();
+                        await supabaseClient.auth.signOut();
 
 
                     if (error) {
@@ -1596,8 +1368,7 @@ document.addEventListener(
                     );
 
 
-                    logoutButton.disabled =
-                        false;
+                    logoutButton.disabled = false;
 
                     logoutButton.textContent =
                         "Logout";
@@ -1607,11 +1378,6 @@ document.addEventListener(
             }
         );
 
-
-
-        /* =========================
-           INITIAL LOAD
-        ========================= */
 
         try {
 
