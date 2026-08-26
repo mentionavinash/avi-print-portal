@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,351 +10,379 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-body {
-    background: #f4f7fb;
-    color: #1f2937;
+body{
+    background:#f4f7fb;
+    color:#1f2937;
 }
 
-.header {
-    background: #111827;
-    color: white;
-    padding: 18px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
+.header{
+    background:#111827;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
 }
 
-.header h1 {
-    font-size: 24px;
+.header h1{
+    font-size:24px;
 }
 
-.header p {
-    margin-top: 5px;
-    font-size: 13px;
-    color: #d1d5db;
+.header p{
+    margin-top:5px;
+    font-size:13px;
+    color:#d1d5db;
 }
 
-.header-buttons {
-    display: flex;
-    gap: 10px;
+.header-buttons{
+    display:flex;
+    gap:10px;
 }
 
-button {
-    border: none;
-    cursor: pointer;
-    border-radius: 7px;
-    padding: 10px 15px;
-    font-weight: 600;
+button{
+    border:none;
+    cursor:pointer;
+    border-radius:7px;
+    padding:10px 15px;
+    font-weight:600;
 }
 
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
-.refresh-btn {
-    background: #2563eb;
-    color: white;
+.refresh-btn{
+    background:#2563eb;
+    color:white;
 }
 
-.logout-btn {
-    background: #dc2626;
-    color: white;
+.logout-btn{
+    background:#dc2626;
+    color:white;
 }
 
-.container {
-    max-width: 1500px;
-    margin: auto;
-    padding: 25px;
+.container{
+    max-width:1500px;
+    margin:auto;
+    padding:25px;
 }
 
-.admin-info {
-    background: white;
-    border-radius: 10px;
-    padding: 15px 18px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+.admin-info{
+    background:white;
+    border-radius:10px;
+    padding:15px 18px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
 }
 
-.admin-info strong {
-    color: #111827;
+.admin-info strong{
+    color:#111827;
 }
 
-.stats {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+    margin-bottom:25px;
 }
 
-.stat-card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+.stat-card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
 }
 
-.stat-card h3 {
-    font-size: 14px;
-    color: #6b7280;
-    margin-bottom: 10px;
+.stat-card h3{
+    font-size:14px;
+    color:#6b7280;
+    margin-bottom:10px;
 }
 
-.stat-card .number {
-    font-size: 28px;
-    font-weight: bold;
-    color: #111827;
+.stat-card .number{
+    font-size:28px;
+    font-weight:bold;
+    color:#111827;
 }
 
-.orders-box {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
+.orders-box{
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    overflow:hidden;
 }
 
-.orders-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
+.orders-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
 }
 
-.orders-header h2 {
-    font-size: 21px;
+.orders-header h2{
+    font-size:21px;
 }
 
-.message {
-    padding: 12px;
-    border-radius: 7px;
-    margin-bottom: 15px;
-    display: none;
+.message{
+    padding:12px;
+    border-radius:7px;
+    margin-bottom:15px;
+    display:none;
 }
 
-.success {
-    background: #dcfce7;
-    color: #166534;
+.success{
+    background:#dcfce7;
+    color:#166534;
 }
 
-.error {
-    background: #fee2e2;
-    color: #991b1b;
+.error{
+    background:#fee2e2;
+    color:#991b1b;
 }
 
-.loading {
-    text-align: center;
-    padding: 30px;
-    color: #6b7280;
+.loading{
+    text-align:center;
+    padding:30px;
+    color:#6b7280;
 }
 
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
 }
 
-table {
-    width: 100%;
-    min-width: 1250px;
-    border-collapse: collapse;
+table{
+    width:100%;
+    min-width:1350px;
+    border-collapse:collapse;
 }
 
-th {
-    background: #f3f4f6;
-    padding: 13px 10px;
-    text-align: left;
-    font-size: 13px;
-    color: #374151;
-    border-bottom: 1px solid #e5e7eb;
+th{
+    background:#f3f4f6;
+    padding:13px 10px;
+    text-align:left;
+    font-size:13px;
+    color:#374151;
+    border-bottom:1px solid #e5e7eb;
 }
 
-td {
-    padding: 13px 10px;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 13px;
-    vertical-align: middle;
+td{
+    padding:13px 10px;
+    border-bottom:1px solid #e5e7eb;
+    font-size:13px;
+    vertical-align:middle;
 }
 
-tr:hover {
-    background: #f9fafb;
+tr:hover{
+    background:#f9fafb;
 }
 
-.order-number {
-    font-weight: bold;
-    color: #2563eb;
+.order-number{
+    font-weight:bold;
+    color:#2563eb;
 }
 
-.user-email {
-    max-width: 230px;
-    word-break: break-word;
-    font-weight: 500;
+.user-email{
+    max-width:230px;
+    word-break:break-word;
+    font-weight:500;
 }
 
-.service {
-    font-weight: 600;
+.service{
+    font-weight:600;
 }
 
-.details {
-    max-width: 240px;
-    word-break: break-word;
+.details{
+    max-width:240px;
+    word-break:break-word;
 }
 
-.statusSelect {
-    padding: 8px 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    background: white;
-    cursor: pointer;
+.statusSelect{
+    padding:8px 10px;
+    border:1px solid #d1d5db;
+    border-radius:6px;
+    background:white;
+    cursor:pointer;
 }
 
-.file-name {
-    max-width: 180px;
-    word-break: break-word;
-    margin-bottom: 8px;
+.file-name{
+    max-width:200px;
+    word-break:break-word;
+    margin-bottom:8px;
+    font-weight:500;
 }
 
-.file-buttons {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
+.file-buttons{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
 }
 
-.view-btn {
-    background: #2563eb;
-    color: white;
-    padding: 7px 10px;
-    font-size: 12px;
+.view-btn{
+    background:#2563eb;
+    color:white;
+    padding:7px 10px;
+    font-size:12px;
 }
 
-.download-btn {
-    background: #16a34a;
-    color: white;
-    padding: 7px 10px;
-    font-size: 12px;
+.view-btn:hover{
+    background:#1d4ed8;
 }
 
-.delete-btn {
-    background: #dc2626;
-    color: white;
-    padding: 8px 12px;
-    font-size: 12px;
+.download-btn{
+    background:#16a34a;
+    color:white;
+    padding:7px 10px;
+    font-size:12px;
 }
 
-.delete-btn:hover {
-    background: #b91c1c;
+.download-btn:hover{
+    background:#15803d;
 }
 
-.empty {
-    text-align: center;
-    padding: 40px;
-    color: #6b7280;
+.delete-btn{
+    background:#dc2626;
+    color:white;
+    padding:8px 12px;
+    font-size:12px;
 }
 
-.login-screen {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+.delete-btn:hover{
+    background:#b91c1c;
 }
 
-.login-box {
-    width: 100%;
-    max-width: 400px;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+.no-file{
+    color:#9ca3af;
+    font-size:12px;
 }
 
-.login-box h2 {
-    margin-bottom: 8px;
+.empty{
+    text-align:center;
+    padding:40px;
+    color:#6b7280;
 }
 
-.login-box p {
-    color: #6b7280;
-    font-size: 14px;
-    margin-bottom: 20px;
+.login-screen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 }
 
-.login-box input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 7px;
-    outline: none;
+.login-box{
+    width:100%;
+    max-width:400px;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
 }
 
-.login-btn {
-    width: 100%;
-    background: #2563eb;
-    color: white;
-    padding: 12px;
+.login-box h2{
+    margin-bottom:8px;
 }
 
-.login-error {
-    background: #fee2e2;
-    color: #991b1b;
-    padding: 10px;
-    border-radius: 7px;
-    margin-bottom: 12px;
-    display: none;
-    font-size: 13px;
+.login-box p{
+    color:#6b7280;
+    font-size:14px;
+    margin-bottom:20px;
 }
 
-#adminPanel {
-    display: none;
+.login-box input{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    outline:none;
 }
 
-@media (max-width: 1000px) {
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.login-box input:focus{
+    border-color:#2563eb;
 }
 
-@media (max-width: 600px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+.login-btn{
+    width:100%;
+    background:#2563eb;
+    color:white;
+    padding:12px;
+}
 
-    .header-buttons {
-        width: 100%;
-    }
+.login-error{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:10px;
+    border-radius:7px;
+    margin-bottom:12px;
+    display:none;
+    font-size:13px;
+}
 
-    .header-buttons button {
-        flex: 1;
-    }
+#adminPanel{
+    display:none;
+}
 
-    .container {
-        padding: 15px;
-    }
+@media(max-width:1000px){
 
-    .stats {
-        grid-template-columns: 1fr;
+    .stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .orders-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
 }
+
+@media(max-width:600px){
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .header-buttons{
+        width:100%;
+    }
+
+    .header-buttons button{
+        flex:1;
+    }
+
+    .container{
+        padding:15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .orders-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<!-- LOGIN -->
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
 <div id="loginScreen" class="login-screen">
 
@@ -361,7 +390,9 @@ tr:hover {
 
         <h2>AviPrint Admin</h2>
 
-        <p>Login using your administrator account.</p>
+        <p>
+            Login using your administrator account.
+        </p>
 
         <div id="loginError" class="login-error"></div>
 
@@ -391,7 +422,9 @@ tr:hover {
 </div>
 
 
-<!-- ADMIN PANEL -->
+<!-- =====================================================
+     ADMIN PANEL
+===================================================== -->
 
 <div id="adminPanel">
 
@@ -442,45 +475,95 @@ tr:hover {
         <div id="message" class="message"></div>
 
 
-        <!-- STATISTICS -->
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
 
         <div class="stats">
 
             <div class="stat-card">
+
                 <h3>Total Orders</h3>
-                <div class="number" id="totalOrders">0</div>
+
+                <div
+                    class="number"
+                    id="totalOrders"
+                >
+                    0
+                </div>
+
             </div>
 
+
             <div class="stat-card">
+
                 <h3>Pending</h3>
-                <div class="number" id="pendingOrders">0</div>
+
+                <div
+                    class="number"
+                    id="pendingOrders"
+                >
+                    0
+                </div>
+
             </div>
 
+
             <div class="stat-card">
+
                 <h3>Processing</h3>
-                <div class="number" id="processingOrders">0</div>
+
+                <div
+                    class="number"
+                    id="processingOrders"
+                >
+                    0
+                </div>
+
             </div>
 
+
             <div class="stat-card">
+
                 <h3>Completed</h3>
-                <div class="number" id="completedOrders">0</div>
+
+                <div
+                    class="number"
+                    id="completedOrders"
+                >
+                    0
+                </div>
+
             </div>
 
+
             <div class="stat-card">
+
                 <h3>Cancelled</h3>
-                <div class="number" id="cancelledOrders">0</div>
+
+                <div
+                    class="number"
+                    id="cancelledOrders"
+                >
+                    0
+                </div>
+
             </div>
 
         </div>
 
 
-        <!-- ORDERS -->
+        <!-- =================================================
+             ORDERS
+        ================================================== -->
 
         <div class="orders-box">
 
             <div class="orders-header">
 
-                <h2>All Orders</h2>
+                <h2>
+                    All Orders
+                </h2>
 
                 <span id="orderCount">
                     0 orders
@@ -498,13 +581,21 @@ tr:hover {
                         <tr>
 
                             <th>Order</th>
+
                             <th>User Email</th>
+
                             <th>Service</th>
+
                             <th>Details</th>
+
                             <th>Date</th>
+
                             <th>Amount</th>
+
                             <th>File</th>
+
                             <th>Status</th>
+
                             <th>Action</th>
 
                         </tr>
@@ -521,7 +612,6 @@ tr:hover {
                                 class="loading"
                             >
                                 Loading orders...
-
                             </td>
 
                         </tr>
@@ -541,15 +631,17 @@ tr:hover {
 
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
+
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
 
 const SUPABASE_URL =
     "https://pmqmewceqnxsvlhceeef.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -558,29 +650,29 @@ const supabaseClient =
     );
 
 
-/* =========================================================
+/* =====================================================
    ADMIN
-========================================================= */
+===================================================== */
 
 const ADMIN_EMAIL =
     "aviinformatics@gmail.com";
 
 
-/* =========================================================
-   STORAGE BUCKET
-========================================================= */
+/* =====================================================
+   STORAGE
+===================================================== */
 
 const STORAGE_BUCKET =
     "print-files";
 
 
-/* =========================================================
+/* =====================================================
    PAGE LOAD
-========================================================= */
+===================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
-    function () {
+    function(){
 
         checkSession();
 
@@ -588,13 +680,13 @@ document.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    CHECK SESSION
-========================================================= */
+===================================================== */
 
-async function checkSession() {
+async function checkSession(){
 
-    try {
+    try{
 
         const {
             data,
@@ -603,7 +695,7 @@ async function checkSession() {
         await supabaseClient.auth.getSession();
 
 
-        if (error) {
+        if(error){
 
             console.error(error);
 
@@ -614,7 +706,7 @@ async function checkSession() {
         }
 
 
-        if (!data.session) {
+        if(!data.session){
 
             showLogin();
 
@@ -627,11 +719,11 @@ async function checkSession() {
             data.session.user;
 
 
-        if (
+        if(
             !user.email ||
             user.email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
-        ) {
+        ){
 
             await supabaseClient.auth.signOut();
 
@@ -651,10 +743,12 @@ async function checkSession() {
         await loadOrders();
 
     }
+    catch(error){
 
-    catch (error) {
-
-        console.error(error);
+        console.error(
+            "Session error:",
+            error
+        );
 
         showLogin();
 
@@ -663,11 +757,11 @@ async function checkSession() {
 }
 
 
-/* =========================================================
+/* =====================================================
    LOGIN
-========================================================= */
+===================================================== */
 
-async function adminLogin() {
+async function adminLogin(){
 
     const email =
         document
@@ -682,7 +776,7 @@ async function adminLogin() {
             .value;
 
 
-    if (!email || !password) {
+    if(!email || !password){
 
         showLoginError(
             "Please enter email and password."
@@ -693,10 +787,10 @@ async function adminLogin() {
     }
 
 
-    if (
+    if(
         email.toLowerCase() !==
         ADMIN_EMAIL.toLowerCase()
-    ) {
+    ){
 
         showLoginError(
             "Only the administrator account can access this panel."
@@ -722,7 +816,7 @@ async function adminLogin() {
     hideLoginError();
 
 
-    try {
+    try{
 
         const {
             data,
@@ -730,14 +824,14 @@ async function adminLogin() {
         } =
         await supabaseClient.auth.signInWithPassword({
 
-            email: email,
+            email:email,
 
-            password: password
+            password:password
 
         });
 
 
-        if (error) {
+        if(error){
 
             showLoginError(
                 error.message
@@ -748,7 +842,7 @@ async function adminLogin() {
         }
 
 
-        if (!data.user) {
+        if(!data.user){
 
             showLoginError(
                 "Login failed."
@@ -759,10 +853,10 @@ async function adminLogin() {
         }
 
 
-        if (
+        if(
             data.user.email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
-        ) {
+        ){
 
             await supabaseClient.auth.signOut();
 
@@ -779,11 +873,11 @@ async function adminLogin() {
             data.user
         );
 
+
         await loadOrders();
 
     }
-
-    catch (error) {
+    catch(error){
 
         console.error(error);
 
@@ -792,8 +886,7 @@ async function adminLogin() {
         );
 
     }
-
-    finally {
+    finally{
 
         button.disabled = false;
 
@@ -805,11 +898,11 @@ async function adminLogin() {
 }
 
 
-/* =========================================================
+/* =====================================================
    SHOW ADMIN
-========================================================= */
+===================================================== */
 
-function showAdminPanel(user) {
+function showAdminPanel(user){
 
     document
         .getElementById("loginScreen")
@@ -837,11 +930,11 @@ function showAdminPanel(user) {
 }
 
 
-/* =========================================================
+/* =====================================================
    SHOW LOGIN
-========================================================= */
+===================================================== */
 
-function showLogin() {
+function showLogin(){
 
     document
         .getElementById("loginScreen")
@@ -857,11 +950,11 @@ function showLogin() {
 }
 
 
-/* =========================================================
+/* =====================================================
    LOAD ORDERS
-========================================================= */
+===================================================== */
 
-async function loadOrders() {
+async function loadOrders(){
 
     const table =
         document.getElementById(
@@ -870,27 +963,34 @@ async function loadOrders() {
 
 
     table.innerHTML = `
+
         <tr>
-            <td colspan="9" class="loading">
+
+            <td
+                colspan="9"
+                class="loading"
+            >
                 Loading orders...
             </td>
+
         </tr>
+
     `;
 
 
-    try {
+    try{
 
-        /* Verify admin session */
+        /* CHECK ADMIN */
 
         const {
-            data: {
+            data:{
                 user
             }
         } =
         await supabaseClient.auth.getUser();
 
 
-        if (!user) {
+        if(!user){
 
             showLogin();
 
@@ -899,11 +999,11 @@ async function loadOrders() {
         }
 
 
-        if (
+        if(
             !user.email ||
             user.email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
-        ) {
+        ){
 
             await logout();
 
@@ -912,13 +1012,12 @@ async function loadOrders() {
         }
 
 
-        /* IMPORTANT:
-           Get orders from RPC.
-           RPC already returns user_email.
-        */
+        /* =========================================
+           GET ORDERS FROM RPC
+        ========================================== */
 
         const {
-            data: orders,
+            data:orders,
             error
         } =
         await supabaseClient
@@ -927,26 +1026,35 @@ async function loadOrders() {
             );
 
 
-        if (error) {
+        if(error){
 
             console.error(
-                "RPC Error:",
+                "RPC ERROR:",
                 error
             );
 
 
             table.innerHTML = `
+
                 <tr>
+
                     <td
                         colspan="9"
                         class="empty"
                     >
-                        Failed to load orders.<br><br>
+
+                        Failed to load orders.
+
+                        <br><br>
+
                         ${escapeHtml(
                             error.message
                         )}
+
                     </td>
+
                 </tr>
+
             `;
 
             return;
@@ -954,20 +1062,30 @@ async function loadOrders() {
         }
 
 
-        if (
+        console.log(
+            "ADMIN ORDERS:",
+            orders
+        );
+
+
+        if(
             !orders ||
             orders.length === 0
-        ) {
+        ){
 
             table.innerHTML = `
+
                 <tr>
+
                     <td
                         colspan="9"
                         class="empty"
                     >
                         No orders found.
                     </td>
+
                 </tr>
+
             `;
 
 
@@ -986,7 +1104,9 @@ async function loadOrders() {
         }
 
 
-        /* Render */
+        /* =========================================
+           RENDER ORDERS
+        ========================================== */
 
         table.innerHTML =
             orders
@@ -1016,26 +1136,31 @@ async function loadOrders() {
             }`;
 
     }
-
-    catch (error) {
+    catch(error){
 
         console.error(
-            "Load orders error:",
+            "LOAD ORDERS ERROR:",
             error
         );
 
 
         table.innerHTML = `
+
             <tr>
+
                 <td
                     colspan="9"
                     class="empty"
                 >
+
                     ${escapeHtml(
                         error.message
                     )}
+
                 </td>
+
             </tr>
+
         `;
 
     }
@@ -1043,13 +1168,11 @@ async function loadOrders() {
 }
 
 
-/* =========================================================
+/* =====================================================
    CREATE ORDER ROW
-========================================================= */
+===================================================== */
 
-function createOrderRow(order) {
-
-    /* Directly from RPC */
+function createOrderRow(order){
 
     const userEmail =
         order.user_email ||
@@ -1082,10 +1205,12 @@ function createOrderRow(order) {
     const amount =
         order.amount !== null &&
         order.amount !== undefined
+
             ? "₹" +
               Number(
                   order.amount
               ).toFixed(2)
+
             : "₹0.00";
 
 
@@ -1104,35 +1229,52 @@ function createOrderRow(order) {
         "";
 
 
+    /* =========================================
+       FILE BUTTONS
+    ========================================== */
+
     let fileButtons = "";
 
 
-    if (filePath) {
+    if(filePath){
 
         fileButtons = `
 
             <div class="file-buttons">
 
                 <button
+                    type="button"
                     class="view-btn"
                     onclick="viewFile(
                         '${escapeJs(filePath)}'
                     )"
                 >
-                    View
+                    👁 View
                 </button>
 
 
                 <button
+                    type="button"
                     class="download-btn"
                     onclick="downloadFile(
                         '${escapeJs(filePath)}',
                         '${escapeJs(fileName)}'
                     )"
                 >
-                    Download
+                    ⬇ Download
                 </button>
 
+            </div>
+
+        `;
+
+    }
+    else{
+
+        fileButtons = `
+
+            <div class="no-file">
+                File path unavailable
             </div>
 
         `;
@@ -1143,6 +1285,9 @@ function createOrderRow(order) {
     return `
 
         <tr>
+
+
+            <!-- ORDER -->
 
             <td>
 
@@ -1157,6 +1302,8 @@ function createOrderRow(order) {
             </td>
 
 
+            <!-- EMAIL -->
+
             <td>
 
                 <div class="user-email">
@@ -1169,6 +1316,8 @@ function createOrderRow(order) {
 
             </td>
 
+
+            <!-- SERVICE -->
 
             <td>
 
@@ -1183,6 +1332,8 @@ function createOrderRow(order) {
             </td>
 
 
+            <!-- DETAILS -->
+
             <td>
 
                 <div class="details">
@@ -1196,6 +1347,8 @@ function createOrderRow(order) {
             </td>
 
 
+            <!-- DATE -->
+
             <td>
 
                 ${escapeHtml(date)}
@@ -1203,12 +1356,16 @@ function createOrderRow(order) {
             </td>
 
 
+            <!-- AMOUNT -->
+
             <td>
 
                 ${escapeHtml(amount)}
 
             </td>
 
+
+            <!-- FILE -->
 
             <td>
 
@@ -1224,6 +1381,8 @@ function createOrderRow(order) {
 
             </td>
 
+
+            <!-- STATUS -->
 
             <td>
 
@@ -1241,8 +1400,7 @@ function createOrderRow(order) {
                     <option
                         value="Pending"
                         ${
-                            status ===
-                            "Pending"
+                            status === "Pending"
                                 ? "selected"
                                 : ""
                         }
@@ -1254,8 +1412,7 @@ function createOrderRow(order) {
                     <option
                         value="Processing"
                         ${
-                            status ===
-                            "Processing"
+                            status === "Processing"
                                 ? "selected"
                                 : ""
                         }
@@ -1267,8 +1424,7 @@ function createOrderRow(order) {
                     <option
                         value="Completed"
                         ${
-                            status ===
-                            "Completed"
+                            status === "Completed"
                                 ? "selected"
                                 : ""
                         }
@@ -1280,8 +1436,7 @@ function createOrderRow(order) {
                     <option
                         value="Cancelled"
                         ${
-                            status ===
-                            "Cancelled"
+                            status === "Cancelled"
                                 ? "selected"
                                 : ""
                         }
@@ -1294,9 +1449,12 @@ function createOrderRow(order) {
             </td>
 
 
+            <!-- DELETE -->
+
             <td>
 
                 <button
+                    type="button"
                     class="delete-btn"
                     onclick="deleteOrder(
                         '${escapeJs(order.id)}'
@@ -1307,6 +1465,7 @@ function createOrderRow(order) {
 
             </td>
 
+
         </tr>
 
     `;
@@ -1314,16 +1473,16 @@ function createOrderRow(order) {
 }
 
 
-/* =========================================================
+/* =====================================================
    VIEW FILE
-========================================================= */
+===================================================== */
 
-async function viewFile(filePath) {
+async function viewFile(filePath){
 
-    if (!filePath) {
+    if(!filePath){
 
         showMessage(
-            "File not available.",
+            "File path not available.",
             "error"
         );
 
@@ -1332,7 +1491,13 @@ async function viewFile(filePath) {
     }
 
 
-    try {
+    console.log(
+        "VIEW FILE PATH:",
+        filePath
+    );
+
+
+    try{
 
         const {
             data,
@@ -1345,14 +1510,14 @@ async function viewFile(filePath) {
             )
             .createSignedUrl(
                 filePath,
-                300
+                600
             );
 
 
-        if (error) {
+        if(error){
 
             console.error(
-                "View file error:",
+                "VIEW FILE ERROR:",
                 error
             );
 
@@ -1368,7 +1533,10 @@ async function viewFile(filePath) {
         }
 
 
-        if (!data || !data.signedUrl) {
+        if(
+            !data ||
+            !data.signedUrl
+        ){
 
             showMessage(
                 "File URL could not be created.",
@@ -1380,16 +1548,24 @@ async function viewFile(filePath) {
         }
 
 
+        console.log(
+            "SIGNED URL CREATED"
+        );
+
+
         window.open(
             data.signedUrl,
             "_blank"
         );
 
     }
+    catch(error){
 
-    catch (error) {
+        console.error(
+            "VIEW ERROR:",
+            error
+        );
 
-        console.error(error);
 
         showMessage(
             "Could not open file.",
@@ -1401,19 +1577,19 @@ async function viewFile(filePath) {
 }
 
 
-/* =========================================================
+/* =====================================================
    DOWNLOAD FILE
-========================================================= */
+===================================================== */
 
 async function downloadFile(
     filePath,
     fileName
-) {
+){
 
-    if (!filePath) {
+    if(!filePath){
 
         showMessage(
-            "File not available.",
+            "File path not available.",
             "error"
         );
 
@@ -1422,7 +1598,13 @@ async function downloadFile(
     }
 
 
-    try {
+    console.log(
+        "DOWNLOAD FILE PATH:",
+        filePath
+    );
+
+
+    try{
 
         const {
             data,
@@ -1435,17 +1617,14 @@ async function downloadFile(
             )
             .createSignedUrl(
                 filePath,
-                300,
-                {
-                    download: fileName || true
-                }
+                600
             );
 
 
-        if (error) {
+        if(error){
 
             console.error(
-                "Download error:",
+                "DOWNLOAD URL ERROR:",
                 error
             );
 
@@ -1461,7 +1640,10 @@ async function downloadFile(
         }
 
 
-        if (!data || !data.signedUrl) {
+        if(
+            !data ||
+            !data.signedUrl
+        ){
 
             showMessage(
                 "Download URL could not be created.",
@@ -1473,6 +1655,35 @@ async function downloadFile(
         }
 
 
+        /* =========================================
+           FETCH FILE
+        ========================================== */
+
+        const response =
+            await fetch(
+                data.signedUrl
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Could not fetch the file."
+            );
+
+        }
+
+
+        const blob =
+            await response.blob();
+
+
+        const blobUrl =
+            window.URL.createObjectURL(
+                blob
+            );
+
+
         const link =
             document.createElement(
                 "a"
@@ -1480,15 +1691,12 @@ async function downloadFile(
 
 
         link.href =
-            data.signedUrl;
+            blobUrl;
 
 
         link.download =
-            fileName || "file";
-
-
-        link.target =
-            "_blank";
+            fileName ||
+            "AviPrint-file";
 
 
         document
@@ -1503,14 +1711,29 @@ async function downloadFile(
 
         link.remove();
 
-    }
 
-    catch (error) {
+        window.URL.revokeObjectURL(
+            blobUrl
+        );
 
-        console.error(error);
 
         showMessage(
-            "Download failed.",
+            "File download started.",
+            "success"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "DOWNLOAD ERROR:",
+            error
+        );
+
+
+        showMessage(
+            "Download failed: " +
+            error.message,
             "error"
         );
 
@@ -1519,28 +1742,42 @@ async function downloadFile(
 }
 
 
-/* =========================================================
+/* =====================================================
    UPDATE STATUS
-========================================================= */
+===================================================== */
 
 async function updateOrderStatus(
     orderId,
     newStatus
-) {
+){
+
+    if(!orderId){
+
+        showMessage(
+            "Invalid order ID.",
+            "error"
+        );
+
+        return;
+
+    }
+
 
     const allowedStatuses = [
+
         "Pending",
         "Processing",
         "Completed",
         "Cancelled"
+
     ];
 
 
-    if (
+    if(
         !allowedStatuses.includes(
             newStatus
         )
-    ) {
+    ){
 
         showMessage(
             "Invalid order status.",
@@ -1552,7 +1789,7 @@ async function updateOrderStatus(
     }
 
 
-    try {
+    try{
 
         const {
             error
@@ -1560,7 +1797,9 @@ async function updateOrderStatus(
         await supabaseClient
             .from("orders")
             .update({
-                status: newStatus
+
+                status:newStatus
+
             })
             .eq(
                 "id",
@@ -1568,10 +1807,10 @@ async function updateOrderStatus(
             );
 
 
-        if (error) {
+        if(error){
 
             console.error(
-                "Status update error:",
+                "STATUS UPDATE ERROR:",
                 error
             );
 
@@ -1596,10 +1835,12 @@ async function updateOrderStatus(
         await loadOrders();
 
     }
+    catch(error){
 
-    catch (error) {
+        console.error(
+            error
+        );
 
-        console.error(error);
 
         showMessage(
             "Status update failed.",
@@ -1611,15 +1852,15 @@ async function updateOrderStatus(
 }
 
 
-/* =========================================================
-   DELETE
-========================================================= */
+/* =====================================================
+   DELETE ORDER
+===================================================== */
 
 async function deleteOrder(
     orderId
-) {
+){
 
-    if (!orderId) {
+    if(!orderId){
 
         showMessage(
             "Invalid order ID.",
@@ -1637,14 +1878,14 @@ async function deleteOrder(
         );
 
 
-    if (!confirmed) {
+    if(!confirmed){
 
         return;
 
     }
 
 
-    try {
+    try{
 
         const {
             error
@@ -1658,10 +1899,10 @@ async function deleteOrder(
             );
 
 
-        if (error) {
+        if(error){
 
             console.error(
-                "Delete error:",
+                "DELETE ERROR:",
                 error
             );
 
@@ -1686,10 +1927,12 @@ async function deleteOrder(
         await loadOrders();
 
     }
+    catch(error){
 
-    catch (error) {
+        console.error(
+            error
+        );
 
-        console.error(error);
 
         showMessage(
             "Delete failed.",
@@ -1701,22 +1944,26 @@ async function deleteOrder(
 }
 
 
-/* =========================================================
+/* =====================================================
    STATISTICS
-========================================================= */
+===================================================== */
 
 function updateStatistics(
     orders
-) {
+){
 
     document
-        .getElementById("totalOrders")
+        .getElementById(
+            "totalOrders"
+        )
         .textContent =
         orders.length;
 
 
     document
-        .getElementById("pendingOrders")
+        .getElementById(
+            "pendingOrders"
+        )
         .textContent =
         orders.filter(
             order =>
@@ -1726,7 +1973,9 @@ function updateStatistics(
 
 
     document
-        .getElementById("processingOrders")
+        .getElementById(
+            "processingOrders"
+        )
         .textContent =
         orders.filter(
             order =>
@@ -1736,7 +1985,9 @@ function updateStatistics(
 
 
     document
-        .getElementById("completedOrders")
+        .getElementById(
+            "completedOrders"
+        )
         .textContent =
         orders.filter(
             order =>
@@ -1746,7 +1997,9 @@ function updateStatistics(
 
 
     document
-        .getElementById("cancelledOrders")
+        .getElementById(
+            "cancelledOrders"
+        )
         .textContent =
         orders.filter(
             order =>
@@ -1757,11 +2010,11 @@ function updateStatistics(
 }
 
 
-/* =========================================================
+/* =====================================================
    LOGOUT
-========================================================= */
+===================================================== */
 
-async function logout() {
+async function logout(){
 
     await supabaseClient.auth.signOut();
 
@@ -1777,14 +2030,14 @@ async function logout() {
 }
 
 
-/* =========================================================
+/* =====================================================
    MESSAGE
-========================================================= */
+===================================================== */
 
 function showMessage(
     text,
     type
-) {
+){
 
     const message =
         document.getElementById(
@@ -1806,7 +2059,7 @@ function showMessage(
 
 
     setTimeout(
-        function () {
+        function(){
 
             message.style.display =
                 "none";
@@ -1818,13 +2071,13 @@ function showMessage(
 }
 
 
-/* =========================================================
+/* =====================================================
    LOGIN ERROR
-========================================================= */
+===================================================== */
 
 function showLoginError(
     text
-) {
+){
 
     const error =
         document.getElementById(
@@ -1842,7 +2095,7 @@ function showLoginError(
 }
 
 
-function hideLoginError() {
+function hideLoginError(){
 
     document
         .getElementById(
@@ -1854,15 +2107,15 @@ function hideLoginError() {
 }
 
 
-/* =========================================================
-   DATE
-========================================================= */
+/* =====================================================
+   DATE FORMAT
+===================================================== */
 
 function formatDate(
     dateString
-) {
+){
 
-    if (!dateString) {
+    if(!dateString){
 
         return "-";
 
@@ -1875,11 +2128,11 @@ function formatDate(
         );
 
 
-    if (
+    if(
         Number.isNaN(
             date.getTime()
         )
-    ) {
+    ){
 
         return "-";
 
@@ -1889,44 +2142,49 @@ function formatDate(
     return date.toLocaleString(
         "en-IN",
         {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
+            day:"2-digit",
+            month:"short",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
         }
     );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    HTML ESCAPE
-========================================================= */
+===================================================== */
 
 function escapeHtml(
     value
-) {
+){
 
     return String(
         value ?? ""
     )
+
     .replace(
         /&/g,
         "&amp;"
     )
+
     .replace(
         /</g,
         "&lt;"
     )
+
     .replace(
         />/g,
         "&gt;"
     )
+
     .replace(
         /"/g,
         "&quot;"
     )
+
     .replace(
         /'/g,
         "&#039;"
@@ -1935,33 +2193,38 @@ function escapeHtml(
 }
 
 
-/* =========================================================
+/* =====================================================
    JS ESCAPE
-========================================================= */
+===================================================== */
 
 function escapeJs(
     value
-) {
+){
 
     return String(
         value ?? ""
     )
+
     .replace(
         /\\/g,
         "\\\\"
     )
+
     .replace(
         /'/g,
         "\\'"
     )
+
     .replace(
         /"/g,
         '\\"'
     )
+
     .replace(
         /\r/g,
         "\\r"
     )
+
     .replace(
         /\n/g,
         "\\n"
@@ -1970,15 +2233,15 @@ function escapeJs(
 }
 
 
-/* =========================================================
-   ENTER KEY
-========================================================= */
+/* =====================================================
+   ENTER KEY LOGIN
+===================================================== */
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    function(event){
 
-        if (
+        if(
             event.key === "Enter" &&
             document
                 .getElementById(
@@ -1986,7 +2249,7 @@ document.addEventListener(
                 )
                 .style.display !==
                 "none"
-        ) {
+        ){
 
             adminLogin();
 
