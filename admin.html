@@ -22,6 +22,8 @@ body {
     color: #1f2937;
 }
 
+/* HEADER */
+
 .header {
     background: #111827;
     color: white;
@@ -70,11 +72,15 @@ button:disabled {
     color: white;
 }
 
+/* CONTAINER */
+
 .container {
     max-width: 1500px;
     margin: auto;
     padding: 25px;
 }
+
+/* ADMIN INFO */
 
 .admin-info {
     background: white;
@@ -87,6 +93,8 @@ button:disabled {
 .admin-info strong {
     color: #111827;
 }
+
+/* STATS */
 
 .stats {
     display: grid;
@@ -114,6 +122,8 @@ button:disabled {
     color: #111827;
 }
 
+/* ORDERS BOX */
+
 .orders-box {
     background: white;
     border-radius: 10px;
@@ -133,6 +143,43 @@ button:disabled {
     font-size: 21px;
 }
 
+/* FILTERS */
+
+.filters {
+    display: grid;
+    grid-template-columns: 1fr 220px auto;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box,
+.status-filter {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    outline: none;
+    background: white;
+    font-size: 14px;
+}
+
+.search-box:focus,
+.status-filter:focus {
+    border-color: #2563eb;
+}
+
+.clear-btn {
+    background: #6b7280;
+    color: white;
+    padding: 10px 18px;
+}
+
+.clear-btn:hover {
+    background: #4b5563;
+}
+
+/* MESSAGE */
+
 .message {
     padding: 12px;
     border-radius: 7px;
@@ -150,6 +197,8 @@ button:disabled {
     color: #991b1b;
 }
 
+/* TABLE */
+
 .loading {
     text-align: center;
     padding: 30px;
@@ -163,7 +212,7 @@ button:disabled {
 
 table {
     width: 100%;
-    min-width: 1300px;
+    min-width: 1250px;
     border-collapse: collapse;
 }
 
@@ -186,6 +235,8 @@ td {
 tr:hover {
     background: #f9fafb;
 }
+
+/* ORDER */
 
 .order-number {
     font-weight: bold;
@@ -215,8 +266,10 @@ tr:hover {
     cursor: pointer;
 }
 
+/* FILE */
+
 .file-name {
-    max-width: 200px;
+    max-width: 180px;
     word-break: break-word;
     margin-bottom: 8px;
 }
@@ -241,14 +294,6 @@ tr:hover {
     font-size: 12px;
 }
 
-.view-btn:hover {
-    background: #1d4ed8;
-}
-
-.download-btn:hover {
-    background: #15803d;
-}
-
 .delete-btn {
     background: #dc2626;
     color: white;
@@ -260,11 +305,15 @@ tr:hover {
     background: #b91c1c;
 }
 
+/* EMPTY */
+
 .empty {
     text-align: center;
     padding: 40px;
     color: #6b7280;
 }
+
+/* LOGIN */
 
 .login-screen {
     min-height: 100vh;
@@ -323,12 +372,21 @@ tr:hover {
     display: none;
 }
 
+/* RESPONSIVE */
+
 @media (max-width: 1000px) {
 
     .stats {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .clear-btn {
+        width: 100%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -360,6 +418,10 @@ tr:hover {
         gap: 10px;
     }
 
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
 }
 
 </style>
@@ -367,9 +429,8 @@ tr:hover {
 
 <body>
 
-
 <!-- =========================================================
-     LOGIN SCREEN
+     LOGIN
 ========================================================= -->
 
 <div id="loginScreen" class="login-screen">
@@ -403,8 +464,7 @@ tr:hover {
 
         <button
             class="login-btn"
-            onclick="adminLogin()"
-        >
+            onclick="adminLogin()">
             Login
         </button>
 
@@ -423,9 +483,7 @@ tr:hover {
 
         <div>
 
-            <h1>
-                AviPrint Admin Panel
-            </h1>
+            <h1>AviPrint Admin Panel</h1>
 
             <p id="loggedInText">
                 Administrator access
@@ -437,15 +495,13 @@ tr:hover {
 
             <button
                 class="refresh-btn"
-                onclick="loadOrders()"
-            >
+                onclick="loadOrders()">
                 ↻ Refresh
             </button>
 
             <button
                 class="logout-btn"
-                onclick="logout()"
-            >
+                onclick="logout()">
                 Logout
             </button>
 
@@ -456,16 +512,18 @@ tr:hover {
 
     <div class="container">
 
+        <!-- ADMIN INFO -->
+
         <div class="admin-info">
 
             Logged in as Admin:
 
-            <strong id="adminEmail">
-                -
-            </strong>
+            <strong id="adminEmail">-</strong>
 
         </div>
 
+
+        <!-- MESSAGE -->
 
         <div
             id="message"
@@ -481,9 +539,7 @@ tr:hover {
 
             <div class="stat-card">
 
-                <h3>
-                    Total Orders
-                </h3>
+                <h3>Total Orders</h3>
 
                 <div
                     class="number"
@@ -496,9 +552,7 @@ tr:hover {
 
             <div class="stat-card">
 
-                <h3>
-                    Pending
-                </h3>
+                <h3>Pending</h3>
 
                 <div
                     class="number"
@@ -511,9 +565,7 @@ tr:hover {
 
             <div class="stat-card">
 
-                <h3>
-                    Processing
-                </h3>
+                <h3>Processing</h3>
 
                 <div
                     class="number"
@@ -526,9 +578,7 @@ tr:hover {
 
             <div class="stat-card">
 
-                <h3>
-                    Completed
-                </h3>
+                <h3>Completed</h3>
 
                 <div
                     class="number"
@@ -541,9 +591,7 @@ tr:hover {
 
             <div class="stat-card">
 
-                <h3>
-                    Cancelled
-                </h3>
+                <h3>Cancelled</h3>
 
                 <div
                     class="number"
@@ -575,6 +623,60 @@ tr:hover {
             </div>
 
 
+            <!-- =================================================
+                 SEARCH + FILTER
+            ================================================== -->
+
+            <div class="filters">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-box"
+                    placeholder="🔍 Search Order ID or User Email..."
+                    oninput="applyFilters()"
+                >
+
+
+                <select
+                    id="statusFilter"
+                    class="status-filter"
+                    onchange="applyFilters()">
+
+                    <option value="All">
+                        All Status
+                    </option>
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="Processing">
+                        Processing
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                    <option value="Cancelled">
+                        Cancelled
+                    </option>
+
+                </select>
+
+
+                <button
+                    class="clear-btn"
+                    onclick="clearFilters()">
+                    Clear
+                </button>
+
+            </div>
+
+
+            <!-- TABLE -->
+
             <div class="table-wrapper">
 
                 <table>
@@ -583,41 +685,23 @@ tr:hover {
 
                         <tr>
 
-                            <th>
-                                Order
-                            </th>
+                            <th>Order</th>
 
-                            <th>
-                                User Email
-                            </th>
+                            <th>User Email</th>
 
-                            <th>
-                                Service
-                            </th>
+                            <th>Service</th>
 
-                            <th>
-                                Details
-                            </th>
+                            <th>Details</th>
 
-                            <th>
-                                Date
-                            </th>
+                            <th>Date</th>
 
-                            <th>
-                                Amount
-                            </th>
+                            <th>Amount</th>
 
-                            <th>
-                                File
-                            </th>
+                            <th>File</th>
 
-                            <th>
-                                Status
-                            </th>
+                            <th>Status</th>
 
-                            <th>
-                                Action
-                            </th>
+                            <th>Action</th>
 
                         </tr>
 
@@ -654,7 +738,7 @@ tr:hover {
 <script>
 
 /* =========================================================
-   SUPABASE CONFIG
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
@@ -662,7 +746,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -688,12 +771,19 @@ const STORAGE_BUCKET =
 
 
 /* =========================================================
+   GLOBAL ORDERS
+========================================================= */
+
+let allOrders = [];
+
+
+/* =========================================================
    PAGE LOAD
 ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
-    function () {
+    function() {
 
         checkSession();
 
@@ -767,10 +857,7 @@ async function checkSession() {
 
     catch (error) {
 
-        console.error(
-            "Session error:",
-            error
-        );
+        console.error(error);
 
         showLogin();
 
@@ -787,18 +874,14 @@ async function adminLogin() {
 
     const email =
         document
-            .getElementById(
-                "loginEmail"
-            )
+            .getElementById("loginEmail")
             .value
             .trim();
 
 
     const password =
         document
-            .getElementById(
-                "loginPassword"
-            )
+            .getElementById("loginPassword")
             .value;
 
 
@@ -933,33 +1016,25 @@ async function adminLogin() {
 function showAdminPanel(user) {
 
     document
-        .getElementById(
-            "loginScreen"
-        )
+        .getElementById("loginScreen")
         .style.display =
         "none";
 
 
     document
-        .getElementById(
-            "adminPanel"
-        )
+        .getElementById("adminPanel")
         .style.display =
         "block";
 
 
     document
-        .getElementById(
-            "adminEmail"
-        )
+        .getElementById("adminEmail")
         .textContent =
         user.email;
 
 
     document
-        .getElementById(
-            "loggedInText"
-        )
+        .getElementById("loggedInText")
         .textContent =
         "Administrator access";
 
@@ -973,17 +1048,13 @@ function showAdminPanel(user) {
 function showLogin() {
 
     document
-        .getElementById(
-            "loginScreen"
-        )
+        .getElementById("loginScreen")
         .style.display =
         "flex";
 
 
     document
-        .getElementById(
-            "adminPanel"
-        )
+        .getElementById("adminPanel")
         .style.display =
         "none";
 
@@ -1004,9 +1075,7 @@ async function loadOrders() {
 
     table.innerHTML = `
         <tr>
-            <td
-                colspan="9"
-                class="loading">
+            <td colspan="9" class="loading">
                 Loading orders...
             </td>
         </tr>
@@ -1014,6 +1083,8 @@ async function loadOrders() {
 
 
     try {
+
+        /* VERIFY ADMIN */
 
         const {
             data: {
@@ -1045,12 +1116,7 @@ async function loadOrders() {
         }
 
 
-        /*
-         * IMPORTANT
-         *
-         * RPC get_admin_orders()
-         * already returns user_email.
-         */
+        /* GET ORDERS */
 
         const {
             data: orders,
@@ -1075,15 +1141,10 @@ async function loadOrders() {
                     <td
                         colspan="9"
                         class="empty">
-
-                        Failed to load orders.
-
-                        <br><br>
-
+                        Failed to load orders.<br><br>
                         ${escapeHtml(
                             error.message
                         )}
-
                     </td>
                 </tr>
             `;
@@ -1093,65 +1154,16 @@ async function loadOrders() {
         }
 
 
-        if (
-            !orders ||
-            orders.length === 0
-        ) {
-
-            table.innerHTML = `
-                <tr>
-                    <td
-                        colspan="9"
-                        class="empty">
-
-                        No orders found.
-
-                    </td>
-                </tr>
-            `;
-
-
-            updateStatistics([]);
-
-            document
-                .getElementById(
-                    "orderCount"
-                )
-                .textContent =
-                "0 orders";
-
-
-            return;
-
-        }
-
-
-        table.innerHTML =
-            orders
-                .map(
-                    order =>
-                        createOrderRow(
-                            order
-                        )
-                )
-                .join("");
+        allOrders =
+            orders || [];
 
 
         updateStatistics(
-            orders
+            allOrders
         );
 
 
-        document
-            .getElementById(
-                "orderCount"
-            )
-            .textContent =
-            `${orders.length} order${
-                orders.length === 1
-                    ? ""
-                    : "s"
-            }`;
+        applyFilters();
 
     }
 
@@ -1178,6 +1190,141 @@ async function loadOrders() {
         `;
 
     }
+
+}
+
+
+/* =========================================================
+   APPLY SEARCH + STATUS FILTER
+========================================================= */
+
+function applyFilters() {
+
+    const search =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const statusFilter =
+        document
+            .getElementById(
+                "statusFilter"
+            )
+            .value;
+
+
+    const filteredOrders =
+        allOrders.filter(
+            order => {
+
+                const orderNumber =
+                    String(
+                        order.order_number ||
+                        ""
+                    ).toLowerCase();
+
+
+                const email =
+                    String(
+                        order.user_email ||
+                        ""
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    orderNumber.includes(
+                        search
+                    ) ||
+                    email.includes(
+                        search
+                    );
+
+
+                const matchesStatus =
+                    statusFilter === "All" ||
+                    order.status ===
+                    statusFilter;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    renderOrders(
+        filteredOrders
+    );
+
+}
+
+
+/* =========================================================
+   RENDER FILTERED ORDERS
+========================================================= */
+
+function renderOrders(
+    orders
+) {
+
+    const table =
+        document.getElementById(
+            "ordersTable"
+        );
+
+
+    document
+        .getElementById(
+            "orderCount"
+        )
+        .textContent =
+        `${orders.length} order${
+            orders.length === 1
+                ? ""
+                : "s"
+        }`;
+
+
+    if (
+        !orders ||
+        orders.length === 0
+    ) {
+
+        table.innerHTML = `
+            <tr>
+                <td
+                    colspan="9"
+                    class="empty">
+
+                    No matching orders found.
+
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        orders
+            .map(
+                order =>
+                    createOrderRow(
+                        order
+                    )
+            )
+            .join("");
 
 }
 
@@ -1251,38 +1398,29 @@ function createOrderRow(order) {
             <div class="file-buttons">
 
                 <button
-                    type="button"
                     class="view-btn"
                     onclick="viewFile(
                         '${escapeJs(filePath)}'
-                    )"
-                >
+                    )">
+
                     View
+
                 </button>
 
 
                 <button
-                    type="button"
                     class="download-btn"
                     onclick="downloadFile(
                         '${escapeJs(filePath)}',
                         '${escapeJs(fileName)}'
-                    )"
-                >
+                    )">
+
                     Download
+
                 </button>
 
             </div>
 
-        `;
-
-    }
-    else {
-
-        fileButtons = `
-            <div style="color:#9ca3af;">
-                File unavailable
-            </div>
         `;
 
     }
@@ -1297,7 +1435,9 @@ function createOrderRow(order) {
                 <div class="order-number">
 
                     ${escapeHtml(
-                        String(orderNumber)
+                        String(
+                            orderNumber
+                        )
                     )}
 
                 </div>
@@ -1377,14 +1517,10 @@ function createOrderRow(order) {
 
                 <select
                     class="statusSelect"
-                    data-id="${escapeHtml(
-                        order.id
-                    )}"
                     onchange="updateOrderStatus(
                         '${escapeJs(order.id)}',
                         this.value
-                    )"
-                >
+                    )">
 
                     <option
                         value="Pending"
@@ -1393,9 +1529,10 @@ function createOrderRow(order) {
                             "Pending"
                                 ? "selected"
                                 : ""
-                        }
-                    >
+                        }>
+
                         Pending
+
                     </option>
 
 
@@ -1406,9 +1543,10 @@ function createOrderRow(order) {
                             "Processing"
                                 ? "selected"
                                 : ""
-                        }
-                    >
+                        }>
+
                         Processing
+
                     </option>
 
 
@@ -1419,9 +1557,10 @@ function createOrderRow(order) {
                             "Completed"
                                 ? "selected"
                                 : ""
-                        }
-                    >
+                        }>
+
                         Completed
+
                     </option>
 
 
@@ -1432,9 +1571,10 @@ function createOrderRow(order) {
                             "Cancelled"
                                 ? "selected"
                                 : ""
-                        }
-                    >
+                        }>
+
                         Cancelled
+
                     </option>
 
                 </select>
@@ -1445,13 +1585,13 @@ function createOrderRow(order) {
             <td>
 
                 <button
-                    type="button"
                     class="delete-btn"
                     onclick="deleteOrder(
                         '${escapeJs(order.id)}'
-                    )"
-                >
+                    )">
+
                     Delete
+
                 </button>
 
             </td>
@@ -1467,12 +1607,14 @@ function createOrderRow(order) {
    VIEW FILE
 ========================================================= */
 
-async function viewFile(filePath) {
+async function viewFile(
+    filePath
+) {
 
     if (!filePath) {
 
         showMessage(
-            "File path is empty.",
+            "File not available.",
             "error"
         );
 
@@ -1482,21 +1624,6 @@ async function viewFile(filePath) {
 
 
     try {
-
-        /*
-         * Remove accidental leading slash.
-         */
-
-        const cleanPath =
-            String(filePath)
-                .replace(/^\/+/, "");
-
-
-        console.log(
-            "VIEW FILE:",
-            cleanPath
-        );
-
 
         const {
             data,
@@ -1508,8 +1635,8 @@ async function viewFile(filePath) {
                 STORAGE_BUCKET
             )
             .createSignedUrl(
-                cleanPath,
-                600
+                filePath,
+                300
             );
 
 
@@ -1538,7 +1665,7 @@ async function viewFile(filePath) {
         ) {
 
             showMessage(
-                "Could not create file URL.",
+                "File URL could not be created.",
                 "error"
             );
 
@@ -1556,14 +1683,10 @@ async function viewFile(filePath) {
 
     catch (error) {
 
-        console.error(
-            "View error:",
-            error
-        );
+        console.error(error);
 
         showMessage(
-            "Could not open file: " +
-            error.message,
+            "Could not open file.",
             "error"
         );
 
@@ -1584,7 +1707,7 @@ async function downloadFile(
     if (!filePath) {
 
         showMessage(
-            "File path is empty.",
+            "File not available.",
             "error"
         );
 
@@ -1594,25 +1717,6 @@ async function downloadFile(
 
 
     try {
-
-        /*
-         * Clean storage path.
-         */
-
-        const cleanPath =
-            String(filePath)
-                .replace(/^\/+/, "");
-
-
-        console.log(
-            "DOWNLOAD FILE:",
-            cleanPath
-        );
-
-
-        /*
-         * First create signed URL.
-         */
 
         const {
             data,
@@ -1624,15 +1728,19 @@ async function downloadFile(
                 STORAGE_BUCKET
             )
             .createSignedUrl(
-                cleanPath,
-                600
+                filePath,
+                300,
+                {
+                    download:
+                        fileName || true
+                }
             );
 
 
         if (error) {
 
             console.error(
-                "Signed URL error:",
+                "Download error:",
                 error
             );
 
@@ -1663,44 +1771,6 @@ async function downloadFile(
         }
 
 
-        /*
-         * Fetch the actual file.
-         *
-         * This is important because simply
-         * setting link.download on a signed
-         * URL does not always force download.
-         */
-
-        const response =
-            await fetch(
-                data.signedUrl
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "File could not be fetched. HTTP " +
-                response.status
-            );
-
-        }
-
-
-        const blob =
-            await response.blob();
-
-
-        /*
-         * Create temporary local URL.
-         */
-
-        const blobUrl =
-            window.URL.createObjectURL(
-                blob
-            );
-
-
         const link =
             document.createElement(
                 "a"
@@ -1708,12 +1778,16 @@ async function downloadFile(
 
 
         link.href =
-            blobUrl;
+            data.signedUrl;
 
 
         link.download =
             fileName ||
-            "AviPrint-file";
+            "file";
+
+
+        link.target =
+            "_blank";
 
 
         document
@@ -1728,41 +1802,14 @@ async function downloadFile(
 
         link.remove();
 
-
-        /*
-         * Clean temporary URL.
-         */
-
-        setTimeout(
-            function () {
-
-                window.URL.revokeObjectURL(
-                    blobUrl
-                );
-
-            },
-            1000
-        );
-
-
-        showMessage(
-            "File download started.",
-            "success"
-        );
-
     }
 
     catch (error) {
 
-        console.error(
-            "Download error:",
-            error
-        );
-
+        console.error(error);
 
         showMessage(
-            "Download failed: " +
-            error.message,
+            "Download failed.",
             "error"
         );
 
@@ -1779,18 +1826,6 @@ async function updateOrderStatus(
     orderId,
     newStatus
 ) {
-
-    if (!orderId) {
-
-        showMessage(
-            "Invalid order ID.",
-            "error"
-        );
-
-        return;
-
-    }
-
 
     const allowedStatuses = [
 
@@ -1830,7 +1865,8 @@ async function updateOrderStatus(
             .from("orders")
             .update({
 
-                status: newStatus
+                status:
+                    newStatus
 
             })
             .eq(
@@ -1873,8 +1909,7 @@ async function updateOrderStatus(
         console.error(error);
 
         showMessage(
-            "Status update failed: " +
-            error.message,
+            "Status update failed.",
             "error"
         );
 
@@ -1964,8 +1999,7 @@ async function deleteOrder(
         console.error(error);
 
         showMessage(
-            "Delete failed: " +
-            error.message,
+            "Delete failed.",
             "error"
         );
 
@@ -2041,12 +2075,38 @@ function updateStatistics(
 
 
 /* =========================================================
+   CLEAR FILTERS
+========================================================= */
+
+function clearFilters() {
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "statusFilter"
+        )
+        .value = "All";
+
+
+    applyFilters();
+
+}
+
+
+/* =========================================================
    LOGOUT
 ========================================================= */
 
 async function logout() {
 
     await supabaseClient.auth.signOut();
+
 
     showLogin();
 
@@ -2089,13 +2149,13 @@ function showMessage(
 
 
     setTimeout(
-        function () {
+        function() {
 
             message.style.display =
                 "none";
 
         },
-        5000
+        4000
     );
 
 }
@@ -2138,7 +2198,7 @@ function hideLoginError() {
 
 
 /* =========================================================
-   DATE FORMAT
+   DATE
 ========================================================= */
 
 function formatDate(
@@ -2270,7 +2330,7 @@ function escapeJs(
 
 
 /* =========================================================
-   ENTER KEY LOGIN
+   ENTER KEY
 ========================================================= */
 
 document.addEventListener(
