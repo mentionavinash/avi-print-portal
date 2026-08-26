@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AviPrint Admin Panel</title>
@@ -13,330 +11,340 @@
 
 <style>
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-body {
-    background: #f4f7fb;
-    color: #1f2937;
+body{
+    background:#f4f7fb;
+    color:#1f2937;
 }
 
-.header {
-    background: #111827;
-    color: white;
-    padding: 18px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
+.header{
+    background:#111827;
+    color:white;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
 }
 
-.header h1 {
-    font-size: 24px;
+.header h1{
+    font-size:24px;
 }
 
-.header p {
-    margin-top: 5px;
-    font-size: 13px;
-    color: #d1d5db;
+.header p{
+    margin-top:5px;
+    font-size:13px;
+    color:#d1d5db;
 }
 
-.header-buttons {
-    display: flex;
-    gap: 10px;
+.header-buttons{
+    display:flex;
+    gap:10px;
 }
 
-button {
-    border: none;
-    cursor: pointer;
-    border-radius: 7px;
-    padding: 10px 15px;
-    font-weight: 600;
+button{
+    border:none;
+    cursor:pointer;
+    border-radius:7px;
+    padding:10px 15px;
+    font-weight:600;
 }
 
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
-.refresh-btn {
-    background: #2563eb;
-    color: white;
+.refresh-btn{
+    background:#2563eb;
+    color:white;
 }
 
-.logout-btn {
-    background: #dc2626;
-    color: white;
+.logout-btn{
+    background:#dc2626;
+    color:white;
 }
 
-.container {
-    max-width: 1500px;
-    margin: auto;
-    padding: 25px;
+.container{
+    max-width:1500px;
+    margin:auto;
+    padding:25px;
 }
 
-.admin-info {
-    background: white;
-    border-radius: 10px;
-    padding: 15px 18px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+.admin-info{
+    background:white;
+    border-radius:10px;
+    padding:15px 18px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
 }
 
-.admin-info strong {
-    color: #111827;
+.admin-info strong{
+    color:#111827;
 }
 
-.stats {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+    margin-bottom:25px;
 }
 
-.stat-card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+.stat-card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
 }
 
-.stat-card h3 {
-    font-size: 14px;
-    color: #6b7280;
-    margin-bottom: 10px;
+.stat-card h3{
+    font-size:14px;
+    color:#6b7280;
+    margin-bottom:10px;
 }
 
-.stat-card .number {
-    font-size: 28px;
-    font-weight: bold;
-    color: #111827;
+.stat-card .number{
+    font-size:28px;
+    font-weight:bold;
+    color:#111827;
 }
 
-.orders-box {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
+.orders-box{
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    overflow:hidden;
 }
 
-.orders-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
+.orders-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
 }
 
-.orders-header h2 {
-    font-size: 21px;
+.orders-header h2{
+    font-size:21px;
 }
 
-.message {
-    padding: 12px;
-    border-radius: 7px;
-    margin-bottom: 15px;
-    display: none;
+.message{
+    padding:12px;
+    border-radius:7px;
+    margin-bottom:15px;
+    display:none;
 }
 
-.success {
-    background: #dcfce7;
-    color: #166534;
+.success{
+    background:#dcfce7;
+    color:#166534;
 }
 
-.error {
-    background: #fee2e2;
-    color: #991b1b;
+.error{
+    background:#fee2e2;
+    color:#991b1b;
 }
 
-.loading {
-    text-align: center;
-    padding: 30px;
-    color: #6b7280;
+.loading{
+    text-align:center;
+    padding:30px;
+    color:#6b7280;
 }
 
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
 }
 
-table {
-    width: 100%;
-    min-width: 1250px;
-    border-collapse: collapse;
+table{
+    width:100%;
+    min-width:1300px;
+    border-collapse:collapse;
 }
 
-th {
-    background: #f3f4f6;
-    padding: 13px 10px;
-    text-align: left;
-    font-size: 13px;
-    color: #374151;
-    border-bottom: 1px solid #e5e7eb;
+th{
+    background:#f3f4f6;
+    padding:13px 10px;
+    text-align:left;
+    font-size:13px;
+    color:#374151;
+    border-bottom:1px solid #e5e7eb;
 }
 
-td {
-    padding: 13px 10px;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 13px;
-    vertical-align: middle;
+td{
+    padding:13px 10px;
+    border-bottom:1px solid #e5e7eb;
+    font-size:13px;
+    vertical-align:middle;
 }
 
-tr:hover {
-    background: #f9fafb;
+tr:hover{
+    background:#f9fafb;
 }
 
-.order-number {
-    font-weight: bold;
-    color: #2563eb;
+.order-number{
+    font-weight:bold;
+    color:#2563eb;
 }
 
-.user-email {
-    max-width: 230px;
-    word-break: break-word;
-    font-weight: 500;
+.user-email{
+    max-width:230px;
+    word-break:break-word;
+    font-weight:500;
 }
 
-.service {
-    font-weight: 600;
+.service{
+    font-weight:600;
 }
 
-.details {
-    max-width: 240px;
-    word-break: break-word;
+.details{
+    max-width:240px;
+    word-break:break-word;
 }
 
-.statusSelect {
-    padding: 8px 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    background: white;
-    cursor: pointer;
+.statusSelect{
+    padding:8px 10px;
+    border:1px solid #d1d5db;
+    border-radius:6px;
+    background:white;
+    cursor:pointer;
 }
 
-.file-name {
-    max-width: 180px;
-    word-break: break-word;
-    margin-bottom: 8px;
+.file-name{
+    max-width:180px;
+    word-break:break-word;
+    margin-bottom:8px;
 }
 
-.file-buttons {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
+.file-buttons{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
 }
 
-.view-btn {
-    background: #2563eb;
-    color: white;
-    padding: 7px 10px;
-    font-size: 12px;
+.view-btn{
+    background:#2563eb;
+    color:white;
+    padding:7px 10px;
+    font-size:12px;
 }
 
-.download-btn {
-    background: #16a34a;
-    color: white;
-    padding: 7px 10px;
-    font-size: 12px;
+.download-btn{
+    background:#16a34a;
+    color:white;
+    padding:7px 10px;
+    font-size:12px;
 }
 
-.delete-btn {
-    background: #dc2626;
-    color: white;
-    padding: 8px 12px;
-    font-size: 12px;
+.delete-btn{
+    background:#dc2626;
+    color:white;
+    padding:8px 12px;
+    font-size:12px;
 }
 
-.login-screen {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+.delete-btn:hover{
+    background:#b91c1c;
 }
 
-.login-box {
-    width: 100%;
-    max-width: 400px;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+.login-screen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 }
 
-.login-box h2 {
-    margin-bottom: 8px;
+.login-box{
+    width:100%;
+    max-width:400px;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
 }
 
-.login-box p {
-    color: #6b7280;
-    font-size: 14px;
-    margin-bottom: 20px;
+.login-box h2{
+    margin-bottom:8px;
 }
 
-.login-box input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 7px;
-    outline: none;
+.login-box p{
+    color:#6b7280;
+    font-size:14px;
+    margin-bottom:20px;
 }
 
-.login-btn {
-    width: 100%;
-    background: #2563eb;
-    color: white;
-    padding: 12px;
+.login-box input{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    outline:none;
 }
 
-.login-error {
-    background: #fee2e2;
-    color: #991b1b;
-    padding: 10px;
-    border-radius: 7px;
-    margin-bottom: 12px;
-    display: none;
-    font-size: 13px;
+.login-btn{
+    width:100%;
+    background:#2563eb;
+    color:white;
+    padding:12px;
 }
 
-#adminPanel {
-    display: none;
+.login-error{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:10px;
+    border-radius:7px;
+    margin-bottom:12px;
+    display:none;
+    font-size:13px;
 }
 
-@media (max-width: 1000px) {
+#adminPanel{
+    display:none;
+}
 
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
 }
 
-@media (max-width: 600px) {
+@media(max-width:600px){
 
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
     }
 
-    .header-buttons {
-        width: 100%;
+    .header-buttons{
+        width:100%;
     }
 
-    .header-buttons button {
-        flex: 1;
+    .header-buttons button{
+        flex:1;
     }
 
-    .container {
-        padding: 15px;
+    .container{
+        padding:15px;
     }
 
-    .stats {
-        grid-template-columns: 1fr;
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .orders-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
     }
 
 }
@@ -356,7 +364,9 @@ tr:hover {
 
         <h2>AviPrint Admin</h2>
 
-        <p>Login using your administrator account.</p>
+        <p>
+            Login using your administrator account.
+        </p>
 
         <div id="loginError" class="login-error"></div>
 
@@ -396,7 +406,9 @@ tr:hover {
 
             <h1>AviPrint Admin Panel</h1>
 
-            <p>Administrator access</p>
+            <p id="loggedInText">
+                Administrator access
+            </p>
 
         </div>
 
@@ -435,6 +447,8 @@ tr:hover {
         <div id="message" class="message"></div>
 
 
+        <!-- STATISTICS -->
+
         <div class="stats">
 
             <div class="stat-card">
@@ -465,13 +479,17 @@ tr:hover {
         </div>
 
 
+        <!-- ORDERS -->
+
         <div class="orders-box">
 
             <div class="orders-header">
 
                 <h2>All Orders</h2>
 
-                <span id="orderCount">0 orders</span>
+                <span id="orderCount">
+                    0 orders
+                </span>
 
             </div>
 
@@ -497,7 +515,6 @@ tr:hover {
                         </tr>
 
                     </thead>
-
 
                     <tbody id="ordersTable">
 
@@ -574,7 +591,11 @@ const EMAIL_FUNCTION =
 
 document.addEventListener(
     "DOMContentLoaded",
-    checkSession
+    function(){
+
+        checkSession();
+
+    }
 );
 
 
@@ -582,9 +603,9 @@ document.addEventListener(
    CHECK SESSION
 ========================================================= */
 
-async function checkSession() {
+async function checkSession(){
 
-    try {
+    try{
 
         const {
             data,
@@ -592,7 +613,10 @@ async function checkSession() {
         } =
         await supabaseClient.auth.getSession();
 
-        if (error || !data.session) {
+
+        if(error){
+
+            console.error(error);
 
             showLogin();
 
@@ -600,14 +624,25 @@ async function checkSession() {
 
         }
 
+
+        if(!data.session){
+
+            showLogin();
+
+            return;
+
+        }
+
+
         const user =
             data.session.user;
 
-        if (
+
+        if(
             !user.email ||
             user.email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
-        ) {
+        ){
 
             await supabaseClient.auth.signOut();
 
@@ -621,13 +656,14 @@ async function checkSession() {
 
         }
 
+
         showAdminPanel(user);
 
         await loadOrders();
 
     }
 
-    catch (error) {
+    catch(error){
 
         console.error(error);
 
@@ -642,20 +678,22 @@ async function checkSession() {
    LOGIN
 ========================================================= */
 
-async function adminLogin() {
+async function adminLogin(){
 
     const email =
         document
-            .getElementById("loginEmail")
-            .value
-            .trim();
+        .getElementById("loginEmail")
+        .value
+        .trim();
+
 
     const password =
         document
-            .getElementById("loginPassword")
-            .value;
+        .getElementById("loginPassword")
+        .value;
 
-    if (!email || !password) {
+
+    if(!email || !password){
 
         showLoginError(
             "Please enter email and password."
@@ -665,10 +703,11 @@ async function adminLogin() {
 
     }
 
-    if (
+
+    if(
         email.toLowerCase() !==
         ADMIN_EMAIL.toLowerCase()
-    ) {
+    ){
 
         showLoginError(
             "Only the administrator account can access this panel."
@@ -678,30 +717,39 @@ async function adminLogin() {
 
     }
 
+
     const button =
-        document.querySelector(".login-btn");
+        document.querySelector(
+            ".login-btn"
+        );
+
 
     button.disabled = true;
 
     button.textContent =
         "Logging in...";
 
+
     hideLoginError();
 
-    try {
+
+    try{
 
         const {
             data,
             error
         } =
-        await supabaseClient.auth.signInWithPassword({
+        await supabaseClient.auth
+        .signInWithPassword({
 
-            email,
-            password
+            email:email,
+
+            password:password
 
         });
 
-        if (error) {
+
+        if(error){
 
             showLoginError(
                 error.message
@@ -711,7 +759,8 @@ async function adminLogin() {
 
         }
 
-        if (!data.user) {
+
+        if(!data.user){
 
             showLoginError(
                 "Login failed."
@@ -721,6 +770,24 @@ async function adminLogin() {
 
         }
 
+
+        if(
+            !data.user.email ||
+            data.user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ){
+
+            await supabaseClient.auth.signOut();
+
+            showLoginError(
+                "Access denied."
+            );
+
+            return;
+
+        }
+
+
         showAdminPanel(
             data.user
         );
@@ -729,18 +796,17 @@ async function adminLogin() {
 
     }
 
-    catch (error) {
+    catch(error){
 
         console.error(error);
 
         showLoginError(
-            error.message ||
-            "Login failed."
+            "An unexpected login error occurred."
         );
 
     }
 
-    finally {
+    finally{
 
         button.disabled = false;
 
@@ -756,22 +822,30 @@ async function adminLogin() {
    SHOW ADMIN
 ========================================================= */
 
-function showAdminPanel(user) {
+function showAdminPanel(user){
 
     document
-        .getElementById("loginScreen")
-        .style.display =
-        "none";
+    .getElementById("loginScreen")
+    .style.display =
+    "none";
+
 
     document
-        .getElementById("adminPanel")
-        .style.display =
-        "block";
+    .getElementById("adminPanel")
+    .style.display =
+    "block";
+
 
     document
-        .getElementById("adminEmail")
-        .textContent =
-        user.email || "-";
+    .getElementById("adminEmail")
+    .textContent =
+    user.email;
+
+
+    document
+    .getElementById("loggedInText")
+    .textContent =
+    "Administrator access";
 
 }
 
@@ -780,17 +854,18 @@ function showAdminPanel(user) {
    SHOW LOGIN
 ========================================================= */
 
-function showLogin() {
+function showLogin(){
 
     document
-        .getElementById("loginScreen")
-        .style.display =
-        "flex";
+    .getElementById("loginScreen")
+    .style.display =
+    "flex";
+
 
     document
-        .getElementById("adminPanel")
-        .style.display =
-        "none";
+    .getElementById("adminPanel")
+    .style.display =
+    "none";
 
 }
 
@@ -799,12 +874,13 @@ function showLogin() {
    LOAD ORDERS
 ========================================================= */
 
-async function loadOrders() {
+async function loadOrders(){
 
     const table =
         document.getElementById(
             "ordersTable"
         );
+
 
     table.innerHTML = `
         <tr>
@@ -814,16 +890,18 @@ async function loadOrders() {
         </tr>
     `;
 
-    try {
+
+    try{
 
         const {
-            data: {
+            data:{
                 user
             }
         } =
         await supabaseClient.auth.getUser();
 
-        if (!user) {
+
+        if(!user){
 
             showLogin();
 
@@ -831,16 +909,35 @@ async function loadOrders() {
 
         }
 
+
+        if(
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ){
+
+            await logout();
+
+            return;
+
+        }
+
+
         const {
-            data: orders,
+            data:orders,
             error
         } =
         await supabaseClient
-            .rpc("get_admin_orders");
+        .rpc("get_admin_orders");
 
-        if (error) {
 
-            console.error(error);
+        if(error){
+
+            console.error(
+                "RPC Error:",
+                error
+            );
+
 
             table.innerHTML = `
                 <tr>
@@ -855,25 +952,11 @@ async function loadOrders() {
 
         }
 
-        const safeOrders =
-            Array.isArray(orders)
-                ? orders
-                : [];
 
-        updateStatistics(
-            safeOrders
-        );
-
-        document
-            .getElementById("orderCount")
-            .textContent =
-            `${safeOrders.length} order${
-                safeOrders.length === 1
-                    ? ""
-                    : "s"
-            }`;
-
-        if (!safeOrders.length) {
+        if(
+            !orders ||
+            orders.length === 0
+        ){
 
             table.innerHTML = `
                 <tr>
@@ -883,20 +966,51 @@ async function loadOrders() {
                 </tr>
             `;
 
+
+            updateStatistics([]);
+
+
+            document
+            .getElementById("orderCount")
+            .textContent =
+            "0 orders";
+
+
             return;
 
         }
 
+
         table.innerHTML =
-            safeOrders
-                .map(createOrderRow)
-                .join("");
+            orders
+            .map(
+                order =>
+                createOrderRow(order)
+            )
+            .join("");
+
+
+        updateStatistics(orders);
+
+
+        document
+        .getElementById("orderCount")
+        .textContent =
+        `${orders.length} order${
+            orders.length === 1
+            ? ""
+            : "s"
+        }`;
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(error);
+        console.error(
+            "Load orders error:",
+            error
+        );
+
 
         table.innerHTML = `
             <tr>
@@ -915,24 +1029,29 @@ async function loadOrders() {
    CREATE ORDER ROW
 ========================================================= */
 
-function createOrderRow(order) {
+function createOrderRow(order){
 
     const userEmail =
+        order.customer_email ||
         order.user_email ||
         "Email not available";
+
 
     const orderNumber =
         order.order_number ||
         order.id ||
         "-";
 
+
     const service =
         order.service_name ||
         "-";
 
+
     const details =
         order.service_details ||
         "-";
+
 
     const date =
         formatDate(
@@ -940,103 +1059,141 @@ function createOrderRow(order) {
             order.created_at
         );
 
+
     const amount =
         order.amount !== null &&
         order.amount !== undefined
-            ? "₹" +
-              Number(order.amount).toFixed(2)
-            : "₹0.00";
+        ? "₹" +
+          Number(order.amount).toFixed(2)
+        : "₹0.00";
+
 
     const fileName =
         order.file_name ||
         "No file";
 
+
     const status =
         order.status ||
         "Pending";
+
 
     const filePath =
         order.file_path ||
         "";
 
-    let fileButtons = "";
-
-    if (filePath) {
-
-        fileButtons = `
-
-            <div class="file-buttons">
-
-                <button
-                    class="view-btn"
-                    onclick="viewFile(
-                        '${escapeJs(filePath)}'
-                    )"
-                >
-                    View
-                </button>
-
-                <button
-                    class="download-btn"
-                    onclick="downloadFile(
-                        '${escapeJs(filePath)}',
-                        '${escapeJs(fileName)}'
-                    )"
-                >
-                    Download
-                </button>
-
-            </div>
-
-        `;
-
-    }
 
     return `
 
         <tr>
 
             <td>
+
                 <div class="order-number">
-                    ${escapeHtml(orderNumber)}
+
+                    ${escapeHtml(
+                        String(orderNumber)
+                    )}
+
                 </div>
+
             </td>
 
+
             <td>
+
                 <div class="user-email">
-                    ${escapeHtml(userEmail)}
+
+                    ${escapeHtml(
+                        userEmail
+                    )}
+
                 </div>
+
             </td>
 
+
             <td>
+
                 <div class="service">
-                    ${escapeHtml(service)}
+
+                    ${escapeHtml(
+                        service
+                    )}
+
                 </div>
+
             </td>
 
+
             <td>
+
                 <div class="details">
-                    ${escapeHtml(details)}
+
+                    ${escapeHtml(
+                        details
+                    )}
+
                 </div>
+
             </td>
 
+
             <td>
+
                 ${escapeHtml(date)}
+
             </td>
 
+
             <td>
+
                 ${escapeHtml(amount)}
+
             </td>
+
 
             <td>
 
                 <div class="file-name">
-                    ${escapeHtml(fileName)}
+
+                    ${escapeHtml(
+                        fileName
+                    )}
+
                 </div>
 
-                ${fileButtons}
+                ${
+                    filePath
+                    ? `
+                        <div class="file-buttons">
+
+                            <button
+                                class="view-btn"
+                                onclick="viewFile(
+                                    ${JSON.stringify(filePath)}
+                                )"
+                            >
+                                View
+                            </button>
+
+                            <button
+                                class="download-btn"
+                                onclick="downloadFile(
+                                    ${JSON.stringify(filePath)},
+                                    ${JSON.stringify(fileName)}
+                                )"
+                            >
+                                Download
+                            </button>
+
+                        </div>
+                    `
+                    : ""
+                }
 
             </td>
+
 
             <td>
 
@@ -1044,9 +1201,15 @@ function createOrderRow(order) {
                     class="statusSelect"
                     data-old-status="${escapeHtml(status)}"
                     onchange="updateOrderStatus(
-                        '${escapeJs(order.id)}',
+                        ${JSON.stringify(order.id)},
                         this.value,
-                        this
+                        ${JSON.stringify(userEmail)},
+                        ${JSON.stringify(orderNumber)},
+                        ${JSON.stringify(service)},
+                        ${JSON.stringify(details)},
+                        ${JSON.stringify(amount)},
+                        ${JSON.stringify(fileName)},
+                        ${JSON.stringify(status)}
                     )"
                 >
 
@@ -1082,12 +1245,13 @@ function createOrderRow(order) {
 
             </td>
 
+
             <td>
 
                 <button
                     class="delete-btn"
                     onclick="deleteOrder(
-                        '${escapeJs(order.id)}'
+                        ${JSON.stringify(order.id)}
                     )"
                 >
                     Delete
@@ -1106,9 +1270,9 @@ function createOrderRow(order) {
    VIEW FILE
 ========================================================= */
 
-async function viewFile(filePath) {
+async function viewFile(filePath){
 
-    if (!filePath) {
+    if(!filePath){
 
         showMessage(
             "File not available.",
@@ -1119,33 +1283,55 @@ async function viewFile(filePath) {
 
     }
 
-    try {
+
+    try{
 
         const {
             data,
             error
         } =
         await supabaseClient
-            .storage
-            .from(STORAGE_BUCKET)
-            .createSignedUrl(
-                filePath,
-                600
+        .storage
+        .from(STORAGE_BUCKET)
+        .createSignedUrl(
+            filePath,
+            600
+        );
+
+
+        if(error){
+
+            console.error(
+                "View file error:",
+                error
             );
 
-        if (error) {
 
-            throw error;
+            showMessage(
+                "Could not open file: " +
+                error.message,
+                "error"
+            );
+
+            return;
 
         }
 
-        if (!data || !data.signedUrl) {
 
-            throw new Error(
-                "File URL could not be created."
+        if(
+            !data ||
+            !data.signedUrl
+        ){
+
+            showMessage(
+                "File URL could not be created.",
+                "error"
             );
 
+            return;
+
         }
+
 
         window.open(
             data.signedUrl,
@@ -1154,16 +1340,12 @@ async function viewFile(filePath) {
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(
-            "View file error:",
-            error
-        );
+        console.error(error);
 
         showMessage(
-            "Could not open file: " +
-            error.message,
+            "Could not open file.",
             "error"
         );
 
@@ -1179,9 +1361,9 @@ async function viewFile(filePath) {
 async function downloadFile(
     filePath,
     fileName
-) {
+){
 
-    if (!filePath) {
+    if(!filePath){
 
         showMessage(
             "File not available.",
@@ -1192,44 +1374,72 @@ async function downloadFile(
 
     }
 
-    try {
+
+    try{
+
+        showMessage(
+            "Preparing download...",
+            "success"
+        );
+
 
         const {
             data,
             error
         } =
         await supabaseClient
-            .storage
-            .from(STORAGE_BUCKET)
-            .createSignedUrl(
-                filePath,
-                600,
-                {
-                    download:
-                        fileName || true
-                }
+        .storage
+        .from(STORAGE_BUCKET)
+        .createSignedUrl(
+            filePath,
+            600,
+            {
+                download:true
+            }
+        );
+
+
+        if(error){
+
+            console.error(
+                "Signed URL error:",
+                error
             );
 
-        if (error) {
 
-            throw error;
+            showMessage(
+                "Download failed: " +
+                error.message,
+                "error"
+            );
+
+            return;
 
         }
 
-        if (!data || !data.signedUrl) {
 
-            throw new Error(
-                "Download URL could not be created."
+        if(
+            !data ||
+            !data.signedUrl
+        ){
+
+            showMessage(
+                "Download URL could not be created.",
+                "error"
             );
 
+            return;
+
         }
+
 
         const response =
             await fetch(
                 data.signedUrl
             );
 
-        if (!response.ok) {
+
+        if(!response.ok){
 
             throw new Error(
                 "Could not fetch the file."
@@ -1237,31 +1447,47 @@ async function downloadFile(
 
         }
 
+
         const blob =
             await response.blob();
+
 
         const blobUrl =
             URL.createObjectURL(blob);
 
+
         const link =
             document.createElement("a");
+
 
         link.href =
             blobUrl;
 
+
         link.download =
-            fileName || "file";
+            fileName || "AviPrint-file";
+
+
+        link.style.display =
+            "none";
+
 
         document.body.appendChild(link);
 
+
         link.click();
 
-        link.remove();
+
+        document.body.removeChild(link);
+
 
         setTimeout(
-            () => URL.revokeObjectURL(blobUrl),
-            1000
+            () => {
+                URL.revokeObjectURL(blobUrl);
+            },
+            2000
         );
+
 
         showMessage(
             "File downloaded successfully.",
@@ -1270,12 +1496,13 @@ async function downloadFile(
 
     }
 
-    catch (error) {
+    catch(error){
 
         console.error(
             "Download error:",
             error
         );
+
 
         showMessage(
             "Download failed: " +
@@ -1289,14 +1516,20 @@ async function downloadFile(
 
 
 /* =========================================================
-   UPDATE STATUS + SEND EMAIL
+   UPDATE STATUS
 ========================================================= */
 
 async function updateOrderStatus(
     orderId,
     newStatus,
-    selectElement
-) {
+    userEmail,
+    orderNumber,
+    service,
+    details,
+    amount,
+    fileName,
+    oldStatus
+){
 
     const allowedStatuses = [
         "Pending",
@@ -1305,104 +1538,105 @@ async function updateOrderStatus(
         "Cancelled"
     ];
 
-    const oldStatus =
-        selectElement.dataset.oldStatus;
 
-    if (
+    if(
         !allowedStatuses.includes(
             newStatus
         )
-    ) {
-
-        selectElement.value =
-            oldStatus;
-
-        return;
-
-    }
-
-    if (
-        newStatus === oldStatus
-    ) {
-
-        return;
-
-    }
-
-    selectElement.disabled = true;
-
-    try {
-
-        /* ---------------------------------------------
-           1. GET CURRENT ORDER
-        --------------------------------------------- */
-
-        const {
-            data: order,
-            error: orderError
-        } =
-        await supabaseClient
-            .from("orders")
-            .select("*")
-            .eq("id", orderId)
-            .single();
-
-        if (orderError) {
-
-            throw orderError;
-
-        }
-
-
-        /* ---------------------------------------------
-           2. UPDATE STATUS
-        --------------------------------------------- */
-
-        const {
-            error: updateError
-        } =
-        await supabaseClient
-            .from("orders")
-            .update({
-                status: newStatus
-            })
-            .eq("id", orderId);
-
-        if (updateError) {
-
-            throw updateError;
-
-        }
-
-
-        /* ---------------------------------------------
-           3. SHOW STATUS SUCCESS
-        --------------------------------------------- */
+    ){
 
         showMessage(
-            "Order status updated successfully.",
-            "success"
+            "Invalid order status.",
+            "error"
         );
 
+        await loadOrders();
 
-        selectElement.dataset.oldStatus =
-            newStatus;
+        return;
+
+    }
+
+
+    if(newStatus === oldStatus){
+
+        return;
+
+    }
+
+
+    try{
+
+        /* ---------------------------------------------
+           CHECK ADMIN
+        --------------------------------------------- */
+
+        const {
+            data:{
+                user
+            }
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if(
+            !user ||
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ){
+
+            showLogin();
+
+            return;
+
+        }
 
 
         /* ---------------------------------------------
-           4. SEND CUSTOMER EMAIL
+           UPDATE DATABASE
         --------------------------------------------- */
 
-        const customerEmail =
-            order.user_email ||
-            order.email ||
-            "";
+        const {
+            error:updateError
+        } =
+        await supabaseClient
+        .from("orders")
+        .update({
+            status:newStatus
+        })
+        .eq("id",orderId);
 
-        if (!customerEmail) {
 
-            console.warn(
-                "Customer email not available."
+        if(updateError){
+
+            console.error(
+                "Status update error:",
+                updateError
             );
+
+
+            showMessage(
+                "Status update failed: " +
+                updateError.message,
+                "error"
+            );
+
+
+            await loadOrders();
+
+            return;
+
+        }
+
+
+        /* ---------------------------------------------
+           CHECK CUSTOMER EMAIL
+        --------------------------------------------- */
+
+        if(
+            !userEmail ||
+            userEmail === "Email not available"
+        ){
 
             showMessage(
                 "Order updated, but customer email is not available.",
@@ -1416,63 +1650,55 @@ async function updateOrderStatus(
         }
 
 
-        try {
+        /* ---------------------------------------------
+           SEND CUSTOMER EMAIL
+        --------------------------------------------- */
 
-            const emailPayload = {
-
-                email:
-                    customerEmail,
-
-                orderNumber:
-                    order.order_number || order.id,
-
-                service:
-                    order.service_name || "-",
-
-                details:
-                    order.service_details || "-",
-
-                amount:
-                    order.amount !== null &&
-                    order.amount !== undefined
-                        ? "₹" +
-                          Number(order.amount).toFixed(2)
-                        : "₹0.00",
-
-                status:
-                    newStatus,
-
-                fileName:
-                    order.file_name || ""
-
-            };
+        showMessage(
+            "Status updated. Sending customer email...",
+            "success"
+        );
 
 
-            console.log(
-                "Sending email:",
-                emailPayload
-            );
-
+        try{
 
             const {
-                data: emailData,
-                error: emailError
+                data:emailData,
+                error:emailError
             } =
-            await supabaseClient.functions.invoke(
+            await supabaseClient
+            .functions
+            .invoke(
                 EMAIL_FUNCTION,
                 {
-                    body:
-                        emailPayload
+                    body:{
+
+                        email:userEmail,
+
+                        orderNumber:orderNumber,
+
+                        service:service,
+
+                        details:details,
+
+                        amount:amount,
+
+                        status:newStatus,
+
+                        fileName:fileName
+
+                    }
                 }
             );
 
 
-            if (emailError) {
+            if(emailError){
 
                 console.error(
-                    "Edge Function error:",
+                    "Email function error:",
                     emailError
                 );
+
 
                 showMessage(
                     "Order updated, but customer email failed: " +
@@ -1482,12 +1708,29 @@ async function updateOrderStatus(
 
             }
 
-            else {
+            else if(
+                emailData &&
+                emailData.success === false
+            ){
 
-                console.log(
-                    "Email function response:",
+                console.error(
+                    "Email sending failed:",
                     emailData
                 );
+
+
+                showMessage(
+                    "Order updated, but email failed: " +
+                    (
+                        emailData.error ||
+                        "Unknown email error."
+                    ),
+                    "error"
+                );
+
+            }
+
+            else{
 
                 showMessage(
                     "Order updated and customer email sent successfully.",
@@ -1498,16 +1741,16 @@ async function updateOrderStatus(
 
         }
 
-        catch (emailError) {
+        catch(emailError){
 
             console.error(
-                "Email request failed:",
+                "Email error:",
                 emailError
             );
 
+
             showMessage(
-                "Order updated, but customer email failed: " +
-                emailError.message,
+                "Order updated, but customer email failed.",
                 "error"
             );
 
@@ -1518,15 +1761,13 @@ async function updateOrderStatus(
 
     }
 
-    catch (error) {
+    catch(error){
 
         console.error(
             "Status update error:",
             error
         );
 
-        selectElement.value =
-            oldStatus;
 
         showMessage(
             "Status update failed: " +
@@ -1534,11 +1775,8 @@ async function updateOrderStatus(
             "error"
         );
 
-    }
 
-    finally {
-
-        selectElement.disabled = false;
+        await loadOrders();
 
     }
 
@@ -1546,14 +1784,12 @@ async function updateOrderStatus(
 
 
 /* =========================================================
-   DELETE
+   DELETE ORDER
 ========================================================= */
 
-async function deleteOrder(
-    orderId
-) {
+async function deleteOrder(orderId){
 
-    if (!orderId) {
+    if(!orderId){
 
         showMessage(
             "Invalid order ID.",
@@ -1564,50 +1800,63 @@ async function deleteOrder(
 
     }
 
+
     const confirmed =
         confirm(
             "Are you sure you want to delete this order? This action cannot be undone."
         );
 
-    if (!confirmed) {
+
+    if(!confirmed){
 
         return;
 
     }
 
-    try {
+
+    try{
 
         const {
             error
         } =
         await supabaseClient
-            .from("orders")
-            .delete()
-            .eq(
-                "id",
-                orderId
+        .from("orders")
+        .delete()
+        .eq("id",orderId);
+
+
+        if(error){
+
+            console.error(
+                "Delete error:",
+                error
             );
 
-        if (error) {
 
-            throw error;
+            showMessage(
+                "Delete failed: " +
+                error.message,
+                "error"
+            );
+
+            return;
 
         }
+
 
         showMessage(
             "Order deleted successfully.",
             "success"
         );
 
+
         await loadOrders();
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(
-            error
-        );
+        console.error(error);
 
         showMessage(
             "Delete failed: " +
@@ -1624,41 +1873,47 @@ async function deleteOrder(
    STATISTICS
 ========================================================= */
 
-function updateStatistics(
-    orders
-) {
+function updateStatistics(orders){
 
-    document.getElementById(
-        "totalOrders"
-    ).textContent =
+    document
+    .getElementById("totalOrders")
+    .textContent =
     orders.length;
 
-    document.getElementById(
-        "pendingOrders"
-    ).textContent =
+
+    document
+    .getElementById("pendingOrders")
+    .textContent =
     orders.filter(
-        o => o.status === "Pending"
+        order =>
+        order.status === "Pending"
     ).length;
 
-    document.getElementById(
-        "processingOrders"
-    ).textContent =
+
+    document
+    .getElementById("processingOrders")
+    .textContent =
     orders.filter(
-        o => o.status === "Processing"
+        order =>
+        order.status === "Processing"
     ).length;
 
-    document.getElementById(
-        "completedOrders"
-    ).textContent =
+
+    document
+    .getElementById("completedOrders")
+    .textContent =
     orders.filter(
-        o => o.status === "Completed"
+        order =>
+        order.status === "Completed"
     ).length;
 
-    document.getElementById(
-        "cancelledOrders"
-    ).textContent =
+
+    document
+    .getElementById("cancelledOrders")
+    .textContent =
     orders.filter(
-        o => o.status === "Cancelled"
+        order =>
+        order.status === "Cancelled"
     ).length;
 
 }
@@ -1668,15 +1923,16 @@ function updateStatistics(
    LOGOUT
 ========================================================= */
 
-async function logout() {
+async function logout(){
 
     await supabaseClient.auth.signOut();
 
     showLogin();
 
-    document.getElementById(
-        "loginPassword"
-    ).value = "";
+
+    document
+    .getElementById("loginPassword")
+    .value = "";
 
 }
 
@@ -1685,36 +1941,47 @@ async function logout() {
    MESSAGE
 ========================================================= */
 
+let messageTimer = null;
+
 function showMessage(
     text,
     type
-) {
+){
 
     const message =
         document.getElementById(
             "message"
         );
 
+
     message.textContent =
         text;
+
 
     message.className =
         "message " + type;
 
+
     message.style.display =
         "block";
 
-    clearTimeout(
-        window.messageTimer
-    );
 
-    window.messageTimer =
+    if(messageTimer){
+
+        clearTimeout(messageTimer);
+
+    }
+
+
+    messageTimer =
         setTimeout(
-            () => {
+            function(){
+
                 message.style.display =
                     "none";
+
             },
-            6000
+            7000
         );
 
 }
@@ -1724,17 +1991,17 @@ function showMessage(
    LOGIN ERROR
 ========================================================= */
 
-function showLoginError(
-    text
-) {
+function showLoginError(text){
 
     const error =
         document.getElementById(
             "loginError"
         );
 
+
     error.textContent =
         text;
+
 
     error.style.display =
         "block";
@@ -1742,11 +2009,13 @@ function showLoginError(
 }
 
 
-function hideLoginError() {
+function hideLoginError(){
 
-    document.getElementById(
+    document
+    .getElementById(
         "loginError"
-    ).style.display =
+    )
+    .style.display =
     "none";
 
 }
@@ -1756,37 +2025,40 @@ function hideLoginError() {
    DATE
 ========================================================= */
 
-function formatDate(
-    dateString
-) {
+function formatDate(dateString){
 
-    if (!dateString) {
+    if(!dateString){
 
         return "-";
 
     }
 
-    const date =
-        new Date(dateString);
 
-    if (
+    const date =
+        new Date(
+            dateString
+        );
+
+
+    if(
         Number.isNaN(
             date.getTime()
         )
-    ) {
+    ){
 
         return "-";
 
     }
+
 
     return date.toLocaleString(
         "en-IN",
         {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
+            day:"2-digit",
+            month:"short",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
         }
     );
 
@@ -1797,38 +2069,31 @@ function formatDate(
    HTML ESCAPE
 ========================================================= */
 
-function escapeHtml(
-    value
-) {
+function escapeHtml(value){
 
     return String(
         value ?? ""
     )
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================================
-   JS ESCAPE
-========================================================= */
-
-function escapeJs(
-    value
-) {
-
-    return String(
-        value ?? ""
+    .replace(
+        /&/g,
+        "&amp;"
     )
-    .replace(/\\/g, "\\\\")
-    .replace(/'/g, "\\'")
-    .replace(/"/g, '\\"')
-    .replace(/\r/g, "\\r")
-    .replace(/\n/g, "\\n");
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
@@ -1839,17 +2104,16 @@ function escapeJs(
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    function(event){
 
-        if (
+        if(
             event.key === "Enter" &&
             document
-                .getElementById(
-                    "loginScreen"
-                )
-                .style.display !==
-                "none"
-        ) {
+            .getElementById(
+                "loginScreen"
+            )
+            .style.display !== "none"
+        ){
 
             adminLogin();
 
@@ -1861,5 +2125,4 @@ document.addEventListener(
 </script>
 
 </body>
-
 </html>
