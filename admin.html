@@ -591,41 +591,23 @@ tr:hover {
 
                         <tr>
 
-                            <th>
-                                Order
-                            </th>
+                            <th>Order</th>
 
-                            <th>
-                                User Email
-                            </th>
+                            <th>User Email</th>
 
-                            <th>
-                                Service
-                            </th>
+                            <th>Service</th>
 
-                            <th>
-                                Details
-                            </th>
+                            <th>Details</th>
 
-                            <th>
-                                Date
-                            </th>
+                            <th>Date</th>
 
-                            <th>
-                                Amount
-                            </th>
+                            <th>Amount</th>
 
-                            <th>
-                                File
-                            </th>
+                            <th>File</th>
 
-                            <th>
-                                Status
-                            </th>
+                            <th>Status</th>
 
-                            <th>
-                                Action
-                            </th>
+                            <th>Action</th>
 
                         </tr>
 
@@ -671,13 +653,11 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
 
-
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
     );
-
 
 
 /* =========================================================
@@ -688,7 +668,6 @@ const ADMIN_EMAIL =
     "aviinformatics@gmail.com";
 
 
-
 /* =========================================================
    STORAGE
 ========================================================= */
@@ -697,14 +676,12 @@ const STORAGE_BUCKET =
     "print-files";
 
 
-
 /* =========================================================
    EDGE FUNCTION
 ========================================================= */
 
 const EMAIL_FUNCTION =
     "send-order-email";
-
 
 
 /* =========================================================
@@ -719,7 +696,6 @@ document.addEventListener(
 
     }
 );
-
 
 
 /* =========================================================
@@ -739,7 +715,10 @@ async function checkSession() {
 
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Session error:",
+                error
+            );
 
             showLogin();
 
@@ -788,14 +767,16 @@ async function checkSession() {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Check session error:",
+            error
+        );
 
         showLogin();
 
     }
 
 }
-
 
 
 /* =========================================================
@@ -895,6 +876,7 @@ async function adminLogin() {
 
 
         if (
+            !data.user.email ||
             data.user.email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
         ) {
@@ -920,7 +902,10 @@ async function adminLogin() {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Login error:",
+            error
+        );
 
         showLoginError(
             "An unexpected login error occurred."
@@ -940,9 +925,8 @@ async function adminLogin() {
 }
 
 
-
 /* =========================================================
-   SHOW ADMIN
+   SHOW ADMIN PANEL
 ========================================================= */
 
 function showAdminPanel(user) {
@@ -973,7 +957,6 @@ function showAdminPanel(user) {
 }
 
 
-
 /* =========================================================
    SHOW LOGIN
 ========================================================= */
@@ -992,7 +975,6 @@ function showLogin() {
         "none";
 
 }
-
 
 
 /* =========================================================
@@ -1174,7 +1156,6 @@ async function loadOrders() {
     }
 
 }
-
 
 
 /* =========================================================
@@ -1361,28 +1342,15 @@ function createOrderRow(order) {
 
                 <select
                     class="statusSelect"
-                    onchange="updateOrderStatus(
-                        '${escapeJs(order.id)}',
-                        this.value,
-                        ${JSON.stringify(
-                            userEmail
-                        )},
-                        ${JSON.stringify(
-                            orderNumber
-                        )},
-                        ${JSON.stringify(
-                            service
-                        )},
-                        ${JSON.stringify(
-                            details
-                        )},
-                        ${JSON.stringify(
-                            amount
-                        )},
-                        ${JSON.stringify(
-                            fileName
-                        )},
-                        '${escapeJs(status)}'
+                    data-id="${escapeHtml(
+                        order.id
+                    )}"
+                    data-old-status="${escapeHtml(
+                        status
+                    )}"
+                    onchange="handleStatusChange(
+                        this,
+                        '${escapeJs(order.id)}'
                     )"
                 >
 
@@ -1458,6 +1426,106 @@ function createOrderRow(order) {
 }
 
 
+/* =========================================================
+   HANDLE STATUS CHANGE
+========================================================= */
+
+async function handleStatusChange(
+    select,
+    orderId
+) {
+
+    const newStatus =
+        select.value;
+
+
+    const oldStatus =
+        select.dataset.oldStatus;
+
+
+    if (
+        newStatus === oldStatus
+    ) {
+
+        return;
+
+    }
+
+
+    /* Find row */
+
+    const row =
+        select.closest("tr");
+
+
+    const cells =
+        row.querySelectorAll("td");
+
+
+    const userEmail =
+        cells[1]
+            .innerText
+            .trim();
+
+
+    const orderNumber =
+        cells[0]
+            .innerText
+            .trim();
+
+
+    const service =
+        cells[2]
+            .innerText
+            .trim();
+
+
+    const details =
+        cells[3]
+            .innerText
+            .trim();
+
+
+    const amount =
+        cells[5]
+            .innerText
+            .trim();
+
+
+    const fileName =
+        cells[6]
+            .querySelector(".file-name")
+            ?.innerText
+            .trim() ||
+        "";
+
+
+    await updateOrderStatus(
+
+        orderId,
+
+        newStatus,
+
+        userEmail,
+
+        orderNumber,
+
+        service,
+
+        details,
+
+        amount,
+
+        fileName,
+
+        oldStatus,
+
+        select
+
+    );
+
+}
+
 
 /* =========================================================
    VIEW FILE
@@ -1490,7 +1558,7 @@ async function viewFile(filePath) {
             )
             .createSignedUrl(
                 filePath,
-                300
+                600
             );
 
 
@@ -1537,7 +1605,10 @@ async function viewFile(filePath) {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "View error:",
+            error
+        );
 
         showMessage(
             "Could not open file.",
@@ -1547,7 +1618,6 @@ async function viewFile(filePath) {
     }
 
 }
-
 
 
 /* =========================================================
@@ -1573,6 +1643,12 @@ async function downloadFile(
 
     try {
 
+        showMessage(
+            "Preparing file download...",
+            "success"
+        );
+
+
         const {
             data,
             error
@@ -1584,21 +1660,16 @@ async function downloadFile(
             )
             .createSignedUrl(
                 filePath,
-                300,
-                {
-                    download:
-                        fileName || true
-                }
+                600
             );
 
 
         if (error) {
 
             console.error(
-                "Download error:",
+                "Signed URL error:",
                 error
             );
-
 
             showMessage(
                 "Download failed: " +
@@ -1662,7 +1733,12 @@ async function downloadFile(
 
 
         link.download =
-            fileName || "file";
+            fileName ||
+            "AviPrint-file";
+
+
+        link.style.display =
+            "none";
 
 
         document
@@ -1686,9 +1762,14 @@ async function downloadFile(
                 );
 
             },
-            1000
+            2000
         );
 
+
+        showMessage(
+            "File downloaded successfully.",
+            "success"
+        );
 
     }
 
@@ -1711,28 +1792,44 @@ async function downloadFile(
 }
 
 
-
 /* =========================================================
-   UPDATE STATUS
+   UPDATE STATUS + SEND EMAIL
 ========================================================= */
 
 async function updateOrderStatus(
+
     orderId,
+
     newStatus,
+
     userEmail,
+
     orderNumber,
+
     service,
+
     details,
+
     amount,
+
     fileName,
-    oldStatus
+
+    oldStatus,
+
+    select
+
 ) {
 
     const allowedStatuses = [
+
         "Pending",
+
         "Processing",
+
         "Completed",
+
         "Cancelled"
+
     ];
 
 
@@ -1746,6 +1843,13 @@ async function updateOrderStatus(
             "Invalid order status.",
             "error"
         );
+
+        if (select) {
+
+            select.value =
+                oldStatus;
+
+        }
 
         return;
 
@@ -1761,19 +1865,31 @@ async function updateOrderStatus(
     }
 
 
+    if (select) {
+
+        select.disabled =
+            true;
+
+    }
+
+
     try {
 
-        /* ==============================================
+        /* ============================================
+           STEP 1
            UPDATE DATABASE
-        ============================================== */
+        ============================================ */
 
         const {
-            error
+            error: updateError
         } =
         await supabaseClient
             .from("orders")
             .update({
-                status: newStatus
+
+                status:
+                    newStatus
+
             })
             .eq(
                 "id",
@@ -1781,45 +1897,76 @@ async function updateOrderStatus(
             );
 
 
-        if (error) {
+        if (updateError) {
 
             console.error(
                 "Status update error:",
-                error
+                updateError
             );
 
 
             showMessage(
                 "Status update failed: " +
-                error.message,
+                updateError.message,
                 "error"
             );
 
 
-            await loadOrders();
+            if (select) {
+
+                select.value =
+                    oldStatus;
+
+            }
 
             return;
 
         }
 
 
+        /*
+         * Database status updated.
+         */
+
         showMessage(
-            "Order status updated successfully.",
+            "Status updated. Sending customer email...",
             "success"
         );
 
 
-        /* ==============================================
-           SEND EMAIL
-        ============================================== */
+        /* ============================================
+           STEP 2
+           SEND CUSTOMER EMAIL
+        ============================================ */
 
-        if (userEmail) {
+        if (
+            userEmail &&
+            userEmail !==
+            "Email not available"
+        ) {
 
             try {
 
-                showMessage(
-                    "Status updated. Sending customer email...",
-                    "success"
+                console.log(
+                    "Calling email function..."
+                );
+
+
+                console.log(
+                    "Customer:",
+                    userEmail
+                );
+
+
+                console.log(
+                    "Order:",
+                    orderNumber
+                );
+
+
+                console.log(
+                    "New status:",
+                    newStatus
                 );
 
 
@@ -1827,34 +1974,50 @@ async function updateOrderStatus(
                     data: emailData,
                     error: emailError
                 } =
-                await supabaseClient.functions.invoke(
-                    EMAIL_FUNCTION,
-                    {
-                        body: {
+                await supabaseClient
+                    .functions
+                    .invoke(
+                        EMAIL_FUNCTION,
+                        {
 
-                            email:
-                                userEmail,
+                            body: {
 
-                            orderNumber:
-                                orderNumber,
+                                email:
+                                    userEmail,
 
-                            service:
-                                service,
+                                orderNumber:
+                                    orderNumber,
 
-                            details:
-                                details,
+                                service:
+                                    service,
 
-                            amount:
-                                amount,
+                                details:
+                                    details,
 
-                            status:
-                                newStatus,
+                                amount:
+                                    amount,
 
-                            fileName:
-                                fileName
+                                status:
+                                    newStatus,
+
+                                fileName:
+                                    fileName
+
+                            }
 
                         }
-                    }
+                    );
+
+
+                console.log(
+                    "Email response:",
+                    emailData
+                );
+
+
+                console.log(
+                    "Email error:",
+                    emailError
                 );
 
 
@@ -1867,7 +2030,7 @@ async function updateOrderStatus(
 
 
                     showMessage(
-                        "Order updated, but email could not be sent: " +
+                        "Status updated, but customer email failed: " +
                         emailError.message,
                         "error"
                     );
@@ -1886,7 +2049,7 @@ async function updateOrderStatus(
 
 
                     showMessage(
-                        "Order updated, but email could not be sent: " +
+                        "Status updated, but customer email failed: " +
                         (
                             emailData.error ||
                             "Unknown email error."
@@ -1910,13 +2073,13 @@ async function updateOrderStatus(
             catch (emailError) {
 
                 console.error(
-                    "Email error:",
+                    "Customer email exception:",
                     emailError
                 );
 
 
                 showMessage(
-                    "Order updated, but customer email failed.",
+                    "Status updated, but customer email failed.",
                     "error"
                 );
 
@@ -1924,6 +2087,36 @@ async function updateOrderStatus(
 
         }
 
+        else {
+
+            showMessage(
+                "Status updated, but customer email is unavailable.",
+                "error"
+            );
+
+        }
+
+
+        /* ============================================
+           STEP 3
+           SAVE NEW STATUS AS OLD STATUS
+        ============================================ */
+
+        if (select) {
+
+            select.dataset.oldStatus =
+                newStatus;
+
+            select.disabled =
+                false;
+
+        }
+
+
+        /* ============================================
+           STEP 4
+           REFRESH ORDERS
+        ============================================ */
 
         await loadOrders();
 
@@ -1937,18 +2130,26 @@ async function updateOrderStatus(
         );
 
 
+        if (select) {
+
+            select.value =
+                oldStatus;
+
+            select.disabled =
+                false;
+
+        }
+
+
         showMessage(
-            "Status update failed.",
+            "Status update failed: " +
+            error.message,
             "error"
         );
-
-
-        await loadOrders();
 
     }
 
 }
-
 
 
 /* =========================================================
@@ -2029,17 +2230,21 @@ async function deleteOrder(
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Delete exception:",
+            error
+        );
+
 
         showMessage(
-            "Delete failed.",
+            "Delete failed: " +
+            error.message,
             "error"
         );
 
     }
 
 }
-
 
 
 /* =========================================================
@@ -2051,13 +2256,17 @@ function updateStatistics(
 ) {
 
     document
-        .getElementById("totalOrders")
+        .getElementById(
+            "totalOrders"
+        )
         .textContent =
         orders.length;
 
 
     document
-        .getElementById("pendingOrders")
+        .getElementById(
+            "pendingOrders"
+        )
         .textContent =
         orders.filter(
             order =>
@@ -2067,7 +2276,9 @@ function updateStatistics(
 
 
     document
-        .getElementById("processingOrders")
+        .getElementById(
+            "processingOrders"
+        )
         .textContent =
         orders.filter(
             order =>
@@ -2077,7 +2288,9 @@ function updateStatistics(
 
 
     document
-        .getElementById("completedOrders")
+        .getElementById(
+            "completedOrders"
+        )
         .textContent =
         orders.filter(
             order =>
@@ -2087,7 +2300,9 @@ function updateStatistics(
 
 
     document
-        .getElementById("cancelledOrders")
+        .getElementById(
+            "cancelledOrders"
+        )
         .textContent =
         orders.filter(
             order =>
@@ -2098,14 +2313,27 @@ function updateStatistics(
 }
 
 
-
 /* =========================================================
    LOGOUT
 ========================================================= */
 
 async function logout() {
 
-    await supabaseClient.auth.signOut();
+    try {
+
+        await supabaseClient.auth.signOut();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
 
     showLogin();
 
@@ -2116,8 +2344,14 @@ async function logout() {
         )
         .value = "";
 
-}
 
+    document
+        .getElementById(
+            "loginEmail"
+        )
+        .value = "";
+
+}
 
 
 /* =========================================================
@@ -2148,18 +2382,23 @@ function showMessage(
         "block";
 
 
-    setTimeout(
-        function () {
-
-            message.style.display =
-                "none";
-
-        },
-        5000
+    clearTimeout(
+        window.messageTimer
     );
 
-}
 
+    window.messageTimer =
+        setTimeout(
+            function () {
+
+                message.style.display =
+                    "none";
+
+            },
+            6000
+        );
+
+}
 
 
 /* =========================================================
@@ -2198,7 +2437,6 @@ function hideLoginError() {
 }
 
 
-
 /* =========================================================
    DATE
 ========================================================= */
@@ -2234,16 +2472,26 @@ function formatDate(
     return date.toLocaleString(
         "en-IN",
         {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
+
+            day:
+                "2-digit",
+
+            month:
+                "short",
+
+            year:
+                "numeric",
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit"
+
         }
     );
 
 }
-
 
 
 /* =========================================================
@@ -2281,7 +2529,6 @@ function escapeHtml(
 }
 
 
-
 /* =========================================================
    JS ESCAPE
 ========================================================= */
@@ -2317,23 +2564,24 @@ function escapeJs(
 }
 
 
-
 /* =========================================================
-   ENTER KEY
+   ENTER KEY LOGIN
 ========================================================= */
 
 document.addEventListener(
     "keydown",
     function(event) {
 
+        const loginScreen =
+            document.getElementById(
+                "loginScreen"
+            );
+
+
         if (
             event.key === "Enter" &&
-            document
-                .getElementById(
-                    "loginScreen"
-                )
-                .style.display !==
-                "none"
+            loginScreen.style.display !==
+            "none"
         ) {
 
             adminLogin();
@@ -2346,4 +2594,5 @@ document.addEventListener(
 </script>
 
 </body>
+
 </html>
