@@ -1,349 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AviPrint Admin Panel</title>
+<title>AviPrint Admin Panel</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-        body {
-            background: #f4f7fb;
-            color: #1f2937;
-        }
+body {
+    background: #f4f7fb;
+    color: #1f2937;
+}
 
-        .header {
-            background: #111827;
-            color: white;
-            padding: 18px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
+.header {
+    background: #111827;
+    color: white;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
 
-        .header h1 {
-            font-size: 24px;
-        }
+.header h1 {
+    font-size: 24px;
+}
 
-        .header p {
-            margin-top: 5px;
-            font-size: 13px;
-            color: #d1d5db;
-        }
+.header p {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #d1d5db;
+}
 
-        .header-buttons {
-            display: flex;
-            gap: 10px;
-        }
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
 
-        button {
-            border: none;
-            cursor: pointer;
-            border-radius: 7px;
-            padding: 10px 15px;
-            font-weight: 600;
-        }
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    padding: 10px 15px;
+    font-weight: 600;
+}
 
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 
-        .refresh-btn {
-            background: #2563eb;
-            color: white;
-        }
+.refresh-btn {
+    background: #2563eb;
+    color: white;
+}
 
-        .logout-btn {
-            background: #dc2626;
-            color: white;
-        }
+.logout-btn {
+    background: #dc2626;
+    color: white;
+}
 
-        .container {
-            max-width: 1500px;
-            margin: auto;
-            padding: 25px;
-        }
+.container {
+    max-width: 1500px;
+    margin: auto;
+    padding: 25px;
+}
 
-        .admin-info {
-            background: white;
-            border-radius: 10px;
-            padding: 15px 18px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+.admin-info {
+    background: white;
+    border-radius: 10px;
+    padding: 15px 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
-        .admin-info strong {
-            color: #111827;
-        }
+.admin-info strong {
+    color: #111827;
+}
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
+.stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
 
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
-        .stat-card h3 {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 10px;
-        }
+.stat-card h3 {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
 
-        .stat-card .number {
-            font-size: 28px;
-            font-weight: bold;
-            color: #111827;
-        }
+.stat-card .number {
+    font-size: 28px;
+    font-weight: bold;
+    color: #111827;
+}
 
-        .orders-box {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
+.orders-box {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
 
-        .orders-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-        }
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
 
-        .orders-header h2 {
-            font-size: 21px;
-        }
+.orders-header h2 {
+    font-size: 21px;
+}
 
-        .message {
-            padding: 12px;
-            border-radius: 7px;
-            margin-bottom: 15px;
-            display: none;
-        }
+.message {
+    padding: 12px;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    display: none;
+}
 
-        .success {
-            background: #dcfce7;
-            color: #166534;
-        }
+.success {
+    background: #dcfce7;
+    color: #166534;
+}
 
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
 
-        .loading {
-            text-align: center;
-            padding: 30px;
-            color: #6b7280;
-        }
+.loading {
+    text-align: center;
+    padding: 30px;
+    color: #6b7280;
+}
 
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-        }
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
 
-        table {
-            width: 100%;
-            min-width: 1200px;
-            border-collapse: collapse;
-        }
+table {
+    width: 100%;
+    min-width: 1250px;
+    border-collapse: collapse;
+}
 
-        th {
-            background: #f3f4f6;
-            padding: 13px 10px;
-            text-align: left;
-            font-size: 13px;
-            color: #374151;
-            border-bottom: 1px solid #e5e7eb;
-        }
+th {
+    background: #f3f4f6;
+    padding: 13px 10px;
+    text-align: left;
+    font-size: 13px;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+}
 
-        td {
-            padding: 13px 10px;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 13px;
-            vertical-align: middle;
-        }
+td {
+    padding: 13px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 13px;
+    vertical-align: middle;
+}
 
-        tr:hover {
-            background: #f9fafb;
-        }
+tr:hover {
+    background: #f9fafb;
+}
 
-        .order-number {
-            font-weight: bold;
-            color: #2563eb;
-        }
+.order-number {
+    font-weight: bold;
+    color: #2563eb;
+}
 
-        .user-email {
-            max-width: 230px;
-            word-break: break-word;
-            font-weight: 500;
-        }
+.user-email {
+    max-width: 230px;
+    word-break: break-word;
+    font-weight: 500;
+}
 
-        .service {
-            font-weight: 600;
-        }
+.service {
+    font-weight: 600;
+}
 
-        .details {
-            max-width: 240px;
-            word-break: break-word;
-        }
+.details {
+    max-width: 240px;
+    word-break: break-word;
+}
 
-        .statusSelect {
-            padding: 8px 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            background: white;
-            cursor: pointer;
-        }
+.statusSelect {
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
 
-        .statusSelect:focus {
-            outline: none;
-            border-color: #2563eb;
-        }
+.file-name {
+    max-width: 180px;
+    word-break: break-word;
+    margin-bottom: 8px;
+}
 
-        .delete-btn {
-            background: #dc2626;
-            color: white;
-            padding: 8px 12px;
-            font-size: 12px;
-        }
+.file-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
 
-        .delete-btn:hover {
-            background: #b91c1c;
-        }
+.view-btn {
+    background: #2563eb;
+    color: white;
+    padding: 7px 10px;
+    font-size: 12px;
+}
 
-        .file-name {
-            max-width: 180px;
-            word-break: break-word;
-        }
+.download-btn {
+    background: #16a34a;
+    color: white;
+    padding: 7px 10px;
+    font-size: 12px;
+}
 
-        .empty {
-            text-align: center;
-            padding: 40px;
-            color: #6b7280;
-        }
+.delete-btn {
+    background: #dc2626;
+    color: white;
+    padding: 8px 12px;
+    font-size: 12px;
+}
 
-        .login-screen {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+.delete-btn:hover {
+    background: #b91c1c;
+}
 
-        .login-box {
-            width: 100%;
-            max-width: 400px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-        }
+.empty {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+}
 
-        .login-box h2 {
-            margin-bottom: 8px;
-        }
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
-        .login-box p {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
 
-        .login-box input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 7px;
-            outline: none;
-        }
+.login-box h2 {
+    margin-bottom: 8px;
+}
 
-        .login-box input:focus {
-            border-color: #2563eb;
-        }
+.login-box p {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
 
-        .login-btn {
-            width: 100%;
-            background: #2563eb;
-            color: white;
-            padding: 12px;
-        }
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    outline: none;
+}
 
-        .login-error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 10px;
-            border-radius: 7px;
-            margin-bottom: 12px;
-            display: none;
-            font-size: 13px;
-        }
+.login-btn {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    padding: 12px;
+}
 
-        #adminPanel {
-            display: none;
-        }
+.login-error {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 10px;
+    border-radius: 7px;
+    margin-bottom: 12px;
+    display: none;
+    font-size: 13px;
+}
 
-        @media (max-width: 1000px) {
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+#adminPanel {
+    display: none;
+}
 
-        @media (max-width: 600px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+@media (max-width: 1000px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-            .header-buttons {
-                width: 100%;
-            }
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-            .header-buttons button {
-                flex: 1;
-            }
+    .header-buttons {
+        width: 100%;
+    }
 
-            .container {
-                padding: 15px;
-            }
+    .header-buttons button {
+        flex: 1;
+    }
 
-            .stats {
-                grid-template-columns: 1fr;
-            }
+    .container {
+        padding: 15px;
+    }
 
-            .orders-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-        }
-    </style>
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .orders-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<!-- =========================
-     LOGIN SCREEN
-========================= -->
+<!-- LOGIN -->
 
 <div id="loginScreen" class="login-screen">
 
@@ -351,9 +361,7 @@
 
         <h2>AviPrint Admin</h2>
 
-        <p>
-            Login using your administrator account.
-        </p>
+        <p>Login using your administrator account.</p>
 
         <div id="loginError" class="login-error"></div>
 
@@ -383,19 +391,20 @@
 </div>
 
 
-<!-- =========================
-     ADMIN PANEL
-========================= -->
+<!-- ADMIN PANEL -->
 
 <div id="adminPanel">
 
     <div class="header">
 
         <div>
+
             <h1>AviPrint Admin Panel</h1>
+
             <p id="loggedInText">
                 Administrator access
             </p>
+
         </div>
 
         <div class="header-buttons">
@@ -425,9 +434,7 @@
 
             Logged in as Admin:
 
-            <strong id="adminEmail">
-                -
-            </strong>
+            <strong id="adminEmail">-</strong>
 
         </div>
 
@@ -435,76 +442,45 @@
         <div id="message" class="message"></div>
 
 
-        <!-- =========================
-             STATISTICS
-        ========================= -->
+        <!-- STATISTICS -->
 
         <div class="stats">
 
             <div class="stat-card">
                 <h3>Total Orders</h3>
-                <div
-                    class="number"
-                    id="totalOrders"
-                >
-                    0
-                </div>
+                <div class="number" id="totalOrders">0</div>
             </div>
 
             <div class="stat-card">
                 <h3>Pending</h3>
-                <div
-                    class="number"
-                    id="pendingOrders"
-                >
-                    0
-                </div>
+                <div class="number" id="pendingOrders">0</div>
             </div>
 
             <div class="stat-card">
                 <h3>Processing</h3>
-                <div
-                    class="number"
-                    id="processingOrders"
-                >
-                    0
-                </div>
+                <div class="number" id="processingOrders">0</div>
             </div>
 
             <div class="stat-card">
                 <h3>Completed</h3>
-                <div
-                    class="number"
-                    id="completedOrders"
-                >
-                    0
-                </div>
+                <div class="number" id="completedOrders">0</div>
             </div>
 
             <div class="stat-card">
                 <h3>Cancelled</h3>
-                <div
-                    class="number"
-                    id="cancelledOrders"
-                >
-                    0
-                </div>
+                <div class="number" id="cancelledOrders">0</div>
             </div>
 
         </div>
 
 
-        <!-- =========================
-             ORDERS
-        ========================= -->
+        <!-- ORDERS -->
 
         <div class="orders-box">
 
             <div class="orders-header">
 
-                <h2>
-                    All Orders
-                </h2>
+                <h2>All Orders</h2>
 
                 <span id="orderCount">
                     0 orders
@@ -521,41 +497,15 @@
 
                         <tr>
 
-                            <th>
-                                Order
-                            </th>
-
-                            <th>
-                                User Email
-                            </th>
-
-                            <th>
-                                Service
-                            </th>
-
-                            <th>
-                                Details
-                            </th>
-
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Amount
-                            </th>
-
-                            <th>
-                                File
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
+                            <th>Order</th>
+                            <th>User Email</th>
+                            <th>Service</th>
+                            <th>Details</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>File</th>
+                            <th>Status</th>
+                            <th>Action</th>
 
                         </tr>
 
@@ -571,6 +521,7 @@
                                 class="loading"
                             >
                                 Loading orders...
+
                             </td>
 
                         </tr>
@@ -591,7 +542,7 @@
 <script>
 
 /* =========================================================
-   SUPABASE CONFIG
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
@@ -599,7 +550,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -609,11 +559,19 @@ const supabaseClient =
 
 
 /* =========================================================
-   ADMIN EMAIL
+   ADMIN
 ========================================================= */
 
 const ADMIN_EMAIL =
     "aviinformatics@gmail.com";
+
+
+/* =========================================================
+   STORAGE BUCKET
+========================================================= */
+
+const STORAGE_BUCKET =
+    "print-files";
 
 
 /* =========================================================
@@ -622,9 +580,9 @@ const ADMIN_EMAIL =
 
 document.addEventListener(
     "DOMContentLoaded",
-    async function () {
+    function () {
 
-        await checkSession();
+        checkSession();
 
     }
 );
@@ -647,10 +605,7 @@ async function checkSession() {
 
         if (error) {
 
-            console.error(
-                "Session error:",
-                error
-            );
+            console.error(error);
 
             showLogin();
 
@@ -659,11 +614,7 @@ async function checkSession() {
         }
 
 
-        const session =
-            data.session;
-
-
-        if (!session) {
+        if (!data.session) {
 
             showLogin();
 
@@ -673,7 +624,7 @@ async function checkSession() {
 
 
         const user =
-            session.user;
+            data.session.user;
 
 
         if (
@@ -703,9 +654,7 @@ async function checkSession() {
 
     catch (error) {
 
-        console.error(
-            error
-        );
+        console.error(error);
 
         showLogin();
 
@@ -715,25 +664,21 @@ async function checkSession() {
 
 
 /* =========================================================
-   ADMIN LOGIN
+   LOGIN
 ========================================================= */
 
 async function adminLogin() {
 
     const email =
         document
-            .getElementById(
-                "loginEmail"
-            )
+            .getElementById("loginEmail")
             .value
             .trim();
 
 
     const password =
         document
-            .getElementById(
-                "loginPassword"
-            )
+            .getElementById("loginPassword")
             .value;
 
 
@@ -834,16 +779,13 @@ async function adminLogin() {
             data.user
         );
 
-
         await loadOrders();
 
     }
 
     catch (error) {
 
-        console.error(
-            error
-        );
+        console.error(error);
 
         showLoginError(
             "An unexpected login error occurred."
@@ -864,39 +806,31 @@ async function adminLogin() {
 
 
 /* =========================================================
-   SHOW ADMIN PANEL
+   SHOW ADMIN
 ========================================================= */
 
 function showAdminPanel(user) {
 
     document
-        .getElementById(
-            "loginScreen"
-        )
+        .getElementById("loginScreen")
         .style.display =
         "none";
 
 
     document
-        .getElementById(
-            "adminPanel"
-        )
+        .getElementById("adminPanel")
         .style.display =
         "block";
 
 
     document
-        .getElementById(
-            "adminEmail"
-        )
+        .getElementById("adminEmail")
         .textContent =
         user.email;
 
 
     document
-        .getElementById(
-            "loggedInText"
-        )
+        .getElementById("loggedInText")
         .textContent =
         "Administrator access";
 
@@ -910,17 +844,13 @@ function showAdminPanel(user) {
 function showLogin() {
 
     document
-        .getElementById(
-            "loginScreen"
-        )
+        .getElementById("loginScreen")
         .style.display =
         "flex";
 
 
     document
-        .getElementById(
-            "adminPanel"
-        )
+        .getElementById("adminPanel")
         .style.display =
         "none";
 
@@ -941,10 +871,7 @@ async function loadOrders() {
 
     table.innerHTML = `
         <tr>
-            <td
-                colspan="9"
-                class="loading"
-            >
+            <td colspan="9" class="loading">
                 Loading orders...
             </td>
         </tr>
@@ -953,9 +880,7 @@ async function loadOrders() {
 
     try {
 
-        /* -----------------------------------------
-           Verify logged-in user
-        ----------------------------------------- */
+        /* Verify admin session */
 
         const {
             data: {
@@ -987,13 +912,10 @@ async function loadOrders() {
         }
 
 
-        /* -----------------------------------------
-           IMPORTANT:
-           Get orders from admin RPC function.
-
-           This function joins orders with auth.users
-           and returns user_email.
-        ----------------------------------------- */
+        /* IMPORTANT:
+           Get orders from RPC.
+           RPC already returns user_email.
+        */
 
         const {
             data: orders,
@@ -1008,7 +930,7 @@ async function loadOrders() {
         if (error) {
 
             console.error(
-                "Admin orders error:",
+                "RPC Error:",
                 error
             );
 
@@ -1064,9 +986,7 @@ async function loadOrders() {
         }
 
 
-        /* -----------------------------------------
-           Render orders
-        ----------------------------------------- */
+        /* Render */
 
         table.innerHTML =
             orders
@@ -1078,10 +998,6 @@ async function loadOrders() {
                 )
                 .join("");
 
-
-        /* -----------------------------------------
-           Statistics
-        ----------------------------------------- */
 
         updateStatistics(
             orders
@@ -1131,9 +1047,9 @@ async function loadOrders() {
    CREATE ORDER ROW
 ========================================================= */
 
-function createOrderRow(
-    order
-) {
+function createOrderRow(order) {
+
+    /* Directly from RPC */
 
     const userEmail =
         order.user_email ||
@@ -1183,6 +1099,47 @@ function createOrderRow(
         "Pending";
 
 
+    const filePath =
+        order.file_path ||
+        "";
+
+
+    let fileButtons = "";
+
+
+    if (filePath) {
+
+        fileButtons = `
+
+            <div class="file-buttons">
+
+                <button
+                    class="view-btn"
+                    onclick="viewFile(
+                        '${escapeJs(filePath)}'
+                    )"
+                >
+                    View
+                </button>
+
+
+                <button
+                    class="download-btn"
+                    onclick="downloadFile(
+                        '${escapeJs(filePath)}',
+                        '${escapeJs(fileName)}'
+                    )"
+                >
+                    Download
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
     return `
 
         <tr>
@@ -1192,9 +1149,7 @@ function createOrderRow(
                 <div class="order-number">
 
                     ${escapeHtml(
-                        String(
-                            orderNumber
-                        )
+                        String(orderNumber)
                     )}
 
                 </div>
@@ -1243,18 +1198,14 @@ function createOrderRow(
 
             <td>
 
-                ${escapeHtml(
-                    date
-                )}
+                ${escapeHtml(date)}
 
             </td>
 
 
             <td>
 
-                ${escapeHtml(
-                    amount
-                )}
+                ${escapeHtml(amount)}
 
             </td>
 
@@ -1269,6 +1220,8 @@ function createOrderRow(
 
                 </div>
 
+                ${fileButtons}
+
             </td>
 
 
@@ -1280,9 +1233,7 @@ function createOrderRow(
                         order.id
                     )}"
                     onchange="updateOrderStatus(
-                        '${escapeJs(
-                            order.id
-                        )}',
+                        '${escapeJs(order.id)}',
                         this.value
                     )"
                 >
@@ -1348,9 +1299,7 @@ function createOrderRow(
                 <button
                     class="delete-btn"
                     onclick="deleteOrder(
-                        '${escapeJs(
-                            order.id
-                        )}'
+                        '${escapeJs(order.id)}'
                     )"
                 >
                     Delete
@@ -1361,6 +1310,211 @@ function createOrderRow(
         </tr>
 
     `;
+
+}
+
+
+/* =========================================================
+   VIEW FILE
+========================================================= */
+
+async function viewFile(filePath) {
+
+    if (!filePath) {
+
+        showMessage(
+            "File not available.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .storage
+            .from(
+                STORAGE_BUCKET
+            )
+            .createSignedUrl(
+                filePath,
+                300
+            );
+
+
+        if (error) {
+
+            console.error(
+                "View file error:",
+                error
+            );
+
+
+            showMessage(
+                "Could not open file: " +
+                error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (!data || !data.signedUrl) {
+
+            showMessage(
+                "File URL could not be created.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        window.open(
+            data.signedUrl,
+            "_blank"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Could not open file.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   DOWNLOAD FILE
+========================================================= */
+
+async function downloadFile(
+    filePath,
+    fileName
+) {
+
+    if (!filePath) {
+
+        showMessage(
+            "File not available.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .storage
+            .from(
+                STORAGE_BUCKET
+            )
+            .createSignedUrl(
+                filePath,
+                300,
+                {
+                    download: fileName || true
+                }
+            );
+
+
+        if (error) {
+
+            console.error(
+                "Download error:",
+                error
+            );
+
+
+            showMessage(
+                "Download failed: " +
+                error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (!data || !data.signedUrl) {
+
+            showMessage(
+                "Download URL could not be created.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            data.signedUrl;
+
+
+        link.download =
+            fileName || "file";
+
+
+        link.target =
+            "_blank";
+
+
+        document
+            .body
+            .appendChild(
+                link
+            );
+
+
+        link.click();
+
+
+        link.remove();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Download failed.",
+            "error"
+        );
+
+    }
 
 }
 
@@ -1445,10 +1599,7 @@ async function updateOrderStatus(
 
     catch (error) {
 
-        console.error(
-            error
-        );
-
+        console.error(error);
 
         showMessage(
             "Status update failed.",
@@ -1461,7 +1612,7 @@ async function updateOrderStatus(
 
 
 /* =========================================================
-   DELETE ORDER
+   DELETE
 ========================================================= */
 
 async function deleteOrder(
@@ -1538,10 +1689,7 @@ async function deleteOrder(
 
     catch (error) {
 
-        console.error(
-            error
-        );
-
+        console.error(error);
 
         showMessage(
             "Delete failed.",
@@ -1561,11 +1709,15 @@ function updateStatistics(
     orders
 ) {
 
-    const total =
+    document
+        .getElementById("totalOrders")
+        .textContent =
         orders.length;
 
 
-    const pending =
+    document
+        .getElementById("pendingOrders")
+        .textContent =
         orders.filter(
             order =>
                 order.status ===
@@ -1573,7 +1725,9 @@ function updateStatistics(
         ).length;
 
 
-    const processing =
+    document
+        .getElementById("processingOrders")
+        .textContent =
         orders.filter(
             order =>
                 order.status ===
@@ -1581,7 +1735,9 @@ function updateStatistics(
         ).length;
 
 
-    const completed =
+    document
+        .getElementById("completedOrders")
+        .textContent =
         orders.filter(
             order =>
                 order.status ===
@@ -1589,52 +1745,14 @@ function updateStatistics(
         ).length;
 
 
-    const cancelled =
+    document
+        .getElementById("cancelledOrders")
+        .textContent =
         orders.filter(
             order =>
                 order.status ===
                 "Cancelled"
         ).length;
-
-
-    document
-        .getElementById(
-            "totalOrders"
-        )
-        .textContent =
-        total;
-
-
-    document
-        .getElementById(
-            "pendingOrders"
-        )
-        .textContent =
-        pending;
-
-
-    document
-        .getElementById(
-            "processingOrders"
-        )
-        .textContent =
-        processing;
-
-
-    document
-        .getElementById(
-            "completedOrders"
-        )
-        .textContent =
-        completed;
-
-
-    document
-        .getElementById(
-            "cancelledOrders"
-        )
-        .textContent =
-        cancelled;
 
 }
 
@@ -1737,7 +1855,7 @@ function hideLoginError() {
 
 
 /* =========================================================
-   DATE FORMAT
+   DATE
 ========================================================= */
 
 function formatDate(
@@ -1818,7 +1936,7 @@ function escapeHtml(
 
 
 /* =========================================================
-   JAVASCRIPT STRING ESCAPE
+   JS ESCAPE
 ========================================================= */
 
 function escapeJs(
@@ -1853,23 +1971,21 @@ function escapeJs(
 
 
 /* =========================================================
-   ENTER KEY LOGIN
+   ENTER KEY
 ========================================================= */
 
 document.addEventListener(
     "keydown",
-    function (event) {
-
-        const loginScreen =
-            document.getElementById(
-                "loginScreen"
-            );
-
+    function(event) {
 
         if (
             event.key === "Enter" &&
-            loginScreen.style.display !==
-            "none"
+            document
+                .getElementById(
+                    "loginScreen"
+                )
+                .style.display !==
+                "none"
         ) {
 
             adminLogin();
