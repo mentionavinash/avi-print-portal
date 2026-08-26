@@ -22,8 +22,6 @@ body {
     color: #1f2937;
 }
 
-/* HEADER */
-
 .header {
     background: #111827;
     color: white;
@@ -72,15 +70,11 @@ button:disabled {
     color: white;
 }
 
-/* CONTAINER */
-
 .container {
     max-width: 1500px;
     margin: auto;
     padding: 25px;
 }
-
-/* ADMIN INFO */
 
 .admin-info {
     background: white;
@@ -94,7 +88,55 @@ button:disabled {
     color: #111827;
 }
 
-/* STATS */
+/* SEARCH */
+
+.search-box {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.search-row {
+    display: grid;
+    grid-template-columns: 1fr 200px auto;
+    gap: 10px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-input:focus {
+    border-color: #2563eb;
+}
+
+.status-filter {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.clear-search {
+    background: #6b7280;
+    color: white;
+}
+
+.search-info {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #6b7280;
+}
 
 .stats {
     display: grid;
@@ -122,8 +164,6 @@ button:disabled {
     color: #111827;
 }
 
-/* ORDERS BOX */
-
 .orders-box {
     background: white;
     border-radius: 10px;
@@ -143,43 +183,6 @@ button:disabled {
     font-size: 21px;
 }
 
-/* FILTERS */
-
-.filters {
-    display: grid;
-    grid-template-columns: 1fr 220px auto;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.search-box,
-.status-filter {
-    width: 100%;
-    padding: 11px 13px;
-    border: 1px solid #d1d5db;
-    border-radius: 7px;
-    outline: none;
-    background: white;
-    font-size: 14px;
-}
-
-.search-box:focus,
-.status-filter:focus {
-    border-color: #2563eb;
-}
-
-.clear-btn {
-    background: #6b7280;
-    color: white;
-    padding: 10px 18px;
-}
-
-.clear-btn:hover {
-    background: #4b5563;
-}
-
-/* MESSAGE */
-
 .message {
     padding: 12px;
     border-radius: 7px;
@@ -196,8 +199,6 @@ button:disabled {
     background: #fee2e2;
     color: #991b1b;
 }
-
-/* TABLE */
 
 .loading {
     text-align: center;
@@ -236,8 +237,6 @@ tr:hover {
     background: #f9fafb;
 }
 
-/* ORDER */
-
 .order-number {
     font-weight: bold;
     color: #2563eb;
@@ -265,8 +264,6 @@ tr:hover {
     background: white;
     cursor: pointer;
 }
-
-/* FILE */
 
 .file-name {
     max-width: 180px;
@@ -305,15 +302,11 @@ tr:hover {
     background: #b91c1c;
 }
 
-/* EMPTY */
-
 .empty {
     text-align: center;
     padding: 40px;
     color: #6b7280;
 }
-
-/* LOGIN */
 
 .login-screen {
     min-height: 100vh;
@@ -372,21 +365,16 @@ tr:hover {
     display: none;
 }
 
-/* RESPONSIVE */
-
 @media (max-width: 1000px) {
 
     .stats {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .filters {
-        grid-template-columns: 1fr 1fr;
+    .search-row {
+        grid-template-columns: 1fr;
     }
 
-    .clear-btn {
-        width: 100%;
-    }
 }
 
 @media (max-width: 600px) {
@@ -418,10 +406,6 @@ tr:hover {
         gap: 10px;
     }
 
-    .filters {
-        grid-template-columns: 1fr;
-    }
-
 }
 
 </style>
@@ -429,9 +413,7 @@ tr:hover {
 
 <body>
 
-<!-- =========================================================
-     LOGIN
-========================================================= -->
+<!-- LOGIN -->
 
 <div id="loginScreen" class="login-screen">
 
@@ -439,14 +421,9 @@ tr:hover {
 
         <h2>AviPrint Admin</h2>
 
-        <p>
-            Login using your administrator account.
-        </p>
+        <p>Login using your administrator account.</p>
 
-        <div
-            id="loginError"
-            class="login-error">
-        </div>
+        <div id="loginError" class="login-error"></div>
 
         <input
             type="email"
@@ -464,7 +441,8 @@ tr:hover {
 
         <button
             class="login-btn"
-            onclick="adminLogin()">
+            onclick="adminLogin()"
+        >
             Login
         </button>
 
@@ -473,9 +451,7 @@ tr:hover {
 </div>
 
 
-<!-- =========================================================
-     ADMIN PANEL
-========================================================= -->
+<!-- ADMIN PANEL -->
 
 <div id="adminPanel">
 
@@ -495,13 +471,15 @@ tr:hover {
 
             <button
                 class="refresh-btn"
-                onclick="loadOrders()">
+                onclick="loadOrders()"
+            >
                 ↻ Refresh
             </button>
 
             <button
                 class="logout-btn"
-                onclick="logout()">
+                onclick="logout()"
+            >
                 Logout
             </button>
 
@@ -512,8 +490,6 @@ tr:hover {
 
     <div class="container">
 
-        <!-- ADMIN INFO -->
-
         <div class="admin-info">
 
             Logged in as Admin:
@@ -523,125 +499,28 @@ tr:hover {
         </div>
 
 
-        <!-- MESSAGE -->
-
-        <div
-            id="message"
-            class="message">
-        </div>
+        <div id="message" class="message"></div>
 
 
-        <!-- =====================================================
-             STATISTICS
-        ====================================================== -->
+        <!-- SEARCH -->
 
-        <div class="stats">
+        <div class="search-box">
 
-            <div class="stat-card">
-
-                <h3>Total Orders</h3>
-
-                <div
-                    class="number"
-                    id="totalOrders">
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <h3>Pending</h3>
-
-                <div
-                    class="number"
-                    id="pendingOrders">
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <h3>Processing</h3>
-
-                <div
-                    class="number"
-                    id="processingOrders">
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <h3>Completed</h3>
-
-                <div
-                    class="number"
-                    id="completedOrders">
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <h3>Cancelled</h3>
-
-                <div
-                    class="number"
-                    id="cancelledOrders">
-                    0
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             ORDERS
-        ====================================================== -->
-
-        <div class="orders-box">
-
-            <div class="orders-header">
-
-                <h2>
-                    All Orders
-                </h2>
-
-                <span id="orderCount">
-                    0 orders
-                </span>
-
-            </div>
-
-
-            <!-- =================================================
-                 SEARCH + FILTER
-            ================================================== -->
-
-            <div class="filters">
+            <div class="search-row">
 
                 <input
                     type="text"
                     id="searchInput"
-                    class="search-box"
-                    placeholder="🔍 Search Order ID or User Email..."
+                    class="search-input"
+                    placeholder="🔍 Search Order ID, Email, File Name, Service..."
                     oninput="applyFilters()"
                 >
-
 
                 <select
                     id="statusFilter"
                     class="status-filter"
-                    onchange="applyFilters()">
+                    onchange="applyFilters()"
+                >
 
                     <option value="All">
                         All Status
@@ -665,17 +544,115 @@ tr:hover {
 
                 </select>
 
-
                 <button
-                    class="clear-btn"
-                    onclick="clearFilters()">
+                    class="clear-search"
+                    onclick="clearFilters()"
+                >
                     Clear
                 </button>
 
             </div>
 
+            <div
+                id="searchInfo"
+                class="search-info"
+            >
+                Showing all orders
+            </div>
 
-            <!-- TABLE -->
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <h3>Total Orders</h3>
+
+                <div
+                    class="number"
+                    id="totalOrders"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Pending</h3>
+
+                <div
+                    class="number"
+                    id="pendingOrders"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Processing</h3>
+
+                <div
+                    class="number"
+                    id="processingOrders"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Completed</h3>
+
+                <div
+                    class="number"
+                    id="completedOrders"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Cancelled</h3>
+
+                <div
+                    class="number"
+                    id="cancelledOrders"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDERS -->
+
+        <div class="orders-box">
+
+            <div class="orders-header">
+
+                <h2>All Orders</h2>
+
+                <span id="orderCount">
+                    0 orders
+                </span>
+
+            </div>
+
 
             <div class="table-wrapper">
 
@@ -686,21 +663,13 @@ tr:hover {
                         <tr>
 
                             <th>Order</th>
-
                             <th>User Email</th>
-
                             <th>Service</th>
-
                             <th>Details</th>
-
                             <th>Date</th>
-
                             <th>Amount</th>
-
                             <th>File</th>
-
                             <th>Status</th>
-
                             <th>Action</th>
 
                         </tr>
@@ -714,10 +683,9 @@ tr:hover {
 
                             <td
                                 colspan="9"
-                                class="loading">
-
+                                class="loading"
+                            >
                                 Loading orders...
-
                             </td>
 
                         </tr>
@@ -783,7 +751,7 @@ let allOrders = [];
 
 document.addEventListener(
     "DOMContentLoaded",
-    function() {
+    function () {
 
         checkSession();
 
@@ -963,6 +931,7 @@ async function adminLogin() {
 
 
         if (
+            !data.user.email ||
             data.user.email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
         ) {
@@ -981,7 +950,6 @@ async function adminLogin() {
         showAdminPanel(
             data.user
         );
-
 
         await loadOrders();
 
@@ -1084,8 +1052,6 @@ async function loadOrders() {
 
     try {
 
-        /* VERIFY ADMIN */
-
         const {
             data: {
                 user
@@ -1116,8 +1082,6 @@ async function loadOrders() {
         }
 
 
-        /* GET ORDERS */
-
         const {
             data: orders,
             error
@@ -1140,7 +1104,8 @@ async function loadOrders() {
                 <tr>
                     <td
                         colspan="9"
-                        class="empty">
+                        class="empty"
+                    >
                         Failed to load orders.<br><br>
                         ${escapeHtml(
                             error.message
@@ -1179,12 +1144,11 @@ async function loadOrders() {
             <tr>
                 <td
                     colspan="9"
-                    class="empty">
-
+                    class="empty"
+                >
                     ${escapeHtml(
                         error.message
                     )}
-
                 </td>
             </tr>
         `;
@@ -1195,27 +1159,31 @@ async function loadOrders() {
 
 
 /* =========================================================
-   APPLY SEARCH + STATUS FILTER
+   SEARCH + FILTER
 ========================================================= */
 
 function applyFilters() {
 
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        );
+
+
     const search =
-        document
-            .getElementById(
-                "searchInput"
-            )
-            .value
+        searchInput.value
             .trim()
             .toLowerCase();
 
 
-    const statusFilter =
-        document
-            .getElementById(
-                "statusFilter"
-            )
-            .value;
+    const selectedStatus =
+        statusFilter.value;
 
 
     const filteredOrders =
@@ -1224,32 +1192,46 @@ function applyFilters() {
 
                 const orderNumber =
                     String(
-                        order.order_number ||
-                        ""
+                        order.order_number || ""
                     ).toLowerCase();
 
 
-                const email =
+                const userEmail =
                     String(
-                        order.user_email ||
-                        ""
+                        order.user_email || ""
+                    ).toLowerCase();
+
+
+                const fileName =
+                    String(
+                        order.file_name || ""
+                    ).toLowerCase();
+
+
+                const service =
+                    String(
+                        order.service_name || ""
+                    ).toLowerCase();
+
+
+                const details =
+                    String(
+                        order.service_details || ""
                     ).toLowerCase();
 
 
                 const matchesSearch =
                     !search ||
-                    orderNumber.includes(
-                        search
-                    ) ||
-                    email.includes(
-                        search
-                    );
+                    orderNumber.includes(search) ||
+                    userEmail.includes(search) ||
+                    fileName.includes(search) ||
+                    service.includes(search) ||
+                    details.includes(search);
 
 
                 const matchesStatus =
-                    statusFilter === "All" ||
-                    order.status ===
-                    statusFilter;
+                    selectedStatus === "All" ||
+                    order.status === selectedStatus;
 
 
                 return (
@@ -1265,11 +1247,64 @@ function applyFilters() {
         filteredOrders
     );
 
+
+    const hasFilters =
+        search ||
+        selectedStatus !== "All";
+
+
+    if (hasFilters) {
+
+        document
+            .getElementById(
+                "searchInfo"
+            )
+            .textContent =
+            `Showing ${filteredOrders.length} of ${allOrders.length} orders`;
+
+    }
+
+    else {
+
+        document
+            .getElementById(
+                "searchInfo"
+            )
+            .textContent =
+            "Showing all orders";
+
+    }
+
 }
 
 
 /* =========================================================
-   RENDER FILTERED ORDERS
+   CLEAR FILTERS
+========================================================= */
+
+function clearFilters() {
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "statusFilter"
+        )
+        .value = "All";
+
+
+    applyFilters();
+
+}
+
+
+/* =========================================================
+   RENDER ORDERS
 ========================================================= */
 
 function renderOrders(
@@ -1282,18 +1317,6 @@ function renderOrders(
         );
 
 
-    document
-        .getElementById(
-            "orderCount"
-        )
-        .textContent =
-        `${orders.length} order${
-            orders.length === 1
-                ? ""
-                : "s"
-        }`;
-
-
     if (
         !orders ||
         orders.length === 0
@@ -1303,13 +1326,21 @@ function renderOrders(
             <tr>
                 <td
                     colspan="9"
-                    class="empty">
-
+                    class="empty"
+                >
                     No matching orders found.
-
                 </td>
             </tr>
         `;
+
+
+        document
+            .getElementById(
+                "orderCount"
+            )
+            .textContent =
+            "0 orders";
+
 
         return;
 
@@ -1326,6 +1357,18 @@ function renderOrders(
             )
             .join("");
 
+
+    document
+        .getElementById(
+            "orderCount"
+        )
+        .textContent =
+        `${orders.length} order${
+            orders.length === 1
+                ? ""
+                : "s"
+        }`;
+
 }
 
 
@@ -1333,7 +1376,9 @@ function renderOrders(
    CREATE ORDER ROW
 ========================================================= */
 
-function createOrderRow(order) {
+function createOrderRow(
+    order
+) {
 
     const userEmail =
         order.user_email ||
@@ -1401,22 +1446,19 @@ function createOrderRow(order) {
                     class="view-btn"
                     onclick="viewFile(
                         '${escapeJs(filePath)}'
-                    )">
-
+                    )"
+                >
                     View
-
                 </button>
-
 
                 <button
                     class="download-btn"
                     onclick="downloadFile(
                         '${escapeJs(filePath)}',
                         '${escapeJs(fileName)}'
-                    )">
-
+                    )"
+                >
                     Download
-
                 </button>
 
             </div>
@@ -1435,9 +1477,7 @@ function createOrderRow(order) {
                 <div class="order-number">
 
                     ${escapeHtml(
-                        String(
-                            orderNumber
-                        )
+                        String(orderNumber)
                     )}
 
                 </div>
@@ -1520,61 +1560,54 @@ function createOrderRow(order) {
                     onchange="updateOrderStatus(
                         '${escapeJs(order.id)}',
                         this.value
-                    )">
+                    )"
+                >
 
                     <option
                         value="Pending"
                         ${
-                            status ===
-                            "Pending"
+                            status === "Pending"
                                 ? "selected"
                                 : ""
-                        }>
-
+                        }
+                    >
                         Pending
-
                     </option>
 
 
                     <option
                         value="Processing"
                         ${
-                            status ===
-                            "Processing"
+                            status === "Processing"
                                 ? "selected"
                                 : ""
-                        }>
-
+                        }
+                    >
                         Processing
-
                     </option>
 
 
                     <option
                         value="Completed"
                         ${
-                            status ===
-                            "Completed"
+                            status === "Completed"
                                 ? "selected"
                                 : ""
-                        }>
-
+                        }
+                    >
                         Completed
-
                     </option>
 
 
                     <option
                         value="Cancelled"
                         ${
-                            status ===
-                            "Cancelled"
+                            status === "Cancelled"
                                 ? "selected"
                                 : ""
-                        }>
-
+                        }
+                    >
                         Cancelled
-
                     </option>
 
                 </select>
@@ -1588,10 +1621,9 @@ function createOrderRow(order) {
                     class="delete-btn"
                     onclick="deleteOrder(
                         '${escapeJs(order.id)}'
-                    )">
-
+                    )"
+                >
                     Delete
-
                 </button>
 
             </td>
@@ -1732,7 +1764,8 @@ async function downloadFile(
                 300,
                 {
                     download:
-                        fileName || true
+                        fileName ||
+                        true
                 }
             );
 
@@ -1771,6 +1804,31 @@ async function downloadFile(
         }
 
 
+        const response =
+            await fetch(
+                data.signedUrl
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not fetch the file."
+            );
+
+        }
+
+
+        const blob =
+            await response.blob();
+
+
+        const blobUrl =
+            URL.createObjectURL(
+                blob
+            );
+
+
         const link =
             document.createElement(
                 "a"
@@ -1778,16 +1836,12 @@ async function downloadFile(
 
 
         link.href =
-            data.signedUrl;
+            blobUrl;
 
 
         link.download =
             fileName ||
-            "file";
-
-
-        link.target =
-            "_blank";
+            "AviPrint-File";
 
 
         document
@@ -1802,14 +1856,30 @@ async function downloadFile(
 
         link.remove();
 
+
+        URL.revokeObjectURL(
+            blobUrl
+        );
+
+
+        showMessage(
+            "File downloaded successfully.",
+            "success"
+        );
+
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Download error:",
+            error
+        );
+
 
         showMessage(
-            "Download failed.",
+            "Download failed: " +
+            error.message,
             "error"
         );
 
@@ -1828,15 +1898,10 @@ async function updateOrderStatus(
 ) {
 
     const allowedStatuses = [
-
         "Pending",
-
         "Processing",
-
         "Completed",
-
         "Cancelled"
-
     ];
 
 
@@ -1864,10 +1929,7 @@ async function updateOrderStatus(
         await supabaseClient
             .from("orders")
             .update({
-
-                status:
-                    newStatus
-
+                status: newStatus
             })
             .eq(
                 "id",
@@ -1919,7 +1981,7 @@ async function updateOrderStatus(
 
 
 /* =========================================================
-   DELETE ORDER
+   DELETE
 ========================================================= */
 
 async function deleteOrder(
@@ -2017,84 +2079,45 @@ function updateStatistics(
 ) {
 
     document
-        .getElementById(
-            "totalOrders"
-        )
+        .getElementById("totalOrders")
         .textContent =
         orders.length;
 
 
     document
-        .getElementById(
-            "pendingOrders"
-        )
+        .getElementById("pendingOrders")
         .textContent =
         orders.filter(
             order =>
-                order.status ===
-                "Pending"
+                order.status === "Pending"
         ).length;
 
 
     document
-        .getElementById(
-            "processingOrders"
-        )
+        .getElementById("processingOrders")
         .textContent =
         orders.filter(
             order =>
-                order.status ===
-                "Processing"
+                order.status === "Processing"
         ).length;
 
 
     document
-        .getElementById(
-            "completedOrders"
-        )
+        .getElementById("completedOrders")
         .textContent =
         orders.filter(
             order =>
-                order.status ===
-                "Completed"
+                order.status === "Completed"
         ).length;
 
 
     document
-        .getElementById(
-            "cancelledOrders"
-        )
+        .getElementById("cancelledOrders")
         .textContent =
         orders.filter(
             order =>
-                order.status ===
-                "Cancelled"
+                order.status === "Cancelled"
         ).length;
-
-}
-
-
-/* =========================================================
-   CLEAR FILTERS
-========================================================= */
-
-function clearFilters() {
-
-    document
-        .getElementById(
-            "searchInput"
-        )
-        .value = "";
-
-
-    document
-        .getElementById(
-            "statusFilter"
-        )
-        .value = "All";
-
-
-    applyFilters();
 
 }
 
@@ -2106,7 +2129,6 @@ function clearFilters() {
 async function logout() {
 
     await supabaseClient.auth.signOut();
-
 
     showLogin();
 
@@ -2149,7 +2171,7 @@ function showMessage(
 
 
     setTimeout(
-        function() {
+        function () {
 
             message.style.display =
                 "none";
@@ -2232,17 +2254,11 @@ function formatDate(
     return date.toLocaleString(
         "en-IN",
         {
-
             day: "2-digit",
-
             month: "short",
-
             year: "numeric",
-
             hour: "2-digit",
-
             minute: "2-digit"
-
         }
     );
 
@@ -2260,27 +2276,22 @@ function escapeHtml(
     return String(
         value ?? ""
     )
-
     .replace(
         /&/g,
         "&amp;"
     )
-
     .replace(
         /</g,
         "&lt;"
     )
-
     .replace(
         />/g,
         "&gt;"
     )
-
     .replace(
         /"/g,
         "&quot;"
     )
-
     .replace(
         /'/g,
         "&#039;"
@@ -2300,27 +2311,22 @@ function escapeJs(
     return String(
         value ?? ""
     )
-
     .replace(
         /\\/g,
         "\\\\"
     )
-
     .replace(
         /'/g,
         "\\'"
     )
-
     .replace(
         /"/g,
         '\\"'
     )
-
     .replace(
         /\r/g,
         "\\r"
     )
-
     .replace(
         /\n/g,
         "\\n"
