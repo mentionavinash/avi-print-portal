@@ -5,28 +5,38 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+      content="AviPrint Customer Profile">
 
 <title>My Profile | AviPrint</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet"
+      href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="config.js"></script>
+
 
 <style>
 
-.profile-container{
-    max-width:800px;
-    margin:40px auto;
-    padding:20px;
+/* =========================
+   PROFILE PAGE
+========================= */
+
+.profile-page{
+    min-height:calc(100vh - 80px);
+    background:#f4f6f9;
+    padding:40px 20px;
 }
 
-.profile-card{
-    background:#fff;
-    border-radius:15px;
-    padding:30px;
-    box-shadow:0 4px 20px rgba(0,0,0,.08);
+.profile-container{
+    width:100%;
+    max-width:850px;
+    margin:0 auto;
 }
 
 .profile-title{
@@ -34,75 +44,165 @@
 }
 
 .profile-title h1{
-    margin-bottom:7px;
+    margin:0 0 8px;
+    color:#111827;
 }
 
 .profile-title p{
+    margin:0;
     color:#6b7280;
 }
 
+
+/* =========================
+   CARD
+========================= */
+
+.profile-card{
+    background:#ffffff;
+    border-radius:16px;
+    padding:30px;
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+}
+
+
+/* =========================
+   AVATAR
+========================= */
+
+.profile-top{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:30px;
+    padding-bottom:25px;
+    border-bottom:1px solid #e5e7eb;
+}
+
 .profile-avatar{
-    width:80px;
-    height:80px;
+    width:82px;
+    height:82px;
+    min-width:82px;
     border-radius:50%;
     background:#2563eb;
-    color:#fff;
+    color:white;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:32px;
     font-weight:bold;
-    margin-bottom:20px;
 }
 
+.profile-user-info h2{
+    margin:0 0 5px;
+    font-size:20px;
+    color:#111827;
+}
+
+.profile-user-info p{
+    margin:0;
+    color:#6b7280;
+    font-size:13px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
 .form-group{
-    margin-bottom:18px;
+    margin-bottom:20px;
 }
 
 .form-group label{
     display:block;
     margin-bottom:7px;
-    font-weight:bold;
+    color:#374151;
     font-size:14px;
+    font-weight:700;
 }
 
 .form-group input{
     width:100%;
-    height:45px;
+    height:46px;
+    padding:0 13px;
     border:1px solid #d1d5db;
     border-radius:8px;
-    padding:0 12px;
+    background:#ffffff;
+    color:#111827;
     font-size:14px;
+    outline:none;
 }
 
 .form-group input:focus{
-    outline:none;
     border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.10);
 }
 
 .form-group input:disabled{
     background:#f3f4f6;
+    color:#6b7280;
+    cursor:not-allowed;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.profile-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:25px;
 }
 
 .save-btn{
+    border:0;
     background:#2563eb;
     color:white;
-    border:0;
     padding:12px 22px;
     border-radius:8px;
-    font-weight:bold;
+    font-weight:700;
     cursor:pointer;
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
 }
 
 .save-btn:disabled{
     opacity:.6;
+    cursor:wait;
 }
+
+.dashboard-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 20px;
+    border-radius:8px;
+    background:#f3f4f6;
+    color:#374151;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.dashboard-btn:hover{
+    background:#e5e7eb;
+}
+
+
+/* =========================
+   MESSAGES
+========================= */
 
 .message{
     display:none;
-    padding:12px;
+    padding:13px 15px;
     border-radius:8px;
     margin-bottom:20px;
+    font-size:14px;
 }
 
 .success{
@@ -115,28 +215,103 @@
     color:#991b1b;
 }
 
-.back-link{
-    display:inline-block;
-    margin-top:20px;
-    color:#2563eb;
+
+/* =========================
+   LOADING
+========================= */
+
+.profile-loading{
+    text-align:center;
+    padding:60px 20px;
+    color:#6b7280;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.profile-nav{
+    display:flex;
+    align-items:center;
+    gap:25px;
+    flex-wrap:wrap;
+}
+
+.profile-nav a{
     text-decoration:none;
-    font-weight:bold;
+    color:#374151;
+    font-weight:600;
+    font-size:14px;
+}
+
+.profile-nav a:hover{
+    color:#2563eb;
+}
+
+.profile-nav a.active{
+    color:#2563eb;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    .profile-page{
+        padding:25px 15px;
+    }
+
+    .profile-card{
+        padding:22px;
+    }
+
+    .profile-top{
+        align-items:flex-start;
+    }
+
+    .profile-avatar{
+        width:65px;
+        height:65px;
+        min-width:65px;
+        font-size:25px;
+    }
+
+    .profile-user-info h2{
+        font-size:17px;
+    }
+
+    .profile-nav{
+        gap:12px;
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
 
+
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <header class="navbar">
 
 <div class="container nav-container">
 
-<a href="dashboard.html" class="logo">
 
-<span class="logo-icon">A</span>
+<a href="dashboard.html"
+   class="logo">
+
+<span class="logo-icon">
+A
+</span>
 
 <span>
 Avi<span>Print</span>
@@ -144,7 +319,8 @@ Avi<span>Print</span>
 
 </a>
 
-<nav class="nav-menu">
+
+<nav class="profile-nav">
 
 <a href="dashboard.html">
 Dashboard
@@ -158,22 +334,34 @@ Services
 My Orders
 </a>
 
-<a href="profile.html">
+<a href="profile.html"
+   class="active">
 Profile
 </a>
 
 </nav>
+
 
 </div>
 
 </header>
 
 
-<main class="profile-container">
+
+<!-- =========================
+     PROFILE PAGE
+========================= -->
+
+<main class="profile-page">
+
+<div class="profile-container">
+
 
 <div class="profile-title">
 
-<h1>👤 My Profile</h1>
+<h1>
+👤 My Profile
+</h1>
 
 <p>
 Manage your AviPrint account information.
@@ -182,25 +370,63 @@ Manage your AviPrint account information.
 </div>
 
 
-<div id="successMessage" class="message success"></div>
 
-<div id="errorMessage" class="message error"></div>
-
-
-<div class="profile-card">
-
-
-<div id="avatar" class="profile-avatar">
-A
+<div id="successMessage"
+     class="message success">
 </div>
+
+
+<div id="errorMessage"
+     class="message error">
+</div>
+
+
+
+<!-- =========================
+     PROFILE CARD
+========================= -->
+
+<div class="profile-card"
+     id="profileCard"
+     style="display:none;">
+
+
+<div class="profile-top">
+
+
+<div id="avatar"
+     class="profile-avatar">
+
+A
+
+</div>
+
+
+<div class="profile-user-info">
+
+<h2 id="profileName">
+Customer
+</h2>
+
+<p id="profileEmailText">
+Loading...
+</p>
+
+</div>
+
+
+</div>
+
 
 
 <form id="profileForm">
 
 
+<!-- FULL NAME -->
+
 <div class="form-group">
 
-<label>
+<label for="fullName">
 Full Name
 </label>
 
@@ -208,29 +434,38 @@ Full Name
 type="text"
 id="fullName"
 placeholder="Enter your full name"
+autocomplete="name"
 required>
 
 </div>
 
 
+
+<!-- MOBILE -->
+
 <div class="form-group">
 
-<label>
+<label for="mobile">
 Mobile Number
 </label>
 
 <input
 type="tel"
 id="mobile"
+placeholder="Enter 10-digit mobile number"
 maxlength="10"
-placeholder="Enter mobile number">
+inputmode="numeric"
+autocomplete="tel">
 
 </div>
 
 
+
+<!-- EMAIL -->
+
 <div class="form-group">
 
-<label>
+<label for="email">
 Email Address
 </label>
 
@@ -242,9 +477,12 @@ disabled>
 </div>
 
 
+
+<!-- ROLE -->
+
 <div class="form-group">
 
-<label>
+<label for="role">
 Account Role
 </label>
 
@@ -256,6 +494,11 @@ disabled>
 </div>
 
 
+
+<!-- BUTTONS -->
+
+<div class="profile-actions">
+
 <button
 type="submit"
 id="saveButton"
@@ -265,37 +508,67 @@ Save Changes
 
 </button>
 
+
+<a
+href="dashboard.html"
+class="dashboard-btn">
+
+← Back to Dashboard
+
+</a>
+
+</div>
+
+
 </form>
 
 
 </div>
 
 
-<a
-href="dashboard.html"
-class="back-link">
 
-← Back to Dashboard
+<!-- LOADING -->
 
-</a>
+<div
+id="loadingBox"
+class="profile-loading">
+
+Loading your profile...
+
+</div>
+
+
+</div>
 
 </main>
 
 
+
+<!-- =========================
+     PROFILE SCRIPT
+========================= -->
+
 <script>
 
-document.addEventListener("DOMContentLoaded", async function(){
+document.addEventListener(
+"DOMContentLoaded",
+async function(){
 
-    console.log("PROFILE PAGE LOADED");
+    console.log(
+        "AviPrint Profile Page Loaded"
+    );
 
-    /* =========================
+
+    /* =====================================
        CHECK SUPABASE
-    ========================= */
+    ===================================== */
 
-    if(typeof supabaseClient === "undefined"){
+    if(
+        typeof window.supabase === "undefined"
+    ){
 
         showError(
-            "Supabase configuration not loaded. Check config.js."
+            "Supabase library could not be loaded."
         );
 
         return;
@@ -303,33 +576,131 @@ document.addEventListener("DOMContentLoaded", async function(){
     }
 
 
-    /* =========================
-       GET SESSION
-    ========================= */
+    if(
+        typeof supabaseClient === "undefined" ||
+        !supabaseClient
+    ){
+
+        showError(
+            "Supabase configuration could not be loaded. Check config.js."
+        );
+
+        return;
+
+    }
+
+
+
+    /* =====================================
+       ELEMENTS
+    ===================================== */
+
+    const profileCard =
+    document.getElementById(
+        "profileCard"
+    );
+
+
+    const loadingBox =
+    document.getElementById(
+        "loadingBox"
+    );
+
+
+    const profileForm =
+    document.getElementById(
+        "profileForm"
+    );
+
+
+    const fullNameInput =
+    document.getElementById(
+        "fullName"
+    );
+
+
+    const mobileInput =
+    document.getElementById(
+        "mobile"
+    );
+
+
+    const emailInput =
+    document.getElementById(
+        "email"
+    );
+
+
+    const roleInput =
+    document.getElementById(
+        "role"
+    );
+
+
+    const avatar =
+    document.getElementById(
+        "avatar"
+    );
+
+
+    const profileName =
+    document.getElementById(
+        "profileName"
+    );
+
+
+    const profileEmailText =
+    document.getElementById(
+        "profileEmailText"
+    );
+
+
+    const saveButton =
+    document.getElementById(
+        "saveButton"
+    );
+
+
+
+    /* =====================================
+       LOAD PROFILE
+    ===================================== */
+
+    let currentUser = null;
+
+    let currentProfile = null;
+
 
     try{
 
-        const result =
-        await supabaseClient.auth.getSession();
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .auth
+        .getSession();
 
-        console.log(
-            "Session result:",
-            result
-        );
 
+        if(error){
 
-        if(result.error){
-
-            throw result.error;
+            throw error;
 
         }
 
 
         const session =
-        result.data.session;
+        data.session;
 
 
-        if(!session){
+        /* =================================
+           NOT LOGGED IN
+        ================================= */
+
+        if(
+            !session ||
+            !session.user
+        ){
 
             window.location.href =
             "login.html";
@@ -339,41 +710,52 @@ document.addEventListener("DOMContentLoaded", async function(){
         }
 
 
-        const user =
+        currentUser =
         session.user;
 
 
         console.log(
-            "Logged in user:",
-            user
+            "Current user:",
+            currentUser.id
         );
 
 
         const userId =
-        user.id;
+        currentUser.id;
 
 
         const userEmail =
-        user.email || "";
+        currentUser.email || "";
 
 
-        /* =========================
+
+        /* =================================
            AUTH METADATA
-        ========================= */
+        ================================= */
 
-        let name =
-        user.user_metadata?.full_name || "";
+        let authName =
+        currentUser.user_metadata &&
+        currentUser.user_metadata.full_name
+        ? currentUser.user_metadata.full_name
+        : "";
 
 
-        let mobile =
-        user.user_metadata?.mobile || "";
+        let authMobile =
+        currentUser.user_metadata &&
+        currentUser.user_metadata.mobile
+        ? currentUser.user_metadata.mobile
+        : "";
 
 
-        /* =========================
-           LOAD PROFILE
-        ========================= */
 
-        const profileResult =
+        /* =================================
+           GET PROFILE
+        ================================= */
+
+        const {
+            data:profileData,
+            error:profileError
+        } =
         await supabaseClient
         .from("profiles")
         .select(
@@ -387,294 +769,424 @@ document.addEventListener("DOMContentLoaded", async function(){
 
 
         console.log(
-            "Profile result:",
-            profileResult
+            "Profile:",
+            profileData,
+            profileError
         );
 
 
+        /*
+         * SELECT error is not fatal here.
+         * Auth metadata can still be used.
+         */
+
         if(
-            profileResult.error
+            profileError
         ){
 
             console.warn(
-                "Profile table error:",
-                profileResult.error
+                "Profile SELECT warning:",
+                profileError
             );
 
         }
 
 
-        const profile =
-        profileResult.data;
+        currentProfile =
+        profileData || null;
 
 
-        /* =========================
-           PRIORITY
-        ========================= */
 
-        if(
-            profile &&
-            profile.full_name
-        ){
+        /* =================================
+           NAME PRIORITY
+        ================================= */
 
-            name =
-            profile.full_name;
-
-        }
+        let finalName = "";
 
 
         if(
-            profile &&
-            profile.mobile
+            currentProfile &&
+            currentProfile.full_name
         ){
 
-            mobile =
-            profile.mobile;
+            finalName =
+            currentProfile.full_name;
 
         }
 
+        else if(
+            authName
+        ){
 
-        if(!name){
+            finalName =
+            authName;
 
-            name =
+        }
+
+        else{
+
+            finalName =
             userEmail
             .split("@")[0];
 
         }
 
 
-        /* =========================
+
+        /* =================================
+           MOBILE PRIORITY
+        ================================= */
+
+        let finalMobile = "";
+
+
+        if(
+            currentProfile &&
+            currentProfile.mobile
+        ){
+
+            finalMobile =
+            currentProfile.mobile;
+
+        }
+
+        else if(
+            authMobile
+        ){
+
+            finalMobile =
+            authMobile;
+
+        }
+
+
+
+        /* =================================
+           ROLE
+        ================================= */
+
+        const finalRole =
+        currentProfile &&
+        currentProfile.role
+        ? currentProfile.role
+        : "customer";
+
+
+
+        /* =================================
            DISPLAY
-        ========================= */
+        ================================= */
 
-        document.getElementById(
-            "fullName"
-        ).value =
-        name;
+        fullNameInput.value =
+        finalName;
 
 
-        document.getElementById(
-            "mobile"
-        ).value =
-        mobile;
+        mobileInput.value =
+        finalMobile;
 
 
-        document.getElementById(
-            "email"
-        ).value =
+        emailInput.value =
         userEmail;
 
 
-        document.getElementById(
-            "role"
-        ).value =
-        profile?.role ||
-        "customer";
+        roleInput.value =
+        finalRole;
 
 
-        document.getElementById(
-            "avatar"
-        ).textContent =
-        name
+        profileName.textContent =
+        finalName;
+
+
+        profileEmailText.textContent =
+        userEmail;
+
+
+        avatar.textContent =
+        finalName
         .charAt(0)
         .toUpperCase();
 
 
-        /* =========================
-           SAVE
-        ========================= */
 
-        document.getElementById(
-            "profileForm"
-        ).addEventListener(
-        "submit",
-        async function(event){
+        /* =================================
+           SHOW PROFILE
+        ================================= */
 
-            event.preventDefault();
+        loadingBox.style.display =
+        "none";
 
 
-            const newName =
-            document.getElementById(
-                "fullName"
-            ).value.trim();
+        profileCard.style.display =
+        "block";
 
-
-            const newMobile =
-            document.getElementById(
-                "mobile"
-            ).value.trim();
-
-
-            if(!newName){
-
-                showError(
-                    "Please enter your full name."
-                );
-
-                return;
-
-            }
-
-
-            if(
-                newMobile &&
-                !/^[0-9]{10}$/.test(
-                    newMobile
-                )
-            ){
-
-                showError(
-                    "Enter a valid 10-digit mobile number."
-                );
-
-                return;
-
-            }
-
-
-            const button =
-            document.getElementById(
-                "saveButton"
-            );
-
-
-            button.disabled =
-            true;
-
-            button.textContent =
-            "Saving...";
-
-
-            hideMessages();
-
-
-            try{
-
-                /* =========================
-                   UPDATE AUTH USER
-                ========================= */
-
-                const authUpdate =
-                await supabaseClient
-                .auth
-                .updateUser({
-
-                    data:{
-
-                        full_name:
-                        newName,
-
-                        mobile:
-                        newMobile
-
-                    }
-
-                });
-
-
-                if(authUpdate.error){
-
-                    throw authUpdate.error;
-
-                }
-
-
-                /* =========================
-                   UPDATE PROFILE
-                ========================= */
-
-                const profileUpdate =
-                await supabaseClient
-                .from("profiles")
-                .upsert({
-
-                    id:userId,
-
-                    email:userEmail,
-
-                    full_name:newName,
-
-                    mobile:newMobile,
-
-                    role:
-                    profile?.role ||
-                    "customer"
-
-                });
-
-
-                if(profileUpdate.error){
-
-                    throw profileUpdate.error;
-
-                }
-
-
-                document.getElementById(
-                    "avatar"
-                ).textContent =
-                newName
-                .charAt(0)
-                .toUpperCase();
-
-
-                showSuccess(
-                    "Profile updated successfully."
-                );
-
-            }
-
-
-            catch(error){
-
-                console.error(
-                    "SAVE PROFILE ERROR:",
-                    error
-                );
-
-
-                showError(
-                    "Profile update failed: " +
-                    error.message
-                );
-
-            }
-
-
-            finally{
-
-                button.disabled =
-                false;
-
-                button.textContent =
-                "Save Changes";
-
-            }
-
-        });
 
 
     }
-
 
     catch(error){
 
         console.error(
-            "PROFILE ERROR:",
+            "Profile loading error:",
             error
         );
 
 
+        loadingBox.style.display =
+        "none";
+
+
         showError(
             "Unable to load profile: " +
-            error.message
+            (
+                error.message ||
+                "Unknown error"
+            )
         );
+
+
+        return;
 
     }
 
 
+
+    /* =====================================
+       SAVE PROFILE
+    ===================================== */
+
+    profileForm.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        if(!currentUser){
+
+            showError(
+                "Login session not found."
+            );
+
+            return;
+
+        }
+
+
+        const newName =
+        fullNameInput.value
+        .trim();
+
+
+        const newMobile =
+        mobileInput.value
+        .trim();
+
+
+        const userEmail =
+        currentUser.email || "";
+
+
+        if(!newName){
+
+            showError(
+                "Please enter your full name."
+            );
+
+            return;
+
+        }
+
+
+        if(
+            newMobile &&
+            !/^[0-9]{10}$/.test(
+                newMobile
+            )
+        ){
+
+            showError(
+                "Please enter a valid 10-digit mobile number."
+            );
+
+            return;
+
+        }
+
+
+
+        saveButton.disabled =
+        true;
+
+
+        saveButton.textContent =
+        "Saving...";
+
+
+        hideMessages();
+
+
+
+        try{
+
+            /* =================================
+               UPDATE AUTH USER METADATA
+            ================================= */
+
+            const {
+                error:authError
+            } =
+            await supabaseClient
+            .auth
+            .updateUser({
+
+                data:{
+
+                    full_name:
+                    newName,
+
+                    mobile:
+                    newMobile
+
+                }
+
+            });
+
+
+            if(authError){
+
+                throw authError;
+
+            }
+
+
+
+            /* =================================
+               SAVE PROFILE
+            ================================= */
+
+            const profilePayload = {
+
+                id:
+                currentUser.id,
+
+                email:
+                userEmail,
+
+                full_name:
+                newName,
+
+                mobile:
+                newMobile,
+
+                role:
+                currentProfile &&
+                currentProfile.role
+                ? currentProfile.role
+                : "customer"
+
+            };
+
+
+            const {
+                data:savedProfile,
+                error:saveError
+            } =
+            await supabaseClient
+            .from("profiles")
+            .upsert(
+                profilePayload,
+                {
+                    onConflict:"id"
+                }
+            )
+            .select()
+            .single();
+
+
+            if(saveError){
+
+                throw saveError;
+
+            }
+
+
+            console.log(
+                "Profile saved:",
+                savedProfile
+            );
+
+
+            currentProfile =
+            savedProfile;
+
+
+
+            /* =================================
+               UPDATE SCREEN
+            ================================= */
+
+            profileName.textContent =
+            newName;
+
+
+            profileEmailText.textContent =
+            userEmail;
+
+
+            avatar.textContent =
+            newName
+            .charAt(0)
+            .toUpperCase();
+
+
+            showSuccess(
+                "Profile updated successfully."
+            );
+
+
+
+        }
+
+        catch(error){
+
+            console.error(
+                "PROFILE SAVE ERROR:",
+                error
+            );
+
+
+            showError(
+                "Profile update failed: " +
+                (
+                    error.message ||
+                    "Unable to save profile."
+                )
+            );
+
+        }
+
+
+        finally{
+
+            saveButton.disabled =
+            false;
+
+
+            saveButton.textContent =
+            "Save Changes";
+
+        }
+
+    });
+
+
 });
 
+
+
+/* =====================================
+   SUCCESS MESSAGE
+===================================== */
 
 function showSuccess(message){
 
@@ -683,14 +1195,42 @@ function showSuccess(message){
         "successMessage"
     );
 
+
+    const errorBox =
+    document.getElementById(
+        "errorMessage"
+    );
+
+
+    errorBox.style.display =
+    "none";
+
+
     box.textContent =
     message;
+
 
     box.style.display =
     "block";
 
+
+    setTimeout(
+        function(){
+
+            box.style.display =
+            "none";
+
+        },
+        5000
+    );
+
 }
 
+
+
+/* =====================================
+   ERROR MESSAGE
+===================================== */
 
 function showError(message){
 
@@ -699,8 +1239,20 @@ function showError(message){
         "errorMessage"
     );
 
+
+    const successBox =
+    document.getElementById(
+        "successMessage"
+    );
+
+
+    successBox.style.display =
+    "none";
+
+
     box.textContent =
     message;
+
 
     box.style.display =
     "block";
@@ -708,12 +1260,18 @@ function showError(message){
 }
 
 
+
+/* =====================================
+   HIDE MESSAGES
+===================================== */
+
 function hideMessages(){
 
     document.getElementById(
         "successMessage"
     ).style.display =
     "none";
+
 
     document.getElementById(
         "errorMessage"
@@ -723,6 +1281,7 @@ function hideMessages(){
 }
 
 </script>
+
 
 </body>
 
