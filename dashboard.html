@@ -3,1518 +3,1169 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="AviPrint User Dashboard">
+<title>Profile | AviPrint Portal</title>
 
-    <title>Dashboard | AviPrint Portal</title>
+<link rel="stylesheet"
+      href="css/style.css">
 
-    <link rel="stylesheet"
-          href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js"></script>
+<script src="config.js"></script>
 
-    <style>
+<style>
 
-        /* =========================
-           RECENT ORDER ROWS
-        ========================= */
+.profile-page{
+    max-width:900px;
+    margin:40px auto;
+    padding:0 20px;
+}
 
-        .dashboard-recent-orders {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+.profile-header{
+    margin-bottom:25px;
+}
 
-        .recent-order-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            padding: 15px;
-            border: 1px solid #eef2f7;
-            border-radius: 12px;
-            background: #ffffff;
-        }
+.profile-header h1{
+    font-size:28px;
+    margin-bottom:8px;
+    color:#111827;
+}
 
-        .recent-order-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 0;
-        }
+.profile-header p{
+    color:#6b7280;
+}
 
-        .recent-order-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: #eff6ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+.profile-card{
+    background:#ffffff;
+    border-radius:16px;
+    padding:30px;
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
 
-        .recent-order-info {
-            min-width: 0;
-        }
+.profile-top{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding-bottom:25px;
+    border-bottom:1px solid #e5e7eb;
+    margin-bottom:25px;
+}
 
-        .recent-order-info strong {
-            display: block;
-            color: #111827;
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
+.profile-avatar{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#2563eb;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    font-weight:bold;
+}
 
-        .recent-order-info span {
-            display: block;
-            color: #9ca3af;
-            font-size: 11px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+.profile-top h2{
+    margin:0 0 5px;
+    color:#111827;
+}
 
-        .recent-order-right {
-            text-align: right;
-            flex-shrink: 0;
-        }
+.profile-top p{
+    margin:0;
+    color:#6b7280;
+    font-size:14px;
+}
 
-        .recent-order-amount {
-            display: block;
-            color: #111827;
-            font-weight: 700;
-            font-size: 13px;
-            margin-bottom: 5px;
-        }
+.profile-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
 
-        .recent-order-status {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 700;
-        }
+.form-group{
+    margin-bottom:18px;
+}
 
-        .recent-order-status.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
+.form-group label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+    color:#374151;
+}
 
-        .recent-order-status.processing {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
+.form-group input{
+    width:100%;
+    height:46px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    padding:0 13px;
+    font-size:14px;
+    outline:none;
+}
 
-        .recent-order-status.completed {
-            background: #dcfce7;
-            color: #166534;
-        }
+.form-group input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
 
-        .recent-order-status.cancelled {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+.form-group input:disabled{
+    background:#f3f4f6;
+    color:#6b7280;
+}
 
-        .recent-loading,
-        .recent-empty,
-        .recent-error {
-            text-align: center;
-            padding: 30px 15px;
-            color: #6b7280;
-            font-size: 13px;
-        }
+.info-box{
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:15px;
+    margin-top:5px;
+}
 
-        .recent-error {
-            color: #b91c1c;
-        }
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:10px 0;
+    border-bottom:1px solid #e5e7eb;
+}
 
-        @media (max-width: 600px) {
+.info-row:last-child{
+    border-bottom:none;
+}
 
-            .recent-order-item {
-                align-items: flex-start;
-            }
+.info-label{
+    color:#6b7280;
+    font-size:13px;
+}
 
-            .recent-order-right {
-                text-align: right;
-            }
+.info-value{
+    font-weight:600;
+    color:#111827;
+    text-align:right;
+}
 
-        }
+.save-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:14px;
+}
 
-    </style>
+.save-btn:hover{
+    background:#1d4ed8;
+}
+
+.save-btn:disabled{
+    opacity:.6;
+    cursor:wait;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-top:5px;
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+}
+
+.message{
+    display:none;
+    padding:13px 15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+@media(max-width:650px){
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-card{
+        padding:20px;
+    }
+
+    .profile-top{
+        align-items:flex-start;
+    }
+
+    .profile-avatar{
+        width:60px;
+        height:60px;
+        font-size:24px;
+    }
+
+}
+
+</style>
 
 </head>
 
 
-<body class="dashboard-page">
+<body>
 
 
 <!-- =========================
-     TOP NAVBAR
+     NAVBAR
 ========================= -->
 
 <header class="navbar">
 
-    <div class="container nav-container">
+<div class="container nav-container">
+
+<a href="index.html"
+   class="logo">
+
+<span class="logo-icon">
+A
+</span>
+
+<span>
+Avi<span>Print</span>
+</span>
+
+</a>
 
 
-        <a href="index.html"
-           class="logo">
+<nav class="nav-menu">
 
-            <span class="logo-icon">
-                A
-            </span>
+<a href="dashboard.html">
+Dashboard
+</a>
 
-            <span>
-                Avi<span>Print</span>
-            </span>
+<a href="services.html">
+Services
+</a>
 
-        </a>
+<a href="orders.html">
+My Orders
+</a>
 
+<a href="profile.html"
+   style="color:#2563eb;">
+Profile
+</a>
 
-        <nav class="nav-menu">
-
-            <a href="dashboard.html"
-               style="color:#2563eb;">
-
-                Dashboard
-
-            </a>
-
-            <a href="services.html">
-
-                Services
-
-            </a>
-
-            <a href="orders.html">
-
-                My Orders
-
-            </a>
-
-        </nav>
+</nav>
 
 
-        <div class="nav-buttons">
+<div class="nav-buttons">
 
-            <button
-                type="button"
-                id="logoutButton"
-                class="login-btn"
-                style="
-                    border:none;
-                    cursor:pointer;
-                    background:transparent;
-                ">
+<button
+type="button"
+id="logoutButton"
+class="login-btn"
+style="
+border:none;
+cursor:pointer;
+background:transparent;
+">
 
-                Logout
+Logout
 
-            </button>
+</button>
 
-        </div>
+</div>
 
-
-        <button
-            class="mobile-menu-btn"
-            id="mobileMenuBtn"
-            type="button">
-
-            ☰
-
-        </button>
-
-
-    </div>
+</div>
 
 </header>
 
 
 
 <!-- =========================
-     DASHBOARD
+     PROFILE
 ========================= -->
 
-<main class="dashboard-container">
+<main class="profile-page">
 
 
-    <!-- SIDEBAR -->
+<div class="profile-header">
 
-    <aside class="dashboard-sidebar">
+<h1>
+👤 My Profile
+</h1>
 
+<p>
+Manage your AviPrint account information.
+</p>
 
-        <div class="sidebar-user">
+</div>
 
-            <div
-                class="user-avatar"
-                id="userAvatar">
 
-                A
+<div id="successMessage"
+     class="message success">
+</div>
 
-            </div>
 
+<div id="errorMessage"
+     class="message error">
+</div>
 
-            <div>
 
-                <strong id="sidebarUserName">
 
-                    Welcome, User
+<!-- PROFILE CARD -->
 
-                </strong>
+<div class="profile-card">
 
-                <span id="sidebarUserEmail">
 
-                    user@example.com
+<div class="profile-top">
 
-                </span>
+<div id="profileAvatar"
+     class="profile-avatar">
 
-            </div>
+A
 
-        </div>
+</div>
 
 
+<div>
 
-        <nav class="sidebar-nav">
+<h2 id="profileName">
+Loading...
+</h2>
 
+<p id="profileEmail">
+Loading...
+</p>
 
-            <a
-                href="dashboard.html"
-                class="active">
+</div>
 
-                <span>▦</span>
+</div>
 
-                Dashboard
 
-            </a>
 
+<!-- EDIT FORM -->
 
-            <a href="services.html">
+<form id="profileForm">
 
-                <span>🖨️</span>
 
-                Print Services
+<div class="profile-grid">
 
-            </a>
 
+<div class="form-group">
 
-            <a href="orders.html">
+<label for="fullName">
+Full Name
+</label>
 
-                <span>📦</span>
+<input
+type="text"
+id="fullName"
+placeholder="Enter your full name"
+required>
 
-                My Orders
+</div>
 
-            </a>
 
 
-            <a href="#wallet">
+<div class="form-group">
 
-                <span>💰</span>
+<label for="mobile">
+Mobile Number
+</label>
 
-                Wallet
+<input
+type="tel"
+id="mobile"
+placeholder="Enter 10-digit mobile number"
+maxlength="10"
+inputmode="numeric">
 
-            </a>
+</div>
 
 
-            <a href="#profile">
 
-                <span>👤</span>
+<div class="form-group">
 
-                Profile
+<label for="email">
+Email Address
+</label>
 
-            </a>
+<input
+type="email"
+id="email"
+disabled>
 
+</div>
 
-            <a href="#support">
 
-                <span>❓</span>
 
-                Help & Support
+<div class="form-group">
 
-            </a>
+<label for="role">
+Account Role
+</label>
 
+<input
+type="text"
+id="role"
+disabled>
 
-        </nav>
+</div>
 
+</div>
 
 
-        <div class="sidebar-bottom">
 
-            <a href="index.html">
+<button
+type="submit"
+id="saveButton"
+class="save-btn">
 
-                ← Back to Website
+Save Changes
 
-            </a>
+</button>
 
-        </div>
 
+</form>
 
-    </aside>
+</div>
 
 
 
-    <!-- MAIN CONTENT -->
+<!-- ACCOUNT INFORMATION -->
 
-    <section class="dashboard-main">
+<div class="profile-card">
 
+<h2 style="margin-bottom:18px;">
+Account Information
+</h2>
 
-        <!-- MOBILE TOP -->
 
-        <div class="dashboard-mobile-header">
+<div class="info-box">
 
-            <button
-                id="sidebarToggle"
-                type="button">
 
-                ☰
+<div class="info-row">
 
-            </button>
+<span class="info-label">
+Email
+</span>
 
-            <strong>
-                Dashboard
-            </strong>
+<span
+id="infoEmail"
+class="info-value">
 
-        </div>
+-
 
+</span>
 
+</div>
 
-        <!-- HEADER -->
 
-        <div class="dashboard-heading">
+<div class="info-row">
 
+<span class="info-label">
+Mobile
+</span>
 
-            <div>
+<span
+id="infoMobile"
+class="info-value">
 
-                <span class="section-label">
+-
 
-                    USER DASHBOARD
+</span>
 
-                </span>
+</div>
 
 
-                <h1 id="welcomeHeading">
+<div class="info-row">
 
-                    Welcome back! 👋
+<span class="info-label">
+Role
+</span>
 
-                </h1>
+<span
+id="infoRole"
+class="info-value">
 
+Customer
 
-                <p>
+</span>
 
-                    Manage your printing services
-                    and orders from here.
+</div>
 
-                </p>
 
-            </div>
+<div class="info-row">
 
+<span class="info-label">
+Account Created
+</span>
 
-            <a
-                href="services.html"
-                class="primary-btn">
+<span
+id="infoCreated"
+class="info-value">
 
-                + New Print
+-
 
-            </a>
+</span>
 
+</div>
 
-        </div>
 
+</div>
 
+</div>
 
-        <!-- STAT CARDS -->
 
-        <div class="dashboard-stats">
+<a href="dashboard.html"
+   class="back-btn">
 
+← Back to Dashboard
 
-            <div class="stat-card">
-
-                <div class="stat-icon blue">
-                    📦
-                </div>
-
-                <div>
-
-                    <span>
-                        Total Orders
-                    </span>
-
-                    <strong id="totalOrders">
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon green">
-                    ✓
-                </div>
-
-                <div>
-
-                    <span>
-                        Completed
-                    </span>
-
-                    <strong id="completedOrders">
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon orange">
-                    ⏳
-                </div>
-
-                <div>
-
-                    <span>
-                        Processing
-                    </span>
-
-                    <strong id="processingOrders">
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon purple">
-                    💰
-                </div>
-
-                <div>
-
-                    <span>
-                        Wallet Balance
-                    </span>
-
-                    <strong id="walletBalance">
-                        ₹0.00
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- SERVICES -->
-
-        <div class="dashboard-section">
-
-
-            <div class="section-title-row">
-
-
-                <div>
-
-                    <h2>
-                        Popular Services
-                    </h2>
-
-                    <p>
-                        Start a new printing order
-                    </p>
-
-                </div>
-
-
-                <a href="services.html">
-
-                    View All →
-
-                </a>
-
-
-            </div>
-
-
-
-            <div class="dashboard-service-grid">
-
-
-                <a
-                    href="services.html"
-                    class="dashboard-service-card">
-
-                    <div class="dashboard-service-icon">
-                        📄
-                    </div>
-
-                    <strong>
-                        Document Print
-                    </strong>
-
-                    <span>
-                        PDF & documents
-                    </span>
-
-                </a>
-
-
-
-                <a
-                    href="services.html"
-                    class="dashboard-service-card">
-
-                    <div class="dashboard-service-icon">
-                        🖼️
-                    </div>
-
-                    <strong>
-                        Photo Print
-                    </strong>
-
-                    <span>
-                        Different sizes
-                    </span>
-
-                </a>
-
-
-
-                <a
-                    href="services.html"
-                    class="dashboard-service-card">
-
-                    <div class="dashboard-service-icon">
-                        🪪
-                    </div>
-
-                    <strong>
-                        ID Card Print
-                    </strong>
-
-                    <span>
-                        Eligible documents
-                    </span>
-
-                </a>
-
-
-
-                <a
-                    href="services.html"
-                    class="dashboard-service-card">
-
-                    <div class="dashboard-service-icon">
-                        📑
-                    </div>
-
-                    <strong>
-                        PDF Print
-                    </strong>
-
-                    <span>
-                        Fast processing
-                    </span>
-
-                </a>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- RECENT ORDERS -->
-
-        <div class="dashboard-section">
-
-
-            <div class="section-title-row">
-
-
-                <div>
-
-                    <h2>
-                        Recent Orders
-                    </h2>
-
-                    <p>
-                        Track your latest print orders
-                    </p>
-
-                </div>
-
-
-                <a href="orders.html">
-
-                    View All →
-
-                </a>
-
-
-            </div>
-
-
-
-            <div
-                id="recentOrders"
-                class="dashboard-recent-orders">
-
-                <div class="recent-loading">
-
-                    Loading recent orders...
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-    </section>
+</a>
 
 
 </main>
 
 
 
-<!-- =========================
-     DASHBOARD SCRIPT
-========================= -->
-
 <script>
 
 document.addEventListener(
-    "DOMContentLoaded",
-    async function () {
+"DOMContentLoaded",
+async function(){
+
+    /* =========================
+       SUPABASE CHECK
+    ========================= */
+
+    if(
+        typeof window.supabase === "undefined" ||
+        typeof supabaseClient === "undefined" ||
+        !supabaseClient
+    ){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
 
 
-        /* =========================
-           SUPABASE CHECK
-        ========================= */
+    const fullName =
+    document.getElementById(
+        "fullName"
+    );
 
-        if (
-            typeof window.supabase === "undefined" ||
-            typeof supabaseClient === "undefined" ||
-            !supabaseClient
-        ) {
+    const mobile =
+    document.getElementById(
+        "mobile"
+    );
+
+    const email =
+    document.getElementById(
+        "email"
+    );
+
+    const role =
+    document.getElementById(
+        "role"
+    );
+
+    const profileName =
+    document.getElementById(
+        "profileName"
+    );
+
+    const profileEmail =
+    document.getElementById(
+        "profileEmail"
+    );
+
+    const profileAvatar =
+    document.getElementById(
+        "profileAvatar"
+    );
+
+    const infoEmail =
+    document.getElementById(
+        "infoEmail"
+    );
+
+    const infoMobile =
+    document.getElementById(
+        "infoMobile"
+    );
+
+    const infoRole =
+    document.getElementById(
+        "infoRole"
+    );
+
+    const infoCreated =
+    document.getElementById(
+        "infoCreated"
+    );
+
+    const profileForm =
+    document.getElementById(
+        "profileForm"
+    );
+
+    const saveButton =
+    document.getElementById(
+        "saveButton"
+    );
+
+    const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
+
+
+    /* =========================
+       SESSION
+    ========================= */
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .auth
+        .getSession();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        const session =
+        data.session;
+
+
+        if(
+            !session ||
+            !session.user
+        ){
 
             window.location.href =
-                "login.html";
+            "login.html";
 
             return;
 
         }
 
 
+        const user =
+        session.user;
 
-        /* =========================
-           ELEMENTS
-        ========================= */
 
-        const totalOrders =
-            document.getElementById(
-                "totalOrders"
-            );
+        const userId =
+        user.id;
 
-        const completedOrders =
-            document.getElementById(
-                "completedOrders"
-            );
 
-        const processingOrders =
-            document.getElementById(
-                "processingOrders"
-            );
-
-        const recentOrders =
-            document.getElementById(
-                "recentOrders"
-            );
-
-        const sidebarUserName =
-            document.getElementById(
-                "sidebarUserName"
-            );
-
-        const sidebarUserEmail =
-            document.getElementById(
-                "sidebarUserEmail"
-            );
-
-        const userAvatar =
-            document.getElementById(
-                "userAvatar"
-            );
-
-        const welcomeHeading =
-            document.getElementById(
-                "welcomeHeading"
-            );
-
-        const logoutButton =
-            document.getElementById(
-                "logoutButton"
-            );
-
+        const userEmail =
+        user.email || "";
 
 
         /* =========================
-           SESSION
+           GET PROFILE
         ========================= */
 
-        try {
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient
-                    .auth
-                    .getSession();
-
-
-            if (error) {
-
-                throw error;
-
-            }
-
-
-            const session =
-                data.session;
-
-
-            if (
-                !session ||
-                !session.user
-            ) {
-
-                window.location.href =
-                    "login.html";
-
-                return;
-
-            }
-
-
-            const user =
-                session.user;
-
-
-
-            /* =========================
-               USER DETAILS
-            ========================= */
-
-            const userEmail =
-                user.email ||
-                "User";
-
-
-            const userName =
-                user.user_metadata &&
-                user.user_metadata.full_name
-                    ? user.user_metadata.full_name
-                    : userEmail.split("@")[0];
-
-
-            const firstLetter =
-                userName
-                    .charAt(0)
-                    .toUpperCase();
-
-
-            if (sidebarUserName) {
-
-                sidebarUserName.textContent =
-                    "Welcome, " +
-                    userName;
-
-            }
-
-
-            if (sidebarUserEmail) {
-
-                sidebarUserEmail.textContent =
-                    userEmail;
-
-            }
-
-
-            if (userAvatar) {
-
-                userAvatar.textContent =
-                    firstLetter;
-
-            }
-
-
-            if (welcomeHeading) {
-
-                welcomeHeading.textContent =
-                    "Welcome back, " +
-                    userName +
-                    "! 👋";
-
-            }
-
-
-
-            /* =========================
-               LOAD ORDERS
-            ========================= */
-
-            await loadDashboardOrders(
-                user.id
-            );
-
-
-
-            /* =========================
-               LOGOUT
-            ========================= */
-
-            if (logoutButton) {
-
-                logoutButton.addEventListener(
-                    "click",
-                    async function () {
-
-                        logoutButton.disabled =
-                            true;
-
-                        logoutButton.textContent =
-                            "Logging out...";
-
-
-                        try {
-
-                            const {
-                                error
-                            } =
-                                await supabaseClient
-                                    .auth
-                                    .signOut();
-
-
-                            if (error) {
-
-                                throw error;
-
-                            }
-
-
-                            window.location.href =
-                                "login.html";
-
-                        }
-
-
-                        catch (logoutError) {
-
-                            console.error(
-                                "Logout error:",
-                                logoutError
-                            );
-
-
-                            alert(
-                                "Logout failed. Please try again."
-                            );
-
-
-                            logoutButton.disabled =
-                                false;
-
-                            logoutButton.textContent =
-                                "Logout";
-
-                        }
-
-                    }
-                );
-
-            }
-
-        }
-
-
-        catch (error) {
+        let profileData = null;
+
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+        .from("profiles")
+        .select(
+            `
+            id,
+            email,
+            full_name,
+            mobile,
+            role,
+            created_at
+            `
+        )
+        .eq(
+            "id",
+            userId
+        )
+        .maybeSingle();
+
+
+        if(profileError){
 
             console.error(
-                "Dashboard error:",
-                error
+                "Profile fetch error:",
+                profileError
             );
 
+        }
+        else{
 
-            window.location.href =
-                "login.html";
+            profileData =
+            profile;
 
         }
 
 
-
         /* =========================
-           LOAD DASHBOARD ORDERS
+           NAME
         ========================= */
 
-        async function loadDashboardOrders(
-            userId
-        ) {
-
-            try {
-
-                const {
-                    data: orders,
-                    error
-                } =
-                    await supabaseClient
-                        .from("orders")
-                        .select(
-                            `
-                            id,
-                            order_number,
-                            service_name,
-                            service_details,
-                            order_date,
-                            status,
-                            amount
-                            `
-                        )
-                        .eq(
-                            "user_id",
-                            userId
-                        )
-                        .order(
-                            "order_date",
-                            {
-                                ascending: false
-                            }
-                        );
+        const metadataName =
+        user.user_metadata &&
+        user.user_metadata.full_name
+        ?
+        user.user_metadata.full_name
+        :
+        "";
 
 
-                if (error) {
-
-                    throw error;
-
-                }
-
-
-                const userOrders =
-                    orders || [];
-
-
-                /* =========================
-                   TOTAL
-                ========================= */
-
-                totalOrders.textContent =
-                    userOrders.length;
+        const finalName =
+        profileData &&
+        profileData.full_name
+        ?
+        profileData.full_name
+        :
+        metadataName
+        ?
+        metadataName
+        :
+        userEmail.split("@")[0];
 
 
-
-                /* =========================
-                   COMPLETED
-                ========================= */
-
-                const completed =
-                    userOrders.filter(
-                        function (order) {
-
-                            return (
-                                String(
-                                    order.status ||
-                                    ""
-                                ).toLowerCase() ===
-                                "completed"
-                            );
-
-                        }
-                    ).length;
+        const finalMobile =
+        profileData &&
+        profileData.mobile
+        ?
+        profileData.mobile
+        :
+        user.user_metadata &&
+        user.user_metadata.mobile
+        ?
+        user.user_metadata.mobile
+        :
+        "";
 
 
-                completedOrders.textContent =
-                    completed;
+        const finalRole =
+        profileData &&
+        profileData.role
+        ?
+        profileData.role
+        :
+        "customer";
 
 
-
-                /* =========================
-                   PROCESSING
-                ========================= */
-
-                const processing =
-                    userOrders.filter(
-                        function (order) {
-
-                            return (
-                                String(
-                                    order.status ||
-                                    ""
-                                ).toLowerCase() ===
-                                "processing"
-                            );
-
-                        }
-                    ).length;
-
-
-                processingOrders.textContent =
-                    processing;
-
-
-
-                /* =========================
-                   RECENT 5 ORDERS
-                ========================= */
-
-                const latestOrders =
-                    userOrders.slice(
-                        0,
-                        5
-                    );
-
-
-                renderRecentOrders(
-                    latestOrders
-                );
-
-            }
-
-
-            catch (error) {
-
-                console.error(
-                    "Order loading error:",
-                    error
-                );
-
-
-                recentOrders.innerHTML = `
-
-                    <div class="recent-error">
-
-                        Unable to load recent orders.
-
-                    </div>
-
-                `;
-
-            }
-
-        }
+        const createdAt =
+        profileData &&
+        profileData.created_at
+        ?
+        profileData.created_at
+        :
+        user.created_at;
 
 
 
         /* =========================
-           RENDER RECENT ORDERS
+           DISPLAY
         ========================= */
 
-        function renderRecentOrders(
-            orders
-        ) {
+        fullName.value =
+        finalName;
 
 
-            if (!orders.length) {
+        mobile.value =
+        finalMobile;
 
-                recentOrders.innerHTML = `
 
-                    <div class="recent-empty">
+        email.value =
+        userEmail;
 
-                        No orders yet.
 
-                        <br><br>
+        role.value =
+        finalRole;
 
-                        <a
-                            href="services.html"
-                            class="primary-btn">
 
-                            Create Your First Order
+        profileName.textContent =
+        finalName;
 
-                        </a>
 
-                    </div>
+        profileEmail.textContent =
+        userEmail;
 
-                `;
+
+        profileAvatar.textContent =
+        finalName
+        .charAt(0)
+        .toUpperCase();
+
+
+        infoEmail.textContent =
+        userEmail;
+
+
+        infoMobile.textContent =
+        finalMobile ||
+        "Not added";
+
+
+        infoRole.textContent =
+        capitalize(finalRole);
+
+
+        infoCreated.textContent =
+        formatDate(createdAt);
+
+
+
+        /* =========================
+           SAVE PROFILE
+        ========================= */
+
+        profileForm.addEventListener(
+        "submit",
+        async function(event){
+
+            event.preventDefault();
+
+
+            const newName =
+            fullName.value.trim();
+
+
+            const newMobile =
+            mobile.value.trim();
+
+
+            if(!newName){
+
+                showError(
+                    "Please enter your full name."
+                );
 
                 return;
 
             }
 
 
-            recentOrders.innerHTML =
-                "";
+            if(
+                newMobile &&
+                !/^[0-9]{10}$/.test(
+                    newMobile
+                )
+            ){
+
+                showError(
+                    "Please enter a valid 10-digit mobile number."
+                );
+
+                return;
+
+            }
 
 
-            orders.forEach(
-                function (order) {
+            saveButton.disabled =
+            true;
 
-                    const serviceIcon =
-                        getServiceIcon(
-                            order.service_name
-                        );
+            saveButton.textContent =
+            "Saving...";
 
 
-                    const status =
-                        order.status ||
-                        "Pending";
+            hideMessages();
 
 
-                    const statusClass =
-                        getStatusClass(
-                            status
-                        );
+            try{
+
+                /* =========================
+                   UPDATE PROFILES
+                ========================= */
+
+                const {
+                    error:updateError
+                } =
+                await supabaseClient
+                .from("profiles")
+                .upsert({
+
+                    id:userId,
+
+                    email:userEmail,
+
+                    full_name:newName,
+
+                    mobile:newMobile,
+
+                    role:finalRole
+
+                });
 
 
-                    const amount =
-                        Number(
-                            order.amount || 0
-                        ).toFixed(2);
+                if(updateError){
+
+                    throw updateError;
+
+                }
 
 
-                    const date =
-                        formatDate(
-                            order.order_date
-                        );
+                /* =========================
+                   UPDATE AUTH METADATA
+                ========================= */
+
+                const {
+                    error:authError
+                } =
+                await supabaseClient
+                .auth
+                .updateUser({
+
+                    data:{
+
+                        full_name:
+                        newName,
+
+                        mobile:
+                        newMobile
+
+                    }
+
+                });
 
 
-                    const orderNumber =
-                        order.order_number ||
-                        order.id.substring(
-                            0,
-                            8
-                        );
+                if(authError){
 
-
-                    const item =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    item.className =
-                        "recent-order-item";
-
-
-                    item.innerHTML = `
-
-                        <div class="recent-order-left">
-
-                            <div class="recent-order-icon">
-
-                                ${serviceIcon}
-
-                            </div>
-
-                            <div class="recent-order-info">
-
-                                <strong>
-
-                                    #${escapeHTML(
-                                        orderNumber
-                                    )}
-
-                                </strong>
-
-                                <span>
-
-                                    ${escapeHTML(
-                                        order.service_name ||
-                                        "Print Service"
-                                    )}
-
-                                    ${
-                                        order.service_details
-                                            ? " • " +
-                                              escapeHTML(
-                                                order.service_details
-                                              )
-                                            : ""
-                                    }
-
-                                </span>
-
-                                <span>
-
-                                    ${date}
-
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="recent-order-right">
-
-                            <span class="recent-order-amount">
-
-                                ₹${amount}
-
-                            </span>
-
-                            <span
-                                class="recent-order-status ${statusClass}">
-
-                                ${escapeHTML(
-                                    status
-                                )}
-
-                            </span>
-
-                        </div>
-
-                    `;
-
-
-                    recentOrders.appendChild(
-                        item
+                    console.warn(
+                        "Auth metadata update warning:",
+                        authError
                     );
 
                 }
-            );
-
-        }
 
 
+                /* =========================
+                   UPDATE SCREEN
+                ========================= */
 
-        /* =========================
-           SERVICE ICON
-        ========================= */
-
-        function getServiceIcon(
-            service
-        ) {
-
-            const value =
-                String(
-                    service || ""
-                )
-                .toLowerCase();
+                profileName.textContent =
+                newName;
 
 
-            if (
-                value.includes("photo")
-            ) {
+                profileAvatar.textContent =
+                newName
+                .charAt(0)
+                .toUpperCase();
 
-                return "🖼️";
+
+                infoMobile.textContent =
+                newMobile ||
+                "Not added";
+
+
+                showSuccess(
+                    "Profile updated successfully."
+                );
 
             }
 
+            catch(updateError){
 
-            if (
-                value.includes("id")
-            ) {
-
-                return "🪪";
-
-            }
-
-
-            if (
-                value.includes("pdf")
-            ) {
-
-                return "📑";
-
-            }
-
-
-            return "📄";
-
-        }
-
-
-
-        /* =========================
-           STATUS CLASS
-        ========================= */
-
-        function getStatusClass(
-            status
-        ) {
-
-            const value =
-                String(
-                    status || "Pending"
-                )
-                .toLowerCase();
-
-
-            if (
-                value === "processing"
-            ) {
-
-                return "processing";
-
-            }
-
-
-            if (
-                value === "completed"
-            ) {
-
-                return "completed";
-
-            }
-
-
-            if (
-                value === "cancelled"
-            ) {
-
-                return "cancelled";
-
-            }
-
-
-            return "pending";
-
-        }
-
-
-
-        /* =========================
-           DATE
-        ========================= */
-
-        function formatDate(
-            value
-        ) {
-
-            if (!value) {
-
-                return "-";
-
-            }
-
-
-            const date =
-                new Date(
-                    value
+                console.error(
+                    "Profile update error:",
+                    updateError
                 );
 
 
-            if (
-                Number.isNaN(
-                    date.getTime()
-                )
-            ) {
-
-                return "-";
+                showError(
+                    "Profile update failed: " +
+                    (
+                        updateError.message ||
+                        updateError
+                    )
+                );
 
             }
 
 
-            return date.toLocaleDateString(
-                "en-IN",
-                {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric"
-                }
-            );
+            finally{
 
-        }
+                saveButton.disabled =
+                false;
 
+                saveButton.textContent =
+                "Save Changes";
 
+            }
 
-        /* =========================
-           ESCAPE HTML
-        ========================= */
-
-        function escapeHTML(
-            value
-        ) {
-
-            return String(
-                value ?? ""
-            )
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-
-        }
+        });
 
 
 
         /* =========================
-           MOBILE SIDEBAR
+           LOGOUT
         ========================= */
 
-        const sidebarToggle =
-            document.getElementById(
-                "sidebarToggle"
-            );
+        logoutButton.addEventListener(
+        "click",
+        async function(){
 
-        const sidebar =
-            document.querySelector(
-                ".dashboard-sidebar"
-            );
+            await supabaseClient
+            .auth
+            .signOut();
 
+            window.location.href =
+            "login.html";
 
-        if (
-            sidebarToggle &&
-            sidebar
-        ) {
+        });
 
-            sidebarToggle.addEventListener(
-                "click",
-                function () {
-
-                    sidebar.classList.toggle(
-                        "open"
-                    );
-
-                }
-            );
-
-        }
 
     }
 
-);
+    catch(error){
+
+        console.error(
+            "Profile page error:",
+            error
+        );
+
+
+        window.location.href =
+        "login.html";
+
+    }
+
+
+
+    /* =========================
+       FUNCTIONS
+    ========================= */
+
+    function capitalize(value){
+
+        const text =
+        String(value || "");
+
+        return(
+            text.charAt(0).toUpperCase() +
+            text.slice(1).toLowerCase()
+        );
+
+    }
+
+
+    function formatDate(value){
+
+        if(!value){
+
+            return "-";
+
+        }
+
+
+        const date =
+        new Date(value);
+
+
+        if(
+            Number.isNaN(
+                date.getTime()
+            )
+        ){
+
+            return "-";
+
+        }
+
+
+        return date.toLocaleString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric",
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+    }
+
+
+    function showSuccess(message){
+
+        const box =
+        document.getElementById(
+            "successMessage"
+        );
+
+        box.textContent =
+        message;
+
+        box.style.display =
+        "block";
+
+    }
+
+
+    function showError(message){
+
+        const box =
+        document.getElementById(
+            "errorMessage"
+        );
+
+        box.textContent =
+        message;
+
+        box.style.display =
+        "block";
+
+    }
+
+
+    function hideMessages(){
+
+        document.getElementById(
+            "successMessage"
+        ).style.display =
+        "none";
+
+
+        document.getElementById(
+            "errorMessage"
+        ).style.display =
+        "none";
+
+    }
+
+});
 
 </script>
-
 
 </body>
 
