@@ -1,6 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,6 +13,7 @@
 <script src="config.js"></script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -22,9 +26,21 @@ body{
     color:#111827;
 }
 
-button,input,select,textarea{
+button,
+input,
+select,
+textarea{
     font-family:inherit;
 }
+
+.hidden{
+    display:none !important;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
 
 .navbar{
     height:72px;
@@ -58,7 +74,7 @@ button,input,select,textarea{
     height:38px;
     border-radius:10px;
     background:#2563eb;
-    color:#fff;
+    color:white;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -81,7 +97,7 @@ button,input,select,textarea{
 
 .logout-btn{
     border:1px solid #e5e7eb;
-    background:#fff;
+    background:white;
     color:#374151;
     padding:9px 14px;
     border-radius:8px;
@@ -90,10 +106,15 @@ button,input,select,textarea{
     font-weight:700;
 }
 
+
+/* =========================
+   PAGE
+========================= */
+
 .admin-page{
     width:min(1400px,94%);
     margin:auto;
-    padding:35px 0 60px;
+    padding:35px 0 70px;
 }
 
 .page-header{
@@ -124,7 +145,13 @@ button,input,select,textarea{
 .admin-email{
     color:#6b7280;
     font-size:12px;
+    text-align:right;
 }
+
+
+/* =========================
+   STATS
+========================= */
 
 .stats{
     display:grid;
@@ -152,13 +179,53 @@ button,input,select,textarea{
     font-size:25px;
 }
 
+
+/* =========================
+   CARD
+========================= */
+
 .card{
     background:#fff;
     border:1px solid #e5e7eb;
     border-radius:16px;
     overflow:hidden;
     box-shadow:0 8px 25px rgba(15,23,42,.04);
+    margin-bottom:25px;
 }
+
+
+/* =========================
+   TABS
+========================= */
+
+.tabs{
+    display:flex;
+    gap:8px;
+    padding:18px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.tab-btn{
+    border:1px solid #e5e7eb;
+    background:#fff;
+    color:#6b7280;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+}
+
+.tab-btn.active{
+    background:#2563eb;
+    border-color:#2563eb;
+    color:#fff;
+}
+
+
+/* =========================
+   TOOLBAR
+========================= */
 
 .toolbar{
     padding:18px;
@@ -194,18 +261,32 @@ button,input,select,textarea{
     cursor:pointer;
 }
 
+
+/* =========================
+   TABLE
+========================= */
+
 .table-wrapper{
     width:100%;
     overflow-x:auto;
 }
 
-.orders-table{
+.orders-table,
+.users-table{
     width:100%;
-    min-width:1400px;
     border-collapse:collapse;
 }
 
-.orders-table th{
+.orders-table{
+    min-width:1250px;
+}
+
+.users-table{
+    min-width:800px;
+}
+
+.orders-table th,
+.users-table th{
     background:#f8fafc;
     color:#6b7280;
     font-size:10px;
@@ -216,11 +297,17 @@ button,input,select,textarea{
     border-bottom:1px solid #e5e7eb;
 }
 
-.orders-table td{
+.orders-table td,
+.users-table td{
     padding:16px;
     border-bottom:1px solid #f1f5f9;
     font-size:12px;
     vertical-align:middle;
+}
+
+.orders-table tr:hover,
+.users-table tr:hover{
+    background:#f8fafc;
 }
 
 .order-number{
@@ -230,6 +317,7 @@ button,input,select,textarea{
 
 .customer-name{
     font-weight:700;
+    color:#111827;
     margin-bottom:4px;
 }
 
@@ -251,6 +339,11 @@ button,input,select,textarea{
 .amount{
     font-weight:800;
 }
+
+
+/* =========================
+   STATUS
+========================= */
 
 .status-select{
     height:36px;
@@ -282,6 +375,11 @@ button,input,select,textarea{
     background:#fee2e2;
 }
 
+
+/* =========================
+   BUTTONS
+========================= */
+
 .action-buttons{
     display:flex;
     gap:7px;
@@ -289,7 +387,10 @@ button,input,select,textarea{
 }
 
 .view-btn,
-.download-btn{
+.download-btn,
+.remark-btn,
+.make-admin-btn,
+.remove-admin-btn{
     border:1px solid #dbeafe;
     background:#eff6ff;
     color:#2563eb;
@@ -298,6 +399,7 @@ button,input,select,textarea{
     cursor:pointer;
     font-size:10px;
     font-weight:700;
+    white-space:nowrap;
 }
 
 .download-btn{
@@ -306,37 +408,56 @@ button,input,select,textarea{
     color:#15803d;
 }
 
-.remark-box{
-    width:180px;
-    min-height:70px;
-    resize:vertical;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    padding:9px;
-    font-size:11px;
-    outline:none;
+.remark-btn{
+    border-color:#fef3c7;
+    background:#fffbeb;
+    color:#92400e;
 }
 
-.remark-box:focus{
-    border-color:#2563eb;
+.make-admin-btn{
+    border-color:#dcfce7;
+    background:#f0fdf4;
+    color:#15803d;
 }
 
-.save-btn{
-    margin-top:6px;
-    width:180px;
-    border:0;
-    background:#2563eb;
-    color:#fff;
-    padding:9px;
-    border-radius:7px;
-    cursor:pointer;
+.remove-admin-btn{
+    border-color:#fee2e2;
+    background:#fef2f2;
+    color:#b91c1c;
+}
+
+
+/* =========================
+   ROLE BADGES
+========================= */
+
+.role-badge{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
     font-size:10px;
-    font-weight:700;
+    font-weight:800;
 }
 
-.save-btn:hover{
-    background:#1d4ed8;
+.role-customer{
+    background:#f3f4f6;
+    color:#4b5563;
 }
+
+.role-admin{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.role-super{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+
+/* =========================
+   LOADING / EMPTY / ERROR
+========================= */
 
 .loading,
 .empty{
@@ -357,9 +478,10 @@ button,input,select,textarea{
     line-height:1.6;
 }
 
-.hidden{
-    display:none !important;
-}
+
+/* =========================
+   MODAL
+========================= */
 
 .modal{
     position:fixed;
@@ -392,6 +514,10 @@ button,input,select,textarea{
     margin-bottom:20px;
 }
 
+.modal-header h2{
+    font-size:20px;
+}
+
 .close-btn{
     width:34px;
     height:34px;
@@ -413,6 +539,7 @@ button,input,select,textarea{
 
 .modal-row span{
     color:#6b7280;
+    flex-shrink:0;
 }
 
 .modal-row strong{
@@ -421,32 +548,10 @@ button,input,select,textarea{
     word-break:break-word;
 }
 
-.modal-remark{
-    margin-top:18px;
-}
-
-.modal-remark label{
-    display:block;
-    font-size:12px;
-    font-weight:700;
-    margin-bottom:7px;
-}
-
-.modal-remark textarea{
-    width:100%;
-    min-height:90px;
-    border:1px solid #d1d5db;
-    border-radius:9px;
-    padding:10px;
-    resize:vertical;
-    outline:none;
-    font-size:12px;
-}
-
 .modal-actions{
     display:flex;
     gap:10px;
-    margin-top:18px;
+    margin-top:20px;
 }
 
 .modal-download{
@@ -471,13 +576,60 @@ button,input,select,textarea{
     cursor:pointer;
 }
 
+
+/* =========================
+   REMARK MODAL
+========================= */
+
+.remark-label{
+    display:block;
+    color:#374151;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.remark-input{
+    width:100%;
+    min-height:130px;
+    resize:vertical;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    padding:12px;
+    outline:none;
+    font-size:13px;
+}
+
+.remark-input:focus{
+    border-color:#2563eb;
+}
+
+.save-remark-btn{
+    flex:1;
+    border:0;
+    background:#2563eb;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:900px){
+
     .stats{
         grid-template-columns:repeat(2,1fr);
     }
+
 }
 
 @media(max-width:600px){
+
     .admin-page{
         width:92%;
         padding-top:25px;
@@ -486,6 +638,10 @@ button,input,select,textarea{
     .page-header{
         flex-direction:column;
         align-items:flex-start;
+    }
+
+    .admin-email{
+        text-align:left;
     }
 
     .stats{
@@ -497,8 +653,16 @@ button,input,select,textarea{
         align-items:stretch;
     }
 
+    .search-box{
+        width:100%;
+    }
+
     .refresh-btn{
         width:100%;
+    }
+
+    .tabs{
+        overflow-x:auto;
     }
 
     .modal-row{
@@ -510,52 +674,87 @@ button,input,select,textarea{
         max-width:100%;
         text-align:left;
     }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header class="navbar">
+
 <div class="nav-container">
 
 <div class="logo">
-<span class="logo-icon">A</span>
+
+<span class="logo-icon">
+A
+</span>
 
 <span class="logo-text">
 Avi<span>Print</span>
 </span>
 
-<span class="admin-badge">ADMIN</span>
+<span class="admin-badge"
+id="roleBadge">
+ADMIN
+</span>
+
 </div>
 
-<button type="button" class="logout-btn" id="logoutButton">
+<button
+type="button"
+class="logout-btn"
+id="logoutButton">
+
 Logout
+
 </button>
 
 </div>
+
 </header>
 
+
 <main class="admin-page">
+
 
 <div class="page-header">
 
 <div>
-<span class="section-label">ADMINISTRATION</span>
 
-<h1>Order Management</h1>
+<span class="section-label">
+ADMINISTRATION
+</span>
+
+<h1>
+Order Management
+</h1>
 
 <p>
-Manage customer orders, print files, status and remarks.
+Manage customer orders, print files and order status.
 </p>
+
 </div>
 
-<div class="admin-email" id="adminEmail">
+<div
+class="admin-email"
+id="adminEmail">
+
 Checking admin session...
-</div>
 
 </div>
 
+</div>
+
+
+<!-- =========================
+     STATS
+========================= -->
 
 <div class="stats">
 
@@ -582,6 +781,40 @@ Checking admin session...
 </div>
 
 
+<!-- =========================
+     TABS
+========================= -->
+
+<div class="tabs">
+
+<button
+type="button"
+class="tab-btn active"
+id="ordersTab">
+
+Orders
+
+</button>
+
+
+<button
+type="button"
+class="tab-btn hidden"
+id="usersTab">
+
+Manage Users
+
+</button>
+
+</div>
+
+
+<!-- =========================
+     ORDERS SECTION
+========================= -->
+
+<section id="ordersSection">
+
 <div class="card">
 
 <div class="toolbar">
@@ -607,37 +840,54 @@ id="refreshButton">
 </div>
 
 
-<div id="errorBox" class="error-box hidden"></div>
+<div
+id="errorBox"
+class="error-box hidden">
+</div>
 
-<div id="loading" class="loading">
+
+<div
+id="loading"
+class="loading">
+
 Loading orders...
+
 </div>
 
-<div id="empty" class="empty hidden">
+
+<div
+id="empty"
+class="empty hidden">
+
 No orders found.
+
 </div>
 
 
-<div class="table-wrapper hidden" id="tableWrapper">
+<div
+class="table-wrapper hidden"
+id="tableWrapper">
 
 <table class="orders-table">
 
 <thead>
 
 <tr>
+
 <th>Order</th>
 <th>Customer</th>
 <th>Service</th>
 <th>Date</th>
 <th>Amount</th>
 <th>Status</th>
-<th>Admin Remark</th>
 <th>Action</th>
+
 </tr>
 
 </thead>
 
-<tbody id="ordersBody"></tbody>
+<tbody id="ordersBody">
+</tbody>
 
 </table>
 
@@ -645,23 +895,129 @@ No orders found.
 
 </div>
 
+</section>
+
+
+<!-- =========================
+     USERS SECTION
+========================= -->
+
+<section
+id="usersSection"
+class="hidden">
+
+<div class="card">
+
+<div class="toolbar">
+
+<div>
+
+<strong>
+User & Admin Management
+</strong>
+
+<div style="
+color:#6b7280;
+font-size:11px;
+margin-top:5px;
+">
+
+Only Super Admin can change user roles.
+
+</div>
+
+</div>
+
+<button
+type="button"
+class="refresh-btn"
+id="refreshUsersButton">
+
+↻ Refresh Users
+
+</button>
+
+</div>
+
+
+<div
+id="usersError"
+class="error-box hidden">
+</div>
+
+
+<div
+id="usersLoading"
+class="loading">
+
+Loading users...
+
+</div>
+
+
+<div
+id="usersEmpty"
+class="empty hidden">
+
+No users found.
+
+</div>
+
+
+<div
+class="table-wrapper hidden"
+id="usersTableWrapper">
+
+<table class="users-table">
+
+<thead>
+
+<tr>
+
+<th>Email</th>
+<th>Name</th>
+<th>Role</th>
+<th>Created</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="usersBody">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
 </main>
 
 
-<!-- ORDER DETAILS MODAL -->
+<!-- =========================
+     ORDER DETAILS MODAL
+========================= -->
 
-<div class="modal" id="orderModal">
+<div
+class="modal"
+id="orderModal">
 
 <div class="modal-card">
 
 <div class="modal-header">
 
-<h2>Order Details</h2>
+<h2>
+Order Details
+</h2>
 
 <button
 type="button"
 class="close-btn"
-id="closeModal">
+id="closeOrderModal">
 
 ×
 
@@ -669,22 +1025,8 @@ id="closeModal">
 
 </div>
 
-
-<div id="modalDetails"></div>
-
-
-<div class="modal-remark">
-
-<label>
-Admin Remark
-</label>
-
-<textarea
-id="modalRemark"
-placeholder="Enter remark for this order..."></textarea>
-
+<div id="modalDetails">
 </div>
-
 
 <div class="modal-actions">
 
@@ -713,7 +1055,80 @@ Close
 </div>
 
 
+<!-- =========================
+     REMARK MODAL
+========================= -->
+
+<div
+class="modal"
+id="remarkModal">
+
+<div class="modal-card">
+
+<div class="modal-header">
+
+<h2>
+Admin Remark
+</h2>
+
+<button
+type="button"
+class="close-btn"
+id="closeRemarkModal">
+
+×
+
+</button>
+
+</div>
+
+
+<label
+class="remark-label">
+
+Remark for Customer
+
+</label>
+
+
+<textarea
+id="remarkInput"
+class="remark-input"
+placeholder="Write a remark that the customer will see..."></textarea>
+
+
+<div class="modal-actions">
+
+<button
+type="button"
+class="save-remark-btn"
+id="saveRemarkButton">
+
+Save Remark
+
+</button>
+
+<button
+type="button"
+class="modal-close"
+id="cancelRemarkButton">
+
+Cancel
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
+
+/* =========================================
+   CONFIG
+========================================= */
 
 const ADMIN_EMAIL =
 "aviinformatics@gmail.com";
@@ -722,8 +1137,15 @@ const PRINT_BUCKET =
 "print-files";
 
 
+/* =========================================
+   ELEMENTS
+========================================= */
+
 const adminEmail =
 document.getElementById("adminEmail");
+
+const roleBadge =
+document.getElementById("roleBadge");
 
 const totalOrders =
 document.getElementById("totalOrders");
@@ -767,11 +1189,8 @@ document.getElementById("orderModal");
 const modalDetails =
 document.getElementById("modalDetails");
 
-const modalRemark =
-document.getElementById("modalRemark");
-
-const closeModal =
-document.getElementById("closeModal");
+const closeOrderModal =
+document.getElementById("closeOrderModal");
 
 const modalCloseButton =
 document.getElementById("modalCloseButton");
@@ -779,14 +1198,111 @@ document.getElementById("modalCloseButton");
 const modalDownloadButton =
 document.getElementById("modalDownloadButton");
 
+const remarkModal =
+document.getElementById("remarkModal");
+
+const remarkInput =
+document.getElementById("remarkInput");
+
+const closeRemarkModal =
+document.getElementById("closeRemarkModal");
+
+const cancelRemarkButton =
+document.getElementById("cancelRemarkButton");
+
+const saveRemarkButton =
+document.getElementById("saveRemarkButton");
+
+const ordersTab =
+document.getElementById("ordersTab");
+
+const usersTab =
+document.getElementById("usersTab");
+
+const ordersSection =
+document.getElementById("ordersSection");
+
+const usersSection =
+document.getElementById("usersSection");
+
+const usersBody =
+document.getElementById("usersBody");
+
+const usersLoading =
+document.getElementById("usersLoading");
+
+const usersEmpty =
+document.getElementById("usersEmpty");
+
+const usersTableWrapper =
+document.getElementById("usersTableWrapper");
+
+const usersError =
+document.getElementById("usersError");
+
+const refreshUsersButton =
+document.getElementById("refreshUsersButton");
+
+
+/* =========================================
+   VARIABLES
+========================================= */
 
 let allOrders = [];
+
+let allUsers = [];
+
 let selectedOrder = null;
 
+let selectedRemarkOrder = null;
 
-/* ===============================
-   ADMIN CHECK
-================================ */
+let currentUser = null;
+
+let currentRole = null;
+
+
+/* =========================================
+   SUPABASE CHECK
+========================================= */
+
+if(
+typeof window.supabase === "undefined"
+){
+
+document.body.innerHTML =
+"<div style='padding:40px;font-family:Arial'>" +
+"<h2>Supabase library failed to load.</h2>" +
+"<p>Please check your internet connection.</p>" +
+"</div>";
+
+throw new Error(
+"Supabase library not loaded."
+);
+
+}
+
+
+if(
+typeof supabaseClient === "undefined" ||
+!supabaseClient
+){
+
+document.body.innerHTML =
+"<div style='padding:40px;font-family:Arial'>" +
+"<h2>Supabase configuration error.</h2>" +
+"<p>Please check config.js.</p>" +
+"</div>";
+
+throw new Error(
+"supabaseClient missing."
+);
+
+}
+
+
+/* =========================================
+   CHECK ADMIN
+========================================= */
 
 async function checkAdmin(){
 
@@ -795,14 +1311,17 @@ try{
 const result =
 await supabaseClient.auth.getSession();
 
+
 if(result.error){
 
 throw result.error;
 
 }
 
+
 const session =
 result.data.session;
+
 
 if(
 !session ||
@@ -817,16 +1336,81 @@ return false;
 
 }
 
-const email =
-String(
-session.user.email || ""
+
+currentUser =
+session.user;
+
+
+/*
+ IMPORTANT:
+
+Role is read from profiles table.
+*/
+
+const profileResult =
+await supabaseClient
+.from("profiles")
+.select(
+"id,email,full_name,role"
 )
-.trim()
-.toLowerCase();
+.eq(
+"id",
+currentUser.id
+)
+.maybeSingle();
+
+
+if(profileResult.error){
+
+throw profileResult.error;
+
+}
+
+
+const profile =
+profileResult.data;
+
+
+/*
+ Fallback for the original owner account.
+*/
 
 if(
-email !==
+String(currentUser.email || "")
+.trim()
+.toLowerCase()
+===
 ADMIN_EMAIL.toLowerCase()
+){
+
+currentRole =
+"super_admin";
+
+}
+else if(profile){
+
+currentRole =
+String(
+profile.role || "customer"
+)
+.toLowerCase();
+
+}
+else{
+
+currentRole =
+"customer";
+
+}
+
+
+/*
+ Only admin and super admin allowed.
+*/
+
+if(
+currentRole !== "admin" &&
+currentRole !== "super_admin"
 ){
 
 alert(
@@ -843,9 +1427,39 @@ return false;
 
 }
 
+
+/*
+ UI
+*/
+
 adminEmail.textContent =
-"Logged in as Admin: " +
-session.user.email;
+"Logged in as " +
+(currentUser.email || "");
+
+
+if(
+currentRole === "super_admin"
+){
+
+roleBadge.textContent =
+"SUPER ADMIN";
+
+usersTab.classList.remove(
+"hidden"
+);
+
+}
+else{
+
+roleBadge.textContent =
+"ADMIN";
+
+usersTab.classList.add(
+"hidden"
+);
+
+}
+
 
 return true;
 
@@ -858,39 +1472,55 @@ error
 );
 
 adminEmail.textContent =
-"Session error";
+"Session error: " +
+(error.message || "Unknown error");
 
 return false;
 
 }
 
-}
 
-
-/* ===============================
+/* =========================================
    LOAD ORDERS
-================================ */
+========================================= */
 
 async function loadOrders(){
 
-loading.classList.remove("hidden");
-tableWrapper.classList.add("hidden");
-empty.classList.add("hidden");
-errorBox.classList.add("hidden");
+loading.classList.remove(
+"hidden"
+);
 
-ordersBody.innerHTML = "";
+tableWrapper.classList.add(
+"hidden"
+);
+
+empty.classList.add(
+"hidden"
+);
+
+errorBox.classList.add(
+"hidden"
+);
+
+ordersBody.innerHTML =
+"";
+
 
 try{
 
 const result =
 await supabaseClient
-.rpc("get_admin_orders");
+.rpc(
+"get_admin_orders"
+);
+
 
 if(result.error){
 
 throw result.error;
 
 }
+
 
 allOrders =
 Array.isArray(result.data)
@@ -899,16 +1529,26 @@ result.data
 :
 [];
 
+
 console.log(
 "ADMIN ORDERS:",
 allOrders
 );
 
-updateStats(allOrders);
 
-loading.classList.add("hidden");
+updateStats(
+allOrders
+);
 
-renderOrders(allOrders);
+
+loading.classList.add(
+"hidden"
+);
+
+
+renderOrders(
+allOrders
+);
 
 }
 catch(error){
@@ -918,7 +1558,9 @@ console.error(
 error
 );
 
-loading.classList.add("hidden");
+loading.classList.add(
+"hidden"
+);
 
 errorBox.innerHTML =
 "Unable to load orders.<br><br>" +
@@ -927,18 +1569,22 @@ error.message ||
 "Unknown error"
 );
 
-errorBox.classList.remove("hidden");
+errorBox.classList.remove(
+"hidden"
+);
 
 }
 
 }
 
 
-/* ===============================
+/* =========================================
    STATS
-================================ */
+========================================= */
 
-function updateStats(orders){
+function updateStats(
+orders
+){
 
 totalOrders.textContent =
 orders.length;
@@ -946,35 +1592,37 @@ orders.length;
 pendingOrders.textContent =
 orders.filter(
 order =>
-normalizeStatus(order.status)
-===
-"pending"
+normalizeStatus(
+order.status
+) === "pending"
 ).length;
 
 processingOrders.textContent =
 orders.filter(
 order =>
-normalizeStatus(order.status)
-===
-"processing"
+normalizeStatus(
+order.status
+) === "processing"
 ).length;
 
 completedOrders.textContent =
 orders.filter(
 order =>
-normalizeStatus(order.status)
-===
-"completed"
+normalizeStatus(
+order.status
+) === "completed"
 ).length;
 
 }
 
 
-/* ===============================
-   STATUS
-================================ */
+/* =========================================
+   NORMALIZE STATUS
+========================================= */
 
-function normalizeStatus(status){
+function normalizeStatus(
+status
+){
 
 const value =
 String(
@@ -982,6 +1630,7 @@ status || "pending"
 )
 .trim()
 .toLowerCase();
+
 
 if(
 [
@@ -996,33 +1645,49 @@ return value;
 
 }
 
+
 return "pending";
 
 }
 
 
-/* ===============================
+/* =========================================
    RENDER ORDERS
-================================ */
+========================================= */
 
-function renderOrders(orders){
+function renderOrders(
+orders
+){
 
-ordersBody.innerHTML = "";
+ordersBody.innerHTML =
+"";
+
 
 if(
 !orders ||
 !orders.length
 ){
 
-tableWrapper.classList.add("hidden");
-empty.classList.remove("hidden");
+tableWrapper.classList.add(
+"hidden"
+);
+
+empty.classList.remove(
+"hidden"
+);
 
 return;
 
 }
 
-empty.classList.add("hidden");
-tableWrapper.classList.remove("hidden");
+
+empty.classList.add(
+"hidden"
+);
+
+tableWrapper.classList.remove(
+"hidden"
+);
 
 
 orders.forEach(
@@ -1031,39 +1696,52 @@ function(order){
 const row =
 document.createElement("tr");
 
+
 const orderNumber =
 order.order_number ||
 (
 order.id
 ?
-String(order.id).substring(0,8)
+String(order.id).substring(
+0,
+8
+)
 :
 "-"
 );
+
 
 const customerName =
 order.customer_name ||
 "Customer";
 
+
 const customerEmail =
 order.customer_email ||
 "";
+
 
 const service =
 order.service_name ||
 "Print Service";
 
+
 const details =
 order.service_details ||
 "Printing order";
 
+
 const status =
-normalizeStatus(order.status);
+normalizeStatus(
+order.status
+);
+
 
 const amount =
 Number(
 order.amount || 0
 ).toFixed(2);
+
 
 const date =
 formatDate(
@@ -1071,9 +1749,18 @@ order.order_date ||
 order.created_at
 );
 
-const remark =
-order.admin_remark ||
-"";
+
+const hasFile =
+Boolean(
+order.file_path
+);
+
+
+const hasRemark =
+String(
+order.admin_remark || ""
+).trim()
+.length > 0;
 
 
 row.innerHTML = `
@@ -1081,7 +1768,9 @@ row.innerHTML = `
 <td>
 
 <span class="order-number">
+
 #${escapeHTML(orderNumber)}
+
 </span>
 
 </td>
@@ -1090,11 +1779,15 @@ row.innerHTML = `
 <td>
 
 <div class="customer-name">
+
 ${escapeHTML(customerName)}
+
 </div>
 
 <div class="customer-email">
+
 ${escapeHTML(customerEmail || "-")}
+
 </div>
 
 </td>
@@ -1103,25 +1796,33 @@ ${escapeHTML(customerEmail || "-")}
 <td>
 
 <div class="service-name">
+
 ${escapeHTML(service)}
+
 </div>
 
 <div class="service-details">
+
 ${escapeHTML(details)}
+
 </div>
 
 </td>
 
 
 <td>
+
 ${escapeHTML(date)}
+
 </td>
 
 
 <td>
 
 <span class="amount">
+
 ₹${amount}
+
 </span>
 
 </td>
@@ -1133,50 +1834,27 @@ ${escapeHTML(date)}
 class="status-select ${status}"
 data-order-id="${escapeHTML(order.id)}">
 
-<option
-value="pending"
+<option value="pending"
 ${status === "pending" ? "selected" : ""}>
 Pending
 </option>
 
-<option
-value="processing"
+<option value="processing"
 ${status === "processing" ? "selected" : ""}>
 Processing
 </option>
 
-<option
-value="completed"
+<option value="completed"
 ${status === "completed" ? "selected" : ""}>
 Completed
 </option>
 
-<option
-value="cancelled"
+<option value="cancelled"
 ${status === "cancelled" ? "selected" : ""}>
 Cancelled
 </option>
 
 </select>
-
-</td>
-
-
-<td>
-
-<textarea
-class="remark-box"
-data-order-id="${escapeHTML(order.id)}"
-placeholder="Write remark...">${escapeHTML(remark)}</textarea>
-
-<button
-type="button"
-class="save-btn"
-data-order-id="${escapeHTML(order.id)}">
-
-Save Status & Remark
-
-</button>
 
 </td>
 
@@ -1194,13 +1872,24 @@ View
 
 </button>
 
+
+<button
+type="button"
+class="remark-btn"
+data-order-id="${escapeHTML(order.id)}">
+
+${hasRemark ? "Edit Remark" : "Remark"}
+
+</button>
+
+
 <button
 type="button"
 class="download-btn"
 data-order-id="${escapeHTML(order.id)}"
-${order.file_path ? "" : "disabled"}>
+${hasFile ? "" : "disabled"}>
 
-${order.file_path ? "⬇ Download" : "No File"}
+${hasFile ? "⬇ Download" : "No File"}
 
 </button>
 
@@ -1210,13 +1899,16 @@ ${order.file_path ? "⬇ Download" : "No File"}
 
 `;
 
-ordersBody.appendChild(row);
+
+ordersBody.appendChild(
+row
+);
 
 }
 );
 
 
-/* STATUS CHANGE */
+/* STATUS EVENTS */
 
 ordersBody
 .querySelectorAll(".status-select")
@@ -1225,61 +1917,19 @@ function(select){
 
 select.addEventListener(
 "change",
-function(){
-
-select.className =
-"status-select " +
-normalizeStatus(
-select.value
-);
-
-}
-);
-
-}
-);
-
-
-/* SAVE STATUS + REMARK */
-
-ordersBody
-.querySelectorAll(".save-btn")
-.forEach(
-function(button){
-
-button.addEventListener(
-"click",
 async function(){
 
 const orderId =
-button.dataset.orderId;
+select.dataset.orderId;
 
-const row =
-button.closest("tr");
-
-const select =
-row.querySelector(
-".status-select"
-);
-
-const textarea =
-row.querySelector(
-".remark-box"
-);
-
-const status =
+const newStatus =
 normalizeStatus(
 select.value
 );
 
-const remark =
-textarea.value.trim();
-
-await saveOrderChanges(
+await updateOrderStatus(
 orderId,
-status,
-remark,
-button
+newStatus
 );
 
 }
@@ -1289,7 +1939,7 @@ button
 );
 
 
-/* VIEW */
+/* VIEW EVENTS */
 
 ordersBody
 .querySelectorAll(".view-btn")
@@ -1307,9 +1957,12 @@ item.id ===
 button.dataset.orderId
 );
 
+
 if(order){
 
-showOrderDetails(order);
+showOrderDetails(
+order
+);
 
 }
 
@@ -1320,7 +1973,41 @@ showOrderDetails(order);
 );
 
 
-/* DOWNLOAD */
+/* REMARK EVENTS */
+
+ordersBody
+.querySelectorAll(".remark-btn")
+.forEach(
+function(button){
+
+button.addEventListener(
+"click",
+function(){
+
+const order =
+allOrders.find(
+item =>
+item.id ===
+button.dataset.orderId
+);
+
+
+if(order){
+
+openRemarkModal(
+order
+);
+
+}
+
+}
+);
+
+}
+);
+
+
+/* DOWNLOAD EVENTS */
 
 ordersBody
 .querySelectorAll(".download-btn")
@@ -1338,34 +2025,45 @@ item.id ===
 button.dataset.orderId
 );
 
-if(order){
 
-await downloadPrintFile(order);
+if(!order){
+
+alert(
+"Order not found."
+);
+
+return;
 
 }
 
-}
+
+await downloadPrintFile(
+order
 );
 
 }
 );
 
 }
+);
+
+}
 
 
-/* ===============================
-   SAVE STATUS + REMARK
-================================ */
+/* =========================================
+   UPDATE ORDER STATUS
+========================================= */
 
-async function saveOrderChanges(
+async function updateOrderStatus(
 orderId,
-status,
-remark,
-button
+newStatus
 ){
 
-button.disabled = true;
-button.textContent = "Saving...";
+const finalStatus =
+normalizeStatus(
+newStatus
+);
+
 
 try{
 
@@ -1373,17 +2071,13 @@ const result =
 await supabaseClient
 .from("orders")
 .update({
-
-status: status,
-admin_remark: remark
-
+status: finalStatus
 })
 .eq(
 "id",
 orderId
-)
-.select()
-.single();
+);
+
 
 if(result.error){
 
@@ -1391,74 +2085,201 @@ throw result.error;
 
 }
 
-const index =
-allOrders.findIndex(
-order =>
-order.id === orderId
+
+const order =
+allOrders.find(
+item =>
+item.id === orderId
 );
 
-if(index !== -1){
 
-allOrders[index].status =
-status;
+if(order){
 
-allOrders[index].admin_remark =
-remark;
+order.status =
+finalStatus;
 
 }
 
-updateStats(allOrders);
 
-button.textContent =
-"Saved ✓";
+updateStats(
+allOrders
+);
 
-setTimeout(
-function(){
 
-button.textContent =
-"Save Status & Remark";
+renderOrders(
+allOrders
+);
 
-button.disabled =
-false;
 
-},
-1200
+alert(
+"Order status updated successfully."
 );
 
 }
 catch(error){
 
 console.error(
-"SAVE ORDER ERROR:",
+"STATUS UPDATE ERROR:",
 error
 );
 
 alert(
-"Failed to save:\n\n" +
-(
-error.message ||
-"Unknown error"
-)
+"Failed to update order status:\n\n" +
+(error.message || "Unknown error")
 );
 
-button.textContent =
-"Save Status & Remark";
+await loadOrders();
 
-button.disabled =
+}
+
+}
+
+
+/* =========================================
+   OPEN REMARK MODAL
+========================================= */
+
+function openRemarkModal(
+order
+){
+
+selectedRemarkOrder =
+order;
+
+remarkInput.value =
+order.admin_remark || "";
+
+remarkModal.classList.add(
+"show"
+);
+
+remarkInput.focus();
+
+}
+
+
+/* =========================================
+   SAVE REMARK
+========================================= */
+
+async function saveAdminRemark(){
+
+if(
+!selectedRemarkOrder
+){
+
+return;
+
+}
+
+
+const remark =
+remarkInput.value.trim();
+
+
+saveRemarkButton.disabled =
+true;
+
+saveRemarkButton.textContent =
+"Saving...";
+
+
+try{
+
+const result =
+await supabaseClient
+.from("orders")
+.update({
+admin_remark: remark
+})
+.eq(
+"id",
+selectedRemarkOrder.id
+);
+
+
+if(result.error){
+
+throw result.error;
+
+}
+
+
+selectedRemarkOrder.admin_remark =
+remark;
+
+
+const index =
+allOrders.findIndex(
+order =>
+order.id ===
+selectedRemarkOrder.id
+);
+
+
+if(index !== -1){
+
+allOrders[index].admin_remark =
+remark;
+
+}
+
+
+remarkModal.classList.remove(
+"show"
+);
+
+renderOrders(
+allOrders
+);
+
+
+alert(
+"Admin remark saved successfully."
+);
+
+}
+catch(error){
+
+console.error(
+"REMARK ERROR:",
+error
+);
+
+alert(
+"Failed to save remark:\n\n" +
+(error.message || "Unknown error")
+);
+
+}
+finally{
+
+saveRemarkButton.disabled =
 false;
 
-}
+saveRemarkButton.textContent =
+"Save Remark";
 
 }
 
+}
 
-/* ===============================
+
+/* =========================================
    DOWNLOAD FILE
-================================ */
+========================================= */
 
-async function downloadPrintFile(order){
+async function downloadPrintFile(
+order
+){
 
-if(!order.file_path){
+const filePath =
+String(
+order.file_path || ""
+).trim();
+
+
+if(!filePath){
 
 alert(
 "No print file is attached to this order."
@@ -1468,6 +2289,7 @@ return;
 
 }
 
+
 try{
 
 const result =
@@ -1475,8 +2297,9 @@ await supabaseClient
 .storage
 .from(PRINT_BUCKET)
 .download(
-order.file_path
+filePath
 );
+
 
 if(result.error){
 
@@ -1484,47 +2307,60 @@ throw result.error;
 
 }
 
-const file =
-result.data;
 
-if(!file){
+if(!result.data){
 
 throw new Error(
-"File was not returned by Storage."
+"File was not returned by Supabase Storage."
 );
 
 }
 
+
 const url =
-URL.createObjectURL(file);
+URL.createObjectURL(
+result.data
+);
+
 
 const link =
 document.createElement("a");
 
-link.href = url;
+
+link.href =
+url;
+
 
 let filename =
 order.file_name ||
 "print-file";
+
 
 filename =
 String(filename)
 .split("/")
 .pop();
 
+
 link.download =
 filename;
 
-document.body.appendChild(link);
+
+document.body.appendChild(
+link
+);
 
 link.click();
 
 link.remove();
 
+
 setTimeout(
 function(){
 
-URL.revokeObjectURL(url);
+URL.revokeObjectURL(
+url
+);
 
 },
 5000
@@ -1540,10 +2376,7 @@ error
 
 alert(
 "Download failed:\n\n" +
-(
-error.message ||
-"Unknown error"
-)
+(error.message || "Unknown error")
 );
 
 }
@@ -1551,27 +2384,41 @@ error.message ||
 }
 
 
-/* ===============================
-   ORDER DETAILS
-================================ */
+/* =========================================
+   SHOW ORDER DETAILS
+========================================= */
 
-function showOrderDetails(order){
+function showOrderDetails(
+order
+){
 
 selectedOrder =
 order;
 
-const status =
-normalizeStatus(order.status);
 
 const amount =
 Number(
 order.amount || 0
 ).toFixed(2);
 
+
+const status =
+normalizeStatus(
+order.status
+);
+
+
+const remark =
+order.admin_remark ||
+"No admin remark";
+
+
 modalDetails.innerHTML = `
 
 <div class="modal-row">
+
 <span>Order Number</span>
+
 <strong>
 #${escapeHTML(
 order.order_number ||
@@ -1579,55 +2426,66 @@ order.id ||
 "-"
 )}
 </strong>
+
 </div>
 
+
 <div class="modal-row">
+
 <span>Customer Name</span>
+
 <strong>
 ${escapeHTML(
 order.customer_name || "-"
 )}
 </strong>
+
 </div>
 
+
 <div class="modal-row">
+
 <span>Customer Email</span>
+
 <strong>
 ${escapeHTML(
 order.customer_email || "-"
 )}
 </strong>
+
 </div>
 
-<div class="modal-row">
-<span>User ID</span>
-<strong>
-${escapeHTML(
-order.user_id || "-"
-)}
-</strong>
-</div>
 
 <div class="modal-row">
+
 <span>Service</span>
+
 <strong>
 ${escapeHTML(
 order.service_name || "-"
 )}
 </strong>
+
 </div>
 
+
 <div class="modal-row">
+
 <span>Details</span>
+
 <strong>
 ${escapeHTML(
 order.service_details || "-"
 )}
 </strong>
+
 </div>
 
+
 <div class="modal-row">
+
 <span>Order Date</span>
+
 <strong>
 ${escapeHTML(
 formatDate(
@@ -1636,44 +2494,58 @@ order.created_at
 )
 )}
 </strong>
+
 </div>
 
+
 <div class="modal-row">
+
 <span>Status</span>
+
 <strong>
 ${escapeHTML(status)}
 </strong>
+
 </div>
 
+
 <div class="modal-row">
+
 <span>Amount</span>
+
 <strong>
 ₹${amount}
 </strong>
+
 </div>
 
+
 <div class="modal-row">
+
+<span>Admin Remark</span>
+
+<strong>
+${escapeHTML(remark)}
+</strong>
+
+</div>
+
+
+<div class="modal-row">
+
 <span>File Name</span>
+
 <strong>
 ${escapeHTML(
-order.file_name || "-"
+order.file_name ||
+"Not available"
 )}
 </strong>
+
 </div>
 
-<div class="modal-row">
-<span>File Path</span>
-<strong>
-${escapeHTML(
-order.file_path || "-"
-)}
-</strong>
-</div>
 `;
 
-modalRemark.value =
-order.admin_remark ||
-"";
 
 modalDownloadButton.disabled =
 !order.file_path;
@@ -1685,84 +2557,558 @@ order.file_path
 :
 ".5";
 
-orderModal.classList.add("show");
+
+orderModal.classList.add(
+"show"
+);
 
 }
 
 
-/* ===============================
-   MODAL DOWNLOAD
-================================ */
+/* =========================================
+   LOAD USERS
+========================================= */
 
-modalDownloadButton.addEventListener(
+async function loadUsers(){
+
+if(
+currentRole !== "super_admin"
+){
+
+return;
+
+}
+
+
+usersLoading.classList.remove(
+"hidden"
+);
+
+usersTableWrapper.classList.add(
+"hidden"
+);
+
+usersEmpty.classList.add(
+"hidden"
+);
+
+usersError.classList.add(
+"hidden"
+);
+
+usersBody.innerHTML =
+"";
+
+
+try{
+
+const result =
+await supabaseClient
+.from("profiles")
+.select(
+"id,email,full_name,role,created_at"
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+if(result.error){
+
+throw result.error;
+
+}
+
+
+allUsers =
+Array.isArray(result.data)
+?
+result.data
+:
+[];
+
+
+usersLoading.classList.add(
+"hidden"
+);
+
+
+renderUsers(
+allUsers
+);
+
+}
+catch(error){
+
+console.error(
+"USERS LOAD ERROR:",
+error
+);
+
+usersLoading.classList.add(
+"hidden"
+);
+
+usersError.innerHTML =
+"Unable to load users.<br><br>" +
+escapeHTML(
+error.message ||
+"Unknown error"
+);
+
+usersError.classList.remove(
+"hidden"
+);
+
+}
+
+}
+
+
+/* =========================================
+   RENDER USERS
+========================================= */
+
+function renderUsers(
+users
+){
+
+usersBody.innerHTML =
+"";
+
+
+if(
+!users.length
+){
+
+usersEmpty.classList.remove(
+"hidden"
+);
+
+usersTableWrapper.classList.add(
+"hidden"
+);
+
+return;
+
+}
+
+
+usersEmpty.classList.add(
+"hidden"
+);
+
+usersTableWrapper.classList.remove(
+"hidden"
+);
+
+
+users.forEach(
+function(user){
+
+const row =
+document.createElement("tr");
+
+
+const role =
+String(
+user.role || "customer"
+)
+.toLowerCase();
+
+
+let roleHTML =
+`<span class="role-badge role-customer">
+Customer
+</span>`;
+
+
+if(
+role === "admin"
+){
+
+roleHTML =
+`<span class="role-badge role-admin">
+Admin
+</span>`;
+
+}
+
+
+if(
+role === "super_admin"
+){
+
+roleHTML =
+`<span class="role-badge role-super">
+Super Admin
+</span>`;
+
+}
+
+
+let actionHTML =
+"-";
+
+
+/*
+ Super Admin account cannot be
+ changed from this UI.
+*/
+
+if(
+role === "super_admin"
+){
+
+actionHTML =
+`<span style="
+color:#92400e;
+font-size:10px;
+font-weight:700;
+">
+Protected
+</span>`;
+
+}
+else if(
+role === "admin"
+){
+
+actionHTML =
+`<button
+type="button"
+class="remove-admin-btn"
+data-user-id="${escapeHTML(user.id)}">
+
+Remove Admin
+
+</button>`;
+
+}
+else{
+
+actionHTML =
+`<button
+type="button"
+class="make-admin-btn"
+data-user-id="${escapeHTML(user.id)}">
+
+Make Admin
+
+</button>`;
+
+}
+
+
+row.innerHTML = `
+
+<td>
+
+<strong>
+${escapeHTML(
+user.email || "-"
+)}
+</strong>
+
+</td>
+
+
+<td>
+
+${escapeHTML(
+user.full_name || "-"
+)}
+
+</td>
+
+
+<td>
+
+${roleHTML}
+
+</td>
+
+
+<td>
+
+${escapeHTML(
+formatDate(
+user.created_at
+)
+)}
+
+</td>
+
+
+<td>
+
+${actionHTML}
+
+</td>
+
+`;
+
+
+usersBody.appendChild(
+row
+);
+
+}
+);
+
+
+/* MAKE ADMIN */
+
+usersBody
+.querySelectorAll(".make-admin-btn")
+.forEach(
+function(button){
+
+button.addEventListener(
 "click",
 async function(){
 
-if(selectedOrder){
+const userId =
+button.dataset.userId;
 
-await downloadPrintFile(
-selectedOrder
+await changeUserRole(
+userId,
+"admin"
 );
 
 }
+);
 
 }
 );
 
 
-/* ===============================
-   MODAL CLOSE
-================================ */
+/* REMOVE ADMIN */
 
-function closeOrderModal(){
+usersBody
+.querySelectorAll(".remove-admin-btn")
+.forEach(
+function(button){
 
-orderModal.classList.remove("show");
-
-selectedOrder =
-null;
-
-}
-
-closeModal.addEventListener(
+button.addEventListener(
 "click",
-closeOrderModal
+async function(){
+
+const userId =
+button.dataset.userId;
+
+await changeUserRole(
+userId,
+"customer"
 );
 
-modalCloseButton.addEventListener(
+}
+);
+
+}
+);
+
+}
+
+
+/* =========================================
+   CHANGE USER ROLE
+========================================= */
+
+async function changeUserRole(
+userId,
+newRole
+){
+
+if(
+currentRole !== "super_admin"
+){
+
+alert(
+"Only Super Admin can change user roles."
+);
+
+return;
+
+}
+
+
+const user =
+allUsers.find(
+item =>
+item.id === userId
+);
+
+
+if(!user){
+
+alert(
+"User not found."
+);
+
+return;
+
+}
+
+
+if(
+String(user.role).toLowerCase()
+===
+"super_admin"
+){
+
+alert(
+"Super Admin account is protected."
+);
+
+return;
+
+}
+
+
+const actionText =
+newRole === "admin"
+?
+"make this user an Admin"
+:
+"remove Admin access from this user";
+
+
+const confirmed =
+confirm(
+"Are you sure you want to " +
+actionText +
+"?\n\n" +
+(user.email || "")
+);
+
+
+if(!confirmed){
+
+return;
+
+}
+
+
+try{
+
+const result =
+await supabaseClient
+.from("profiles")
+.update({
+role: newRole,
+updated_at: new Date().toISOString()
+})
+.eq(
+"id",
+userId
+);
+
+
+if(result.error){
+
+throw result.error;
+
+}
+
+
+alert(
+newRole === "admin"
+?
+"User is now an Admin."
+:
+"Admin access removed."
+);
+
+
+await loadUsers();
+
+}
+catch(error){
+
+console.error(
+"ROLE UPDATE ERROR:",
+error
+);
+
+alert(
+"Failed to change user role:\n\n" +
+(error.message || "Unknown error")
+);
+
+}
+
+}
+
+
+/* =========================================
+   TABS
+========================================= */
+
+ordersTab.addEventListener(
 "click",
-closeOrderModal
+function(){
+
+ordersTab.classList.add(
+"active"
 );
 
-orderModal.addEventListener(
+usersTab.classList.remove(
+"active"
+);
+
+ordersSection.classList.remove(
+"hidden"
+);
+
+usersSection.classList.add(
+"hidden"
+);
+
+}
+);
+
+
+usersTab.addEventListener(
 "click",
-function(event){
+async function(){
 
-if(event.target === orderModal){
+if(
+currentRole !== "super_admin"
+){
 
-closeOrderModal();
+return;
 
 }
+
+usersTab.classList.add(
+"active"
+);
+
+ordersTab.classList.remove(
+"active"
+);
+
+ordersSection.classList.add(
+"hidden"
+);
+
+usersSection.classList.remove(
+"hidden"
+);
+
+await loadUsers();
 
 }
 );
 
-document.addEventListener(
-"keydown",
-function(event){
 
-if(event.key === "Escape"){
-
-closeOrderModal();
-
-}
-
-}
-);
-
-
-/* ===============================
+/* =========================================
    SEARCH
-================================ */
+========================================= */
 
 searchInput.addEventListener(
 "input",
@@ -1775,80 +3121,82 @@ this.value || ""
 .toLowerCase()
 .trim();
 
+
 if(!query){
 
-renderOrders(allOrders);
+renderOrders(
+allOrders
+);
 
 return;
 
 }
 
+
 const filtered =
 allOrders.filter(
 function(order){
 
-return (
-
+const orderNumber =
 String(
 order.order_number || ""
 )
-.toLowerCase()
-.includes(query)
+.toLowerCase();
 
-||
-
+const name =
 String(
 order.customer_name || ""
 )
-.toLowerCase()
-.includes(query)
+.toLowerCase();
 
-||
-
+const email =
 String(
 order.customer_email || ""
 )
-.toLowerCase()
-.includes(query)
+.toLowerCase();
 
-||
-
+const service =
 String(
 order.service_name || ""
 )
-.toLowerCase()
-.includes(query)
+.toLowerCase();
 
-||
-
+const details =
 String(
 order.service_details || ""
 )
-.toLowerCase()
-.includes(query)
+.toLowerCase();
 
-||
+const status =
+normalizeStatus(
+order.status
+);
 
-String(
-order.admin_remark || ""
-)
-.toLowerCase()
-.includes(query)
 
+return(
+orderNumber.includes(query) ||
+name.includes(query) ||
+email.includes(query) ||
+service.includes(query) ||
+details.includes(query) ||
+status.includes(query)
 );
 
 }
 );
 
-renderOrders(filtered);
+
+renderOrders(
+filtered
+);
 
 }
 );
 
 
-/* ===============================
-   REFRESH
-================================ */
+/* =========================================
+   REFRESH ORDERS
+========================================= */
 
 refreshButton.addEventListener(
 "click",
@@ -1860,7 +3208,9 @@ true;
 refreshButton.textContent =
 "Loading...";
 
+
 await loadOrders();
+
 
 refreshButton.disabled =
 false;
@@ -1872,9 +3222,158 @@ refreshButton.textContent =
 );
 
 
-/* ===============================
+/* =========================================
+   REFRESH USERS
+========================================= */
+
+refreshUsersButton.addEventListener(
+"click",
+async function(){
+
+refreshUsersButton.disabled =
+true;
+
+refreshUsersButton.textContent =
+"Loading...";
+
+
+await loadUsers();
+
+
+refreshUsersButton.disabled =
+false;
+
+refreshUsersButton.textContent =
+"↻ Refresh Users";
+
+}
+);
+
+
+/* =========================================
+   CLOSE ORDER MODAL
+========================================= */
+
+function closeOrderDetails(){
+
+orderModal.classList.remove(
+"show"
+);
+
+selectedOrder =
+null;
+
+}
+
+
+closeOrderModal.addEventListener(
+"click",
+closeOrderDetails
+);
+
+
+modalCloseButton.addEventListener(
+"click",
+closeOrderDetails
+);
+
+
+orderModal.addEventListener(
+"click",
+function(event){
+
+if(
+event.target === orderModal
+){
+
+closeOrderDetails();
+
+}
+
+}
+);
+
+
+/* =========================================
+   CLOSE REMARK MODAL
+========================================= */
+
+function closeRemark(){
+
+remarkModal.classList.remove(
+"show"
+);
+
+selectedRemarkOrder =
+null;
+
+remarkInput.value =
+"";
+
+}
+
+
+closeRemarkModal.addEventListener(
+"click",
+closeRemark
+);
+
+
+cancelRemarkButton.addEventListener(
+"click",
+closeRemark
+);
+
+
+remarkModal.addEventListener(
+"click",
+function(event){
+
+if(
+event.target === remarkModal
+){
+
+closeRemark();
+
+}
+
+}
+);
+
+
+/* SAVE REMARK */
+
+saveRemarkButton.addEventListener(
+"click",
+saveAdminRemark
+);
+
+
+/* =========================================
+   ESC KEY
+========================================= */
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key === "Escape"
+){
+
+closeOrderDetails();
+
+closeRemark();
+
+}
+
+}
+);
+
+
+/* =========================================
    LOGOUT
-================================ */
+========================================= */
 
 logoutButton.addEventListener(
 "click",
@@ -1886,16 +3385,19 @@ true;
 logoutButton.textContent =
 "Logging out...";
 
+
 try{
 
 const result =
 await supabaseClient.auth.signOut();
+
 
 if(result.error){
 
 throw result.error;
 
 }
+
 
 window.location.replace(
 "login.html"
@@ -1904,12 +3406,14 @@ window.location.replace(
 }
 catch(error){
 
+console.error(
+"LOGOUT ERROR:",
+error
+);
+
 alert(
 "Logout failed:\n\n" +
-(
-error.message ||
-"Unknown error"
-)
+(error.message || "Unknown error")
 );
 
 logoutButton.disabled =
@@ -1923,11 +3427,13 @@ logoutButton.textContent =
 });
 
 
-/* ===============================
+/* =========================================
    DATE
-================================ */
+========================================= */
 
-function formatDate(value){
+function formatDate(
+value
+){
 
 if(!value){
 
@@ -1935,8 +3441,10 @@ return "-";
 
 }
 
+
 const date =
 new Date(value);
+
 
 if(
 Number.isNaN(
@@ -1947,6 +3455,7 @@ date.getTime()
 return "-";
 
 }
+
 
 return date.toLocaleDateString(
 "en-IN",
@@ -1960,38 +3469,57 @@ year:"numeric"
 }
 
 
-/* ===============================
+/* =========================================
    ESCAPE HTML
-================================ */
+========================================= */
 
-function escapeHTML(value){
+function escapeHTML(
+value
+){
 
 return String(
 value ?? ""
 )
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+.replace(
+/&/g,
+"&amp;"
+)
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
-/* ===============================
+/* =========================================
    START
-================================ */
+========================================= */
 
 (async function(){
 
 const isAdmin =
 await checkAdmin();
 
+
 if(!isAdmin){
 
 return;
 
 }
+
 
 await loadOrders();
 
@@ -2000,5 +3528,6 @@ await loadOrders();
 </script>
 
 </body>
-</html>
 
+</html>
+```
