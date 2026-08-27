@@ -1,1002 +1,34 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<meta name="description"
-      content="AviPrint Admin Panel">
-
-<title>Admin Panel | AviPrint</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-
-<style>
-
-/* =========================================
-   RESET
-========================================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f8fafc;
-    color:#111827;
-}
-
-
-/* =========================================
-   NAVBAR
-========================================= */
-
-.navbar{
-    height:72px;
-    background:#fff;
-    border-bottom:1px solid #e5e7eb;
-    display:flex;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-
-.nav-container{
-    width:min(1400px,94%);
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:21px;
-    font-weight:800;
-}
-
-.logo-icon{
-    width:38px;
-    height:38px;
-    border-radius:10px;
-    background:#2563eb;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:800;
-}
-
-.logo span span{
-    color:#2563eb;
-}
-
-.admin-badge{
-    margin-left:8px;
-    padding:5px 9px;
-    background:#eff6ff;
-    color:#2563eb;
-    border-radius:20px;
-    font-size:10px;
-    font-weight:800;
-}
-
-.logout-btn{
-    border:1px solid #e5e7eb;
-    background:#fff;
-    color:#374151;
-    padding:9px 14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:12px;
-    font-weight:700;
-}
-
-.logout-btn:hover{
-    background:#f3f4f6;
-}
-
-
-/* =========================================
-   PAGE
-========================================= */
-
-.admin-page{
-    width:min(1500px,95%);
-    margin:auto;
-    padding:35px 0 60px;
-}
-
-
-/* =========================================
-   HEADER
-========================================= */
-
-.page-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:20px;
-    margin-bottom:28px;
-}
-
-.page-header h1{
-    font-size:30px;
-    margin:8px 0;
-}
-
-.page-header p{
-    color:#6b7280;
-    font-size:13px;
-}
-
-.admin-email{
-    color:#6b7280;
-    font-size:12px;
-}
-
-.section-label{
-    color:#2563eb;
-    font-size:11px;
-    font-weight:800;
-    letter-spacing:1px;
-}
-
-
-/* =========================================
-   STATS
-========================================= */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin-bottom:25px;
-}
-
-.stat-card{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:14px;
-    padding:20px;
-}
-
-.stat-card span{
-    display:block;
-    color:#6b7280;
-    font-size:12px;
-    margin-bottom:8px;
-}
-
-.stat-card strong{
-    display:block;
-    font-size:25px;
-}
-
-
-/* =========================================
-   CARD
-========================================= */
-
-.card{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:16px;
-    overflow:hidden;
-    box-shadow:0 8px 25px rgba(15,23,42,.04);
-}
-
-
-/* =========================================
-   TOOLBAR
-========================================= */
-
-.toolbar{
-    padding:18px;
-    border-bottom:1px solid #e5e7eb;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-}
-
-.search-box{
-    width:min(500px,100%);
-}
-
-.search-box input{
-    width:100%;
-    height:44px;
-    border:1px solid #d1d5db;
-    border-radius:9px;
-    padding:0 14px;
-    outline:none;
-    font-size:13px;
-}
-
-.search-box input:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.08);
-}
-
-.refresh-btn{
-    border:1px solid #dbeafe;
-    background:#eff6ff;
-    color:#2563eb;
-    padding:10px 15px;
-    border-radius:8px;
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.refresh-btn:hover{
-    background:#dbeafe;
-}
-
-
-/* =========================================
-   TABLE
-========================================= */
-
-.table-wrapper{
-    width:100%;
-    overflow-x:auto;
-}
-
-.orders-table{
-    width:100%;
-    min-width:1450px;
-    border-collapse:collapse;
-}
-
-.orders-table th{
-    background:#f8fafc;
-    color:#6b7280;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:.6px;
-    text-align:left;
-    padding:16px;
-    border-bottom:1px solid #e5e7eb;
-    white-space:nowrap;
-}
-
-.orders-table td{
-    padding:16px;
-    border-bottom:1px solid #f1f5f9;
-    font-size:12px;
-    vertical-align:middle;
-}
-
-.orders-table tr:hover{
-    background:#f8fafc;
-}
-
-
-/* =========================================
-   ORDER
-========================================= */
-
-.order-number{
-    color:#2563eb;
-    font-weight:800;
-    white-space:nowrap;
-}
-
-
-/* =========================================
-   CUSTOMER
-========================================= */
-
-.customer-name{
-    font-weight:700;
-    color:#111827;
-    margin-bottom:4px;
-}
-
-.customer-email{
-    color:#6b7280;
-    font-size:11px;
-}
-
-
-/* =========================================
-   SERVICE
-========================================= */
-
-.service-name{
-    font-weight:700;
-    color:#111827;
-}
-
-.service-details{
-    color:#9ca3af;
-    font-size:10px;
-    margin-top:4px;
-    max-width:220px;
-}
-
-
-/* =========================================
-   AMOUNT
-========================================= */
-
-.amount{
-    font-weight:800;
-    white-space:nowrap;
-}
-
-
-/* =========================================
-   STATUS
-========================================= */
-
-.status-select{
-    height:36px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    padding:0 9px;
-    font-size:11px;
-    font-weight:700;
-    background:#fff;
-    cursor:pointer;
-    outline:none;
-}
-
-.status-select:focus{
-    border-color:#2563eb;
-}
-
-.status-select.pending{
-    color:#92400e;
-    background:#fef3c7;
-}
-
-.status-select.processing{
-    color:#1d4ed8;
-    background:#dbeafe;
-}
-
-.status-select.completed{
-    color:#166534;
-    background:#dcfce7;
-}
-
-.status-select.cancelled{
-    color:#991b1b;
-    background:#fee2e2;
-}
-
-
-/* =========================================
-   FILE
-========================================= */
-
-.file-cell{
-    min-width:220px;
-    max-width:280px;
-}
-
-.file-name{
-    color:#374151;
-    font-size:11px;
-    font-weight:700;
-    word-break:break-word;
-    line-height:1.4;
-    margin-bottom:8px;
-}
-
-.no-file{
-    color:#9ca3af;
-    font-size:11px;
-}
-
-.download-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    border:1px solid #bbf7d0;
-    background:#f0fdf4;
-    color:#15803d;
-    padding:7px 11px;
-    border-radius:7px;
-    cursor:pointer;
-    font-size:10px;
-    font-weight:700;
-    text-decoration:none;
-}
-
-.download-btn:hover{
-    background:#dcfce7;
-}
-
-.download-btn:disabled{
-    opacity:.6;
-    cursor:wait;
-}
-
-
-/* =========================================
-   VIEW
-========================================= */
-
-.view-btn{
-    border:1px solid #dbeafe;
-    background:#eff6ff;
-    color:#2563eb;
-    padding:7px 11px;
-    border-radius:7px;
-    cursor:pointer;
-    font-size:10px;
-    font-weight:700;
-    white-space:nowrap;
-}
-
-.view-btn:hover{
-    background:#dbeafe;
-}
-
-
-/* =========================================
-   LOADING / EMPTY
-========================================= */
-
-.loading,
-.empty{
-    padding:60px 20px;
-    text-align:center;
-    color:#6b7280;
-    font-size:13px;
-}
-
-
-/* =========================================
-   ERROR
-========================================= */
-
-.error-box{
-    padding:20px;
-    margin:20px;
-    border-radius:10px;
-    background:#fef2f2;
-    border:1px solid #fecaca;
-    color:#b91c1c;
-    font-size:12px;
-}
-
-
-/* =========================================
-   HIDDEN
-========================================= */
-
-.hidden{
-    display:none !important;
-}
-
-
-/* =========================================
-   MODAL
-========================================= */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(15,23,42,.55);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:9999;
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal-card{
-    width:min(600px,100%);
-    max-height:90vh;
-    overflow-y:auto;
-    background:#fff;
-    border-radius:18px;
-    padding:25px;
-    box-shadow:0 25px 80px rgba(0,0,0,.2);
-}
-
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.modal-header h2{
-    font-size:20px;
-}
-
-.close-btn{
-    width:34px;
-    height:34px;
-    border:0;
-    background:#f3f4f6;
-    border-radius:8px;
-    font-size:18px;
-    cursor:pointer;
-}
-
-.modal-row{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    padding:13px 0;
-    border-bottom:1px solid #f1f5f9;
-    font-size:12px;
-}
-
-.modal-row span{
-    color:#6b7280;
-}
-
-.modal-row strong{
-    text-align:right;
-    max-width:70%;
-    word-break:break-word;
-}
-
-.modal-file{
-    margin-top:18px;
-    padding:15px;
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-}
-
-.modal-file-title{
-    font-size:11px;
-    color:#6b7280;
-    margin-bottom:7px;
-}
-
-.modal-file-name{
-    font-size:12px;
-    font-weight:700;
-    color:#111827;
-    word-break:break-word;
-    margin-bottom:12px;
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media(max-width:900px){
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-}
-
-@media(max-width:600px){
-
-    .admin-page{
-        width:92%;
-        padding-top:25px;
-    }
-
-    .page-header{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .page-header h1{
-        font-size:25px;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .toolbar{
-        flex-direction:column;
-        align-items:stretch;
-    }
-
-    .search-box{
-        width:100%;
-    }
-
-    .refresh-btn{
-        width:100%;
-    }
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<!-- =========================================
-     NAVBAR
-========================================= -->
-
-<header class="navbar">
-
-<div class="nav-container">
-
-<div class="logo">
-
-<span class="logo-icon">
-A
-</span>
-
-<span>
-Avi<span>Print</span>
-</span>
-
-<span class="admin-badge">
-ADMIN
-</span>
-
-</div>
-
-<button
-type="button"
-class="logout-btn"
-id="logoutButton">
-
-Logout
-
-</button>
-
-</div>
-
-</header>
-
-
-<!-- =========================================
-     MAIN
-========================================= -->
-
-<main class="admin-page">
-
-
-<div class="page-header">
-
-<div>
-
-<span class="section-label">
-ADMINISTRATION
-</span>
-
-<h1>
-Order Management
-</h1>
-
-<p>
-Manage customer orders, print files and order status.
-</p>
-
-</div>
-
-<div
-class="admin-email"
-id="adminEmail">
-
-Checking admin session...
-
-</div>
-
-</div>
-
-
-<!-- =========================================
-     STATS
-========================================= -->
-
-<div class="stats">
-
-
-<div class="stat-card">
-
-<span>
-Total Orders
-</span>
-
-<strong id="totalOrders">
-0
-</strong>
-
-</div>
-
-
-<div class="stat-card">
-
-<span>
-Pending
-</span>
-
-<strong id="pendingOrders">
-0
-</strong>
-
-</div>
-
-
-<div class="stat-card">
-
-<span>
-Processing
-</span>
-
-<strong id="processingOrders">
-0
-</strong>
-
-</div>
-
-
-<div class="stat-card">
-
-<span>
-Completed
-</span>
-
-<strong id="completedOrders">
-0
-</strong>
-
-</div>
-
-</div>
-
-
-<!-- =========================================
-     ORDERS CARD
-========================================= -->
-
-<div class="card">
-
-
-<div class="toolbar">
-
-<div class="search-box">
-
-<input
-type="text"
-id="searchInput"
-placeholder="Search order, customer, email, service or file...">
-
-</div>
-
-
-<button
-type="button"
-class="refresh-btn"
-id="refreshButton">
-
-↻ Refresh Orders
-
-</button>
-
-</div>
-
-
-<div
-id="errorBox"
-class="error-box hidden">
-</div>
-
-
-<div
-id="loading"
-class="loading">
-
-Loading orders...
-
-</div>
-
-
-<div
-id="empty"
-class="empty hidden">
-
-No orders found.
-
-</div>
-
-
-<div
-class="table-wrapper hidden"
-id="tableWrapper">
-
-<table class="orders-table">
-
-
-<thead>
-
-<tr>
-
-<th>
-Order
-</th>
-
-<th>
-Customer
-</th>
-
-<th>
-Service
-</th>
-
-<th>
-Print File
-</th>
-
-<th>
-Date
-</th>
-
-<th>
-Amount
-</th>
-
-<th>
-Status
-</th>
-
-<th>
-Action
-</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="ordersBody">
-</tbody>
-
-
-</table>
-
-</div>
-
-
-</div>
-
-
-</main>
-
-
-<!-- =========================================
-     MODAL
-========================================= -->
-
-<div
-class="modal"
-id="orderModal">
-
-
-<div class="modal-card">
-
-
-<div class="modal-header">
-
-<h2>
-Order Details
-</h2>
-
-<button
-type="button"
-class="close-btn"
-id="closeModal">
-
-×
-
-</button>
-
-</div>
-
-
-<div id="modalDetails">
-</div>
-
-
-</div>
-
-</div>
-
-
 <script>
 
-/* =========================================
-   ADMIN CONFIG
-========================================= */
-
-const ADMIN_EMAIL =
-"aviinformatics@gmail.com";
-
-
-/*
- IMPORTANT:
- Supabase Storage bucket name
-*/
-
-const STORAGE_BUCKET =
-"print-files";
+const ADMIN_EMAIL = "aviinformatics@gmail.com";
+const STORAGE_BUCKET = "print-files";
 
 
 /* =========================================
    ELEMENTS
 ========================================= */
 
-const adminEmail =
-document.getElementById("adminEmail");
+const adminEmail = document.getElementById("adminEmail");
 
-const totalOrders =
-document.getElementById("totalOrders");
+const totalOrders = document.getElementById("totalOrders");
+const pendingOrders = document.getElementById("pendingOrders");
+const processingOrders = document.getElementById("processingOrders");
+const completedOrders = document.getElementById("completedOrders");
 
-const pendingOrders =
-document.getElementById("pendingOrders");
+const ordersBody = document.getElementById("ordersBody");
 
-const processingOrders =
-document.getElementById("processingOrders");
+const loading = document.getElementById("loading");
+const empty = document.getElementById("empty");
+const tableWrapper = document.getElementById("tableWrapper");
+const errorBox = document.getElementById("errorBox");
 
-const completedOrders =
-document.getElementById("completedOrders");
+const searchInput = document.getElementById("searchInput");
+const refreshButton = document.getElementById("refreshButton");
+const logoutButton = document.getElementById("logoutButton");
 
-const ordersBody =
-document.getElementById("ordersBody");
-
-const loading =
-document.getElementById("loading");
-
-const empty =
-document.getElementById("empty");
-
-const tableWrapper =
-document.getElementById("tableWrapper");
-
-const errorBox =
-document.getElementById("errorBox");
-
-const searchInput =
-document.getElementById("searchInput");
-
-const refreshButton =
-document.getElementById("refreshButton");
-
-const logoutButton =
-document.getElementById("logoutButton");
-
-const orderModal =
-document.getElementById("orderModal");
-
-const modalDetails =
-document.getElementById("modalDetails");
-
-const closeModal =
-document.getElementById("closeModal");
-
+const orderModal = document.getElementById("orderModal");
+const modalDetails = document.getElementById("modalDetails");
+const closeModal = document.getElementById("closeModal");
 
 let allOrders = [];
 
@@ -1005,17 +37,16 @@ let allOrders = [];
    SUPABASE CHECK
 ========================================= */
 
-if(
-typeof supabaseClient === "undefined" ||
-!supabaseClient
-){
+if (
+    typeof supabaseClient === "undefined" ||
+    !supabaseClient
+) {
 
-adminEmail.textContent =
-"Supabase client missing.";
+    adminEmail.textContent = "Supabase client missing.";
 
-throw new Error(
-"supabaseClient missing. Check config.js"
-);
+    throw new Error(
+        "supabaseClient missing. Check config.js"
+    );
 
 }
 
@@ -1024,88 +55,72 @@ throw new Error(
    ADMIN SESSION
 ========================================= */
 
-async function checkAdmin(){
+async function checkAdmin() {
 
-try{
+    try {
 
-const result =
-await supabaseClient.auth.getSession();
+        const result =
+            await supabaseClient.auth.getSession();
 
+        if (result.error) {
+            throw result.error;
+        }
 
-if(result.error){
+        const session =
+            result.data.session;
 
-throw result.error;
+        if (
+            !session ||
+            !session.user
+        ) {
 
-}
+            window.location.replace("login.html");
 
+            return false;
+        }
 
-const session =
-result.data.session;
+        const email =
+            String(
+                session.user.email || ""
+            )
+            .trim()
+            .toLowerCase();
 
+        if (
+            email !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
 
-if(
-!session ||
-!session.user
-){
+            alert(
+                "Access denied. Admin account required."
+            );
 
-window.location.replace(
-"login.html"
-);
+            await supabaseClient.auth.signOut();
 
-return false;
+            window.location.replace("login.html");
 
-}
+            return false;
+        }
 
+        adminEmail.textContent =
+            "Logged in as Admin: " +
+            session.user.email;
 
-const email =
-String(
-session.user.email || ""
-)
-.trim()
-.toLowerCase();
+        return true;
 
+    }
+    catch (error) {
 
-if(
-email !==
-ADMIN_EMAIL.toLowerCase()
-){
+        console.error(
+            "Admin session error:",
+            error
+        );
 
-alert(
-"Access denied. Admin account required."
-);
+        adminEmail.textContent =
+            "Session error";
 
-await supabaseClient.auth.signOut();
-
-window.location.replace(
-"login.html"
-);
-
-return false;
-
-}
-
-
-adminEmail.textContent =
-"Logged in as Admin: " +
-session.user.email;
-
-
-return true;
-
-}
-catch(error){
-
-console.error(
-"ADMIN SESSION ERROR:",
-error
-);
-
-adminEmail.textContent =
-"Session error";
-
-return false;
-
-}
+        return false;
+    }
 
 }
 
@@ -1114,110 +129,61 @@ return false;
    LOAD ORDERS
 ========================================= */
 
-async function loadOrders(){
+async function loadOrders() {
 
-loading.classList.remove(
-"hidden"
-);
+    loading.classList.remove("hidden");
 
-tableWrapper.classList.add(
-"hidden"
-);
+    tableWrapper.classList.add("hidden");
 
-empty.classList.add(
-"hidden"
-);
+    empty.classList.add("hidden");
 
-errorBox.classList.add(
-"hidden"
-);
+    errorBox.classList.add("hidden");
 
-ordersBody.innerHTML =
-"";
+    ordersBody.innerHTML = "";
 
+    try {
 
-try{
+        const result =
+            await supabaseClient
+                .rpc("get_admin_orders");
 
-/*
- IMPORTANT:
+        if (result.error) {
+            throw result.error;
+        }
 
-We use the existing RPC function:
+        allOrders =
+            result.data || [];
 
-get_admin_orders
+        console.log(
+            "ADMIN ORDERS:",
+            allOrders
+        );
 
-Do NOT select user_email because that
-column does not exist.
+        updateStats(allOrders);
 
-The actual order data contains:
+        loading.classList.add("hidden");
 
-customer_email
-customer_name
-file_name
-file_path
-*/
+        renderOrders(allOrders);
 
-const result =
-await supabaseClient
-.rpc(
-"get_admin_orders"
-);
+    }
+    catch (error) {
 
+        console.error(
+            "ORDER LOAD ERROR:",
+            error
+        );
 
-if(result.error){
+        loading.classList.add("hidden");
 
-throw result.error;
+        errorBox.innerHTML =
+            "Unable to load orders.<br><br>" +
+            escapeHTML(
+                error.message ||
+                "Unknown error"
+            );
 
-}
-
-
-allOrders =
-result.data || [];
-
-
-console.log(
-"ADMIN ORDERS:",
-allOrders
-);
-
-
-updateStats(
-allOrders
-);
-
-
-loading.classList.add(
-"hidden"
-);
-
-
-renderOrders(
-allOrders
-);
-
-}
-catch(error){
-
-console.error(
-"ORDER LOAD ERROR:",
-error
-);
-
-loading.classList.add(
-"hidden"
-);
-
-errorBox.innerHTML =
-"Unable to load orders.<br><br>" +
-escapeHTML(
-error.message ||
-"Unknown error"
-);
-
-errorBox.classList.remove(
-"hidden"
-);
-
-}
+        errorBox.classList.remove("hidden");
+    }
 
 }
 
@@ -1226,48 +192,31 @@ errorBox.classList.remove(
    UPDATE STATS
 ========================================= */
 
-function updateStats(
-orders
-){
+function updateStats(orders) {
 
-totalOrders.textContent =
-orders.length;
+    totalOrders.textContent =
+        orders.length;
 
+    pendingOrders.textContent =
+        orders.filter(
+            order =>
+                normalizeStatus(order.status) ===
+                "pending"
+        ).length;
 
-pendingOrders.textContent =
-orders.filter(
-function(order){
+    processingOrders.textContent =
+        orders.filter(
+            order =>
+                normalizeStatus(order.status) ===
+                "processing"
+        ).length;
 
-return normalizeStatus(
-order.status
-) === "pending";
-
-}
-).length;
-
-
-processingOrders.textContent =
-orders.filter(
-function(order){
-
-return normalizeStatus(
-order.status
-) === "processing";
-
-}
-).length;
-
-
-completedOrders.textContent =
-orders.filter(
-function(order){
-
-return normalizeStatus(
-order.status
-) === "completed";
-
-}
-).length;
+    completedOrders.textContent =
+        orders.filter(
+            order =>
+                normalizeStatus(order.status) ===
+                "completed"
+        ).length;
 
 }
 
@@ -1276,31 +225,27 @@ order.status
    NORMALIZE STATUS
 ========================================= */
 
-function normalizeStatus(
-status
-){
+function normalizeStatus(status) {
 
-const value =
-String(
-status || "pending"
-)
-.trim()
-.toLowerCase();
+    const value =
+        String(
+            status || "pending"
+        )
+        .trim()
+        .toLowerCase();
 
+    if (
+        value === "pending" ||
+        value === "processing" ||
+        value === "completed" ||
+        value === "cancelled"
+    ) {
 
-if(
-value === "pending" ||
-value === "processing" ||
-value === "completed" ||
-value === "cancelled"
-){
+        return value;
 
-return value;
+    }
 
-}
-
-
-return "pending";
+    return "pending";
 
 }
 
@@ -1309,743 +254,916 @@ return "pending";
    RENDER ORDERS
 ========================================= */
 
-function renderOrders(
-orders
-){
+function renderOrders(orders) {
 
-ordersBody.innerHTML =
-"";
+    ordersBody.innerHTML = "";
 
+    if (!orders.length) {
 
-if(!orders.length){
+        tableWrapper.classList.add("hidden");
 
-tableWrapper.classList.add(
-"hidden"
-);
+        empty.classList.remove("hidden");
 
-empty.classList.remove(
-"hidden"
-);
+        return;
+    }
 
-return;
+    empty.classList.add("hidden");
 
-}
+    tableWrapper.classList.remove("hidden");
 
 
-empty.classList.add(
-"hidden"
-);
+    orders.forEach(function(order) {
 
-tableWrapper.classList.remove(
-"hidden"
-);
+        const row =
+            document.createElement("tr");
 
 
-orders.forEach(
-function(order){
+        const orderNumber =
+            order.order_number ||
+            (
+                order.id
+                ?
+                order.id.substring(0, 8)
+                :
+                "-"
+            );
 
-const row =
-document.createElement("tr");
 
+        const customerName =
+            order.customer_name ||
+            "Customer";
 
-const orderNumber =
-order.order_number ||
-(
-order.id
-?
-order.id.substring(0,8)
-:
-"-"
-);
 
+        const customerEmail =
+            order.customer_email ||
+            "";
 
-const customerName =
-order.customer_name ||
-"Customer";
 
+        const service =
+            order.service_name ||
+            "Print Service";
 
-const customerEmail =
-order.customer_email ||
-"";
 
+        const details =
+            order.service_details ||
+            "Printing order";
 
-const service =
-order.service_name ||
-"Print Service";
 
+        const status =
+            normalizeStatus(
+                order.status
+            );
 
-const details =
-order.service_details ||
-"Printing order";
 
+        const amount =
+            Number(
+                order.amount || 0
+            ).toFixed(2);
 
-const status =
-normalizeStatus(
-order.status
-);
 
+        const date =
+            formatDate(
+                order.order_date ||
+                order.created_at
+            );
 
-const amount =
-Number(
-order.amount || 0
-).toFixed(2);
 
+        row.innerHTML = `
 
-const date =
-formatDate(
-order.order_date ||
-order.created_at
-);
+        <td>
 
+            <span class="order-number">
 
-const fileName =
-order.file_name ||
-"";
+                #${escapeHTML(orderNumber)}
 
+            </span>
 
-row.innerHTML = `
+        </td>
 
-<td>
 
-<span class="order-number">
+        <td>
 
-#${escapeHTML(
-orderNumber
-)}
+            <div class="customer-name">
 
-</span>
+                ${escapeHTML(customerName)}
 
-</td>
+            </div>
 
+            <div class="customer-email">
 
-<td>
+                ${escapeHTML(
+                    customerEmail || "-"
+                )}
 
-<div class="customer-name">
+            </div>
 
-${escapeHTML(
-customerName
-)}
+        </td>
 
-</div>
 
-<div class="customer-email">
+        <td>
 
-${escapeHTML(
-customerEmail || "-"
-)}
+            <div class="service-name">
 
-</div>
+                ${escapeHTML(service)}
 
-</td>
+            </div>
 
+            <div class="service-details">
 
-<td>
+                ${escapeHTML(details)}
 
-<div class="service-name">
+            </div>
 
-${escapeHTML(
-service
-)}
+        </td>
 
-</div>
 
-<div class="service-details">
+        <td>
 
-${escapeHTML(
-details
-)}
+            ${escapeHTML(date)}
 
-</div>
+        </td>
 
-</td>
 
+        <td>
 
-<td class="file-cell">
+            <span class="amount">
 
-${
-fileName
+                ₹${amount}
 
-?
+            </span>
 
-`
+        </td>
 
-<div class="file-name">
 
-📄 ${escapeHTML(
-fileName
-)}
+        <td>
 
-</div>
+            <select
+                class="status-select ${status}"
+                data-order-id="${escapeHTML(order.id)}"
+            >
 
+                <option
+                    value="pending"
+                    ${status === "pending" ? "selected" : ""}
+                >
+                    Pending
+                </option>
 
-<button
-type="button"
-class="download-btn"
-data-file-path="${escapeHTML(
-order.file_path || ""
-)}"
-data-file-name="${escapeHTML(
-fileName
-)}">
+                <option
+                    value="processing"
+                    ${status === "processing" ? "selected" : ""}
+                >
+                    Processing
+                </option>
 
-⬇ Download
+                <option
+                    value="completed"
+                    ${status === "completed" ? "selected" : ""}
+                >
+                    Completed
+                </option>
 
-</button>
+                <option
+                    value="cancelled"
+                    ${status === "cancelled" ? "selected" : ""}
+                >
+                    Cancelled
+                </option>
 
-`
+            </select>
 
-:
+        </td>
 
-`
 
-<div class="no-file">
+        <td>
 
-No print file
+            <button
+                type="button"
+                class="view-btn"
+                data-order-id="${escapeHTML(order.id)}"
+            >
 
-</div>
+                View
 
-`
+            </button>
 
-}
+        </td>
 
-</td>
+        `;
 
 
-<td>
+        ordersBody.appendChild(row);
 
-${escapeHTML(
-date
-)}
+    });
 
-</td>
 
+    /* =========================================
+       STATUS EVENTS
+    ========================================= */
 
-<td>
+    ordersBody
+        .querySelectorAll(".status-select")
+        .forEach(function(select) {
 
-<span class="amount">
+            select.addEventListener(
+                "change",
+                async function() {
 
-₹${amount}
+                    const orderId =
+                        select.getAttribute(
+                            "data-order-id"
+                        );
 
-</span>
+                    const newStatus =
+                        normalizeStatus(
+                            select.value
+                        );
 
-</td>
+                    await updateOrderStatus(
+                        orderId,
+                        newStatus
+                    );
 
+                }
+            );
 
-<td>
+        });
 
-<select
-class="status-select ${status}"
-data-order-id="${escapeHTML(
-order.id
-)}">
 
-<option
-value="pending"
-${status === "pending" ? "selected" : ""}>
+    /* =========================================
+       VIEW EVENTS
+    ========================================= */
 
-Pending
+    ordersBody
+        .querySelectorAll(".view-btn")
+        .forEach(function(button) {
 
-</option>
+            button.addEventListener(
+                "click",
+                function() {
 
-<option
-value="processing"
-${status === "processing" ? "selected" : ""}>
+                    const orderId =
+                        button.getAttribute(
+                            "data-order-id"
+                        );
 
-Processing
+                    const order =
+                        allOrders.find(
+                            function(item) {
 
-</option>
+                                return (
+                                    item.id ===
+                                    orderId
+                                );
 
-<option
-value="completed"
-${status === "completed" ? "selected" : ""}>
+                            }
+                        );
 
-Completed
+                    if (order) {
 
-</option>
+                        showOrderDetails(order);
 
-<option
-value="cancelled"
-${status === "cancelled" ? "selected" : ""}>
+                    }
 
-Cancelled
+                }
+            );
 
-</option>
-
-</select>
-
-</td>
-
-
-<td>
-
-<button
-type="button"
-class="view-btn"
-data-order-id="${escapeHTML(
-order.id
-)}">
-
-View
-
-</button>
-
-</td>
-
-`;
-
-
-ordersBody.appendChild(
-row
-);
-
-}
-);
-
-
-/* =========================================
-   STATUS EVENTS
-========================================= */
-
-ordersBody
-.querySelectorAll(
-".status-select"
-)
-.forEach(
-function(select){
-
-select.addEventListener(
-"change",
-async function(){
-
-const orderId =
-select.getAttribute(
-"data-order-id"
-);
-
-
-const newStatus =
-normalizeStatus(
-select.value
-);
-
-
-await updateOrderStatus(
-orderId,
-newStatus
-);
-
-}
-);
-
-}
-);
-
-
-/* =========================================
-   DOWNLOAD EVENTS
-========================================= */
-
-ordersBody
-.querySelectorAll(
-".download-btn"
-)
-.forEach(
-function(button){
-
-button.addEventListener(
-"click",
-async function(){
-
-const filePath =
-button.getAttribute(
-"data-file-path"
-);
-
-
-const fileName =
-button.getAttribute(
-"data-file-name"
-);
-
-
-if(!filePath){
-
-alert(
-"Print file path is missing."
-);
-
-return;
-
-}
-
-
-await downloadPrintFile(
-filePath,
-fileName,
-button
-);
-
-}
-);
-
-}
-);
-
-
-/* =========================================
-   VIEW EVENTS
-========================================= */
-
-ordersBody
-.querySelectorAll(
-".view-btn"
-)
-.forEach(
-function(button){
-
-button.addEventListener(
-"click",
-function(){
-
-const orderId =
-button.getAttribute(
-"data-order-id"
-);
-
-
-const order =
-allOrders.find(
-function(item){
-
-return item.id === orderId;
-
-}
-);
-
-
-if(order){
-
-showOrderDetails(
-order
-);
-
-}
-
-}
-);
-
-}
-);
+        });
 
 }
 
 
 /* =========================================
-   DOWNLOAD PRINT FILE
-========================================= */
-
-async function downloadPrintFile(
-filePath,
-fileName,
-button
-){
-
-const originalText =
-button.textContent;
-
-
-try{
-
-button.disabled =
-true;
-
-button.textContent =
-"Preparing...";
-
-
-console.log(
-"Storage bucket:",
-STORAGE_BUCKET
-);
-
-console.log(
-"File path:",
-filePath
-);
-
-
-/*
- Create a temporary signed URL.
-
-This works with private Supabase
-Storage buckets.
-*/
-
-const result =
-await supabaseClient
-.storage
-.from(
-STORAGE_BUCKET
-)
-.createSignedUrl(
-filePath,
-300
-);
-
-
-if(result.error){
-
-throw result.error;
-
-}
-
-
-const signedUrl =
-result.data?.signedUrl;
-
-
-if(!signedUrl){
-
-throw new Error(
-"Could not create download URL."
-);
-
-}
-
-
-/*
- Open the file.
-
-Using an anchor gives the browser
-a chance to download the file.
-*/
-
-const link =
-document.createElement("a");
-
-
-link.href =
-signedUrl;
-
-
-link.target =
-"_blank";
-
-
-link.rel =
-"noopener noreferrer";
-
-
-link.download =
-fileName ||
-"print-file";
-
-
-document.body.appendChild(
-link
-);
-
-
-link.click();
-
-
-link.remove();
-
-
-button.textContent =
-"✓ Ready";
-
-
-setTimeout(
-function(){
-
-button.textContent =
-originalText;
-
-button.disabled =
-false;
-
-},
-1500
-);
-
-}
-catch(error){
-
-console.error(
-"DOWNLOAD FILE ERROR:",
-error
-);
-
-alert(
-"Failed to download print file: " +
-(
-error.message ||
-"Unknown error"
-)
-);
-
-button.textContent =
-originalText;
-
-button.disabled =
-false;
-
-}
-
-}
-
-
-/* =========================================
-   UPDATE ORDER STATUS
+   UPDATE STATUS
 ========================================= */
 
 async function updateOrderStatus(
-orderId,
-newStatus
-){
+    orderId,
+    newStatus
+) {
 
-const allowedStatuses = [
-
-"pending",
-"processing",
-"completed",
-"cancelled"
-
-];
+    const allowedStatuses = [
+        "pending",
+        "processing",
+        "completed",
+        "cancelled"
+    ];
 
 
-const finalStatus =
-String(
-newStatus || ""
-)
-.trim()
-.toLowerCase();
+    const finalStatus =
+        String(
+            newStatus || ""
+        )
+        .trim()
+        .toLowerCase();
 
 
-if(
-!allowedStatuses.includes(
-finalStatus
-)
-){
+    if (
+        !allowedStatuses.includes(
+            finalStatus
+        )
+    ) {
 
-alert(
-"Invalid order status."
-);
+        alert(
+            "Invalid order status."
+        );
 
-await loadOrders();
+        await loadOrders();
 
-return;
+        return;
+    }
+
+
+    try {
+
+        console.log(
+            "Updating order:",
+            orderId
+        );
+
+        console.log(
+            "New status:",
+            finalStatus
+        );
+
+
+        const result =
+            await supabaseClient
+                .from("orders")
+                .update({
+                    status: finalStatus
+                })
+                .eq(
+                    "id",
+                    orderId
+                )
+                .select()
+                .single();
+
+
+        if (result.error) {
+
+            throw result.error;
+
+        }
+
+
+        console.log(
+            "STATUS UPDATED:",
+            result.data
+        );
+
+
+        alert(
+            "Order status updated successfully."
+        );
+
+
+        await loadOrders();
+
+    }
+    catch (error) {
+
+        console.error(
+            "STATUS UPDATE ERROR:",
+            error
+        );
+
+        await loadOrders();
+
+        alert(
+            "Failed to update order status: " +
+            (
+                error.message ||
+                "Unknown error"
+            )
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   SHOW ORDER DETAILS
+========================================= */
+
+function showOrderDetails(order) {
+
+    const status =
+        normalizeStatus(
+            order.status
+        );
+
+
+    const amount =
+        Number(
+            order.amount || 0
+        ).toFixed(2);
+
+
+    const filePath =
+        String(
+            order.file_path || ""
+        ).trim();
+
+
+    const fileName =
+        order.file_name ||
+        "Print File";
+
+
+    modalDetails.innerHTML = `
+
+        <div class="modal-row">
+
+            <span>
+                Order Number
+            </span>
+
+            <strong>
+                #${escapeHTML(
+                    order.order_number ||
+                    order.id ||
+                    "-"
+                )}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Customer Name
+            </span>
+
+            <strong>
+                ${escapeHTML(
+                    order.customer_name ||
+                    "-"
+                )}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Customer Email
+            </span>
+
+            <strong>
+                ${escapeHTML(
+                    order.customer_email ||
+                    "-"
+                )}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Service
+            </span>
+
+            <strong>
+                ${escapeHTML(
+                    order.service_name ||
+                    "-"
+                )}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Details
+            </span>
+
+            <strong>
+                ${escapeHTML(
+                    order.service_details ||
+                    "-"
+                )}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Date
+            </span>
+
+            <strong>
+                ${escapeHTML(
+                    formatDate(
+                        order.order_date ||
+                        order.created_at
+                    )
+                )}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Status
+            </span>
+
+            <strong>
+                ${escapeHTML(status)}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Amount
+            </span>
+
+            <strong>
+                ₹${amount}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                File Name
+            </span>
+
+            <strong>
+                ${escapeHTML(fileName)}
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                File Path
+            </span>
+
+            <strong>
+                ${escapeHTML(
+                    filePath || "-"
+                )}
+            </strong>
+
+        </div>
+
+
+        <div
+            style="
+                margin-top:20px;
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            "
+        >
+
+            <button
+                type="button"
+                id="viewFileButton"
+                style="
+                    border:1px solid #dbeafe;
+                    background:#eff6ff;
+                    color:#2563eb;
+                    padding:10px 15px;
+                    border-radius:8px;
+                    cursor:pointer;
+                    font-size:12px;
+                    font-weight:700;
+                "
+            >
+                View File
+            </button>
+
+
+            <button
+                type="button"
+                id="downloadFileButton"
+                style="
+                    border:1px solid #dcfce7;
+                    background:#f0fdf4;
+                    color:#166534;
+                    padding:10px 15px;
+                    border-radius:8px;
+                    cursor:pointer;
+                    font-size:12px;
+                    font-weight:700;
+                "
+            >
+                Download File
+            </button>
+
+        </div>
+
+
+        <div
+            id="fileMessage"
+            style="
+                margin-top:14px;
+                font-size:12px;
+                color:#6b7280;
+            "
+        ></div>
+
+    `;
+
+
+    orderModal.classList.add("show");
+
+
+    const viewFileButton =
+        document.getElementById(
+            "viewFileButton"
+        );
+
+
+    const downloadFileButton =
+        document.getElementById(
+            "downloadFileButton"
+        );
+
+
+    const fileMessage =
+        document.getElementById(
+            "fileMessage"
+        );
+
+
+    if (!filePath) {
+
+        viewFileButton.disabled = true;
+
+        downloadFileButton.disabled = true;
+
+        fileMessage.textContent =
+            "No file path saved for this order.";
+
+        return;
+    }
+
+
+    /* =========================================
+       VIEW FILE
+    ========================================= */
+
+    viewFileButton.addEventListener(
+        "click",
+        async function() {
+
+            viewFileButton.disabled = true;
+
+            viewFileButton.textContent =
+                "Opening...";
+
+            fileMessage.textContent =
+                "Creating secure file link...";
+
+
+            try {
+
+                const signedUrl =
+                    await createFileUrl(
+                        filePath
+                    );
+
+
+                if (!signedUrl) {
+
+                    throw new Error(
+                        "Could not create file URL."
+                    );
+
+                }
+
+
+                window.open(
+                    signedUrl,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+
+
+                fileMessage.textContent =
+                    "File opened successfully.";
+
+            }
+            catch (error) {
+
+                console.error(
+                    "VIEW FILE ERROR:",
+                    error
+                );
+
+                fileMessage.textContent =
+                    "File could not be opened: " +
+                    error.message;
+
+            }
+            finally {
+
+                viewFileButton.disabled =
+                    false;
+
+                viewFileButton.textContent =
+                    "View File";
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       DOWNLOAD FILE
+    ========================================= */
+
+    downloadFileButton.addEventListener(
+        "click",
+        async function() {
+
+            downloadFileButton.disabled = true;
+
+            downloadFileButton.textContent =
+                "Preparing...";
+
+            fileMessage.textContent =
+                "Creating secure download link...";
+
+
+            try {
+
+                const signedUrl =
+                    await createFileUrl(
+                        filePath
+                    );
+
+
+                if (!signedUrl) {
+
+                    throw new Error(
+                        "Could not create file URL."
+                    );
+
+                }
+
+
+                const link =
+                    document.createElement("a");
+
+
+                link.href =
+                    signedUrl;
+
+
+                link.download =
+                    fileName;
+
+
+                link.target =
+                    "_blank";
+
+
+                link.rel =
+                    "noopener";
+
+
+                document.body.appendChild(
+                    link
+                );
+
+
+                link.click();
+
+
+                link.remove();
+
+
+                fileMessage.textContent =
+                    "Download started.";
+
+            }
+            catch (error) {
+
+                console.error(
+                    "DOWNLOAD FILE ERROR:",
+                    error
+                );
+
+                fileMessage.textContent =
+                    "File could not be downloaded: " +
+                    error.message;
+
+            }
+            finally {
+
+                downloadFileButton.disabled =
+                    false;
+
+                downloadFileButton.textContent =
+                    "Download File";
+
+            }
+
+        }
+    );
 
 }
 
 
-try{
+/* =========================================
+   CREATE SIGNED FILE URL
+========================================= */
 
-console.log(
-"Updating order:",
-orderId
-);
+async function createFileUrl(filePath) {
 
-console.log(
-"New status:",
-finalStatus
-);
-
-
-const result =
-await supabaseClient
-.from("orders")
-.update({
-
-status:
-finalStatus
-
-})
-.eq(
-"id",
-orderId
-)
-.select()
-.single();
+    const cleanPath =
+        String(filePath || "")
+            .trim()
+            .replace(/^\/+/, "");
 
 
-if(result.error){
+    if (!cleanPath) {
 
-throw result.error;
+        throw new Error(
+            "File path is empty."
+        );
 
-}
-
-
-console.log(
-"STATUS UPDATED:",
-result.data
-);
+    }
 
 
-/*
- Update local data.
-*/
+    console.log(
+        "Storage bucket:",
+        STORAGE_BUCKET
+    );
 
-const index =
-allOrders.findIndex(
-function(order){
-
-return order.id === orderId;
-
-}
-);
+    console.log(
+        "Storage file path:",
+        cleanPath
+    );
 
 
-if(index !== -1){
+    /*
+       Private bucket ke liye signed URL.
+       1 hour validity.
+    */
 
-allOrders[index].status =
-finalStatus;
-
-}
-
-
-updateStats(
-allOrders
-);
-
-
-alert(
-"Order status updated successfully."
-);
+    const result =
+        await supabaseClient
+            .storage
+            .from(STORAGE_BUCKET)
+            .createSignedUrl(
+                cleanPath,
+                3600
+            );
 
 
-/*
- Reload data from database.
-*/
+    if (result.error) {
 
-await loadOrders();
+        console.error(
+            "SUPABASE STORAGE ERROR:",
+            result.error
+        );
 
-}
-catch(error){
+        throw new Error(
+            result.error.message ||
+            "Object not found"
+        );
 
-console.error(
-"STATUS UPDATE ERROR:",
-error
-);
-
-
-/*
- Reload original value.
-*/
-
-await loadOrders();
+    }
 
 
-alert(
-"Failed to update order status: " +
-(
-error.message ||
-"Unknown error"
-)
-);
+    if (
+        !result.data ||
+        !result.data.signedUrl
+    ) {
 
-}
+        throw new Error(
+            "Signed URL was not generated."
+        );
+
+    }
+
+
+    return result.data.signedUrl;
 
 }
 
@@ -2055,107 +1173,102 @@ error.message ||
 ========================================= */
 
 searchInput.addEventListener(
-"input",
-function(){
+    "input",
+    function() {
 
-const query =
-String(
-this.value || ""
-)
-.toLowerCase()
-.trim();
-
-
-if(!query){
-
-renderOrders(
-allOrders
-);
-
-return;
-
-}
+        const query =
+            String(
+                this.value || ""
+            )
+            .toLowerCase()
+            .trim();
 
 
-const filtered =
-allOrders.filter(
-function(order){
+        if (!query) {
 
-const orderNumber =
-String(
-order.order_number || ""
-)
-.toLowerCase();
+            renderOrders(
+                allOrders
+            );
 
-
-const name =
-String(
-order.customer_name || ""
-)
-.toLowerCase();
+            return;
+        }
 
 
-const email =
-String(
-order.customer_email || ""
-)
-.toLowerCase();
+        const filtered =
+            allOrders.filter(
+                function(order) {
+
+                    const orderNumber =
+                        String(
+                            order.order_number ||
+                            ""
+                        )
+                        .toLowerCase();
 
 
-const service =
-String(
-order.service_name || ""
-)
-.toLowerCase();
+                    const name =
+                        String(
+                            order.customer_name ||
+                            ""
+                        )
+                        .toLowerCase();
 
 
-const details =
-String(
-order.service_details || ""
-)
-.toLowerCase();
+                    const email =
+                        String(
+                            order.customer_email ||
+                            ""
+                        )
+                        .toLowerCase();
 
 
-const fileName =
-String(
-order.file_name || ""
-)
-.toLowerCase();
+                    const service =
+                        String(
+                            order.service_name ||
+                            ""
+                        )
+                        .toLowerCase();
 
 
-const status =
-normalizeStatus(
-order.status
-);
+                    const details =
+                        String(
+                            order.service_details ||
+                            ""
+                        )
+                        .toLowerCase();
 
 
-return (
-
-orderNumber.includes(query) ||
-
-name.includes(query) ||
-
-email.includes(query) ||
-
-service.includes(query) ||
-
-details.includes(query) ||
-
-fileName.includes(query) ||
-
-status.includes(query)
-
-);
-
-}
-);
+                    const status =
+                        normalizeStatus(
+                            order.status
+                        );
 
 
-renderOrders(
-filtered
-);
+                    return (
 
-}
+                        orderNumber.includes(query) ||
+
+                        name.includes(query) ||
+
+                        email.includes(query) ||
+
+                        service.includes(query) ||
+
+                        details.includes(query) ||
+
+                        status.includes(query)
+
+                    );
+
+                }
+            );
+
+
+        renderOrders(
+            filtered
+        );
+
+    }
 );
 
 
@@ -2164,297 +1277,25 @@ filtered
 ========================================= */
 
 refreshButton.addEventListener(
-"click",
-async function(){
+    "click",
+    async function() {
 
-refreshButton.disabled =
-true;
+        refreshButton.disabled = true;
 
-refreshButton.textContent =
-"Loading...";
-
-
-await loadOrders();
+        refreshButton.textContent =
+            "Loading...";
 
 
-refreshButton.disabled =
-false;
+        await loadOrders();
 
-refreshButton.textContent =
-"↻ Refresh Orders";
 
-}
+        refreshButton.disabled = false;
+
+        refreshButton.textContent =
+            "↻ Refresh Orders";
+
+    }
 );
-
-
-/* =========================================
-   ORDER DETAILS MODAL
-========================================= */
-
-function showOrderDetails(
-order
-){
-
-const status =
-normalizeStatus(
-order.status
-);
-
-
-const amount =
-Number(
-order.amount || 0
-).toFixed(2);
-
-
-const fileName =
-order.file_name ||
-"";
-
-
-const filePath =
-order.file_path ||
-"";
-
-
-modalDetails.innerHTML = `
-
-<div class="modal-row">
-
-<span>
-Order Number
-</span>
-
-<strong>
-#${escapeHTML(
-order.order_number ||
-order.id ||
-"-"
-)}
-
-</strong>
-
-</div>
-
-
-<div class="modal-row">
-
-<span>
-Customer Name
-</span>
-
-<strong>
-${escapeHTML(
-order.customer_name ||
-"-"
-)}
-
-</strong>
-
-</div>
-
-
-<div class="modal-row">
-
-<span>
-Customer Email
-</span>
-
-<strong>
-${escapeHTML(
-order.customer_email ||
-"-"
-)}
-
-</strong>
-
-</div>
-
-
-<div class="modal-row">
-
-<span>
-User ID
-</span>
-
-<strong>
-${escapeHTML(
-order.user_id ||
-"-"
-)}
-
-</strong>
-
-</div>
-
-
-<div class="modal-row">
-
-<span>
-Service
-</span>
-
-<strong>
-${escapeHTML(
-order.service_name ||
-"-"
-)}
-
-</strong>
-
-</div>
-
-
-<div class="modal-row">
-
-<span>
-Details
-</span>
-
-<strong>
-${escapeHTML(
-order.service_details ||
-"-"
-)}
-
-</strong>
-
-</div>
-
-
-<div class="modal-row">
-
-<span>
-Date
-</span>
-
-<strong>
-${escapeHTML(
-formatDate(
-order.order_date ||
-order.created_at
-)
-)}
-
-</strong>
-
-</div>
-
-
-<div class="modal-row">
-
-<span>
-Status
-</span>
-
-<strong>
-${escapeHTML(
-status
-)}
-
-</strong>
-
-</div>
-
-
-<div class="modal-row">
-
-<span>
-Amount
-</span>
-
-<strong>
-₹${amount}
-
-</strong>
-
-</div>
-
-
-<div class="modal-file">
-
-<div class="modal-file-title">
-
-PRINT FILE
-
-</div>
-
-
-<div class="modal-file-name">
-
-${
-fileName
-?
-"📄 " + escapeHTML(fileName)
-:
-"No print file available"
-}
-
-</div>
-
-
-${
-filePath
-
-?
-
-`
-
-<button
-type="button"
-class="download-btn"
-id="modalDownloadButton">
-
-⬇ Download Print File
-
-</button>
-
-`
-
-:
-
-""
-
-}
-
-</div>
-
-`;
-
-
-orderModal.classList.add(
-"show"
-);
-
-
-/*
- Modal download button.
-*/
-
-const modalDownloadButton =
-document.getElementById(
-"modalDownloadButton"
-);
-
-
-if(modalDownloadButton){
-
-modalDownloadButton.addEventListener(
-"click",
-async function(){
-
-await downloadPrintFile(
-filePath,
-fileName,
-modalDownloadButton
-);
-
-}
-);
-
-}
-
-}
 
 
 /* =========================================
@@ -2462,55 +1303,51 @@ modalDownloadButton
 ========================================= */
 
 closeModal.addEventListener(
-"click",
-function(){
+    "click",
+    function() {
 
-orderModal.classList.remove(
-"show"
-);
+        orderModal.classList.remove(
+            "show"
+        );
 
-}
+    }
 );
 
 
 orderModal.addEventListener(
-"click",
-function(event){
+    "click",
+    function(event) {
 
-if(
-event.target ===
-orderModal
-){
+        if (
+            event.target ===
+            orderModal
+        ) {
 
-orderModal.classList.remove(
-"show"
+            orderModal.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
 );
 
-}
-
-}
-);
-
-
-/* =========================================
-   ESCAPE KEY
-========================================= */
 
 document.addEventListener(
-"keydown",
-function(event){
+    "keydown",
+    function(event) {
 
-if(
-event.key === "Escape"
-){
+        if (
+            event.key === "Escape"
+        ) {
 
-orderModal.classList.remove(
-"show"
-);
+            orderModal.classList.remove(
+                "show"
+            );
 
-}
+        }
 
-}
+    }
 );
 
 
@@ -2519,96 +1356,90 @@ orderModal.classList.remove(
 ========================================= */
 
 logoutButton.addEventListener(
-"click",
-async function(){
+    "click",
+    async function() {
 
-logoutButton.disabled =
-true;
+        logoutButton.disabled = true;
 
-logoutButton.textContent =
-"Logging out...";
-
-
-try{
-
-const result =
-await supabaseClient
-.auth
-.signOut();
+        logoutButton.textContent =
+            "Logging out...";
 
 
-if(result.error){
+        try {
 
-throw result.error;
+            const result =
+                await supabaseClient.auth.signOut();
 
-}
+
+            if (result.error) {
+
+                throw result.error;
+
+            }
 
 
-window.location.replace(
-"login.html"
+            window.location.replace(
+                "login.html"
+            );
+
+        }
+        catch (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            alert(
+                "Logout failed. Please try again."
+            );
+
+
+            logoutButton.disabled =
+                false;
+
+            logoutButton.textContent =
+                "Logout";
+
+        }
+
+    }
 );
-
-}
-catch(error){
-
-console.error(
-"Logout error:",
-error
-);
-
-alert(
-"Logout failed. Please try again."
-);
-
-logoutButton.disabled =
-false;
-
-logoutButton.textContent =
-"Logout";
-
-}
-
-});
 
 
 /* =========================================
    DATE
 ========================================= */
 
-function formatDate(
-value
-){
+function formatDate(value) {
 
-if(!value){
-
-return "-";
-
-}
+    if (!value) {
+        return "-";
+    }
 
 
-const date =
-new Date(value);
+    const date =
+        new Date(value);
 
 
-if(
-Number.isNaN(
-date.getTime()
-)
-){
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
 
-return "-";
+        return "-";
+    }
 
-}
 
-
-return date.toLocaleDateString(
-"en-IN",
-{
-day:"2-digit",
-month:"short",
-year:"numeric"
-}
-);
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
 
 }
 
@@ -2617,33 +1448,31 @@ year:"numeric"
    ESCAPE HTML
 ========================================= */
 
-function escapeHTML(
-value
-){
+function escapeHTML(value) {
 
-return String(
-value ?? ""
-)
-.replace(
-/&/g,
-"&amp;"
-)
-.replace(
-/</g,
-"&lt;"
-)
-.replace(
-/>/g,
-"&gt;"
-)
-.replace(
-/"/g,
-"&quot;"
-)
-.replace(
-/'/g,
-"&#039;"
-);
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
@@ -2652,26 +1481,19 @@ value ?? ""
    START
 ========================================= */
 
-(async function(){
+(async function() {
 
-const isAdmin =
-await checkAdmin();
-
-
-if(!isAdmin){
-
-return;
-
-}
+    const isAdmin =
+        await checkAdmin();
 
 
-await loadOrders();
+    if (!isAdmin) {
+        return;
+    }
+
+
+    await loadOrders();
 
 })();
 
 </script>
-
-</body>
-
-</html>
-```
