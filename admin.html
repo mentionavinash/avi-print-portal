@@ -31,6 +31,10 @@ body{
     color:#111827;
 }
 
+/* =========================
+   NAVBAR
+========================= */
+
 .navbar{
     height:72px;
     background:#fff;
@@ -99,11 +103,19 @@ body{
     background:#f3f4f6;
 }
 
+/* =========================
+   PAGE
+========================= */
+
 .admin-page{
     width:min(1400px,94%);
     margin:auto;
     padding:35px 0 60px;
 }
+
+/* =========================
+   HEADER
+========================= */
 
 .page-header{
     display:flex;
@@ -135,6 +147,10 @@ body{
     letter-spacing:1px;
 }
 
+/* =========================
+   STATS
+========================= */
+
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -161,6 +177,10 @@ body{
     font-size:25px;
 }
 
+/* =========================
+   CARD
+========================= */
+
 .card{
     background:#fff;
     border:1px solid #e5e7eb;
@@ -168,6 +188,10 @@ body{
     overflow:hidden;
     box-shadow:0 8px 25px rgba(15,23,42,.04);
 }
+
+/* =========================
+   TOOLBAR
+========================= */
 
 .toolbar{
     padding:18px;
@@ -206,6 +230,14 @@ body{
     font-weight:700;
     cursor:pointer;
 }
+
+.refresh-btn:hover{
+    background:#dbeafe;
+}
+
+/* =========================
+   TABLE
+========================= */
 
 .table-wrapper{
     width:100%;
@@ -270,6 +302,10 @@ body{
     font-weight:800;
 }
 
+/* =========================
+   STATUS
+========================= */
+
 .status-select{
     height:36px;
     border:1px solid #d1d5db;
@@ -301,6 +337,10 @@ body{
     background:#fee2e2;
 }
 
+/* =========================
+   VIEW BUTTON
+========================= */
+
 .view-btn{
     border:1px solid #dbeafe;
     background:#eff6ff;
@@ -311,6 +351,14 @@ body{
     font-size:10px;
     font-weight:700;
 }
+
+.view-btn:hover{
+    background:#dbeafe;
+}
+
+/* =========================
+   LOADING / EMPTY / ERROR
+========================= */
 
 .loading,
 .empty{
@@ -334,6 +382,10 @@ body{
     display:none !important;
 }
 
+/* =========================
+   MODAL
+========================= */
+
 .modal{
     position:fixed;
     inset:0;
@@ -350,12 +402,13 @@ body{
 }
 
 .modal-card{
-    width:min(560px,100%);
+    width:min(600px,100%);
     max-height:90vh;
     overflow-y:auto;
     background:#fff;
     border-radius:18px;
     padding:25px;
+    box-shadow:0 25px 80px rgba(0,0,0,.2);
 }
 
 .modal-header{
@@ -398,6 +451,52 @@ body{
     word-break:break-word;
 }
 
+/* =========================
+   FILE ACTIONS
+========================= */
+
+.file-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #e5e7eb;
+}
+
+.download-btn{
+    border:0;
+    background:#2563eb;
+    color:#fff;
+    padding:11px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+}
+
+.download-btn:hover{
+    background:#1d4ed8;
+}
+
+.download-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.no-file{
+    padding:12px;
+    border-radius:9px;
+    background:#fef2f2;
+    border:1px solid #fecaca;
+    color:#b91c1c;
+    font-size:12px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:900px){
 
     .stats{
@@ -418,6 +517,10 @@ body{
         align-items:flex-start;
     }
 
+    .page-header h1{
+        font-size:25px;
+    }
+
     .stats{
         grid-template-columns:1fr 1fr;
     }
@@ -435,15 +538,27 @@ body{
         width:100%;
     }
 
+    .modal-card{
+        padding:20px;
+    }
+
+    .modal-row{
+        flex-direction:column;
+        gap:5px;
+    }
+
+    .modal-row strong{
+        max-width:100%;
+        text-align:left;
+    }
+
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <header class="navbar">
 
@@ -480,7 +595,6 @@ Logout
 
 
 <main class="admin-page">
-
 
 <div class="page-header">
 
@@ -525,7 +639,6 @@ Total Orders
 
 </div>
 
-
 <div class="stat-card">
 
 <span>
@@ -538,7 +651,6 @@ Pending
 
 </div>
 
-
 <div class="stat-card">
 
 <span>
@@ -550,7 +662,6 @@ Processing
 </strong>
 
 </div>
-
 
 <div class="stat-card">
 
@@ -569,7 +680,6 @@ Completed
 
 <div class="card">
 
-
 <div class="toolbar">
 
 <div class="search-box">
@@ -580,7 +690,6 @@ id="searchInput"
 placeholder="Search order, customer, email or service...">
 
 </div>
-
 
 <button
 type="button"
@@ -672,6 +781,10 @@ Action
 </main>
 
 
+<!-- =========================
+     ORDER MODAL
+========================= -->
+
 <div
 class="modal"
 id="orderModal">
@@ -711,6 +824,22 @@ id="closeModal">
 
 const ADMIN_EMAIL =
 "aviinformatics@gmail.com";
+
+
+/*
+ IMPORTANT:
+
+Apne Supabase Storage bucket ka naam
+yahan rakho.
+
+Example:
+
+const STORAGE_BUCKET = "orders";
+
+*/
+
+const STORAGE_BUCKET =
+"orders";
 
 
 /* =========================================
@@ -799,14 +928,17 @@ try{
 const result =
 await supabaseClient.auth.getSession();
 
+
 if(result.error){
 
 throw result.error;
 
 }
 
+
 const session =
 result.data.session;
+
 
 if(
 !session ||
@@ -820,6 +952,7 @@ window.location.replace(
 return false;
 
 }
+
 
 const email =
 String(
@@ -848,9 +981,11 @@ return false;
 
 }
 
+
 adminEmail.textContent =
 "Logged in as Admin: " +
 session.user.email;
+
 
 return true;
 
@@ -903,17 +1038,11 @@ try{
 /*
  IMPORTANT:
 
-Database me user_email naam ka
-column nahi hai.
+RPC get_admin_orders() se orders
+load honge.
 
-Actual columns:
-
-customer_email
-customer_name
-
-Aur get_admin_orders()
-function already database me available hai.
-
+Ye user_email ko directly query nahi
+kar raha.
 */
 
 const result =
@@ -965,9 +1094,7 @@ loading.classList.add(
 );
 
 errorBox.innerHTML =
-
 "Unable to load orders.<br><br>" +
-
 escapeHTML(
 error.message ||
 "Unknown error"
@@ -978,11 +1105,6 @@ errorBox.classList.remove(
 );
 
 }
-
-
-/*
- END LOAD ORDERS
-*/
 
 }
 
@@ -1041,7 +1163,7 @@ order.status
 
 
 /* =========================================
-   STATUS NORMALIZE
+   NORMALIZE STATUS
 ========================================= */
 
 function normalizeStatus(
@@ -1066,6 +1188,7 @@ value === "cancelled"
 return value;
 
 }
+
 
 return "pending";
 
@@ -1120,7 +1243,10 @@ order.order_number ||
 (
 order.id
 ?
-order.id.substring(0,8)
+order.id.substring(
+0,
+8
+)
 :
 "-"
 );
@@ -1171,7 +1297,9 @@ row.innerHTML = `
 
 <span class="order-number">
 
-#${escapeHTML(orderNumber)}
+#${escapeHTML(
+orderNumber
+)}
 
 </span>
 
@@ -1182,7 +1310,9 @@ row.innerHTML = `
 
 <div class="customer-name">
 
-${escapeHTML(customerName)}
+${escapeHTML(
+customerName
+)}
 
 </div>
 
@@ -1201,13 +1331,17 @@ customerEmail || "-"
 
 <div class="service-name">
 
-${escapeHTML(service)}
+${escapeHTML(
+service
+)}
 
 </div>
 
 <div class="service-details">
 
-${escapeHTML(details)}
+${escapeHTML(
+details
+)}
 
 </div>
 
@@ -1216,7 +1350,9 @@ ${escapeHTML(details)}
 
 <td>
 
-${escapeHTML(date)}
+${escapeHTML(
+date
+)}
 
 </td>
 
@@ -1236,7 +1372,9 @@ ${escapeHTML(date)}
 
 <select
 class="status-select ${status}"
-data-order-id="${escapeHTML(order.id)}">
+data-order-id="${escapeHTML(
+order.id
+)}">
 
 <option
 value="pending"
@@ -1280,7 +1418,9 @@ Cancelled
 <button
 type="button"
 class="view-btn"
-data-order-id="${escapeHTML(order.id)}">
+data-order-id="${escapeHTML(
+order.id
+)}">
 
 View
 
@@ -1304,7 +1444,9 @@ row
 ========================================= */
 
 ordersBody
-.querySelectorAll(".status-select")
+.querySelectorAll(
+".status-select"
+)
 .forEach(
 function(select){
 
@@ -1340,7 +1482,9 @@ newStatus
 ========================================= */
 
 ordersBody
-.querySelectorAll(".view-btn")
+.querySelectorAll(
+".view-btn"
+)
 .forEach(
 function(button){
 
@@ -1382,7 +1526,7 @@ order
 
 
 /* =========================================
-   UPDATE STATUS
+   UPDATE ORDER STATUS
 ========================================= */
 
 async function updateOrderStatus(
@@ -1431,16 +1575,10 @@ orderId
 );
 
 console.log(
-"Status:",
+"New status:",
 finalStatus
 );
 
-
-/*
- Direct database update.
- Database constraint accepts exactly
- these four lowercase values.
-*/
 
 const result =
 await supabaseClient
@@ -1472,10 +1610,6 @@ result.data
 );
 
 
-/*
- Local update
-*/
-
 const index =
 allOrders.findIndex(
 function(order){
@@ -1499,16 +1633,8 @@ allOrders
 );
 
 
-alert(
-"Order status updated successfully."
-);
-
-
-/*
- Reload from database
-*/
-
 await loadOrders();
+
 
 }
 catch(error){
@@ -1519,6 +1645,7 @@ error
 );
 
 await loadOrders();
+
 
 alert(
 "Failed to update order status: " +
@@ -1607,17 +1734,29 @@ order.status
 
 return (
 
-orderNumber.includes(query) ||
+orderNumber.includes(
+query
+) ||
 
-name.includes(query) ||
+name.includes(
+query
+) ||
 
-email.includes(query) ||
+email.includes(
+query
+) ||
 
-service.includes(query) ||
+service.includes(
+query
+) ||
 
-details.includes(query) ||
+details.includes(
+query
+) ||
 
-status.includes(query)
+status.includes(
+query
+)
 
 );
 
@@ -1662,7 +1801,7 @@ refreshButton.textContent =
 
 
 /* =========================================
-   MODAL
+   SHOW ORDER DETAILS
 ========================================= */
 
 function showOrderDetails(
@@ -1679,6 +1818,56 @@ const amount =
 Number(
 order.amount || 0
 ).toFixed(2);
+
+
+let fileSection = "";
+
+
+/*
+ ========================================
+ FILE DOWNLOAD
+ ========================================
+*/
+
+if(
+order.file_path
+){
+
+fileSection = `
+
+<div class="file-actions">
+
+<button
+type="button"
+class="download-btn"
+id="downloadFileButton">
+
+⬇ Download File
+
+</button>
+
+</div>
+
+`;
+
+}
+else{
+
+fileSection = `
+
+<div class="file-actions">
+
+<div class="no-file">
+
+No file is attached to this order.
+
+</div>
+
+</div>
+
+`;
+
+}
 
 
 modalDetails.innerHTML = `
@@ -1812,7 +2001,9 @@ Status
 </span>
 
 <strong>
-${escapeHTML(status)}
+${escapeHTML(
+status
+)}
 
 </strong>
 
@@ -1866,12 +2057,237 @@ order.file_path ||
 
 </div>
 
+
+${fileSection}
+
 `;
 
 
 orderModal.classList.add(
 "show"
 );
+
+
+/*
+ Attach download event
+*/
+
+const downloadButton =
+document.getElementById(
+"downloadFileButton"
+);
+
+
+if(downloadButton){
+
+downloadButton.addEventListener(
+"click",
+function(){
+
+downloadOrderFile(
+order,
+downloadButton
+);
+
+}
+);
+
+}
+
+}
+
+
+/* =========================================
+   DOWNLOAD ORDER FILE
+========================================= */
+
+async function downloadOrderFile(
+order,
+button
+){
+
+if(
+!order.file_path
+){
+
+alert(
+"No file is attached to this order."
+);
+
+return;
+
+}
+
+
+try{
+
+button.disabled =
+true;
+
+button.textContent =
+"Preparing download...";
+
+
+console.log(
+"Downloading file:",
+order.file_path
+);
+
+
+/*
+ ========================================
+ CREATE SIGNED URL
+ ========================================
+
+Private bucket ke liye signed URL
+use kiya ja raha hai.
+
+*/
+
+const result =
+await supabaseClient
+.storage
+.from(
+STORAGE_BUCKET
+)
+.createSignedUrl(
+order.file_path,
+60
+);
+
+
+if(result.error){
+
+throw result.error;
+
+}
+
+
+const signedUrl =
+result.data?.signedUrl;
+
+
+if(!signedUrl){
+
+throw new Error(
+"Could not create file download URL."
+);
+
+}
+
+
+/*
+ ========================================
+ FORCE DOWNLOAD
+ ========================================
+*/
+
+const response =
+await fetch(
+signedUrl
+);
+
+
+if(!response.ok){
+
+throw new Error(
+"Could not access the file."
+);
+
+}
+
+
+const blob =
+await response.blob();
+
+
+const blobUrl =
+window.URL.createObjectURL(
+blob
+);
+
+
+const link =
+document.createElement("a");
+
+
+link.href =
+blobUrl;
+
+
+link.download =
+order.file_name ||
+"aviprint-order-file";
+
+
+document.body.appendChild(
+link
+);
+
+
+link.click();
+
+
+link.remove();
+
+
+window.URL.revokeObjectURL(
+blobUrl
+);
+
+
+button.textContent =
+"✓ Downloaded";
+
+
+setTimeout(
+function(){
+
+if(
+document.body.contains(
+button
+)
+){
+
+button.textContent =
+"⬇ Download File";
+
+button.disabled =
+false;
+
+}
+
+},
+1500
+);
+
+
+}
+catch(error){
+
+console.error(
+"FILE DOWNLOAD ERROR:",
+error
+);
+
+
+button.disabled =
+false;
+
+button.textContent =
+"⬇ Download File";
+
+
+alert(
+"File download failed:\n\n" +
+(
+error.message ||
+"Unknown error"
+) +
+"\n\nCheck Supabase Storage bucket and file path."
+);
+
+}
 
 }
 
@@ -1916,7 +2332,8 @@ document.addEventListener(
 function(event){
 
 if(
-event.key === "Escape"
+event.key ===
+"Escape"
 ){
 
 orderModal.classList.remove(
@@ -1947,7 +2364,9 @@ logoutButton.textContent =
 try{
 
 const result =
-await supabaseClient.auth.signOut();
+await supabaseClient
+.auth
+.signOut();
 
 
 if(result.error){
@@ -2000,7 +2419,9 @@ return "-";
 
 
 const date =
-new Date(value);
+new Date(
+value
+);
 
 
 if(
