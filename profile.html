@@ -20,22 +20,112 @@
 
 <script src="config.js"></script>
 
+
 <style>
 
-/* =========================
-   PAGE
-========================= */
-
-.profile-page{
-    min-height:calc(100vh - 80px);
-    background:#f4f6f9;
-    padding:40px 20px;
+*{
+    box-sizing:border-box;
 }
 
+body{
+    background:#f4f6f9;
+}
+
+
+/* =========================
+   PROFILE CONTAINER
+========================= */
+
 .profile-container{
-    width:100%;
+
+    width:94%;
     max-width:850px;
-    margin:0 auto;
+
+    margin:40px auto;
+
+}
+
+
+/* =========================
+   TOP ACTIONS
+========================= */
+
+.profile-actions{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.dashboard-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    background:#2563eb;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:10px 16px;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    border:0;
+
+}
+
+
+.dashboard-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+.logout-btn{
+
+    background:#ef4444;
+
+    color:white;
+
+    border:0;
+
+    padding:10px 16px;
+
+    border-radius:8px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+.logout-btn:hover{
+
+    background:#dc2626;
+
 }
 
 
@@ -44,162 +134,29 @@
 ========================= */
 
 .profile-title{
-    margin-bottom:25px;
+
+    margin-bottom:20px;
+
 }
+
 
 .profile-title h1{
-    margin:0 0 8px;
-    color:#111827;
+
+    margin:0 0 6px 0;
+
+    font-size:28px;
+
 }
+
 
 .profile-title p{
+
     margin:0;
+
     color:#6b7280;
-}
 
-
-/* =========================
-   CARD
-========================= */
-
-.profile-card{
-    background:#ffffff;
-    border-radius:16px;
-    padding:30px;
-    box-shadow:0 4px 20px rgba(0,0,0,.08);
-}
-
-
-/* =========================
-   TOP
-========================= */
-
-.profile-top{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    margin-bottom:30px;
-    padding-bottom:25px;
-    border-bottom:1px solid #e5e7eb;
-}
-
-
-/* =========================
-   AVATAR
-========================= */
-
-.profile-avatar{
-    width:82px;
-    height:82px;
-    min-width:82px;
-    border-radius:50%;
-    background:#2563eb;
-    color:#ffffff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:32px;
-    font-weight:bold;
-}
-
-.profile-user-info h2{
-    margin:0 0 5px;
-    font-size:20px;
-    color:#111827;
-}
-
-.profile-user-info p{
-    margin:0;
-    color:#6b7280;
-    font-size:13px;
-}
-
-
-/* =========================
-   FORM
-========================= */
-
-.form-group{
-    margin-bottom:20px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:7px;
-    color:#374151;
     font-size:14px;
-    font-weight:700;
-}
 
-.form-group input{
-    width:100%;
-    height:46px;
-    padding:0 13px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    background:#ffffff;
-    color:#111827;
-    font-size:14px;
-    outline:none;
-}
-
-.form-group input:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.10);
-}
-
-.form-group input:disabled{
-    background:#f3f4f6;
-    color:#6b7280;
-    cursor:not-allowed;
-}
-
-
-/* =========================
-   BUTTONS
-========================= */
-
-.profile-actions{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-    margin-top:25px;
-}
-
-.save-btn{
-    border:0;
-    background:#2563eb;
-    color:white;
-    padding:12px 22px;
-    border-radius:8px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.save-btn:hover{
-    background:#1d4ed8;
-}
-
-.save-btn:disabled{
-    opacity:.6;
-    cursor:wait;
-}
-
-.dashboard-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:12px 20px;
-    border-radius:8px;
-    background:#f3f4f6;
-    color:#374151;
-    text-decoration:none;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.dashboard-btn:hover{
-    background:#e5e7eb;
 }
 
 
@@ -208,21 +165,262 @@
 ========================= */
 
 .message{
+
     display:none;
-    padding:13px 15px;
+
+    padding:13px 16px;
+
     border-radius:8px;
-    margin-bottom:20px;
+
+    margin-bottom:18px;
+
     font-size:14px;
+
+    font-weight:600;
+
 }
+
 
 .success{
+
     background:#dcfce7;
+
     color:#166534;
+
 }
 
+
 .error{
+
     background:#fee2e2;
+
     color:#991b1b;
+
+}
+
+
+/* =========================
+   PROFILE CARD
+========================= */
+
+.profile-card{
+
+    background:#ffffff;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+
+}
+
+
+/* =========================
+   AVATAR
+========================= */
+
+.profile-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:30px;
+
+    padding-bottom:25px;
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+
+.profile-avatar{
+
+    width:80px;
+
+    height:80px;
+
+    min-width:80px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+}
+
+
+.profile-user-info h2{
+
+    margin:0 0 5px 0;
+
+    font-size:20px;
+
+}
+
+
+.profile-user-info p{
+
+    margin:0;
+
+    color:#6b7280;
+
+    font-size:13px;
+
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+
+    margin-bottom:20px;
+
+}
+
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+
+.form-group input{
+
+    width:100%;
+
+    height:46px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:8px;
+
+    padding:0 13px;
+
+    font-size:14px;
+
+    background:white;
+
+}
+
+
+.form-group input:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.1);
+
+}
+
+
+.form-group input:disabled{
+
+    background:#f3f4f6;
+
+    color:#6b7280;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.save-btn{
+
+    width:100%;
+
+    height:48px;
+
+    background:#2563eb;
+
+    color:white;
+
+    border:0;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+.save-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+.save-btn:disabled{
+
+    opacity:.6;
+
+    cursor:wait;
+
+}
+
+
+/* =========================
+   FOOTER BACK
+========================= */
+
+.back-dashboard{
+
+    display:block;
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    font-size:14px;
+
+}
+
+
+.back-dashboard:hover{
+
+    text-decoration:underline;
+
 }
 
 
@@ -230,38 +428,14 @@
    LOADING
 ========================= */
 
-.profile-loading{
+.loading-box{
+
     text-align:center;
-    padding:60px 20px;
+
+    padding:30px;
+
     color:#6b7280;
-}
 
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.profile-nav{
-    display:flex;
-    align-items:center;
-    gap:25px;
-    flex-wrap:wrap;
-}
-
-.profile-nav a{
-    text-decoration:none;
-    color:#374151;
-    font-weight:600;
-    font-size:14px;
-    cursor:pointer;
-}
-
-.profile-nav a:hover{
-    color:#2563eb;
-}
-
-.profile-nav a.active{
-    color:#2563eb;
 }
 
 
@@ -269,33 +443,54 @@
    MOBILE
 ========================= */
 
-@media(max-width:700px){
+@media(max-width:600px){
 
-    .profile-page{
-        padding:25px 15px;
+    .profile-container{
+
+        width:92%;
+
+        margin:25px auto;
+
     }
+
 
     .profile-card{
-        padding:22px;
+
+        padding:20px;
+
     }
+
 
     .profile-top{
+
         align-items:flex-start;
+
     }
 
-    .profile-avatar{
-        width:65px;
-        height:65px;
-        min-width:65px;
-        font-size:25px;
+
+    .profile-title h1{
+
+        font-size:24px;
+
     }
 
-    .profile-user-info h2{
-        font-size:17px;
+
+    .profile-actions{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
     }
 
-    .profile-nav{
-        gap:12px;
+
+    .dashboard-btn,
+    .logout-btn{
+
+        justify-content:center;
+
+        width:100%;
+
     }
 
 }
@@ -308,69 +503,47 @@
 <body>
 
 
-<!-- =====================================================
+<!-- =========================
      NAVBAR
-===================================================== -->
+========================= -->
 
 <header class="navbar">
 
 <div class="container nav-container">
 
 
-<!-- LOGO -->
+<a href="dashboard.html"
+   class="logo">
 
-<a
-    href="./dashboard.html"
-    class="logo">
+<span class="logo-icon">
+A
+</span>
 
-    <span class="logo-icon">
-        A
-    </span>
-
-    <span>
-        Avi<span>Print</span>
-    </span>
+<span>
+Avi<span>Print</span>
+</span>
 
 </a>
 
 
-<!-- NAVIGATION -->
+<nav class="nav-menu">
 
-<nav class="profile-nav">
-
-
-<a
-    href="./dashboard.html">
-
-    Dashboard
-
+<a href="dashboard.html">
+Dashboard
 </a>
 
-
-<a
-    href="./services.html">
-
-    Services
-
+<a href="services.html">
+Services
 </a>
 
-
-<a
-    href="./orders.html">
-
-    My Orders
-
+<a href="orders.html">
+My Orders
 </a>
 
-
-<a
-    href="./profile.html"
-    class="active">
-
-    Profile
-
+<a href="profile.html"
+   style="color:#2563eb;">
+Profile
 </a>
-
 
 </nav>
 
@@ -381,14 +554,40 @@
 
 
 
-<!-- =====================================================
-     PROFILE PAGE
-===================================================== -->
+<!-- =========================
+     PROFILE
+========================= -->
 
-<main class="profile-page">
+<main class="profile-container">
 
 
-<div class="profile-container">
+<!-- ACTION BUTTONS -->
+
+<div class="profile-actions">
+
+
+<button
+type="button"
+class="dashboard-btn"
+id="dashboardButton">
+
+← Dashboard
+
+</button>
+
+
+<button
+type="button"
+class="logout-btn"
+id="logoutButton">
+
+Logout
+
+</button>
+
+
+</div>
+
 
 
 <!-- TITLE -->
@@ -396,11 +595,11 @@
 <div class="profile-title">
 
 <h1>
-    👤 My Profile
+👤 My Profile
 </h1>
 
 <p>
-    Manage your AviPrint account information.
+Manage your AviPrint account information.
 </p>
 
 </div>
@@ -410,8 +609,8 @@
 <!-- SUCCESS -->
 
 <div
-    id="successMessage"
-    class="message success">
+id="successMessage"
+class="message success">
 </div>
 
 
@@ -419,20 +618,15 @@
 <!-- ERROR -->
 
 <div
-    id="errorMessage"
-    class="message error">
+id="errorMessage"
+class="message error">
 </div>
 
 
 
-<!-- =====================================================
-     PROFILE CARD
-===================================================== -->
+<!-- PROFILE CARD -->
 
-<div
-    id="profileCard"
-    class="profile-card"
-    style="display:none;">
+<div class="profile-card">
 
 
 <!-- PROFILE TOP -->
@@ -441,27 +635,22 @@
 
 
 <div
-    id="avatar"
-    class="profile-avatar">
+id="avatar"
+class="profile-avatar">
 
-    A
+A
 
 </div>
 
 
 <div class="profile-user-info">
 
-<h2 id="profileName">
-
-    Customer
-
+<h2 id="displayName">
+Loading...
 </h2>
 
-
-<p id="profileEmailText">
-
-    Loading...
-
+<p id="displayEmail">
+Loading account...
 </p>
 
 </div>
@@ -471,31 +660,25 @@
 
 
 
-<!-- =====================================================
-     FORM
-===================================================== -->
+<!-- FORM -->
 
-<form
-    id="profileForm">
+<form id="profileForm">
 
 
-<!-- NAME -->
+<!-- FULL NAME -->
 
 <div class="form-group">
 
 <label for="fullName">
-
-    Full Name
-
+Full Name
 </label>
 
-
 <input
-    type="text"
-    id="fullName"
-    placeholder="Enter your full name"
-    autocomplete="name"
-    required>
+type="text"
+id="fullName"
+placeholder="Enter your full name"
+autocomplete="name"
+required>
 
 </div>
 
@@ -506,19 +689,16 @@
 <div class="form-group">
 
 <label for="mobile">
-
-    Mobile Number
-
+Mobile Number
 </label>
 
-
 <input
-    type="tel"
-    id="mobile"
-    maxlength="10"
-    placeholder="Enter 10-digit mobile number"
-    inputmode="numeric"
-    autocomplete="tel">
+type="tel"
+id="mobile"
+placeholder="Enter your 10-digit mobile number"
+maxlength="10"
+inputmode="numeric"
+autocomplete="tel">
 
 </div>
 
@@ -529,16 +709,13 @@
 <div class="form-group">
 
 <label for="email">
-
-    Email Address
-
+Email Address
 </label>
 
-
 <input
-    type="email"
-    id="email"
-    disabled>
+type="email"
+id="email"
+disabled>
 
 </div>
 
@@ -549,47 +726,28 @@
 <div class="form-group">
 
 <label for="role">
-
-    Account Role
-
+Account Role
 </label>
 
-
 <input
-    type="text"
-    id="role"
-    disabled>
+type="text"
+id="role"
+disabled>
 
 </div>
 
 
 
-<!-- ACTIONS -->
-
-<div class="profile-actions">
-
+<!-- SAVE -->
 
 <button
-    type="submit"
-    id="saveButton"
-    class="save-btn">
+type="submit"
+class="save-btn"
+id="saveButton">
 
-    Save Changes
+Save Changes
 
 </button>
-
-
-
-<a
-    href="./dashboard.html"
-    class="dashboard-btn">
-
-    ← Back to Dashboard
-
-</a>
-
-
-</div>
 
 
 </form>
@@ -599,749 +757,877 @@
 
 
 
-<!-- =====================================================
-     LOADING
-===================================================== -->
+<!-- BACK -->
 
-<div
-    id="loadingBox"
-    class="profile-loading">
+<a
+href="dashboard.html"
+class="back-dashboard">
 
-    Loading your profile...
+← Back to Dashboard
 
-</div>
+</a>
 
-
-</div>
 
 </main>
 
 
 
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
 <script>
+
+
+/* =========================================================
+   AVIPrint PROFILE
+========================================================= */
+
 
 document.addEventListener(
 "DOMContentLoaded",
 async function(){
 
-    console.log(
-        "AviPrint Profile Loaded"
-    );
 
+console.log(
+"=============================="
+);
 
-    /* ==========================================
-       SUPABASE CHECK
-    ========================================== */
+console.log(
+"AVIPrint PROFILE PAGE"
+);
 
-    if(
-        typeof window.supabase === "undefined"
-    ){
+console.log(
+"=============================="
+);
 
-        showError(
-            "Supabase library could not be loaded."
-        );
 
-        return;
 
-    }
+/* =========================================================
+   SUPABASE CHECK
+========================================================= */
 
+if(
+typeof window.supabase === "undefined"
+){
 
-    if(
-        typeof supabaseClient === "undefined" ||
-        !supabaseClient
-    ){
+showError(
+"Supabase library failed to load."
+);
 
-        showError(
-            "Supabase configuration could not be loaded. Check config.js."
-        );
+return;
 
-        return;
+}
 
-    }
 
+if(
+typeof supabaseClient === "undefined" ||
+!supabaseClient
+){
 
+showError(
+"Supabase configuration not loaded. Check config.js."
+);
 
-    /* ==========================================
-       ELEMENTS
-    ========================================== */
+return;
 
-    const profileCard =
-        document.getElementById(
-            "profileCard"
-        );
+}
 
 
-    const loadingBox =
-        document.getElementById(
-            "loadingBox"
-        );
 
+/* =========================================================
+   BUTTONS
+========================================================= */
 
-    const profileForm =
-        document.getElementById(
-            "profileForm"
-        );
+const dashboardButton =
+document.getElementById(
+"dashboardButton"
+);
 
 
-    const fullNameInput =
-        document.getElementById(
-            "fullName"
-        );
+const logoutButton =
+document.getElementById(
+"logoutButton"
+);
 
 
-    const mobileInput =
-        document.getElementById(
-            "mobile"
-        );
+const profileForm =
+document.getElementById(
+"profileForm"
+);
 
 
-    const emailInput =
-        document.getElementById(
-            "email"
-        );
+const saveButton =
+document.getElementById(
+"saveButton"
+);
 
 
-    const roleInput =
-        document.getElementById(
-            "role"
-        );
 
+/* =========================================================
+   DASHBOARD BUTTON
+========================================================= */
 
-    const avatar =
-        document.getElementById(
-            "avatar"
-        );
+dashboardButton.addEventListener(
+"click",
+function(){
 
+console.log(
+"Dashboard button clicked"
+);
 
-    const profileName =
-        document.getElementById(
-            "profileName"
-        );
 
+/*
+   IMPORTANT:
+   Direct navigation.
+*/
 
-    const profileEmailText =
-        document.getElementById(
-            "profileEmailText"
-        );
+window.location.assign(
+"dashboard.html"
+);
 
+}
+);
 
-    const saveButton =
-        document.getElementById(
-            "saveButton"
-        );
 
 
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-    /* ==========================================
-       VARIABLES
-    ========================================== */
+logoutButton.addEventListener(
+"click",
+async function(){
 
-    let currentUser = null;
+logoutButton.disabled =
+true;
 
-    let currentProfile = null;
+logoutButton.textContent =
+"Logging out...";
 
 
+try{
 
-    /* ==========================================
-       GET SESSION
-    ========================================== */
+const {
+error
+} =
+await supabaseClient
+.auth
+.signOut();
 
-    try{
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-            .auth
-            .getSession();
+if(error){
 
+throw error;
 
-        if(error){
+}
 
-            throw error;
 
-        }
+window.location.replace(
+"login.html"
+);
 
+}
 
-        const session =
-            data.session;
+catch(error){
 
+console.error(
+"Logout error:",
+error
+);
 
-        /* ======================================
-           NOT LOGGED IN
-        ====================================== */
+alert(
+"Logout failed. Please try again."
+);
 
-        if(
-            !session ||
-            !session.user
-        ){
+logoutButton.disabled =
+false;
 
-            window.location.replace(
-                "./login.html"
-            );
+logoutButton.textContent =
+"Logout";
 
-            return;
+}
 
-        }
+}
+);
 
 
-        currentUser =
-            session.user;
 
+/* =========================================================
+   GET SESSION
+========================================================= */
 
-        console.log(
-            "Logged in user:",
-            currentUser.id
-        );
+let currentUser =
+null;
 
+let currentProfile =
+null;
 
-        const userId =
-            currentUser.id;
 
+try{
 
-        const userEmail =
-            currentUser.email || "";
 
+const {
+data,
+error
+} =
+await supabaseClient
+.auth
+.getSession();
 
 
-        /* ======================================
-           AUTH METADATA
-        ====================================== */
+if(error){
 
-        const metadata =
-            currentUser.user_metadata || {};
+throw error;
 
+}
 
-        let authName =
-            metadata.full_name || "";
 
+const session =
+data.session;
 
-        let authMobile =
-            metadata.mobile || "";
 
+console.log(
+"Current session:",
+session
+);
 
 
-        /* ======================================
-           LOAD PROFILE
-        ====================================== */
 
-        const {
-            data:profileData,
-            error:profileError
-        } =
-        await supabaseClient
-            .from("profiles")
-            .select(
-                "id,email,full_name,mobile,role,created_at"
-            )
-            .eq(
-                "id",
-                userId
-            )
-            .maybeSingle();
+/*
+   NO SESSION
+*/
 
+if(
+!session ||
+!session.user
+){
 
-        console.log(
-            "Profile data:",
-            profileData
-        );
+console.log(
+"No active session. Redirecting to login."
+);
 
 
-        if(profileError){
+window.location.replace(
+"login.html"
+);
 
-            console.warn(
-                "Profile read warning:",
-                profileError
-            );
+return;
 
-        }
+}
 
 
-        currentProfile =
-            profileData || null;
 
+currentUser =
+session.user;
 
 
-        /* ======================================
-           NAME
-        ====================================== */
 
-        let finalName = "";
+console.log(
+"Logged in user:",
+currentUser
+);
 
 
-        if(
-            currentProfile &&
-            currentProfile.full_name
-        ){
 
-            finalName =
-                currentProfile.full_name;
+/* =========================================================
+   USER EMAIL
+========================================================= */
 
-        }
+const userEmail =
+currentUser.email ||
+"";
 
-        else if(authName){
 
-            finalName =
-                authName;
+document.getElementById(
+"email"
+).value =
+userEmail;
 
-        }
 
-        else{
+document.getElementById(
+"displayEmail"
+).textContent =
+userEmail;
 
-            finalName =
-                userEmail.split("@")[0];
 
-        }
 
+/* =========================================================
+   GET AUTH METADATA
+========================================================= */
 
+let userName =
+currentUser.user_metadata?.full_name ||
+"";
 
-        /* ======================================
-           MOBILE
-        ====================================== */
 
-        let finalMobile = "";
+let userMobile =
+currentUser.user_metadata?.mobile ||
+"";
 
 
-        if(
-            currentProfile &&
-            currentProfile.mobile
-        ){
 
-            finalMobile =
-                currentProfile.mobile;
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
 
-        }
+const profileResult =
+await supabaseClient
+.from("profiles")
+.select(
+"id,email,full_name,mobile,role,created_at"
+)
+.eq(
+"id",
+currentUser.id
+)
+.maybeSingle();
 
-        else if(authMobile){
 
-            finalMobile =
-                authMobile;
+console.log(
+"Profile query result:",
+profileResult
+);
 
-        }
 
 
+if(
+profileResult.error
+){
 
-        /* ======================================
-           ROLE
-        ====================================== */
+console.warn(
+"Could not read profile:",
+profileResult.error
+);
 
-        const finalRole =
-            currentProfile &&
-            currentProfile.role
-            ? currentProfile.role
-            : "customer";
+}
 
 
+currentProfile =
+profileResult.data;
 
-        /* ======================================
-           DISPLAY
-        ====================================== */
 
-        fullNameInput.value =
-            finalName;
 
+/* =========================================================
+   PROFILE PRIORITY
+========================================================= */
 
-        mobileInput.value =
-            finalMobile;
+if(
+currentProfile &&
+currentProfile.full_name
+){
 
+userName =
+currentProfile.full_name;
 
-        emailInput.value =
-            userEmail;
+}
 
 
-        roleInput.value =
-            finalRole;
+if(
+currentProfile &&
+currentProfile.mobile
+){
 
+userMobile =
+currentProfile.mobile;
 
-        profileName.textContent =
-            finalName;
+}
 
 
-        profileEmailText.textContent =
-            userEmail;
 
+/* =========================================================
+   FALLBACK NAME
+========================================================= */
 
-        avatar.textContent =
-            finalName
-                .charAt(0)
-                .toUpperCase();
+if(!userName){
 
+userName =
+userEmail
+.split("@")[0];
 
+}
 
-        /* ======================================
-           SHOW
-        ====================================== */
 
-        loadingBox.style.display =
-            "none";
 
+/* =========================================================
+   ROLE
+========================================================= */
 
-        profileCard.style.display =
-            "block";
+const userRole =
+currentProfile?.role ||
+"customer";
 
 
 
-    }
+/* =========================================================
+   DISPLAY
+========================================================= */
 
-    catch(error){
+document.getElementById(
+"fullName"
+).value =
+userName;
 
-        console.error(
-            "Profile load error:",
-            error
-        );
 
+document.getElementById(
+"mobile"
+).value =
+userMobile;
 
-        loadingBox.style.display =
-            "none";
 
+document.getElementById(
+"role"
+).value =
+userRole;
 
-        showError(
-            "Unable to load profile: " +
-            (
-                error.message ||
-                "Unknown error"
-            )
-        );
 
+document.getElementById(
+"displayName"
+).textContent =
+userName;
 
-        return;
 
-    }
+document.getElementById(
+"displayEmail"
+).textContent =
+userEmail;
 
 
+document.getElementById(
+"avatar"
+).textContent =
+userName
+.charAt(0)
+.toUpperCase();
 
-    /* ==========================================
-       SAVE PROFILE
-    ========================================== */
 
-    profileForm.addEventListener(
-    "submit",
-    async function(event){
 
-        event.preventDefault();
+/* =========================================================
+   SAVE PROFILE
+========================================================= */
 
+profileForm.addEventListener(
+"submit",
+async function(event){
 
-        if(!currentUser){
+event.preventDefault();
 
-            showError(
-                "Login session not found."
-            );
 
-            return;
+hideMessages();
 
-        }
 
 
-        const newName =
-            fullNameInput.value.trim();
+const newName =
+document.getElementById(
+"fullName"
+)
+.value
+.trim();
 
 
-        const newMobile =
-            mobileInput.value.trim();
+const newMobile =
+document.getElementById(
+"mobile"
+)
+.value
+.trim();
 
 
-        const userEmail =
-            currentUser.email || "";
 
+/* VALIDATE NAME */
 
-        /* ======================================
-           VALIDATION
-        ====================================== */
+if(!newName){
 
-        if(!newName){
+showError(
+"Please enter your full name."
+);
 
-            showError(
-                "Please enter your full name."
-            );
+return;
 
-            return;
+}
 
-        }
 
 
-        if(
-            newMobile &&
-            !/^[0-9]{10}$/.test(
-                newMobile
-            )
-        ){
+/* VALIDATE MOBILE */
 
-            showError(
-                "Please enter a valid 10-digit mobile number."
-            );
+if(
+newMobile &&
+! /^[0-9]{10}$/.test(
+newMobile
+)
+){
 
-            return;
+showError(
+"Please enter a valid 10-digit mobile number."
+);
 
-        }
+return;
 
+}
 
 
-        saveButton.disabled =
-            true;
 
+/* BUTTON */
 
-        saveButton.textContent =
-            "Saving...";
+saveButton.disabled =
+true;
 
+saveButton.textContent =
+"Saving...";
 
-        hideMessages();
 
 
+try{
 
-        try{
 
-            /* ==================================
-               UPDATE AUTH METADATA
-            ================================== */
+/* =====================================================
+   STEP 1
+   UPDATE AUTH METADATA
+===================================================== */
 
-            const authResult =
-                await supabaseClient
-                    .auth
-                    .updateUser({
+const authUpdate =
+await supabaseClient
+.auth
+.updateUser({
 
-                        data:{
+data:{
 
-                            full_name:
-                                newName,
+full_name:
+newName,
 
-                            mobile:
-                                newMobile
+mobile:
+newMobile
 
-                        }
+}
 
-                    });
+});
 
 
-            if(authResult.error){
+if(
+authUpdate.error
+){
 
-                throw authResult.error;
+throw authUpdate.error;
 
-            }
+}
 
 
 
-            /* ==================================
-               PROFILE DATA
-            ================================== */
+/* =====================================================
+   STEP 2
+   UPDATE EXISTING PROFILE
+===================================================== */
 
-            const profileData = {
+let profileSaveError =
+null;
 
-                id:
-                    currentUser.id,
 
-                email:
-                    userEmail,
 
-                full_name:
-                    newName,
+if(currentProfile){
 
-                mobile:
-                    newMobile,
+console.log(
+"Existing profile found. Updating..."
+);
 
-                role:
-                    currentProfile &&
-                    currentProfile.role
-                    ? currentProfile.role
-                    : "customer"
 
-            };
+const updateResult =
+await supabaseClient
+.from("profiles")
+.update({
 
+email:
+userEmail,
 
+full_name:
+newName,
 
-            /* ==================================
-               UPSERT PROFILE
-            ================================== */
+mobile:
+newMobile
 
-            const profileResult =
-                await supabaseClient
-                    .from("profiles")
-                    .upsert(
-                        profileData,
-                        {
-                            onConflict:"id"
-                        }
-                    )
-                    .select()
-                    .single();
+})
+.eq(
+"id",
+currentUser.id
+);
 
 
-            if(profileResult.error){
 
-                throw profileResult.error;
+if(
+updateResult.error
+){
 
-            }
+profileSaveError =
+updateResult.error;
 
+}
 
-            currentProfile =
-                profileResult.data;
+}
 
 
+/* =====================================================
+   STEP 3
+   IF PROFILE DOES NOT EXIST
+   INSERT IT
+===================================================== */
 
-            /* ==================================
-               UPDATE UI
-            ================================== */
+else{
 
-            profileName.textContent =
-                newName;
+console.log(
+"No profile found. Creating profile..."
+);
 
 
-            profileEmailText.textContent =
-                userEmail;
+const insertResult =
+await supabaseClient
+.from("profiles")
+.insert({
 
+id:
+currentUser.id,
 
-            avatar.textContent =
-                newName
-                    .charAt(0)
-                    .toUpperCase();
+email:
+userEmail,
 
+full_name:
+newName,
 
+mobile:
+newMobile,
 
-            showSuccess(
-                "Profile updated successfully."
-            );
+role:
+"customer"
 
+});
 
 
-        }
+if(
+insertResult.error
+){
 
-        catch(error){
+profileSaveError =
+insertResult.error;
 
-            console.error(
-                "Profile save error:",
-                error
-            );
+}
 
+}
 
-            showError(
-                "Profile update failed: " +
-                (
-                    error.message ||
-                    "Unable to save profile."
-                )
-            );
 
-        }
 
+/* =====================================================
+   PROFILE ERROR
+===================================================== */
 
-        finally{
+if(
+profileSaveError
+){
 
-            saveButton.disabled =
-                false;
+console.error(
+"Profile database error:",
+profileSaveError
+);
 
 
-            saveButton.textContent =
-                "Save Changes";
+/*
+   Auth metadata has already been updated.
+*/
 
-        }
+throw profileSaveError;
 
-    });
+}
+
+
+
+/* =====================================================
+   UPDATE UI
+===================================================== */
+
+document.getElementById(
+"displayName"
+).textContent =
+newName;
+
+
+document.getElementById(
+"avatar"
+).textContent =
+newName
+.charAt(0)
+.toUpperCase();
+
+
+currentProfile = {
+
+id:
+currentUser.id,
+
+email:
+userEmail,
+
+full_name:
+newName,
+
+mobile:
+newMobile,
+
+role:
+currentProfile?.role ||
+"customer"
+
+};
+
+
+
+/* =====================================================
+   SUCCESS
+===================================================== */
+
+showSuccess(
+"Profile updated successfully."
+);
+
+
+console.log(
+"Profile update successful."
+);
+
+
+}
+
+catch(error){
+
+console.error(
+"PROFILE UPDATE ERROR:",
+error
+);
+
+
+showError(
+"Profile update failed: " +
+(
+error.message ||
+"Unknown error"
+)
+);
+
+}
+
+
+finally{
+
+saveButton.disabled =
+false;
+
+saveButton.textContent =
+"Save Changes";
+
+}
+
+}
+);
+
+
+}
+
+catch(error){
+
+console.error(
+"PROFILE PAGE ERROR:",
+error
+);
+
+
+showError(
+"Unable to load profile: " +
+(
+error.message ||
+"Unknown error"
+)
+);
+
+}
+
 
 
 });
 
 
 
-/* =================================================
-   SUCCESS
-================================================= */
+/* =========================================================
+   SUCCESS MESSAGE
+========================================================= */
 
-function showSuccess(message){
+function showSuccess(
+message
+){
 
-    const success =
-        document.getElementById(
-            "successMessage"
-        );
-
-
-    const error =
-        document.getElementById(
-            "errorMessage"
-        );
+const box =
+document.getElementById(
+"successMessage"
+);
 
 
-    error.style.display =
-        "none";
+box.textContent =
+message;
 
 
-    success.textContent =
-        message;
+box.style.display =
+"block";
 
 
-    success.style.display =
-        "block";
+setTimeout(
+function(){
 
+box.style.display =
+"none";
 
-
-    setTimeout(
-        function(){
-
-            success.style.display =
-                "none";
-
-        },
-        5000
-    );
+},
+5000
+);
 
 }
 
 
 
-/* =================================================
-   ERROR
-================================================= */
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
 
-function showError(message){
+function showError(
+message
+){
 
-    const success =
-        document.getElementById(
-            "successMessage"
-        );
-
-
-    const error =
-        document.getElementById(
-            "errorMessage"
-        );
+const box =
+document.getElementById(
+"errorMessage"
+);
 
 
-    success.style.display =
-        "none";
+box.textContent =
+message;
 
 
-    error.textContent =
-        message;
-
-
-    error.style.display =
-        "block";
+box.style.display =
+"block";
 
 }
 
 
 
-/* =================================================
-   HIDE
-================================================= */
+/* =========================================================
+   HIDE MESSAGES
+========================================================= */
 
 function hideMessages(){
 
-    document.getElementById(
-        "successMessage"
-    ).style.display =
-        "none";
+document.getElementById(
+"successMessage"
+).style.display =
+"none";
 
 
-    document.getElementById(
-        "errorMessage"
-    ).style.display =
-        "none";
+document.getElementById(
+"errorMessage"
+).style.display =
+"none";
 
 }
+
 
 </script>
 
