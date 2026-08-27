@@ -16,10 +16,10 @@
     <link rel="stylesheet"
           href="css/style.css">
 
-    <!-- Supabase Library -->
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- AviPrint Supabase Config -->
+    <!-- AviPrint Config -->
     <script src="config.js"></script>
 
 </head>
@@ -84,7 +84,6 @@
         </div>
 
 
-
         <!-- TITLE -->
 
         <h1 class="auth-title">
@@ -92,12 +91,10 @@
         </h1>
 
 
-
         <p class="auth-subtitle">
             Join AviPrint and manage your
             printing easily.
         </p>
-
 
 
         <!-- REGISTER FORM -->
@@ -124,7 +121,6 @@
             </div>
 
 
-
             <!-- MOBILE -->
 
             <div class="form-group">
@@ -146,7 +142,6 @@
             </div>
 
 
-
             <!-- EMAIL -->
 
             <div class="form-group">
@@ -164,7 +159,6 @@
                     required>
 
             </div>
-
 
 
             <!-- PASSWORD -->
@@ -199,7 +193,6 @@
             </div>
 
 
-
             <!-- CONFIRM PASSWORD -->
 
             <div class="form-group">
@@ -218,7 +211,6 @@
                     required>
 
             </div>
-
 
 
             <!-- TERMS -->
@@ -263,8 +255,7 @@
             </div>
 
 
-
-            <!-- SUBMIT BUTTON -->
+            <!-- SUBMIT -->
 
             <button
                 type="submit"
@@ -283,13 +274,11 @@
         </form>
 
 
-
         <!-- DIVIDER -->
 
         <div class="auth-divider">
             OR
         </div>
-
 
 
         <!-- LOGIN -->
@@ -303,7 +292,6 @@
             </a>
 
         </p>
-
 
 
         <!-- BACK HOME -->
@@ -324,34 +312,43 @@
 
 
 <!-- =========================
-     SUPABASE REGISTRATION
+     REGISTRATION SCRIPT
 ========================= -->
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    const registerForm =
-        document.getElementById("registerForm");
-
-    const registerButton =
-        document.getElementById("registerButton");
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
 
     /* =========================
-       CHECK SUPABASE
+       ELEMENTS
+    ========================= */
+
+    const registerForm =
+        document.getElementById(
+            "registerForm"
+        );
+
+
+    const registerButton =
+        document.getElementById(
+            "registerButton"
+        );
+
+
+    /* =========================
+       SUPABASE CHECK
     ========================= */
 
     if (
-        typeof window.supabase === "undefined"
+        typeof window.supabase ===
+        "undefined"
     ) {
 
         alert(
             "Supabase library could not be loaded."
-        );
-
-        console.error(
-            "Supabase JavaScript library missing."
         );
 
         return;
@@ -360,7 +357,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     if (
-        typeof supabaseClient === "undefined" ||
+        typeof supabaseClient ===
+        "undefined" ||
         !supabaseClient
     ) {
 
@@ -368,18 +366,13 @@ document.addEventListener("DOMContentLoaded", function () {
             "Supabase configuration could not be loaded."
         );
 
-        console.error(
-            "supabaseClient is not available."
-        );
-
         return;
 
     }
 
 
-
     /* =========================
-       REGISTER FORM
+       REGISTER
     ========================= */
 
     registerForm.addEventListener(
@@ -390,41 +383,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             /* =========================
-               FORM VALUES
+               GET VALUES
             ========================= */
 
             const name =
-                document.getElementById("name")
+                document
+                .getElementById("name")
                 .value
                 .trim();
 
 
             const mobile =
-                document.getElementById("mobile")
+                document
+                .getElementById("mobile")
                 .value
                 .trim();
 
 
             const email =
-                document.getElementById("email")
+                document
+                .getElementById("email")
                 .value
-                .trim();
+                .trim()
+                .toLowerCase();
 
 
             const password =
-                document.getElementById("password")
+                document
+                .getElementById("password")
                 .value;
 
 
             const confirmPassword =
-                document.getElementById("confirmPassword")
+                document
+                .getElementById("confirmPassword")
                 .value;
 
 
             const terms =
-                document.getElementById("terms")
+                document
+                .getElementById("terms")
                 .checked;
-
 
 
             /* =========================
@@ -478,7 +477,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             if (
-                password !== confirmPassword
+                password !==
+                confirmPassword
             ) {
 
                 alert(
@@ -501,16 +501,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-
             /* =========================
-               BUTTON LOADING
+               BUTTON
             ========================= */
 
-            registerButton.disabled = true;
+            registerButton.disabled =
+                true;
 
             registerButton.innerHTML =
                 "Creating Account...";
-
 
 
             /* =========================
@@ -523,28 +522,31 @@ document.addEventListener("DOMContentLoaded", function () {
                     data,
                     error
                 } =
-                    await supabaseClient.auth.signUp({
+                await supabaseClient
+                .auth
+                .signUp({
 
-                        email: email,
+                    email:
+                        email,
 
-                        password: password,
+                    password:
+                        password,
 
-                        options: {
+                    options: {
 
-                            data: {
+                        data: {
 
-                                full_name:
-                                    name,
+                            full_name:
+                                name,
 
-                                mobile:
-                                    mobile
-
-                            }
+                            mobile:
+                                mobile
 
                         }
 
-                    });
+                    }
 
+                });
 
 
                 /* =========================
@@ -558,52 +560,76 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
-
                 console.log(
-                    "Registration response:",
+                    "Registration successful:",
                     data
                 );
 
+
+                /* =========================
+                   USER CHECK
+                ========================= */
+
+                if (
+                    !data ||
+                    !data.user
+                ) {
+
+                    throw new Error(
+                        "Account could not be created."
+                    );
+
+                }
+
+
+                /* =========================
+                   PROFILE CHECK
+                   
+                   The database trigger
+                   automatically creates
+                   profiles row.
+                ========================= */
+
+                console.log(
+                    "User ID:",
+                    data.user.id
+                );
+
+
+                console.log(
+                    "Full Name:",
+                    name
+                );
+
+
+                console.log(
+                    "Email:",
+                    email
+                );
 
 
                 /* =========================
                    SUCCESS
                 ========================= */
 
-                if (
-                    data &&
-                    data.user
-                ) {
-
-                    alert(
-                        "Account created successfully! Please check your email to verify your account."
-                    );
+                alert(
+                    "Account created successfully!\n\n" +
+                    "Your name has been saved to your profile.\n\n" +
+                    "Please check your email to verify your account."
+                );
 
 
-                    window.location.href =
-                        "login.html";
+                window.location.href =
+                    "login.html";
 
-                }
-
-                else {
-
-                    alert(
-                        "Registration completed. Please check your email."
-                    );
-
-                }
 
             }
 
 
-            /* =========================
-               CATCH ERROR
-            ========================= */
-
             catch (error) {
 
                 console.error(
-                    "Supabase Registration Error:",
+                    "Registration Error:",
                     error
                 );
 
@@ -612,7 +638,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Registration failed.";
 
 
-                if (error && error.message) {
+                if (
+                    error &&
+                    error.message
+                ) {
 
                     message =
                         error.message;
@@ -627,10 +656,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
-
-            /* =========================
-               RESTORE BUTTON
-            ========================= */
 
             finally {
 
