@@ -4,1592 +4,1791 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="description"
-content="View and manage your AviPrint printing orders.">
-
-<title>My Orders | AviPrint Portal</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-
-<style>
-
-.orders-page{
-    min-height:calc(100vh - 72px);
-    background:#f8fafc;
-    padding:45px 0 70px;
-}
-
-.orders-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:20px;
-    margin-bottom:30px;
-}
-
-.orders-header h1{
-    font-size:36px;
-    margin:10px 0 8px;
-    color:#111827;
-}
-
-.orders-header p{
-    color:#6b7280;
-    font-size:14px;
-}
-
-.orders-toolbar{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:16px;
-    padding:18px;
-    margin-bottom:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-}
-
-.search-box{
-    position:relative;
-    flex:1;
-    max-width:420px;
-}
-
-.search-box span{
-    position:absolute;
-    left:14px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#9ca3af;
-}
-
-.search-box input{
-    width:100%;
-    height:46px;
-    border:1px solid #d1d5db;
-    border-radius:10px;
-    padding:0 15px 0 42px;
-    outline:none;
-    font-size:13px;
-}
-
-.search-box input:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.08);
-}
-
-.order-count{
-    color:#6b7280;
-    font-size:13px;
-}
-
-.orders-card{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 8px 30px rgba(15,23,42,.05);
-}
-
-.orders-table-wrapper{
-    overflow-x:auto;
-}
-
-.orders-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:760px;
-}
-
-.orders-table th{
-    background:#f8fafc;
-    color:#6b7280;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.5px;
-    text-align:left;
-    padding:17px 20px;
-    border-bottom:1px solid #e5e7eb;
-}
-
-.orders-table td{
-    padding:19px 20px;
-    border-bottom:1px solid #f1f5f9;
-    font-size:13px;
-    color:#374151;
-}
-
-.orders-table tbody tr:hover{
-    background:#f8fafc;
-}
-
-.order-id{
-    color:#2563eb;
-    font-weight:700;
-}
-
-.service-name{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.service-icon{
-    width:36px;
-    height:36px;
-    border-radius:9px;
-    background:#eff6ff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:17px;
-}
-
-.service-name strong{
-    display:block;
-    color:#111827;
-    margin-bottom:3px;
-}
-
-.service-name small{
-    color:#9ca3af;
-    font-size:11px;
-}
-
-.status{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:6px 10px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:700;
-}
-
-.status.pending{
-    color:#92400e;
-    background:#fef3c7;
-}
-
-.status.processing{
-    color:#1d4ed8;
-    background:#dbeafe;
-}
-
-.status.completed{
-    color:#166534;
-    background:#dcfce7;
-}
-
-.status.cancelled{
-    color:#991b1b;
-    background:#fee2e2;
-}
-
-.amount{
-    font-weight:700;
-    color:#111827;
-}
-
-.view-btn{
-    border:1px solid #dbeafe;
-    background:#eff6ff;
-    color:#2563eb;
-    padding:7px 12px;
-    border-radius:8px;
-    font-size:11px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.view-btn:hover{
-    background:#dbeafe;
-}
-
-.empty-orders{
-    text-align:center;
-    padding:70px 20px;
-}
-
-.empty-orders.hidden{
-    display:none;
-}
-
-.empty-orders .empty-icon{
-    width:70px;
-    height:70px;
-    border-radius:20px;
-    background:#eff6ff;
-    margin:0 auto 18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
-}
-
-.empty-orders h2{
-    color:#111827;
-    margin-bottom:8px;
-}
-
-.empty-orders p{
-    color:#6b7280;
-    font-size:13px;
-    margin-bottom:22px;
-}
-
-.loading-orders{
-    text-align:center;
-    padding:70px 20px;
-    color:#6b7280;
-}
-
-.loading-orders.hidden{
-    display:none;
-}
-
-.orders-error{
-    text-align:center;
-    padding:50px 20px;
-    color:#b91c1c;
-}
-
-.orders-error.hidden{
-    display:none;
-}
-
-/* MODAL */
-
-.order-modal{
-    position:fixed;
-    inset:0;
-    background:rgba(15,23,42,.55);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:9999;
-}
-
-.order-modal.show{
-    display:flex;
-}
-
-.modal-card{
-    width:min(540px,100%);
-    max-height:90vh;
-    overflow-y:auto;
-    background:white;
-    border-radius:20px;
-    padding:28px;
-    box-shadow:0 25px 80px rgba(0,0,0,.2);
-}
-
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:22px;
-}
-
-.modal-header h2{
-    font-size:21px;
-    color:#111827;
-}
-
-.modal-close{
-    width:34px;
-    height:34px;
-    border:none;
-    border-radius:8px;
-    background:#f3f4f6;
-    cursor:pointer;
-    font-size:18px;
-}
-
-.modal-details{
-    display:flex;
-    flex-direction:column;
-}
-
-.modal-row{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    padding:13px 0;
-    border-bottom:1px solid #f1f5f9;
-    font-size:13px;
-}
-
-.modal-row span{
-    color:#6b7280;
-    flex-shrink:0;
-}
-
-.modal-row strong{
-    color:#111827;
-    text-align:right;
-    max-width:65%;
-    word-break:break-word;
-}
-
-/* ADMIN REMARK */
-
-.remark-box{
-    margin-top:18px;
-    padding:16px;
-    background:#eff6ff;
-    border:1px solid #dbeafe;
-    border-radius:12px;
-}
-
-.remark-title{
-    font-size:11px;
-    font-weight:800;
-    color:#2563eb;
-    text-transform:uppercase;
-    letter-spacing:.5px;
-    margin-bottom:8px;
-}
-
-.remark-text{
-    color:#374151;
-    font-size:13px;
-    line-height:1.6;
-    white-space:pre-wrap;
-    word-break:break-word;
-}
-
-.no-remark{
-    color:#9ca3af;
-    font-size:12px;
-    font-style:italic;
-}
-
-@media(max-width:700px){
-
-    .orders-page{
-        padding:30px 0 50px;
-    }
-
-    .orders-header{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-    .orders-header h1{
-        font-size:29px;
-    }
-
-    .orders-toolbar{
-        align-items:stretch;
-        flex-direction:column;
-    }
-
-    .search-box{
-        max-width:none;
-    }
-
-    .modal-card{
-        padding:22px;
-    }
-
-    .modal-row{
-        flex-direction:column;
-        gap:5px;
-    }
-
-    .modal-row strong{
-        max-width:100%;
-        text-align:left;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="View and manage your AviPrint printing orders.">
+
+    <title>My Orders | AviPrint Portal</title>
+
+    <link rel="stylesheet"
+        href="css/style.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+
+
+    <style>
+
+        /* =========================
+           ORDERS PAGE
+        ========================= */
+
+        .orders-page {
+            min-height: calc(100vh - 72px);
+            background: #f8fafc;
+            padding: 45px 0 70px;
+        }
+
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .orders-header h1 {
+            font-size: 36px;
+            margin: 10px 0 8px;
+            color: #111827;
+        }
+
+        .orders-header p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+
+        /* SEARCH */
+
+        .orders-toolbar {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 420px;
+        }
+
+        .search-box span {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 46px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 0 15px 0 42px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, .08);
+        }
+
+        .order-count {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+
+        /* TABLE */
+
+        .orders-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, .05);
+        }
+
+        .orders-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        .orders-table th {
+            background: #f8fafc;
+            color: #6b7280;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            text-align: left;
+            padding: 17px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .orders-table td {
+            padding: 19px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+            color: #374151;
+        }
+
+        .orders-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .order-id {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .service-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+        }
+
+        .service-name strong {
+            display: block;
+            color: #111827;
+            margin-bottom: 3px;
+        }
+
+        .service-name small {
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+
+        /* STATUS */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status.pending {
+            color: #92400e;
+            background: #fef3c7;
+        }
+
+        .status.processing {
+            color: #1d4ed8;
+            background: #dbeafe;
+        }
+
+        .status.completed {
+            color: #166534;
+            background: #dcfce7;
+        }
+
+        .status.cancelled {
+            color: #991b1b;
+            background: #fee2e2;
+        }
+
+        .amount {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .view-btn {
+            border: 1px solid #dbeafe;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .view-btn:hover {
+            background: #dbeafe;
+        }
+
+
+        /* EMPTY STATE */
+
+        .empty-orders {
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .empty-orders.hidden {
+            display: none;
+        }
+
+        .empty-orders .empty-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: #eff6ff;
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+        }
+
+        .empty-orders h2 {
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .empty-orders p {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+
+        /* LOADING */
+
+        .loading-orders {
+            text-align: center;
+            padding: 70px 20px;
+            color: #6b7280;
+        }
+
+        .loading-orders.hidden {
+            display: none;
+        }
+
+
+        /* ERROR */
+
+        .orders-error {
+            text-align: center;
+            padding: 50px 20px;
+            color: #b91c1c;
+        }
+
+        .orders-error.hidden {
+            display: none;
+        }
+
+
+        /* MODAL */
+
+        .order-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        .order-modal.show {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(520px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 25px 80px rgba(0,0,0,.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .modal-header h2 {
+            font-size: 21px;
+            color: #111827;
+        }
+
+        .modal-close {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 8px;
+            background: #f3f4f6;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .modal-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+        }
+
+        .modal-row span {
+            color: #6b7280;
+            flex-shrink: 0;
+        }
+
+        .modal-row strong {
+            color: #111827;
+            text-align: right;
+            max-width: 70%;
+            word-break: break-word;
+        }
+
+
+        /* ADMIN REMARK */
+
+        .remark-row {
+            display: block;
+            padding: 15px 0;
+        }
+
+        .remark-label {
+            display: block;
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .admin-remark {
+            display: block;
+            width: 100%;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e3a8a;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .admin-remark.no-remark {
+            background: #f9fafb;
+            border-color: #e5e7eb;
+            color: #9ca3af;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .orders-page {
+                padding: 30px 0 50px;
+            }
+
+            .orders-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .orders-header h1 {
+                font-size: 29px;
+            }
+
+            .orders-toolbar {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+            .modal-card {
+                padding: 22px;
+            }
+
+            .modal-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .modal-row strong {
+                max-width: 100%;
+                text-align: left;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-<!-- NAVBAR -->
+
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <header class="navbar">
 
-<div class="container nav-container">
+    <div class="container nav-container">
 
-<a href="index.html" class="logo">
+        <a href="index.html"
+            class="logo">
 
-<span class="logo-icon">
-A
-</span>
+            <span class="logo-icon">
+                A
+            </span>
 
-<span>
-Avi<span>Print</span>
-</span>
+            <span>
+                Avi<span>Print</span>
+            </span>
 
-</a>
+        </a>
 
-<nav class="nav-menu">
 
-<a href="dashboard.html">
-Dashboard
-</a>
+        <nav class="nav-menu">
 
-<a href="services.html">
-Services
-</a>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-<a href="orders.html" style="color:#2563eb;">
-My Orders
-</a>
+            <a href="services.html">
+                Services
+            </a>
 
-</nav>
+            <a href="orders.html"
+                style="color:#2563eb;">
+                My Orders
+            </a>
 
-<div class="nav-buttons">
+        </nav>
 
-<button
-type="button"
-id="logoutButton"
-class="login-btn"
-style="border:none;background:transparent;cursor:pointer;">
 
-Logout
+        <div class="nav-buttons">
 
-</button>
+            <button
+                type="button"
+                id="logoutButton"
+                class="login-btn"
+                style="
+                    border:none;
+                    background:transparent;
+                    cursor:pointer;
+                ">
 
-</div>
+                Logout
 
-</div>
+            </button>
+
+        </div>
+
+    </div>
 
 </header>
 
 
-<!-- ORDERS -->
+
+<!-- =========================
+     ORDERS
+========================= -->
 
 <main class="orders-page">
 
-<div class="container">
-
-<div class="orders-header">
-
-<div>
-
-<span class="section-label">
-ORDER MANAGEMENT
-</span>
-
-<h1>
-My Orders
-</h1>
-
-<p>
-Track and manage your printing orders.
-</p>
-
-</div>
-
-<a href="services.html" class="primary-btn">
-+ New Print
-</a>
-
-</div>
+    <div class="container">
 
 
-<!-- SEARCH -->
+        <!-- HEADER -->
 
-<div class="orders-toolbar">
+        <div class="orders-header">
 
-<div class="search-box">
+            <div>
 
-<span>🔍</span>
+                <span class="section-label">
+                    ORDER MANAGEMENT
+                </span>
 
-<input
-type="text"
-id="searchOrders"
-placeholder="Search by order ID or service...">
+                <h1>
+                    My Orders
+                </h1>
 
-</div>
+                <p>
+                    Track and manage your printing orders.
+                </p>
 
-<div class="order-count">
-
-Showing
-<strong id="orderCount">0</strong>
-orders
-
-</div>
-
-</div>
+            </div>
 
 
-<!-- ORDERS CARD -->
+            <a href="services.html"
+                class="primary-btn">
 
-<div class="orders-card">
+                + New Print
 
-<div
-class="loading-orders"
-id="loadingOrders">
+            </a>
 
-Loading your orders...
-
-</div>
+        </div>
 
 
-<div
-class="orders-error hidden"
-id="ordersError">
-</div>
+
+        <!-- TOOLBAR -->
+
+        <div class="orders-toolbar">
+
+            <div class="search-box">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchOrders"
+                    placeholder="Search by order ID or service...">
+
+            </div>
 
 
-<div
-class="orders-table-wrapper hidden"
-id="ordersTableWrapper">
+            <div class="order-count">
 
-<table class="orders-table">
+                Showing
+                <strong id="orderCount">
+                    0
+                </strong>
+                orders
 
-<thead>
+            </div>
 
-<tr>
-
-<th>Order ID</th>
-<th>Service</th>
-<th>Date</th>
-<th>Status</th>
-<th>Amount</th>
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody id="ordersBody">
-</tbody>
-
-</table>
-
-</div>
+        </div>
 
 
-<div
-class="empty-orders hidden"
-id="emptyOrders">
 
-<div class="empty-icon">
-📦
-</div>
+        <!-- ORDERS CARD -->
 
-<h2>
-No Orders Yet
-</h2>
+        <div class="orders-card">
 
-<p>
-You haven't placed any printing orders yet.
-</p>
 
-<a href="services.html" class="primary-btn">
-Create New Order
-</a>
+            <!-- LOADING -->
 
-</div>
+            <div
+                class="loading-orders"
+                id="loadingOrders">
 
-</div>
+                Loading your orders...
 
-</div>
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                class="orders-error hidden"
+                id="ordersError">
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div
+                class="orders-table-wrapper hidden"
+                id="ordersTableWrapper">
+
+                <table class="orders-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Service
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="ordersBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- EMPTY -->
+
+            <div
+                class="empty-orders hidden"
+                id="emptyOrders">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h2>
+                    No Orders Yet
+                </h2>
+
+                <p>
+                    You haven't placed any printing orders yet.
+                </p>
+
+                <a
+                    href="services.html"
+                    class="primary-btn">
+
+                    Create New Order
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
 
 </main>
 
 
-<!-- ORDER DETAILS MODAL -->
+
+<!-- =========================
+     ORDER DETAILS MODAL
+========================= -->
 
 <div
-class="order-modal"
-id="orderModal">
+    class="order-modal"
+    id="orderModal">
 
-<div class="modal-card">
 
-<div class="modal-header">
+    <div class="modal-card">
 
-<h2>
-Order Details
-</h2>
 
-<button
-class="modal-close"
-id="modalCloseButton"
-type="button">
+        <div class="modal-header">
 
-×
+            <h2>
+                Order Details
+            </h2>
 
-</button>
+            <button
+                class="modal-close"
+                id="modalCloseButton"
+                type="button">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="modal-details"
+            id="modalDetails">
+
+        </div>
+
+
+    </div>
 
 </div>
 
-<div
-class="modal-details"
-id="modalDetails">
-</div>
 
-</div>
 
-</div>
-
+<!-- =========================
+     JAVASCRIPT
+========================= -->
 
 <script>
 
 document.addEventListener(
-"DOMContentLoaded",
-async function(){
+    "DOMContentLoaded",
+    async function () {
 
-const ordersBody =
-document.getElementById("ordersBody");
 
-const ordersTableWrapper =
-document.getElementById("ordersTableWrapper");
+        /* =========================
+           ELEMENTS
+        ========================= */
 
-const loadingOrders =
-document.getElementById("loadingOrders");
+        const ordersBody =
+            document.getElementById(
+                "ordersBody"
+            );
 
-const emptyOrders =
-document.getElementById("emptyOrders");
+        const ordersTableWrapper =
+            document.getElementById(
+                "ordersTableWrapper"
+            );
 
-const ordersError =
-document.getElementById("ordersError");
+        const loadingOrders =
+            document.getElementById(
+                "loadingOrders"
+            );
 
-const orderCount =
-document.getElementById("orderCount");
+        const emptyOrders =
+            document.getElementById(
+                "emptyOrders"
+            );
 
-const searchInput =
-document.getElementById("searchOrders");
+        const ordersError =
+            document.getElementById(
+                "ordersError"
+            );
 
-const logoutButton =
-document.getElementById("logoutButton");
+        const orderCount =
+            document.getElementById(
+                "orderCount"
+            );
 
-const orderModal =
-document.getElementById("orderModal");
+        const searchInput =
+            document.getElementById(
+                "searchOrders"
+            );
 
-const modalDetails =
-document.getElementById("modalDetails");
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
 
-const modalCloseButton =
-document.getElementById("modalCloseButton");
+        const orderModal =
+            document.getElementById(
+                "orderModal"
+            );
 
-let allOrders = [];
+        const modalDetails =
+            document.getElementById(
+                "modalDetails"
+            );
 
+        const modalCloseButton =
+            document.getElementById(
+                "modalCloseButton"
+            );
 
-/* =========================
-   SUPABASE CHECK
-========================= */
 
-if(
-typeof window.supabase === "undefined" ||
-typeof supabaseClient === "undefined" ||
-!supabaseClient
-){
+        let allOrders = [];
 
-window.location.href =
-"login.html";
 
-return;
 
-}
+        /* =========================
+           SUPABASE CHECK
+        ========================= */
 
+        if (
+            typeof window.supabase === "undefined" ||
+            typeof supabaseClient === "undefined" ||
+            !supabaseClient
+        ) {
 
-/* =========================
-   LOAD ORDERS
-========================= */
+            window.location.href =
+                "login.html";
 
-async function loadOrders(){
+            return;
 
-loadingOrders.classList.remove("hidden");
+        }
 
-ordersTableWrapper.classList.add("hidden");
 
-emptyOrders.classList.add("hidden");
 
-ordersError.classList.add("hidden");
+        /* =========================
+           LOAD ORDERS
+        ========================= */
 
-try{
+        async function loadOrders() {
 
-const {
-data:sessionData,
-error:sessionError
-} =
-await supabaseClient.auth.getSession();
+            loadingOrders.classList.remove(
+                "hidden"
+            );
 
+            ordersTableWrapper.classList.add(
+                "hidden"
+            );
 
-if(sessionError){
+            emptyOrders.classList.add(
+                "hidden"
+            );
 
-throw sessionError;
+            ordersError.classList.add(
+                "hidden"
+            );
 
-}
 
+            try {
 
-const session =
-sessionData.session;
+                const {
+                    data: sessionData,
+                    error: sessionError
+                } =
+                    await supabaseClient.auth
+                        .getSession();
 
 
-if(
-!session ||
-!session.user
-){
+                if (sessionError) {
 
-window.location.href =
-"login.html";
+                    throw sessionError;
 
-return;
+                }
 
-}
 
+                const session =
+                    sessionData.session;
 
-const user =
-session.user;
 
+                if (
+                    !session ||
+                    !session.user
+                ) {
 
-/* =========================
-   FETCH USER ORDERS
-========================= */
+                    window.location.href =
+                        "login.html";
 
-const {
-data,
-error
-} =
-await supabaseClient
-.from("orders")
-.select(`
-id,
-order_number,
-service_name,
-service_details,
-order_date,
-status,
-amount,
-admin_remark,
-created_at
-`)
-.eq(
-"user_id",
-user.id
-)
-.order(
-"order_date",
-{
-ascending:false
-}
-);
+                    return;
 
+                }
 
-if(error){
 
-throw error;
+                const user =
+                    session.user;
 
-}
 
 
-allOrders =
-data || [];
+                /* =========================
+                   FETCH USER ORDERS
+                   
+                   IMPORTANT:
+                   admin_remark added here
+                ========================= */
 
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .from("orders")
+                        .select(
+                            `
+                            id,
+                            order_number,
+                            service_name,
+                            service_details,
+                            order_date,
+                            status,
+                            admin_remark,
+                            amount,
+                            created_at
+                            `
+                        )
+                        .eq(
+                            "user_id",
+                            user.id
+                        )
+                        .order(
+                            "order_date",
+                            {
+                                ascending: false
+                            }
+                        );
 
-loadingOrders.classList.add("hidden");
 
-renderOrders(
-allOrders
-);
+                if (error) {
 
-}
+                    throw error;
 
-catch(error){
+                }
 
-console.error(
-"Orders loading error:",
-error
-);
 
-loadingOrders.classList.add("hidden");
+                allOrders =
+                    data || [];
 
-ordersError.textContent =
-"Unable to load orders: " +
-(
-error.message ||
-"Unknown error"
-);
 
-ordersError.classList.remove(
-"hidden"
-);
+                loadingOrders.classList.add(
+                    "hidden"
+                );
 
-}
 
-}
+                renderOrders(
+                    allOrders
+                );
 
+            }
 
-/* =========================
-   RENDER ORDERS
-========================= */
 
-function renderOrders(
-orders
-){
+            catch (error) {
 
-ordersBody.innerHTML = "";
+                console.error(
+                    "Orders loading error:",
+                    error
+                );
 
-orderCount.textContent =
-orders.length;
 
+                loadingOrders.classList.add(
+                    "hidden"
+                );
 
-if(!orders.length){
 
-ordersTableWrapper.classList.add(
-"hidden"
-);
+                ordersError.textContent =
+                    "Unable to load orders: " +
+                    (
+                        error.message ||
+                        "Unknown error"
+                    );
 
-emptyOrders.classList.remove(
-"hidden"
-);
 
-return;
+                ordersError.classList.remove(
+                    "hidden"
+                );
 
-}
+            }
 
+        }
 
-ordersTableWrapper.classList.remove(
-"hidden"
-);
 
-emptyOrders.classList.add(
-"hidden"
-);
 
+        /* =========================
+           RENDER ORDERS
+        ========================= */
 
-orders.forEach(
-function(order){
+        function renderOrders(
+            orders
+        ) {
 
-const row =
-document.createElement("tr");
+            ordersBody.innerHTML = "";
 
 
-const serviceIcon =
-getServiceIcon(
-order.service_name
-);
+            orderCount.textContent =
+                orders.length;
 
 
-const statusClass =
-getStatusClass(
-order.status
-);
+            if (!orders.length) {
 
+                ordersTableWrapper.classList.add(
+                    "hidden"
+                );
 
-const formattedDate =
-formatDate(
-order.order_date ||
-order.created_at
-);
+                emptyOrders.classList.remove(
+                    "hidden"
+                );
 
+                return;
 
-const amount =
-Number(
-order.amount || 0
-).toFixed(2);
+            }
 
 
-row.innerHTML = `
+            ordersTableWrapper.classList.remove(
+                "hidden"
+            );
 
-<td>
+            emptyOrders.classList.add(
+                "hidden"
+            );
 
-<span class="order-id">
 
-#${escapeHTML(
-order.order_number ||
-String(order.id).slice(0,8)
-)}
+            orders.forEach(
+                function (order) {
 
-</span>
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
 
-</td>
 
+                    const serviceIcon =
+                        getServiceIcon(
+                            order.service_name
+                        );
 
-<td>
 
-<div class="service-name">
+                    const statusClass =
+                        getStatusClass(
+                            order.status
+                        );
 
-<div class="service-icon">
 
-${serviceIcon}
+                    const formattedDate =
+                        formatDate(
+                            order.order_date ||
+                            order.created_at
+                        );
 
-</div>
 
-<div>
+                    const amount =
+                        Number(
+                            order.amount || 0
+                        ).toFixed(2);
 
-<strong>
 
-${escapeHTML(
-order.service_name ||
-"Print Service"
-)}
+                    row.innerHTML = `
 
-</strong>
+                        <td>
 
-<small>
+                            <span class="order-id">
 
-${escapeHTML(
-order.service_details ||
-"Printing order"
-)}
+                                #${escapeHTML(
+                                    order.order_number ||
+                                    String(order.id || "").slice(0, 8)
+                                )}
 
-</small>
+                            </span>
 
-</div>
+                        </td>
 
-</div>
 
-</td>
+                        <td>
 
+                            <div class="service-name">
 
-<td>
+                                <div class="service-icon">
 
-${formattedDate}
+                                    ${serviceIcon}
 
-</td>
+                                </div>
 
+                                <div>
 
-<td>
+                                    <strong>
 
-<span class="status ${statusClass}">
+                                        ${escapeHTML(
+                                            order.service_name ||
+                                            "Print Service"
+                                        )}
 
-●
-${escapeHTML(
-order.status ||
-"Pending"
-)}
+                                    </strong>
 
-</span>
+                                    <small>
 
-</td>
+                                        ${escapeHTML(
+                                            order.service_details ||
+                                            "Printing order"
+                                        )}
 
+                                    </small>
 
-<td>
+                                </div>
 
-<span class="amount">
+                            </div>
 
-₹${amount}
+                        </td>
 
-</span>
 
-</td>
+                        <td>
 
+                            ${formattedDate}
 
-<td>
+                        </td>
 
-<button
-type="button"
-class="view-btn"
-data-order-id="${escapeHTML(
-order.id
-)}">
 
-View
+                        <td>
 
-</button>
+                            <span
+                                class="status ${statusClass}">
 
-</td>
+                                ●
+                                ${escapeHTML(
+                                    order.status ||
+                                    "Pending"
+                                )}
 
-`;
+                            </span>
 
-ordersBody.appendChild(row);
+                        </td>
 
-}
-);
 
+                        <td>
 
-/* =========================
-   VIEW EVENTS
-========================= */
+                            <span class="amount">
 
-const buttons =
-ordersBody.querySelectorAll(
-".view-btn"
-);
+                                ₹${amount}
 
+                            </span>
 
-buttons.forEach(
-function(button){
+                        </td>
 
-button.addEventListener(
-"click",
-function(){
 
-const orderId =
-button.getAttribute(
-"data-order-id"
-);
+                        <td>
 
+                            <button
+                                type="button"
+                                class="view-btn"
+                                data-order-id="${escapeHTML(
+                                    order.id
+                                )}">
 
-const order =
-allOrders.find(
-function(item){
+                                View
 
-return item.id ===
-orderId;
+                            </button>
 
-}
-);
+                        </td>
 
+                    `;
 
-if(order){
 
-viewOrder(order);
+                    ordersBody.appendChild(
+                        row
+                    );
 
-}
+                }
+            );
 
-}
-);
 
-}
-);
 
-}
+            /* =========================
+               VIEW BUTTON EVENTS
+            ========================= */
 
+            const buttons =
+                ordersBody.querySelectorAll(
+                    ".view-btn"
+                );
 
-/* =========================
-   SEARCH
-========================= */
 
-searchInput.addEventListener(
-"input",
-function(){
+            buttons.forEach(
+                function (button) {
 
-const query =
-this.value
-.toLowerCase()
-.trim();
+                    button.addEventListener(
+                        "click",
+                        function () {
 
+                            const orderId =
+                                button.getAttribute(
+                                    "data-order-id"
+                                );
 
-if(!query){
 
-renderOrders(
-allOrders
-);
+                            const order =
+                                allOrders.find(
+                                    function (item) {
 
-return;
+                                        return (
+                                            String(item.id) ===
+                                            String(orderId)
+                                        );
 
-}
+                                    }
+                                );
 
 
-const filtered =
-allOrders.filter(
-function(order){
+                            if (order) {
 
-const orderNumber =
-String(
-order.order_number || ""
-).toLowerCase();
+                                viewOrder(
+                                    order
+                                );
 
+                            }
 
-const service =
-String(
-order.service_name || ""
-).toLowerCase();
+                        }
+                    );
 
+                }
+            );
 
-const details =
-String(
-order.service_details || ""
-).toLowerCase();
+        }
 
 
-const status =
-String(
-order.status || ""
-).toLowerCase();
 
+        /* =========================
+           SEARCH
+        ========================= */
 
-const remark =
-String(
-order.admin_remark || ""
-).toLowerCase();
+        searchInput.addEventListener(
+            "input",
+            function () {
 
+                const query =
+                    this.value
+                    .toLowerCase()
+                    .trim();
 
-return (
 
-orderNumber.includes(query) ||
+                if (!query) {
 
-service.includes(query) ||
+                    renderOrders(
+                        allOrders
+                    );
 
-details.includes(query) ||
+                    return;
 
-status.includes(query) ||
+                }
 
-remark.includes(query)
 
-);
+                const filtered =
+                    allOrders.filter(
+                        function (order) {
 
-}
-);
+                            const orderNumber =
+                                (
+                                    order.order_number ||
+                                    ""
+                                ).toLowerCase();
 
 
-renderOrders(filtered);
+                            const service =
+                                (
+                                    order.service_name ||
+                                    ""
+                                ).toLowerCase();
 
-}
-);
 
+                            const details =
+                                (
+                                    order.service_details ||
+                                    ""
+                                ).toLowerCase();
 
-/* =========================
-   SERVICE ICON
-========================= */
 
-function getServiceIcon(
-serviceName
-){
+                            const status =
+                                (
+                                    order.status ||
+                                    ""
+                                ).toLowerCase();
 
-const service =
-String(
-serviceName || ""
-).toLowerCase();
 
+                            const remark =
+                                (
+                                    order.admin_remark ||
+                                    ""
+                                ).toLowerCase();
 
-if(
-service.includes("photo")
-){
 
-return "🖼️";
+                            return (
+                                orderNumber.includes(query) ||
+                                service.includes(query) ||
+                                details.includes(query) ||
+                                status.includes(query) ||
+                                remark.includes(query)
+                            );
 
-}
+                        }
+                    );
 
 
-if(
-service.includes("id")
-){
+                renderOrders(
+                    filtered
+                );
 
-return "🪪";
+            }
+        );
 
-}
 
 
-if(
-service.includes("pdf")
-){
+        /* =========================
+           SERVICE ICON
+        ========================= */
 
-return "📑";
+        function getServiceIcon(
+            serviceName
+        ) {
 
-}
+            const service =
+                (
+                    serviceName ||
+                    ""
+                ).toLowerCase();
 
 
-return "📄";
+            if (
+                service.includes("photo")
+            ) {
 
-}
+                return "🖼️";
 
+            }
 
-/* =========================
-   STATUS CLASS
-========================= */
 
-function getStatusClass(
-status
-){
+            if (
+                service.includes("id")
+            ) {
 
-const value =
-String(
-status || "pending"
-).toLowerCase();
+                return "🪪";
 
+            }
 
-if(value === "processing"){
 
-return "processing";
+            if (
+                service.includes("pdf")
+            ) {
 
-}
+                return "📑";
 
+            }
 
-if(value === "completed"){
 
-return "completed";
+            return "📄";
 
-}
+        }
 
 
-if(value === "cancelled"){
 
-return "cancelled";
+        /* =========================
+           STATUS CLASS
+        ========================= */
 
-}
+        function getStatusClass(
+            status
+        ) {
 
+            const value =
+                (
+                    status ||
+                    "Pending"
+                ).toLowerCase();
 
-return "pending";
 
-}
+            if (
+                value === "processing"
+            ) {
 
+                return "processing";
 
-/* =========================
-   FORMAT DATE
-========================= */
+            }
 
-function formatDate(
-dateValue
-){
 
-if(!dateValue){
+            if (
+                value === "completed"
+            ) {
 
-return "-";
+                return "completed";
 
-}
+            }
 
 
-const date =
-new Date(
-dateValue
-);
+            if (
+                value === "cancelled"
+            ) {
 
+                return "cancelled";
 
-if(
-Number.isNaN(
-date.getTime()
-)
-){
+            }
 
-return "-";
 
-}
+            return "pending";
 
+        }
 
-return date.toLocaleDateString(
-"en-IN",
-{
-day:"2-digit",
-month:"short",
-year:"numeric"
-}
-);
 
-}
 
+        /* =========================
+           FORMAT DATE
+        ========================= */
 
-/* =========================
-   VIEW ORDER
-========================= */
+        function formatDate(
+            dateValue
+        ) {
 
-function viewOrder(
-order
-){
+            if (!dateValue) {
 
-const amount =
-Number(
-order.amount || 0
-).toFixed(2);
+                return "-";
 
+            }
 
-const remark =
-String(
-order.admin_remark || ""
-).trim();
 
+            const date =
+                new Date(
+                    dateValue
+                );
 
-modalDetails.innerHTML = `
 
-<div class="modal-row">
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
 
-<span>
-Order ID
-</span>
+                return "-";
 
-<strong>
+            }
 
-#${escapeHTML(
-order.order_number ||
-order.id
-)}
 
-</strong>
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
 
-</div>
+        }
 
 
-<div class="modal-row">
 
-<span>
-Service
-</span>
+        /* =========================
+           VIEW ORDER
+        ========================= */
 
-<strong>
+        function viewOrder(
+            order
+        ) {
 
-${escapeHTML(
-order.service_name ||
-"-"
-)}
+            const amount =
+                Number(
+                    order.amount || 0
+                ).toFixed(2);
 
-</strong>
 
-</div>
+            const remark =
+                String(
+                    order.admin_remark || ""
+                ).trim();
 
 
-<div class="modal-row">
+            const remarkHTML =
+                remark
+                ?
+                `
+                    <div class="admin-remark">
 
-<span>
-Details
-</span>
+                        ${escapeHTML(
+                            remark
+                        )}
 
-<strong>
+                    </div>
+                `
+                :
+                `
+                    <div class="admin-remark no-remark">
 
-${escapeHTML(
-order.service_details ||
-"-"
-)}
+                        No remark added by admin.
 
-</strong>
+                    </div>
+                `;
 
-</div>
 
+            modalDetails.innerHTML = `
 
-<div class="modal-row">
+                <div class="modal-row">
 
-<span>
-Order Date
-</span>
+                    <span>
+                        Order ID
+                    </span>
 
-<strong>
+                    <strong>
+                        #${escapeHTML(
+                            order.order_number ||
+                            order.id ||
+                            "-"
+                        )}
+                    </strong>
 
-${formatDate(
-order.order_date ||
-order.created_at
-)}
+                </div>
 
-</strong>
 
-</div>
+                <div class="modal-row">
 
+                    <span>
+                        Service
+                    </span>
 
-<div class="modal-row">
+                    <strong>
+                        ${escapeHTML(
+                            order.service_name ||
+                            "-"
+                        )}
+                    </strong>
 
-<span>
-Status
-</span>
+                </div>
 
-<strong>
 
-${escapeHTML(
-order.status ||
-"Pending"
-)}
+                <div class="modal-row">
 
-</strong>
+                    <span>
+                        Details
+                    </span>
 
-</div>
+                    <strong>
+                        ${escapeHTML(
+                            order.service_details ||
+                            "-"
+                        )}
+                    </strong>
 
+                </div>
 
-<div class="modal-row">
 
-<span>
-Amount
-</span>
+                <div class="modal-row">
 
-<strong>
+                    <span>
+                        Order Date
+                    </span>
 
-₹${amount}
+                    <strong>
+                        ${formatDate(
+                            order.order_date ||
+                            order.created_at
+                        )}
+                    </strong>
 
-</strong>
+                </div>
 
-</div>
 
+                <div class="modal-row">
 
-<div class="remark-box">
+                    <span>
+                        Status
+                    </span>
 
-<div class="remark-title">
+                    <strong>
+                        ${escapeHTML(
+                            order.status ||
+                            "Pending"
+                        )}
+                    </strong>
 
-Admin Remark
+                </div>
 
-</div>
 
-<div class="${
-remark
-?
-"remark-text"
-:
-"no-remark"
-}">
+                <div class="remark-row">
 
-${
-remark
-?
-escapeHTML(remark)
-:
-"No remark added by admin."
-}
+                    <span class="remark-label">
+                        Admin Remark
+                    </span>
 
-</div>
+                    ${remarkHTML}
 
-</div>
+                </div>
 
-`;
 
+                <div class="modal-row">
 
-orderModal.classList.add(
-"show"
-);
+                    <span>
+                        Amount
+                    </span>
 
-}
+                    <strong>
+                        ₹${amount}
+                    </strong>
 
+                </div>
 
-/* =========================
-   ESCAPE HTML
-========================= */
+            `;
 
-function escapeHTML(
-value
-){
 
-return String(
-value ?? ""
-)
-.replace(
-/&/g,
-"&amp;"
-)
-.replace(
-/</g,
-"&lt;"
-)
-.replace(
-/>/g,
-"&gt;"
-)
-.replace(
-/"/g,
-"&quot;"
-)
-.replace(
-/'/g,
-"&#039;"
-);
+            orderModal.classList.add(
+                "show"
+            );
 
-}
+        }
 
 
-/* =========================
-   CLOSE MODAL
-========================= */
 
-modalCloseButton.addEventListener(
-"click",
-function(){
+        /* =========================
+           ESCAPE HTML
+        ========================= */
 
-orderModal.classList.remove(
-"show"
-);
+        function escapeHTML(
+            value
+        ) {
 
-}
-);
+            return String(
+                value ?? ""
+            )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
 
+        }
 
-orderModal.addEventListener(
-"click",
-function(event){
 
-if(
-event.target ===
-orderModal
-){
 
-orderModal.classList.remove(
-"show"
-);
+        /* =========================
+           CLOSE MODAL
+        ========================= */
 
-}
+        modalCloseButton.addEventListener(
+            "click",
+            function () {
 
-}
-);
+                orderModal.classList.remove(
+                    "show"
+                );
 
+            }
+        );
 
-document.addEventListener(
-"keydown",
-function(event){
 
-if(
-event.key === "Escape"
-){
+        orderModal.addEventListener(
+            "click",
+            function (event) {
 
-orderModal.classList.remove(
-"show"
-);
+                if (
+                    event.target ===
+                    orderModal
+                ) {
 
-}
+                    orderModal.classList.remove(
+                        "show"
+                    );
 
-}
-);
+                }
 
+            }
+        );
 
-/* =========================
-   LOGOUT
-========================= */
 
-logoutButton.addEventListener(
-"click",
-async function(){
+        document.addEventListener(
+            "keydown",
+            function (event) {
 
-logoutButton.disabled =
-true;
+                if (
+                    event.key === "Escape"
+                ) {
 
-logoutButton.textContent =
-"Logging out...";
+                    orderModal.classList.remove(
+                        "show"
+                    );
 
+                }
 
-try{
+            }
+        );
 
-const {
-error
-} =
-await supabaseClient.auth.signOut();
 
 
-if(error){
+        /* =========================
+           LOGOUT
+        ========================= */
 
-throw error;
+        logoutButton.addEventListener(
+            "click",
+            async function () {
 
-}
+                logoutButton.disabled =
+                    true;
 
+                logoutButton.textContent =
+                    "Logging out...";
 
-window.location.href =
-"login.html";
 
-}
+                try {
 
-catch(error){
+                    const {
+                        error
+                    } =
+                        await supabaseClient.auth
+                            .signOut();
 
-console.error(
-"Logout error:",
-error
-);
 
-alert(
-"Logout failed. Please try again."
-);
+                    if (error) {
 
-logoutButton.disabled =
-false;
+                        throw error;
 
-logoutButton.textContent =
-"Logout";
+                    }
 
-}
 
-});
+                    window.location.href =
+                        "login.html";
 
+                }
 
-/* =========================
-   START
-========================= */
 
-await loadOrders();
+                catch (error) {
 
-}
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Logout failed. Please try again."
+                    );
+
+
+                    logoutButton.disabled =
+                        false;
+
+                    logoutButton.textContent =
+                        "Logout";
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           START
+        ========================= */
+
+        await loadOrders();
+
+    }
+
 );
 
 </script>
+
 
 </body>
 
