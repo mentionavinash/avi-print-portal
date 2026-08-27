@@ -5,17 +5,18 @@
 
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>AviPrint Admin Panel</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <style>
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     box-sizing: border-box;
@@ -24,54 +25,64 @@ content="width=device-width, initial-scale=1.0"
 }
 
 body {
-    font-family: Arial, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background: #f4f6f9;
-    color: #222;
+
+    color: #111827;
+
 }
 
 
-/* ==============================
+/* =========================================================
    TOP BAR
-============================== */
+========================================================= */
 
 .topbar {
 
     background: #111827;
+
     color: white;
 
     padding: 18px 25px;
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
-    flex-wrap: wrap;
     gap: 15px;
+
+    flex-wrap: wrap;
+
 }
 
 .topbar h1 {
+
     font-size: 22px;
+
 }
 
 .admin-info {
 
-    margin-top: 5px;
+    margin-top: 6px;
 
     font-size: 13px;
 
-    opacity: 0.85;
+    color: #d1d5db;
+
 }
-
-
-/* ==============================
-   LOGOUT
-============================== */
 
 .logout-btn {
 
-    background: #ef4444;
-
     border: none;
+
+    background: #ef4444;
 
     color: white;
 
@@ -82,102 +93,113 @@ body {
     cursor: pointer;
 
     font-weight: bold;
+
 }
 
 .logout-btn:hover {
+
     background: #dc2626;
+
 }
 
 
-/* ==============================
+/* =========================================================
    CONTAINER
-============================== */
+========================================================= */
 
 .container {
 
     width: 95%;
 
-    max-width: 1400px;
+    max-width: 1500px;
 
     margin: 25px auto;
+
 }
 
 
-/* ==============================
+/* =========================================================
    MESSAGES
-============================== */
+========================================================= */
 
 .message {
 
     display: none;
 
-    padding: 14px 18px;
+    padding: 13px 16px;
 
     border-radius: 8px;
 
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 
     font-size: 14px;
+
 }
 
-.success {
+.message.success {
 
     background: #dcfce7;
 
     color: #166534;
+
 }
 
-.error {
+.message.error {
 
     background: #fee2e2;
 
     color: #991b1b;
+
 }
 
 
-/* ==============================
+/* =========================================================
    DASHBOARD CARDS
-============================== */
+========================================================= */
 
 .cards {
 
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(5, 1fr);
 
-    gap: 18px;
+    gap: 16px;
 
     margin-bottom: 25px;
+
 }
 
 .card {
 
     background: white;
 
-    padding: 22px;
+    padding: 21px;
 
     border-radius: 12px;
 
     box-shadow:
         0 2px 10px
         rgba(0,0,0,0.07);
+
 }
 
 .card h3 {
 
-    font-size: 14px;
-
     color: #6b7280;
 
-    margin-bottom: 10px;
+    font-size: 13px;
+
+    margin-bottom: 9px;
+
 }
 
 .number {
 
-    font-size: 30px;
+    font-size: 29px;
 
-    font-weight: bold;
+    font-weight: 800;
+
 }
 
 .blue {
@@ -196,10 +218,14 @@ body {
     color: #16a34a;
 }
 
+.red {
+    color: #dc2626;
+}
 
-/* ==============================
+
+/* =========================================================
    SECTION
-============================== */
+========================================================= */
 
 .section {
 
@@ -212,7 +238,13 @@ body {
     box-shadow:
         0 2px 10px
         rgba(0,0,0,0.07);
+
 }
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .section-header {
 
@@ -222,28 +254,25 @@ body {
 
     align-items: center;
 
-    flex-wrap: wrap;
-
     gap: 15px;
 
-    margin-bottom: 20px;
+    flex-wrap: wrap;
+
+    margin-bottom: 18px;
+
 }
 
 .section-header h2 {
 
     font-size: 20px;
+
 }
-
-
-/* ==============================
-   REFRESH
-============================== */
 
 .refresh-btn {
 
-    background: #2563eb;
-
     border: none;
+
+    background: #2563eb;
 
     color: white;
 
@@ -254,32 +283,122 @@ body {
     cursor: pointer;
 
     font-weight: bold;
+
 }
 
 .refresh-btn:hover {
 
     background: #1d4ed8;
+
 }
 
 
-/* ==============================
+/* =========================================================
+   SEARCH AREA
+========================================================= */
+
+.search-area {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 180px 130px;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+.search-input {
+
+    width: 100%;
+
+    height: 44px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    padding: 0 14px;
+
+    outline: none;
+
+    font-size: 14px;
+
+}
+
+.search-input:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37,99,235,0.10);
+
+}
+
+.filter-select {
+
+    height: 44px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    padding: 0 10px;
+
+    background: white;
+
+    cursor: pointer;
+
+}
+
+.clear-btn {
+
+    height: 44px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #6b7280;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+.clear-btn:hover {
+
+    background: #4b5563;
+
+}
+
+
+/* =========================================================
    TABLE
-============================== */
+========================================================= */
 
 .table-wrapper {
 
     width: 100%;
 
     overflow-x: auto;
+
 }
 
 table {
 
     width: 100%;
 
-    min-width: 1050px;
+    min-width: 1450px;
 
     border-collapse: collapse;
+
 }
 
 th {
@@ -290,9 +409,10 @@ th {
 
     padding: 13px;
 
-    font-size: 13px;
+    font-size: 12px;
 
     white-space: nowrap;
+
 }
 
 td {
@@ -305,28 +425,34 @@ td {
     font-size: 13px;
 
     vertical-align: middle;
+
 }
 
 tr:hover {
 
     background: #fafafa;
+
 }
 
 
-/* ==============================
-   TABLE CONTENT
-============================== */
+/* =========================================================
+   ORDER
+========================================================= */
 
 .order-id {
 
     color: #2563eb;
 
-    font-weight: bold;
+    font-weight: 800;
+
+    white-space: nowrap;
+
 }
 
 .customer-name {
 
-    font-weight: bold;
+    font-weight: 700;
+
 }
 
 .email {
@@ -334,16 +460,37 @@ tr:hover {
     color: #374151;
 
     word-break: break-word;
+
 }
 
 .service {
 
-    font-weight: 600;
+    font-weight: 700;
+
+}
+
+.details {
+
+    color: #6b7280;
+
+    max-width: 220px;
+
+    line-height: 1.4;
+
+}
+
+.amount {
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
 }
 
 .quantity {
 
     text-align: center;
+
 }
 
 .date {
@@ -351,19 +498,19 @@ tr:hover {
     color: #6b7280;
 
     white-space: nowrap;
+
 }
 
 
-/* ==============================
-   STATUS SELECT
-============================== */
+/* =========================================================
+   STATUS
+========================================================= */
 
-select {
+.status-select {
 
     padding: 8px 10px;
 
-    border:
-        1px solid #d1d5db;
+    border: 1px solid #d1d5db;
 
     border-radius: 6px;
 
@@ -371,28 +518,26 @@ select {
 
     cursor: pointer;
 
-    min-width: 130px;
+    min-width: 135px;
 
     font-weight: 600;
+
 }
 
-select:disabled {
+.status-select:disabled {
 
     opacity: 0.6;
 
     cursor: wait;
+
 }
-
-
-/* ==============================
-   STATUS COLORS
-============================== */
 
 .status-pending {
 
     color: #c2410c;
 
     background: #fff7ed;
+
 }
 
 .status-processing {
@@ -400,6 +545,7 @@ select:disabled {
     color: #6d28d9;
 
     background: #f5f3ff;
+
 }
 
 .status-printing {
@@ -407,6 +553,7 @@ select:disabled {
     color: #1d4ed8;
 
     background: #eff6ff;
+
 }
 
 .status-ready {
@@ -414,6 +561,7 @@ select:disabled {
     color: #0e7490;
 
     background: #ecfeff;
+
 }
 
 .status-completed {
@@ -421,6 +569,7 @@ select:disabled {
     color: #15803d;
 
     background: #f0fdf4;
+
 }
 
 .status-cancelled {
@@ -428,39 +577,99 @@ select:disabled {
     color: #b91c1c;
 
     background: #fef2f2;
+
 }
 
 
-/* ==============================
+/* =========================================================
+   FILE BUTTONS
+========================================================= */
+
+.file-buttons {
+
+    display: flex;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+
+}
+
+.file-btn {
+
+    border: none;
+
+    padding: 7px 10px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+.view-btn {
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+}
+
+.download-btn {
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+}
+
+.no-file {
+
+    color: #9ca3af;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
    EMAIL STATUS
-============================== */
+========================================================= */
 
 .email-status {
 
     font-size: 11px;
 
     margin-top: 5px;
+
 }
 
 .email-sending {
 
     color: #d97706;
+
 }
 
 .email-success {
 
     color: #15803d;
+
 }
 
 .email-failed {
 
     color: #dc2626;
+
 }
 
 
-/* ==============================
+/* =========================================================
    LOADING / EMPTY
-============================== */
+========================================================= */
 
 .loading,
 .empty {
@@ -470,44 +679,81 @@ select:disabled {
     padding: 40px;
 
     color: #6b7280;
+
 }
 
 
-/* ==============================
-   MOBILE
-============================== */
+/* =========================================================
+   SEARCH RESULT COUNT
+========================================================= */
 
-@media (max-width: 900px) {
+.result-info {
+
+    font-size: 13px;
+
+    color: #6b7280;
+
+    margin-bottom: 12px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .cards {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+}
+
+@media (max-width: 750px) {
 
     .cards {
 
         grid-template-columns:
             repeat(2, 1fr);
+
+    }
+
+    .search-area {
+
+        grid-template-columns: 1fr;
+
     }
 
 }
 
-
-@media (max-width: 600px) {
+@media (max-width: 500px) {
 
     .cards {
 
         grid-template-columns: 1fr;
+
     }
 
     .container {
 
         width: 94%;
+
     }
 
     .section {
 
         padding: 15px;
+
     }
 
     .topbar {
 
         padding: 15px;
+
     }
 
 }
@@ -520,9 +766,9 @@ select:disabled {
 <body>
 
 
-<!-- ==========================================
-     HEADER
-========================================== -->
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
 
 <header class="topbar">
 
@@ -534,9 +780,10 @@ select:disabled {
 
         <div
             class="admin-info"
-            id="adminInfo"
-        >
+            id="adminInfo">
+
             Checking admin session...
+
         </div>
 
     </div>
@@ -544,210 +791,306 @@ select:disabled {
 
     <button
         class="logout-btn"
-        onclick="logout()"
-    >
+        onclick="logout()">
+
         Logout
+
     </button>
 
 </header>
 
 
 
-<!-- ==========================================
-     MAIN
-========================================== -->
-
 <main class="container">
 
 
-    <!-- SUCCESS -->
+<!-- =========================================================
+     MESSAGES
+========================================================= -->
 
-    <div
-        id="successMessage"
-        class="message success"
-    ></div>
+<div
+    id="successMessage"
+    class="message success">
+</div>
 
-
-    <!-- ERROR -->
-
-    <div
-        id="errorMessage"
-        class="message error"
-    ></div>
-
-
-
-    <!-- ======================================
-         DASHBOARD CARDS
-    ======================================= -->
-
-    <div class="cards">
-
-
-        <div class="card">
-
-            <h3>
-                Total Orders
-            </h3>
-
-            <div
-                id="totalOrders"
-                class="number blue"
-            >
-                0
-            </div>
-
-        </div>
+<div
+    id="errorMessage"
+    class="message error">
+</div>
 
 
 
-        <div class="card">
+<!-- =========================================================
+     CARDS
+========================================================= -->
 
-            <h3>
-                Pending Orders
-            </h3>
-
-            <div
-                id="pendingOrders"
-                class="number orange"
-            >
-                0
-            </div>
-
-        </div>
+<div class="cards">
 
 
+    <div class="card">
 
-        <div class="card">
+        <h3>
+            Total Orders
+        </h3>
 
-            <h3>
-                Processing / Printing
-            </h3>
+        <div
+            id="totalOrders"
+            class="number blue">
 
-            <div
-                id="processingOrders"
-                class="number purple"
-            >
-                0
-            </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <h3>
-                Completed Orders
-            </h3>
-
-            <div
-                id="completedOrders"
-                class="number green"
-            >
-                0
-            </div>
+            0
 
         </div>
 
     </div>
 
 
+    <div class="card">
 
-    <!-- ======================================
-         ORDERS
-    ======================================= -->
+        <h3>
+            Pending Orders
+        </h3>
 
-    <section class="section">
+        <div
+            id="pendingOrders"
+            class="number orange">
 
-
-        <div class="section-header">
-
-            <h2>
-                📦 Customer Orders
-            </h2>
-
-
-            <button
-                class="refresh-btn"
-                onclick="loadOrders()"
-            >
-                🔄 Refresh
-            </button>
+            0
 
         </div>
 
+    </div>
 
 
-        <div class="table-wrapper">
+    <div class="card">
 
+        <h3>
+            Processing / Printing
+        </h3>
 
-            <table>
+        <div
+            id="processingOrders"
+            class="number purple">
 
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Order ID
-                        </th>
-
-                        <th>
-                            Customer
-                        </th>
-
-                        <th>
-                            Email
-                        </th>
-
-                        <th>
-                            Service
-                        </th>
-
-                        <th>
-                            Quantity
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
-                        <th>
-                            Date
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-
-                <tbody
-                    id="ordersTableBody"
-                >
-
-                    <tr>
-
-                        <td
-                            colspan="7"
-                            class="loading"
-                        >
-                            Loading orders...
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-
-            </table>
-
+            0
 
         </div>
 
+    </div>
 
-    </section>
+
+    <div class="card">
+
+        <h3>
+            Completed Orders
+        </h3>
+
+        <div
+            id="completedOrders"
+            class="number green">
+
+            0
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Cancelled Orders
+        </h3>
+
+        <div
+            id="cancelledOrders"
+            class="number red">
+
+            0
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     ORDERS SECTION
+========================================================= -->
+
+<section class="section">
+
+
+<div class="section-header">
+
+    <h2>
+        📦 Customer Orders
+    </h2>
+
+
+    <button
+        class="refresh-btn"
+        onclick="loadOrders()">
+
+        🔄 Refresh
+
+    </button>
+
+</div>
+
+
+
+<!-- =========================================================
+     SEARCH
+========================================================= -->
+
+<div class="search-area">
+
+    <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="🔍 Search Order ID, Customer Name or Email...">
+
+
+    <select
+        id="statusFilter"
+        class="filter-select">
+
+        <option value="">
+            All Status
+        </option>
+
+        <option value="pending">
+            Pending
+        </option>
+
+        <option value="processing">
+            Processing
+        </option>
+
+        <option value="printing">
+            Printing
+        </option>
+
+        <option value="ready">
+            Ready
+        </option>
+
+        <option value="completed">
+            Completed
+        </option>
+
+        <option value="cancelled">
+            Cancelled
+        </option>
+
+    </select>
+
+
+    <button
+        class="clear-btn"
+        onclick="clearSearch()">
+
+        Clear Search
+
+    </button>
+
+</div>
+
+
+
+<div
+    id="resultInfo"
+    class="result-info">
+
+    Showing 0 orders
+
+</div>
+
+
+
+<!-- =========================================================
+     TABLE
+========================================================= -->
+
+<div class="table-wrapper">
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+    Order ID
+</th>
+
+<th>
+    Customer
+</th>
+
+<th>
+    Email
+</th>
+
+<th>
+    Service
+</th>
+
+<th>
+    Details
+</th>
+
+<th>
+    Amount
+</th>
+
+<th>
+    File
+</th>
+
+<th>
+    Status
+</th>
+
+<th>
+    Date
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody
+    id="ordersTableBody">
+
+<tr>
+
+<td
+    colspan="9"
+    class="loading">
+
+    Loading orders...
+
+</td>
+
+</tr>
+
+</tbody>
+
+
+</table>
+
+</div>
+
+
+</section>
 
 
 </main>
@@ -756,7 +1099,6 @@ select:disabled {
 
 <script>
 
-
 /* =========================================================
    SUPABASE CONFIG
 ========================================================= */
@@ -764,13 +1106,12 @@ select:disabled {
 const SUPABASE_URL =
     "https://pmqmewceqnxsvlhceeef.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
     "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
 
 
 /* =========================================================
-   ADMIN EMAIL
+   ADMIN
 ========================================================= */
 
 const ADMIN_EMAIL =
@@ -786,6 +1127,14 @@ const EDGE_FUNCTION_NAME =
 
 
 /* =========================================================
+   STORAGE BUCKET
+========================================================= */
+
+const STORAGE_BUCKET =
+    "orders";
+
+
+/* =========================================================
    SUPABASE CLIENT
 ========================================================= */
 
@@ -797,6 +1146,13 @@ const supabaseClient =
 
 
 /* =========================================================
+   GLOBAL ORDERS
+========================================================= */
+
+let allOrders = [];
+
+
+/* =========================================================
    PAGE LOAD
 ========================================================= */
 
@@ -805,6 +1161,8 @@ document.addEventListener(
     async function () {
 
         await checkAdmin();
+
+        setupSearch();
 
     }
 );
@@ -822,19 +1180,14 @@ async function checkAdmin() {
             data,
             error
         } =
-        await supabaseClient.auth.getSession();
+        await supabaseClient
+            .auth
+            .getSession();
 
 
         if (error) {
 
-            console.error(error);
-
-            showError(
-                "Session check failed: " +
-                error.message
-            );
-
-            return;
+            throw error;
 
         }
 
@@ -869,13 +1222,12 @@ async function checkAdmin() {
                 "Access denied. Admin account required."
             );
 
-
-            await supabaseClient.auth.signOut();
-
+            await supabaseClient
+                .auth
+                .signOut();
 
             window.location.href =
                 "login.html";
-
 
             return;
 
@@ -900,7 +1252,6 @@ async function checkAdmin() {
             error
         );
 
-
         showError(
             error.message ||
             "Unable to verify admin."
@@ -924,14 +1275,19 @@ async function loadOrders() {
 
 
     tbody.innerHTML = `
+
         <tr>
+
             <td
-                colspan="7"
-                class="loading"
-            >
+                colspan="9"
+                class="loading">
+
                 Loading orders...
+
             </td>
+
         </tr>
+
     `;
 
 
@@ -962,46 +1318,17 @@ async function loadOrders() {
         }
 
 
-        const orders =
+        allOrders =
             data || [];
 
 
         updateCounters(
-            orders
+            allOrders
         );
 
 
-        if (
-            orders.length === 0
-        ) {
-
-            tbody.innerHTML = `
-                <tr>
-                    <td
-                        colspan="7"
-                        class="empty"
-                    >
-                        No orders found.
-                    </td>
-                </tr>
-            `;
-
-            return;
-
-        }
-
-
-        tbody.innerHTML = "";
-
-
-        orders.forEach(
-            function (order) {
-
-                tbody.appendChild(
-                    createOrderRow(order)
-                );
-
-            }
+        renderOrders(
+            allOrders
         );
 
     }
@@ -1015,14 +1342,19 @@ async function loadOrders() {
 
 
         tbody.innerHTML = `
+
             <tr>
+
                 <td
-                    colspan="7"
-                    class="empty"
-                >
+                    colspan="9"
+                    class="empty">
+
                     Failed to load orders.
+
                 </td>
+
             </tr>
+
         `;
 
 
@@ -1040,57 +1372,137 @@ async function loadOrders() {
 
 
 /* =========================================================
-   CREATE ORDER ROW
+   RENDER ORDERS
 ========================================================= */
 
-function createOrderRow(order) {
+function renderOrders(
+    orders
+) {
+
+    const tbody =
+        document.getElementById(
+            "ordersTableBody"
+        );
+
+
+    document.getElementById(
+        "resultInfo"
+    ).textContent =
+        "Showing " +
+        orders.length +
+        " of " +
+        allOrders.length +
+        " orders";
+
+
+    if (!orders.length) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="9"
+                    class="empty">
+
+                    No matching orders found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML = "";
+
+
+    orders.forEach(
+        function (order) {
+
+            tbody.appendChild(
+                createOrderRow(order)
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CREATE ROW
+========================================================= */
+
+function createOrderRow(
+    order
+) {
 
     const tr =
         document.createElement("tr");
 
 
     const orderId =
-        String(
-            order.id || ""
-        );
+        order.id || "";
 
 
     const orderNumber =
-        String(
-            order.order_number ||
-            orderId
-        );
+        order.order_number ||
+        orderId;
 
+
+    /*
+       Customer name may come from
+       different places depending on
+       how the order was created.
+    */
 
     const customerName =
-        String(
-            order.customer_name ||
-            order.full_name ||
-            order.name ||
+        order.customer_name ||
+        order.full_name ||
+        order.name ||
+        (
+            order.customer_email
+            ?
+            order.customer_email
+                .split("@")[0]
+            :
             "Customer"
         );
 
 
-    const email =
-        String(
-            order.user_email ||
-            order.email ||
-            "-"
-        );
+    const customerEmail =
+        order.customer_email ||
+        order.user_email ||
+        order.email ||
+        "-";
 
 
     const service =
-        String(
-            order.service ||
-            order.service_name ||
-            order.service_type ||
-            "-"
-        );
+        order.service_name ||
+        order.service ||
+        "-";
 
 
-    const quantity =
-        order.quantity ||
-        1;
+    const details =
+        order.service_details ||
+        "-";
+
+
+    const amount =
+        order.amount !== null &&
+        order.amount !== undefined
+        ?
+        "₹" +
+        Number(
+            order.amount
+        ).toFixed(2)
+        :
+        "₹0.00";
 
 
     const status =
@@ -1102,202 +1514,497 @@ function createOrderRow(order) {
 
     const createdAt =
         order.created_at ||
-        order.date ||
+        order.order_date ||
+        "";
+
+
+    const filePath =
+        order.file_path ||
         "";
 
 
     tr.dataset.orderId =
         orderId;
 
-
     tr.dataset.orderNumber =
         orderNumber;
-
 
     tr.dataset.customerName =
         customerName;
 
+    tr.dataset.customerEmail =
+        customerEmail;
 
-    tr.dataset.email =
-        email;
+    tr.dataset.service =
+        service;
+
+    tr.dataset.details =
+        details;
+
+    tr.dataset.amount =
+        amount;
+
+    tr.dataset.filePath =
+        filePath;
 
 
     tr.innerHTML = `
 
-        <td>
+<td>
 
-            <span class="order-id">
+    <span class="order-id">
 
-                ${escapeHTML(
-                    orderNumber
-                )}
+        ${escapeHTML(
+            orderNumber
+        )}
 
-            </span>
+    </span>
 
-        </td>
-
-
-        <td>
-
-            <span class="customer-name">
-
-                ${escapeHTML(
-                    customerName
-                )}
-
-            </span>
-
-        </td>
+</td>
 
 
-        <td>
+<td>
 
-            <span class="email">
+    <span class="customer-name">
 
-                ${escapeHTML(
-                    email
-                )}
+        ${escapeHTML(
+            customerName
+        )}
 
-            </span>
+    </span>
 
-
-            <div
-                id="email-status-${escapeHTML(
-                    orderId
-                )}"
-                class="email-status"
-            ></div>
-
-        </td>
+</td>
 
 
-        <td>
+<td>
 
-            <span class="service">
+    <span class="email">
 
-                ${escapeHTML(
-                    service
-                )}
+        ${escapeHTML(
+            customerEmail
+        )}
 
-            </span>
-
-        </td>
+    </span>
 
 
-        <td class="quantity">
+    <div
+        id="email-status-${escapeHTML(
+            orderId
+        )}"
+        class="email-status">
 
-            ${escapeHTML(
-                String(quantity)
-            )}
+    </div>
 
-        </td>
-
-
-        <td>
-
-
-            <select
-                class="${getStatusClass(status)}"
-                data-old-status="${escapeHTML(status)}"
-            >
+</td>
 
 
-                <option
-                    value="pending"
-                    ${status === "pending"
-                        ? "selected"
-                        : ""}
-                >
-                    Pending
-                </option>
+<td>
+
+    <span class="service">
+
+        ${escapeHTML(
+            service
+        )}
+
+    </span>
+
+</td>
 
 
-                <option
-                    value="processing"
-                    ${status === "processing"
-                        ? "selected"
-                        : ""}
-                >
-                    Processing
-                </option>
+<td>
+
+    <span class="details">
+
+        ${escapeHTML(
+            details
+        )}
+
+    </span>
+
+</td>
 
 
-                <option
-                    value="printing"
-                    ${status === "printing"
-                        ? "selected"
-                        : ""}
-                >
-                    Printing
-                </option>
+<td>
+
+    <span class="amount">
+
+        ${escapeHTML(
+            amount
+        )}
+
+    </span>
+
+</td>
 
 
-                <option
-                    value="ready"
-                    ${status === "ready"
-                        ? "selected"
-                        : ""}
-                >
-                    Ready
-                </option>
+<td>
+
+    ${createFileButtons(
+        order
+    )}
+
+</td>
 
 
-                <option
-                    value="completed"
-                    ${status === "completed"
-                        ? "selected"
-                        : ""}
-                >
-                    Completed
-                </option>
+<td>
+
+<select
+    class="status-select ${getStatusClass(status)}"
+    data-old-status="${escapeHTML(status)}"
+    onchange="changeOrderStatus(
+        '${escapeJS(orderId)}',
+        this.value,
+        this
+    )">
+
+<option
+    value="pending"
+    ${status === "pending"
+        ? "selected"
+        : ""}>
+
+    Pending
+
+</option>
 
 
-                <option
-                    value="cancelled"
-                    ${status === "cancelled"
-                        ? "selected"
-                        : ""}
-                >
-                    Cancelled
-                </option>
+<option
+    value="processing"
+    ${status === "processing"
+        ? "selected"
+        : ""}>
+
+    Processing
+
+</option>
 
 
-            </select>
+<option
+    value="printing"
+    ${status === "printing"
+        ? "selected"
+        : ""}>
+
+    Printing
+
+</option>
 
 
-        </td>
+<option
+    value="ready"
+    ${status === "ready"
+        ? "selected"
+        : ""}>
+
+    Ready
+
+</option>
 
 
-        <td class="date">
+<option
+    value="completed"
+    ${status === "completed"
+        ? "selected"
+        : ""}>
 
-            ${escapeHTML(
-                formatDate(createdAt)
-            )}
+    Completed
 
-        </td>
-
-    `;
-
-
-    const select =
-        tr.querySelector("select");
+</option>
 
 
-    select.addEventListener(
-        "change",
-        function () {
+<option
+    value="cancelled"
+    ${status === "cancelled"
+        ? "selected"
+        : ""}>
 
-            changeOrderStatus(
-                orderId,
-                this.value,
-                this
-            );
+    Cancelled
 
-        }
-    );
+</option>
+
+</select>
+
+</td>
+
+
+<td class="date">
+
+    ${escapeHTML(
+        formatDate(createdAt)
+    )}
+
+</td>
+
+`;
 
 
     return tr;
+
+}
+
+
+/* =========================================================
+   FILE BUTTONS
+========================================================= */
+
+function createFileButtons(
+    order
+) {
+
+    const filePath =
+        order.file_path ||
+        "";
+
+
+    const fileName =
+        order.file_name ||
+        "";
+
+
+    if (!filePath) {
+
+        return `
+            <span class="no-file">
+                No file
+            </span>
+        `;
+
+    }
+
+
+    const encodedPath =
+        encodeURIComponent(
+            filePath
+        );
+
+
+    const encodedName =
+        encodeURIComponent(
+            fileName
+        );
+
+
+    return `
+
+        <div class="file-buttons">
+
+            <button
+                class="file-btn view-btn"
+                onclick="viewFile(
+                    '${escapeJS(filePath)}'
+                )">
+
+                👁 View
+
+            </button>
+
+
+            <button
+                class="file-btn download-btn"
+                onclick="downloadFile(
+                    '${escapeJS(filePath)}',
+                    '${escapeJS(fileName)}'
+                )">
+
+                ⬇ Download
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   VIEW FILE
+========================================================= */
+
+async function viewFile(
+    filePath
+) {
+
+    if (!filePath) {
+
+        showError(
+            "File path is missing."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .storage
+            .from(STORAGE_BUCKET)
+            .createSignedUrl(
+                filePath,
+                300
+            );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        if (
+            !data ||
+            !data.signedUrl
+        ) {
+
+            throw new Error(
+                "Could not create file URL."
+            );
+
+        }
+
+
+        window.open(
+            data.signedUrl,
+            "_blank"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "View file error:",
+            error
+        );
+
+
+        showError(
+            "Unable to view file: " +
+            (
+                error.message ||
+                error
+            )
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   DOWNLOAD FILE
+========================================================= */
+
+async function downloadFile(
+    filePath,
+    fileName
+) {
+
+    if (!filePath) {
+
+        showError(
+            "File path is missing."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .storage
+            .from(STORAGE_BUCKET)
+            .createSignedUrl(
+                filePath,
+                300,
+                {
+                    download:
+                        fileName ||
+                        true
+                }
+            );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        if (
+            !data ||
+            !data.signedUrl
+        ) {
+
+            throw new Error(
+                "Could not create download URL."
+            );
+
+        }
+
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            data.signedUrl;
+
+
+        link.target =
+            "_blank";
+
+
+        link.download =
+            fileName ||
+            "AviPrint-file";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        link.remove();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Download error:",
+            error
+        );
+
+
+        showError(
+            "Unable to download file: " +
+            (
+                error.message ||
+                error
+            )
+        );
+
+    }
 
 }
 
@@ -1312,24 +2019,15 @@ async function changeOrderStatus(
     selectElement
 ) {
 
-    if (!orderId) {
-
-        showError(
-            "Order ID is missing."
-        );
-
-        return;
-
-    }
-
-
     const oldStatus =
         selectElement.dataset.oldStatus ||
         "pending";
 
 
     const row =
-        selectElement.closest("tr");
+        selectElement.closest(
+            "tr"
+        );
 
 
     const orderNumber =
@@ -1343,8 +2041,23 @@ async function changeOrderStatus(
 
 
     const customerEmail =
-        row.dataset.email ||
+        row.dataset.customerEmail ||
         "";
+
+
+    const service =
+        row.dataset.service ||
+        "-";
+
+
+    const details =
+        row.dataset.details ||
+        "-";
+
+
+    const amount =
+        row.dataset.amount ||
+        "₹0.00";
 
 
     selectElement.disabled =
@@ -1356,7 +2069,6 @@ async function changeOrderStatus(
 
     try {
 
-
         /* =========================================
            UPDATE DATABASE
         ========================================= */
@@ -1367,7 +2079,8 @@ async function changeOrderStatus(
         await supabaseClient
             .from("orders")
             .update({
-                status: newStatus
+                status:
+                    newStatus
             })
             .eq(
                 "id",
@@ -1387,6 +2100,7 @@ async function changeOrderStatus(
 
 
         selectElement.className =
+            "status-select " +
             getStatusClass(
                 newStatus
             );
@@ -1402,14 +2116,13 @@ async function changeOrderStatus(
 
 
         /* =========================================
-           SEND EMAIL
+           EMAIL
         ========================================= */
 
         if (
             customerEmail &&
             customerEmail !== "-"
         ) {
-
 
             setEmailStatus(
                 orderId,
@@ -1420,23 +2133,31 @@ async function changeOrderStatus(
 
             try {
 
-
                 await sendOrderEmail({
 
-                    orderId:
-                        orderId,
+                    email:
+                        customerEmail,
 
                     orderNumber:
                         orderNumber,
 
-                    customerName:
-                        customerName,
+                    service:
+                        service,
 
-                    customerEmail:
-                        customerEmail,
+                    details:
+                        details,
+
+                    amount:
+                        amount,
 
                     status:
-                        newStatus
+                        capitalizeStatus(
+                            newStatus
+                        ),
+
+                    fileName:
+                        row.dataset.fileName ||
+                        "-"
 
                 });
 
@@ -1446,7 +2167,6 @@ async function changeOrderStatus(
                     "✓ Email sent",
                     "email-success"
                 );
-
 
             }
 
@@ -1481,18 +2201,14 @@ async function changeOrderStatus(
 
             setEmailStatus(
                 orderId,
-                "No email available",
+                "No customer email",
                 "email-failed"
             );
 
         }
 
 
-        /* =========================================
-           UPDATE COUNTERS
-        ========================================= */
-
-        await loadCounters();
+        await loadOrders();
 
     }
 
@@ -1509,6 +2225,7 @@ async function changeOrderStatus(
 
 
         selectElement.className =
+            "status-select " +
             getStatusClass(
                 oldStatus
             );
@@ -1535,10 +2252,12 @@ async function changeOrderStatus(
 
 
 /* =========================================================
-   SEND ORDER EMAIL
+   SEND EMAIL
 ========================================================= */
 
-async function sendOrderEmail(data) {
+async function sendOrderEmail(
+    data
+) {
 
     console.log(
         "Calling Edge Function:",
@@ -1547,20 +2266,23 @@ async function sendOrderEmail(data) {
 
 
     const {
-        data: resultData,
+        data: result,
         error
     } =
-    await supabaseClient.functions.invoke(
-        EDGE_FUNCTION_NAME,
-        {
-            body: data
-        }
-    );
+    await supabaseClient
+        .functions
+        .invoke(
+            EDGE_FUNCTION_NAME,
+            {
+                body: data
+            }
+        );
 
 
     console.log(
-        "Edge Function response:",
-        resultData
+        "Edge Function result:",
+        result,
+        error
     );
 
 
@@ -1568,80 +2290,33 @@ async function sendOrderEmail(data) {
 
         throw new Error(
             error.message ||
-            "Failed to call dynamic-function."
+            "Failed to call Edge Function."
         );
 
     }
 
 
     if (
-        resultData &&
-        resultData.success === false
+        result &&
+        result.success === false
     ) {
 
         throw new Error(
-            resultData.error ||
-            resultData.message ||
+            result.error ||
+            result.message ||
             "Email sending failed."
         );
 
     }
 
 
-    return resultData;
+    return result;
 
 }
 
 
 /* =========================================================
-   LOAD COUNTERS
-========================================================= */
-
-async function loadCounters() {
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-            .from("orders")
-            .select("status");
-
-
-        if (error) {
-
-            console.error(
-                "Counter error:",
-                error
-            );
-
-            return;
-
-        }
-
-
-        updateCounters(
-            data || []
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Counter error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   UPDATE COUNTERS
+   COUNTERS
 ========================================================= */
 
 function updateCounters(
@@ -1654,18 +2329,22 @@ function updateCounters(
 
     let completed = 0;
 
+    let cancelled = 0;
+
 
     orders.forEach(
         function (order) {
 
             const status =
                 String(
-                    order.status || ""
+                    order.status ||
+                    ""
                 ).toLowerCase();
 
 
             if (
-                status === "pending"
+                status ===
+                "pending"
             ) {
 
                 pending++;
@@ -1685,10 +2364,21 @@ function updateCounters(
 
 
             if (
-                status === "completed"
+                status ===
+                "completed"
             ) {
 
                 completed++;
+
+            }
+
+
+            if (
+                status ===
+                "cancelled"
+            ) {
+
+                cancelled++;
 
             }
 
@@ -1719,6 +2409,160 @@ function updateCounters(
     ).textContent =
         completed;
 
+
+    document.getElementById(
+        "cancelledOrders"
+    ).textContent =
+        cancelled;
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function setupSearch() {
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        );
+
+
+    searchInput.addEventListener(
+        "input",
+        applyFilters
+    );
+
+
+    statusFilter.addEventListener(
+        "change",
+        applyFilters
+    );
+
+}
+
+
+/* =========================================================
+   APPLY FILTERS
+========================================================= */
+
+function applyFilters() {
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        )
+        .value
+        .toLowerCase();
+
+
+    const filtered =
+        allOrders.filter(
+            function (order) {
+
+                const orderNumber =
+                    String(
+                        order.order_number ||
+                        ""
+                    ).toLowerCase();
+
+
+                const customerName =
+                    String(
+                        order.customer_name ||
+                        order.full_name ||
+                        order.name ||
+                        ""
+                    ).toLowerCase();
+
+
+                const email =
+                    String(
+                        order.customer_email ||
+                        order.user_email ||
+                        order.email ||
+                        ""
+                    ).toLowerCase();
+
+
+                const orderStatus =
+                    String(
+                        order.status ||
+                        ""
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    orderNumber.includes(
+                        search
+                    ) ||
+                    customerName.includes(
+                        search
+                    ) ||
+                    email.includes(
+                        search
+                    );
+
+
+                const matchesStatus =
+                    !status ||
+                    orderStatus === status;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    renderOrders(
+        filtered
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR SEARCH
+========================================================= */
+
+function clearSearch() {
+
+    document.getElementById(
+        "searchInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "statusFilter"
+    ).value = "";
+
+
+    renderOrders(
+        allOrders
+    );
+
 }
 
 
@@ -1740,42 +2584,28 @@ function getStatusClass(
 
 
 /* =========================================================
-   EMAIL STATUS
+   CAPITALIZE STATUS
 ========================================================= */
 
-function setEmailStatus(
-    orderId,
-    message,
-    className
+function capitalizeStatus(
+    status
 ) {
 
-    const element =
-        document.getElementById(
-            "email-status-" +
-            orderId
-        );
+    const value =
+        String(status)
+            .toLowerCase();
 
 
-    if (!element) {
-
-        return;
-
-    }
-
-
-    element.textContent =
-        message;
-
-
-    element.className =
-        "email-status " +
-        className;
+    return (
+        value.charAt(0).toUpperCase() +
+        value.slice(1)
+    );
 
 }
 
 
 /* =========================================================
-   DATE FORMAT
+   DATE
 ========================================================= */
 
 function formatDate(
@@ -1857,7 +2687,80 @@ function escapeHTML(
 
 
 /* =========================================================
-   SUCCESS MESSAGE
+   ESCAPE JS
+========================================================= */
+
+function escapeJS(
+    value
+) {
+
+    return String(value)
+
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+
+        .replace(
+            /'/g,
+            "\\'"
+        )
+
+        .replace(
+            /"/g,
+            '\\"'
+        )
+
+        .replace(
+            /\n/g,
+            "\\n"
+        )
+
+        .replace(
+            /\r/g,
+            "\\r"
+        );
+
+}
+
+
+/* =========================================================
+   EMAIL STATUS
+========================================================= */
+
+function setEmailStatus(
+    orderId,
+    text,
+    className
+) {
+
+    const element =
+        document.getElementById(
+            "email-status-" +
+            orderId
+        );
+
+
+    if (!element) {
+
+        return;
+
+    }
+
+
+    element.textContent =
+        text;
+
+
+    element.className =
+        "email-status " +
+        className;
+
+}
+
+
+/* =========================================================
+   SUCCESS
 ========================================================= */
 
 function showSuccess(
@@ -1892,7 +2795,7 @@ function showSuccess(
 
 
 /* =========================================================
-   ERROR MESSAGE
+   ERROR
 ========================================================= */
 
 function showError(
@@ -1943,7 +2846,9 @@ async function logout() {
 
     try {
 
-        await supabaseClient.auth.signOut();
+        await supabaseClient
+            .auth
+            .signOut();
 
     }
 
@@ -1964,7 +2869,7 @@ async function logout() {
 
 
 /* =========================================================
-   AUTH STATE LISTENER
+   AUTH LISTENER
 ========================================================= */
 
 supabaseClient.auth.onAuthStateChange(
