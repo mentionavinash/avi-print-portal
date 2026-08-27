@@ -20,11 +20,10 @@
 
 <script src="config.js"></script>
 
-
 <style>
 
 /* =========================
-   PROFILE PAGE
+   PAGE
 ========================= */
 
 .profile-page{
@@ -38,6 +37,11 @@
     max-width:850px;
     margin:0 auto;
 }
+
+
+/* =========================
+   TITLE
+========================= */
 
 .profile-title{
     margin-bottom:25px;
@@ -67,7 +71,7 @@
 
 
 /* =========================
-   AVATAR
+   TOP
 ========================= */
 
 .profile-top{
@@ -79,13 +83,18 @@
     border-bottom:1px solid #e5e7eb;
 }
 
+
+/* =========================
+   AVATAR
+========================= */
+
 .profile-avatar{
     width:82px;
     height:82px;
     min-width:82px;
     border-radius:50%;
     background:#2563eb;
-    color:white;
+    color:#ffffff;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -186,6 +195,7 @@
     color:#374151;
     text-decoration:none;
     font-weight:700;
+    cursor:pointer;
 }
 
 .dashboard-btn:hover{
@@ -194,7 +204,7 @@
 
 
 /* =========================
-   MESSAGES
+   MESSAGE
 ========================= */
 
 .message{
@@ -228,7 +238,7 @@
 
 
 /* =========================
-   NAVBAR
+   NAVIGATION
 ========================= */
 
 .profile-nav{
@@ -243,6 +253,7 @@
     color:#374151;
     font-weight:600;
     font-size:14px;
+    cursor:pointer;
 }
 
 .profile-nav a:hover{
@@ -297,47 +308,69 @@
 <body>
 
 
-<!-- =========================
+<!-- =====================================================
      NAVBAR
-========================= -->
+===================================================== -->
 
 <header class="navbar">
 
 <div class="container nav-container">
 
 
-<a href="dashboard.html"
-   class="logo">
+<!-- LOGO -->
 
-<span class="logo-icon">
-A
-</span>
+<a
+    href="./dashboard.html"
+    class="logo">
 
-<span>
-Avi<span>Print</span>
-</span>
+    <span class="logo-icon">
+        A
+    </span>
+
+    <span>
+        Avi<span>Print</span>
+    </span>
 
 </a>
 
+
+<!-- NAVIGATION -->
 
 <nav class="profile-nav">
 
-<a href="dashboard.html">
-Dashboard
+
+<a
+    href="./dashboard.html">
+
+    Dashboard
+
 </a>
 
-<a href="services.html">
-Services
+
+<a
+    href="./services.html">
+
+    Services
+
 </a>
 
-<a href="orders.html">
-My Orders
+
+<a
+    href="./orders.html">
+
+    My Orders
+
 </a>
 
-<a href="profile.html"
-   class="active">
-Profile
+
+<a
+    href="./profile.html"
+    class="active">
+
+    Profile
+
 </a>
+
 
 </nav>
 
@@ -348,56 +381,70 @@ Profile
 
 
 
-<!-- =========================
+<!-- =====================================================
      PROFILE PAGE
-========================= -->
+===================================================== -->
 
 <main class="profile-page">
+
 
 <div class="profile-container">
 
 
+<!-- TITLE -->
+
 <div class="profile-title">
 
 <h1>
-👤 My Profile
+    👤 My Profile
 </h1>
 
 <p>
-Manage your AviPrint account information.
+    Manage your AviPrint account information.
 </p>
 
 </div>
 
 
 
-<div id="successMessage"
-     class="message success">
+<!-- SUCCESS -->
+
+<div
+    id="successMessage"
+    class="message success">
 </div>
 
 
-<div id="errorMessage"
-     class="message error">
+
+<!-- ERROR -->
+
+<div
+    id="errorMessage"
+    class="message error">
 </div>
 
 
 
-<!-- =========================
+<!-- =====================================================
      PROFILE CARD
-========================= -->
+===================================================== -->
 
-<div class="profile-card"
-     id="profileCard"
-     style="display:none;">
+<div
+    id="profileCard"
+    class="profile-card"
+    style="display:none;">
 
+
+<!-- PROFILE TOP -->
 
 <div class="profile-top">
 
 
-<div id="avatar"
-     class="profile-avatar">
+<div
+    id="avatar"
+    class="profile-avatar">
 
-A
+    A
 
 </div>
 
@@ -405,11 +452,16 @@ A
 <div class="profile-user-info">
 
 <h2 id="profileName">
-Customer
+
+    Customer
+
 </h2>
 
+
 <p id="profileEmailText">
-Loading...
+
+    Loading...
+
 </p>
 
 </div>
@@ -419,23 +471,31 @@ Loading...
 
 
 
-<form id="profileForm">
+<!-- =====================================================
+     FORM
+===================================================== -->
+
+<form
+    id="profileForm">
 
 
-<!-- FULL NAME -->
+<!-- NAME -->
 
 <div class="form-group">
 
 <label for="fullName">
-Full Name
+
+    Full Name
+
 </label>
 
+
 <input
-type="text"
-id="fullName"
-placeholder="Enter your full name"
-autocomplete="name"
-required>
+    type="text"
+    id="fullName"
+    placeholder="Enter your full name"
+    autocomplete="name"
+    required>
 
 </div>
 
@@ -446,16 +506,19 @@ required>
 <div class="form-group">
 
 <label for="mobile">
-Mobile Number
+
+    Mobile Number
+
 </label>
 
+
 <input
-type="tel"
-id="mobile"
-placeholder="Enter 10-digit mobile number"
-maxlength="10"
-inputmode="numeric"
-autocomplete="tel">
+    type="tel"
+    id="mobile"
+    maxlength="10"
+    placeholder="Enter 10-digit mobile number"
+    inputmode="numeric"
+    autocomplete="tel">
 
 </div>
 
@@ -466,13 +529,16 @@ autocomplete="tel">
 <div class="form-group">
 
 <label for="email">
-Email Address
+
+    Email Address
+
 </label>
 
+
 <input
-type="email"
-id="email"
-disabled>
+    type="email"
+    id="email"
+    disabled>
 
 </div>
 
@@ -483,39 +549,45 @@ disabled>
 <div class="form-group">
 
 <label for="role">
-Account Role
+
+    Account Role
+
 </label>
 
+
 <input
-type="text"
-id="role"
-disabled>
+    type="text"
+    id="role"
+    disabled>
 
 </div>
 
 
 
-<!-- BUTTONS -->
+<!-- ACTIONS -->
 
 <div class="profile-actions">
 
-<button
-type="submit"
-id="saveButton"
-class="save-btn">
 
-Save Changes
+<button
+    type="submit"
+    id="saveButton"
+    class="save-btn">
+
+    Save Changes
 
 </button>
 
 
-<a
-href="dashboard.html"
-class="dashboard-btn">
 
-← Back to Dashboard
+<a
+    href="./dashboard.html"
+    class="dashboard-btn">
+
+    ← Back to Dashboard
 
 </a>
+
 
 </div>
 
@@ -527,13 +599,15 @@ class="dashboard-btn">
 
 
 
-<!-- LOADING -->
+<!-- =====================================================
+     LOADING
+===================================================== -->
 
 <div
-id="loadingBox"
-class="profile-loading">
+    id="loadingBox"
+    class="profile-loading">
 
-Loading your profile...
+    Loading your profile...
 
 </div>
 
@@ -544,9 +618,9 @@ Loading your profile...
 
 
 
-<!-- =========================
-     PROFILE SCRIPT
-========================= -->
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
 <script>
 
@@ -555,13 +629,13 @@ document.addEventListener(
 async function(){
 
     console.log(
-        "AviPrint Profile Page Loaded"
+        "AviPrint Profile Loaded"
     );
 
 
-    /* =====================================
-       CHECK SUPABASE
-    ===================================== */
+    /* ==========================================
+       SUPABASE CHECK
+    ========================================== */
 
     if(
         typeof window.supabase === "undefined"
@@ -591,85 +665,90 @@ async function(){
 
 
 
-    /* =====================================
+    /* ==========================================
        ELEMENTS
-    ===================================== */
+    ========================================== */
 
     const profileCard =
-    document.getElementById(
-        "profileCard"
-    );
+        document.getElementById(
+            "profileCard"
+        );
 
 
     const loadingBox =
-    document.getElementById(
-        "loadingBox"
-    );
+        document.getElementById(
+            "loadingBox"
+        );
 
 
     const profileForm =
-    document.getElementById(
-        "profileForm"
-    );
+        document.getElementById(
+            "profileForm"
+        );
 
 
     const fullNameInput =
-    document.getElementById(
-        "fullName"
-    );
+        document.getElementById(
+            "fullName"
+        );
 
 
     const mobileInput =
-    document.getElementById(
-        "mobile"
-    );
+        document.getElementById(
+            "mobile"
+        );
 
 
     const emailInput =
-    document.getElementById(
-        "email"
-    );
+        document.getElementById(
+            "email"
+        );
 
 
     const roleInput =
-    document.getElementById(
-        "role"
-    );
+        document.getElementById(
+            "role"
+        );
 
 
     const avatar =
-    document.getElementById(
-        "avatar"
-    );
+        document.getElementById(
+            "avatar"
+        );
 
 
     const profileName =
-    document.getElementById(
-        "profileName"
-    );
+        document.getElementById(
+            "profileName"
+        );
 
 
     const profileEmailText =
-    document.getElementById(
-        "profileEmailText"
-    );
+        document.getElementById(
+            "profileEmailText"
+        );
 
 
     const saveButton =
-    document.getElementById(
-        "saveButton"
-    );
+        document.getElementById(
+            "saveButton"
+        );
 
 
 
-    /* =====================================
-       LOAD PROFILE
-    ===================================== */
+    /* ==========================================
+       VARIABLES
+    ========================================== */
 
     let currentUser = null;
 
     let currentProfile = null;
 
+
+
+    /* ==========================================
+       GET SESSION
+    ========================================== */
 
     try{
 
@@ -678,8 +757,8 @@ async function(){
             error
         } =
         await supabaseClient
-        .auth
-        .getSession();
+            .auth
+            .getSession();
 
 
         if(error){
@@ -690,20 +769,21 @@ async function(){
 
 
         const session =
-        data.session;
+            data.session;
 
 
-        /* =================================
+        /* ======================================
            NOT LOGGED IN
-        ================================= */
+        ====================================== */
 
         if(
             !session ||
             !session.user
         ){
 
-            window.location.href =
-            "login.html";
+            window.location.replace(
+                "./login.html"
+            );
 
             return;
 
@@ -711,81 +791,71 @@ async function(){
 
 
         currentUser =
-        session.user;
+            session.user;
 
 
         console.log(
-            "Current user:",
+            "Logged in user:",
             currentUser.id
         );
 
 
         const userId =
-        currentUser.id;
+            currentUser.id;
 
 
         const userEmail =
-        currentUser.email || "";
+            currentUser.email || "";
 
 
 
-        /* =================================
+        /* ======================================
            AUTH METADATA
-        ================================= */
+        ====================================== */
+
+        const metadata =
+            currentUser.user_metadata || {};
+
 
         let authName =
-        currentUser.user_metadata &&
-        currentUser.user_metadata.full_name
-        ? currentUser.user_metadata.full_name
-        : "";
+            metadata.full_name || "";
 
 
         let authMobile =
-        currentUser.user_metadata &&
-        currentUser.user_metadata.mobile
-        ? currentUser.user_metadata.mobile
-        : "";
+            metadata.mobile || "";
 
 
 
-        /* =================================
-           GET PROFILE
-        ================================= */
+        /* ======================================
+           LOAD PROFILE
+        ====================================== */
 
         const {
             data:profileData,
             error:profileError
         } =
         await supabaseClient
-        .from("profiles")
-        .select(
-            "id,email,full_name,mobile,role,created_at"
-        )
-        .eq(
-            "id",
-            userId
-        )
-        .maybeSingle();
+            .from("profiles")
+            .select(
+                "id,email,full_name,mobile,role,created_at"
+            )
+            .eq(
+                "id",
+                userId
+            )
+            .maybeSingle();
 
 
         console.log(
-            "Profile:",
-            profileData,
-            profileError
+            "Profile data:",
+            profileData
         );
 
 
-        /*
-         * SELECT error is not fatal here.
-         * Auth metadata can still be used.
-         */
-
-        if(
-            profileError
-        ){
+        if(profileError){
 
             console.warn(
-                "Profile SELECT warning:",
+                "Profile read warning:",
                 profileError
             );
 
@@ -793,13 +863,13 @@ async function(){
 
 
         currentProfile =
-        profileData || null;
+            profileData || null;
 
 
 
-        /* =================================
-           NAME PRIORITY
-        ================================= */
+        /* ======================================
+           NAME
+        ====================================== */
 
         let finalName = "";
 
@@ -810,32 +880,29 @@ async function(){
         ){
 
             finalName =
-            currentProfile.full_name;
+                currentProfile.full_name;
 
         }
 
-        else if(
-            authName
-        ){
+        else if(authName){
 
             finalName =
-            authName;
+                authName;
 
         }
 
         else{
 
             finalName =
-            userEmail
-            .split("@")[0];
+                userEmail.split("@")[0];
 
         }
 
 
 
-        /* =================================
-           MOBILE PRIORITY
-        ================================= */
+        /* ======================================
+           MOBILE
+        ====================================== */
 
         let finalMobile = "";
 
@@ -846,78 +913,76 @@ async function(){
         ){
 
             finalMobile =
-            currentProfile.mobile;
+                currentProfile.mobile;
 
         }
 
-        else if(
-            authMobile
-        ){
+        else if(authMobile){
 
             finalMobile =
-            authMobile;
+                authMobile;
 
         }
 
 
 
-        /* =================================
+        /* ======================================
            ROLE
-        ================================= */
+        ====================================== */
 
         const finalRole =
-        currentProfile &&
-        currentProfile.role
-        ? currentProfile.role
-        : "customer";
+            currentProfile &&
+            currentProfile.role
+            ? currentProfile.role
+            : "customer";
 
 
 
-        /* =================================
+        /* ======================================
            DISPLAY
-        ================================= */
+        ====================================== */
 
         fullNameInput.value =
-        finalName;
+            finalName;
 
 
         mobileInput.value =
-        finalMobile;
+            finalMobile;
 
 
         emailInput.value =
-        userEmail;
+            userEmail;
 
 
         roleInput.value =
-        finalRole;
+            finalRole;
 
 
         profileName.textContent =
-        finalName;
+            finalName;
 
 
         profileEmailText.textContent =
-        userEmail;
+            userEmail;
 
 
         avatar.textContent =
-        finalName
-        .charAt(0)
-        .toUpperCase();
+            finalName
+                .charAt(0)
+                .toUpperCase();
 
 
 
-        /* =================================
-           SHOW PROFILE
-        ================================= */
+        /* ======================================
+           SHOW
+        ====================================== */
 
         loadingBox.style.display =
-        "none";
+            "none";
 
 
         profileCard.style.display =
-        "block";
+            "block";
 
 
 
@@ -926,13 +991,13 @@ async function(){
     catch(error){
 
         console.error(
-            "Profile loading error:",
+            "Profile load error:",
             error
         );
 
 
         loadingBox.style.display =
-        "none";
+            "none";
 
 
         showError(
@@ -950,9 +1015,9 @@ async function(){
 
 
 
-    /* =====================================
+    /* ==========================================
        SAVE PROFILE
-    ===================================== */
+    ========================================== */
 
     profileForm.addEventListener(
     "submit",
@@ -973,18 +1038,20 @@ async function(){
 
 
         const newName =
-        fullNameInput.value
-        .trim();
+            fullNameInput.value.trim();
 
 
         const newMobile =
-        mobileInput.value
-        .trim();
+            mobileInput.value.trim();
 
 
         const userEmail =
-        currentUser.email || "";
+            currentUser.email || "";
 
+
+        /* ======================================
+           VALIDATION
+        ====================================== */
 
         if(!newName){
 
@@ -1015,11 +1082,11 @@ async function(){
 
 
         saveButton.disabled =
-        true;
+            true;
 
 
         saveButton.textContent =
-        "Saving...";
+            "Saving...";
 
 
         hideMessages();
@@ -1028,115 +1095,110 @@ async function(){
 
         try{
 
-            /* =================================
-               UPDATE AUTH USER METADATA
-            ================================= */
+            /* ==================================
+               UPDATE AUTH METADATA
+            ================================== */
 
-            const {
-                error:authError
-            } =
-            await supabaseClient
-            .auth
-            .updateUser({
+            const authResult =
+                await supabaseClient
+                    .auth
+                    .updateUser({
 
-                data:{
+                        data:{
 
-                    full_name:
-                    newName,
+                            full_name:
+                                newName,
 
-                    mobile:
-                    newMobile
+                            mobile:
+                                newMobile
 
-                }
+                        }
 
-            });
+                    });
 
 
-            if(authError){
+            if(authResult.error){
 
-                throw authError;
+                throw authResult.error;
 
             }
 
 
 
-            /* =================================
-               SAVE PROFILE
-            ================================= */
+            /* ==================================
+               PROFILE DATA
+            ================================== */
 
-            const profilePayload = {
+            const profileData = {
 
                 id:
-                currentUser.id,
+                    currentUser.id,
 
                 email:
-                userEmail,
+                    userEmail,
 
                 full_name:
-                newName,
+                    newName,
 
                 mobile:
-                newMobile,
+                    newMobile,
 
                 role:
-                currentProfile &&
-                currentProfile.role
-                ? currentProfile.role
-                : "customer"
+                    currentProfile &&
+                    currentProfile.role
+                    ? currentProfile.role
+                    : "customer"
 
             };
 
 
-            const {
-                data:savedProfile,
-                error:saveError
-            } =
-            await supabaseClient
-            .from("profiles")
-            .upsert(
-                profilePayload,
-                {
-                    onConflict:"id"
-                }
-            )
-            .select()
-            .single();
+
+            /* ==================================
+               UPSERT PROFILE
+            ================================== */
+
+            const profileResult =
+                await supabaseClient
+                    .from("profiles")
+                    .upsert(
+                        profileData,
+                        {
+                            onConflict:"id"
+                        }
+                    )
+                    .select()
+                    .single();
 
 
-            if(saveError){
+            if(profileResult.error){
 
-                throw saveError;
+                throw profileResult.error;
 
             }
 
 
-            console.log(
-                "Profile saved:",
-                savedProfile
-            );
-
-
             currentProfile =
-            savedProfile;
+                profileResult.data;
 
 
 
-            /* =================================
-               UPDATE SCREEN
-            ================================= */
+            /* ==================================
+               UPDATE UI
+            ================================== */
 
             profileName.textContent =
-            newName;
+                newName;
 
 
             profileEmailText.textContent =
-            userEmail;
+                userEmail;
 
 
             avatar.textContent =
-            newName
-            .charAt(0)
-            .toUpperCase();
+                newName
+                    .charAt(0)
+                    .toUpperCase();
+
 
 
             showSuccess(
@@ -1150,7 +1212,7 @@ async function(){
         catch(error){
 
             console.error(
-                "PROFILE SAVE ERROR:",
+                "Profile save error:",
                 error
             );
 
@@ -1169,11 +1231,11 @@ async function(){
         finally{
 
             saveButton.disabled =
-            false;
+                false;
 
 
             saveButton.textContent =
-            "Save Changes";
+                "Save Changes";
 
         }
 
@@ -1184,41 +1246,42 @@ async function(){
 
 
 
-/* =====================================
-   SUCCESS MESSAGE
-===================================== */
+/* =================================================
+   SUCCESS
+================================================= */
 
 function showSuccess(message){
 
-    const box =
-    document.getElementById(
-        "successMessage"
-    );
+    const success =
+        document.getElementById(
+            "successMessage"
+        );
 
 
-    const errorBox =
-    document.getElementById(
-        "errorMessage"
-    );
+    const error =
+        document.getElementById(
+            "errorMessage"
+        );
 
 
-    errorBox.style.display =
-    "none";
+    error.style.display =
+        "none";
 
 
-    box.textContent =
-    message;
+    success.textContent =
+        message;
 
 
-    box.style.display =
-    "block";
+    success.style.display =
+        "block";
+
 
 
     setTimeout(
         function(){
 
-            box.style.display =
-            "none";
+            success.style.display =
+                "none";
 
         },
         5000
@@ -1228,55 +1291,55 @@ function showSuccess(message){
 
 
 
-/* =====================================
-   ERROR MESSAGE
-===================================== */
+/* =================================================
+   ERROR
+================================================= */
 
 function showError(message){
 
-    const box =
-    document.getElementById(
-        "errorMessage"
-    );
+    const success =
+        document.getElementById(
+            "successMessage"
+        );
 
 
-    const successBox =
-    document.getElementById(
-        "successMessage"
-    );
+    const error =
+        document.getElementById(
+            "errorMessage"
+        );
 
 
-    successBox.style.display =
-    "none";
+    success.style.display =
+        "none";
 
 
-    box.textContent =
-    message;
+    error.textContent =
+        message;
 
 
-    box.style.display =
-    "block";
+    error.style.display =
+        "block";
 
 }
 
 
 
-/* =====================================
-   HIDE MESSAGES
-===================================== */
+/* =================================================
+   HIDE
+================================================= */
 
 function hideMessages(){
 
     document.getElementById(
         "successMessage"
     ).style.display =
-    "none";
+        "none";
 
 
     document.getElementById(
         "errorMessage"
     ).style.display =
-    "none";
+        "none";
 
 }
 
