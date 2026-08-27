@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,13 +17,10 @@
 <link rel="stylesheet" href="css/style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="config.js"></script>
 
 <style>
-
-/* =========================
-   DASHBOARD
-========================= */
 
 .dashboard-container{
     max-width:1400px;
@@ -59,7 +57,6 @@
     justify-content:center;
     font-weight:800;
     font-size:18px;
-    flex-shrink:0;
 }
 
 .sidebar-user strong{
@@ -90,18 +87,13 @@
     gap:12px;
     padding:12px 13px;
     border-radius:9px;
-    text-decoration:none;
     color:#4b5563;
     font-size:13px;
     font-weight:600;
-    transition:.2s;
+    text-decoration:none;
 }
 
-.sidebar-nav a:hover{
-    background:#eff6ff;
-    color:#2563eb;
-}
-
+.sidebar-nav a:hover,
 .sidebar-nav a.active{
     background:#eff6ff;
     color:#2563eb;
@@ -174,10 +166,6 @@
     background:#1d4ed8;
 }
 
-/* =========================
-   STATS
-========================= */
-
 .dashboard-stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -234,10 +222,6 @@
     font-size:21px;
 }
 
-/* =========================
-   SECTIONS
-========================= */
-
 .dashboard-section{
     background:#fff;
     border:1px solid #e5e7eb;
@@ -273,10 +257,6 @@
     text-decoration:none;
 }
 
-/* =========================
-   SERVICES
-========================= */
-
 .dashboard-service-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -295,7 +275,6 @@
 .dashboard-service-card:hover{
     border-color:#93c5fd;
     transform:translateY(-2px);
-    box-shadow:0 7px 20px rgba(15,23,42,.06);
 }
 
 .dashboard-service-icon{
@@ -320,10 +299,6 @@
     font-size:11px;
     color:#9ca3af;
 }
-
-/* =========================
-   ORDERS
-========================= */
 
 .dashboard-recent-orders{
     display:flex;
@@ -356,7 +331,6 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-shrink:0;
 }
 
 .recent-order-info{
@@ -374,14 +348,10 @@
     display:block;
     color:#9ca3af;
     font-size:11px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
 }
 
 .recent-order-right{
     text-align:right;
-    flex-shrink:0;
 }
 
 .recent-order-amount{
@@ -433,11 +403,8 @@
     color:#b91c1c;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 .mobile-menu-btn{
+    display:none;
     border:0;
     background:transparent;
     font-size:22px;
@@ -497,13 +464,21 @@
         font-size:20px;
     }
 
+    .nav-menu{
+        display:none;
+    }
+
+    .mobile-menu-btn{
+        display:block;
+    }
+
+    .nav-buttons{
+        display:none;
+    }
+
     .dashboard-heading{
         align-items:flex-start;
         flex-direction:column;
-    }
-
-    .nav-menu{
-        display:none;
     }
 
 }
@@ -522,10 +497,6 @@
         font-size:24px;
     }
 
-    .recent-order-item{
-        align-items:flex-start;
-    }
-
 }
 
 @media(max-width:450px){
@@ -542,20 +513,13 @@
 
 <body class="dashboard-page">
 
-
-<!-- =========================
-     NAVBAR
-========================= -->
-
 <header class="navbar">
 
 <div class="container nav-container">
 
 <a href="dashboard.html" class="logo">
 
-<span class="logo-icon">
-A
-</span>
+<span class="logo-icon">A</span>
 
 <span>
 Avi<span>Print</span>
@@ -590,11 +554,7 @@ Profile
 type="button"
 id="logoutButton"
 class="login-btn"
-style="
-border:none;
-background:transparent;
-cursor:pointer;
-">
+style="border:none;background:transparent;cursor:pointer;">
 
 Logout
 
@@ -616,18 +576,11 @@ id="mobileMenuBtn">
 </header>
 
 
-<!-- =========================
-     DASHBOARD
-========================= -->
-
 <main class="dashboard-container">
 
 
-<!-- SIDEBAR -->
-
 <aside class="dashboard-sidebar"
        id="dashboardSidebar">
-
 
 <div class="sidebar-user">
 
@@ -655,52 +608,41 @@ Loading...
 
 <nav class="sidebar-nav">
 
-
 <a href="dashboard.html"
    class="active">
 
 <span>▦</span>
-
 Dashboard
 
 </a>
 
-
 <a href="services.html">
 
 <span>🖨️</span>
-
 Print Services
 
 </a>
 
-
 <a href="orders.html">
 
 <span>📦</span>
-
 My Orders
 
 </a>
 
-
 <a href="profile.html">
 
 <span>👤</span>
-
 Profile
 
 </a>
 
-
 <a href="index.html">
 
 <span>🏠</span>
-
 Back to Website
 
 </a>
-
 
 </nav>
 
@@ -718,8 +660,6 @@ Logout →
 
 </aside>
 
-
-<!-- MAIN -->
 
 <section class="dashboard-main">
 
@@ -741,8 +681,6 @@ Dashboard
 </div>
 
 
-<!-- HEADING -->
-
 <div class="dashboard-heading">
 
 <div>
@@ -761,7 +699,6 @@ Manage your printing services and orders from here.
 
 </div>
 
-
 <a href="services.html"
    class="primary-btn">
 
@@ -772,10 +709,7 @@ Manage your printing services and orders from here.
 </div>
 
 
-<!-- STATS -->
-
 <div class="dashboard-stats">
-
 
 <div class="stat-card">
 
@@ -785,9 +719,7 @@ Manage your printing services and orders from here.
 
 <div>
 
-<span>
-Total Orders
-</span>
+<span>Total Orders</span>
 
 <strong id="totalOrders">
 0
@@ -806,9 +738,7 @@ Total Orders
 
 <div>
 
-<span>
-Completed
-</span>
+<span>Completed</span>
 
 <strong id="completedOrders">
 0
@@ -827,9 +757,7 @@ Completed
 
 <div>
 
-<span>
-Processing
-</span>
+<span>Processing</span>
 
 <strong id="processingOrders">
 0
@@ -848,9 +776,7 @@ Processing
 
 <div>
 
-<span>
-Wallet Balance
-</span>
+<span>Wallet Balance</span>
 
 <strong>
 ₹0.00
@@ -860,11 +786,8 @@ Wallet Balance
 
 </div>
 
-
 </div>
 
-
-<!-- SERVICES -->
 
 <div class="dashboard-section">
 
@@ -890,7 +813,6 @@ View All →
 
 
 <div class="dashboard-service-grid">
-
 
 <a href="services.html"
    class="dashboard-service-card">
@@ -963,13 +885,10 @@ Fast processing
 
 </a>
 
-
 </div>
 
 </div>
 
-
-<!-- RECENT ORDERS -->
 
 <div class="dashboard-section">
 
@@ -1011,24 +930,18 @@ Loading recent orders...
 </main>
 
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
 <script>
 
 document.addEventListener(
 "DOMContentLoaded",
 async function(){
 
-console.log(
-"AviPrint Dashboard Loaded"
-);
+console.log("AviPrint Dashboard Loaded");
 
 
-/* =========================
+/* ==========================================
    SUPABASE CHECK
-========================= */
+========================================== */
 
 if(
 typeof window.supabase === "undefined" ||
@@ -1036,102 +949,85 @@ typeof supabaseClient === "undefined" ||
 !supabaseClient
 ){
 
-console.error(
-"Supabase client missing."
+console.error("Supabase client not found.");
+
+alert(
+"Supabase configuration not loaded. Please check config.js."
 );
 
-window.location.replace(
-"login.html"
-);
+window.location.replace("login.html");
 
 return;
 
 }
 
 
-/* =========================
+/* ==========================================
    ELEMENTS
-========================= */
+========================================== */
 
 const sidebarUserName =
-document.getElementById(
-"sidebarUserName"
-);
+document.getElementById("sidebarUserName");
 
 const sidebarUserEmail =
-document.getElementById(
-"sidebarUserEmail"
-);
+document.getElementById("sidebarUserEmail");
 
 const userAvatar =
-document.getElementById(
-"userAvatar"
-);
+document.getElementById("userAvatar");
 
 const welcomeHeading =
-document.getElementById(
-"welcomeHeading"
-);
+document.getElementById("welcomeHeading");
 
 const totalOrders =
-document.getElementById(
-"totalOrders"
-);
+document.getElementById("totalOrders");
 
 const completedOrders =
-document.getElementById(
-"completedOrders"
-);
+document.getElementById("completedOrders");
 
 const processingOrders =
-document.getElementById(
-"processingOrders"
-);
+document.getElementById("processingOrders");
 
 const recentOrders =
-document.getElementById(
-"recentOrders"
-);
+document.getElementById("recentOrders");
 
 const logoutButton =
-document.getElementById(
-"logoutButton"
-);
+document.getElementById("logoutButton");
 
 const sidebarLogout =
-document.getElementById(
-"sidebarLogout"
-);
+document.getElementById("sidebarLogout");
 
 const sidebar =
-document.getElementById(
-"dashboardSidebar"
-);
+document.getElementById("dashboardSidebar");
 
 const sidebarToggle =
-document.getElementById(
-"sidebarToggle"
-);
+document.getElementById("sidebarToggle");
 
 const mobileMenuBtn =
-document.getElementById(
-"mobileMenuBtn"
-);
+document.getElementById("mobileMenuBtn");
 
 
-/* =========================
-   GET SESSION
-========================= */
-
-try{
+/* ==========================================
+   SESSION CHECK
+========================================== */
 
 const sessionResult =
 await supabaseClient.auth.getSession();
 
+console.log(
+"Dashboard session:",
+sessionResult
+);
+
 
 if(sessionResult.error){
 
-throw sessionResult.error;
+console.error(
+sessionResult.error
+);
+
+window.location.replace("login.html");
+
+return;
 
 }
 
@@ -1146,12 +1042,10 @@ if(
 ){
 
 console.log(
-"No active session."
+"No logged-in user."
 );
 
-window.location.replace(
-"login.html"
-);
+window.location.replace("login.html");
 
 return;
 
@@ -1161,42 +1055,34 @@ return;
 const user =
 session.user;
 
-
 console.log(
-"Dashboard user:",
+"Logged in user:",
 user
 );
 
 
-/* =========================
-   USER DATA
-========================= */
+/* ==========================================
+   USER INFORMATION
+========================================== */
 
 const email =
 user.email || "";
-
 
 let name =
 user.user_metadata?.full_name || "";
 
 
-let mobile =
-user.user_metadata?.mobile || "";
-
-
 if(!name){
 
 name =
-email.split("@")[0];
+email.split("@")[0] || "User";
 
 }
 
 
-/* =========================
+/* ==========================================
    LOAD PROFILE
-========================= */
-
-try{
+========================================== */
 
 const profileResult =
 await supabaseClient
@@ -1211,95 +1097,69 @@ user.id
 .maybeSingle();
 
 
+console.log(
+"Profile:",
+profileResult
+);
+
+
 if(
 !profileResult.error &&
 profileResult.data
 ){
 
-const profile =
-profileResult.data;
-
-
-if(profile.full_name){
+if(
+profileResult.data.full_name
+){
 
 name =
-profile.full_name;
-
-}
-
-
-if(profile.mobile){
-
-mobile =
-profile.mobile;
+profileResult.data.full_name;
 
 }
 
 }
 
-}
-catch(profileError){
 
-console.warn(
-"Profile loading skipped:",
-profileError
-);
-
-}
-
-
-/* =========================
+/* ==========================================
    DISPLAY USER
-========================= */
+========================================== */
 
 sidebarUserName.textContent =
 "Welcome, " + name;
 
-
 sidebarUserEmail.textContent =
 email;
 
-
 welcomeHeading.textContent =
-"Welcome back, " +
-name +
-"! 👋";
-
+"Welcome back, " + name + "! 👋";
 
 userAvatar.textContent =
-name
-.charAt(0)
-.toUpperCase();
+name.charAt(0).toUpperCase();
 
 
-/* =========================
+/* ==========================================
    LOAD ORDERS
-========================= */
+========================================== */
 
-await loadOrders(
-user.id
-);
+await loadOrders(user.id);
 
 
-/* =========================
+/* ==========================================
    LOGOUT
-========================= */
+========================================== */
 
 async function logout(){
 
 try{
 
-logoutButton.disabled =
-true;
+logoutButton.disabled = true;
 
 logoutButton.textContent =
 "Logging out...";
 
 
 const result =
-await supabaseClient
-.auth
-.signOut();
+await supabaseClient.auth.signOut();
 
 
 if(result.error){
@@ -1354,9 +1214,9 @@ logout();
 );
 
 
-/* =========================
-   MOBILE SIDEBAR
-========================= */
+/* ==========================================
+   MOBILE MENU
+========================================== */
 
 if(sidebarToggle){
 
@@ -1364,9 +1224,7 @@ sidebarToggle.addEventListener(
 "click",
 function(){
 
-sidebar.classList.toggle(
-"open"
-);
+sidebar.classList.toggle("open");
 
 }
 );
@@ -1380,9 +1238,7 @@ mobileMenuBtn.addEventListener(
 "click",
 function(){
 
-sidebar.classList.toggle(
-"open"
-);
+sidebar.classList.toggle("open");
 
 }
 );
@@ -1390,15 +1246,12 @@ sidebar.classList.toggle(
 }
 
 
-/* =========================
-   CLOSE SIDEBAR
-   AFTER LINK CLICK
-========================= */
+/* ==========================================
+   CLOSE SIDEBAR AFTER LINK
+========================================== */
 
 document
-.querySelectorAll(
-".dashboard-sidebar a"
-)
+.querySelectorAll(".dashboard-sidebar a")
 .forEach(
 function(link){
 
@@ -1406,9 +1259,7 @@ link.addEventListener(
 "click",
 function(){
 
-sidebar.classList.remove(
-"open"
-);
+sidebar.classList.remove("open");
 
 }
 );
@@ -1417,28 +1268,11 @@ sidebar.classList.remove(
 );
 
 
-}
-catch(error){
-
-console.error(
-"DASHBOARD ERROR:",
-error
-);
-
-window.location.replace(
-"login.html"
-);
-
-}
-
-
-/* =========================
+/* ==========================================
    LOAD ORDERS
-========================= */
+========================================== */
 
-async function loadOrders(
-userId
-){
+async function loadOrders(userId){
 
 try{
 
@@ -1468,6 +1302,12 @@ ascending:false
 );
 
 
+console.log(
+"Dashboard orders:",
+result
+);
+
+
 if(result.error){
 
 throw result.error;
@@ -1479,53 +1319,29 @@ const orders =
 result.data || [];
 
 
-/* TOTAL */
-
 totalOrders.textContent =
 orders.length;
 
 
-/* COMPLETED */
-
-const completed =
-orders.filter(
-function(order){
-
-return String(
-order.status || ""
-)
-.toLowerCase() ===
-"completed";
-
-}
-).length;
-
-
 completedOrders.textContent =
-completed;
-
-
-/* PROCESSING */
-
-const processing =
 orders.filter(
-function(order){
-
-return String(
+order =>
+String(
 order.status || ""
-)
-.toLowerCase() ===
-"processing";
-
-}
+).toLowerCase() ===
+"completed"
 ).length;
 
 
 processingOrders.textContent =
-processing;
+orders.filter(
+order =>
+String(
+order.status || ""
+).toLowerCase() ===
+"processing"
+).length;
 
-
-/* RECENT */
 
 renderOrders(
 orders.slice(0,5)
@@ -1548,7 +1364,7 @@ Unable to load recent orders.
 <br><br>
 
 <a href="orders.html">
-Open My Orders
+Open My Orders →
 </a>
 
 </div>
@@ -1560,13 +1376,11 @@ Open My Orders
 }
 
 
-/* =========================
+/* ==========================================
    RENDER ORDERS
-========================= */
+========================================== */
 
-function renderOrders(
-orders
-){
+function renderOrders(orders){
 
 if(!orders.length){
 
@@ -1595,32 +1409,21 @@ return;
 }
 
 
-recentOrders.innerHTML =
-"";
+recentOrders.innerHTML = "";
 
 
 orders.forEach(
 function(order){
 
 const item =
-document.createElement(
-"div"
-);
-
+document.createElement("div");
 
 item.className =
 "recent-order-item";
 
 
 const status =
-order.status ||
-"Pending";
-
-
-const statusClass =
-getStatusClass(
-status
-);
+order.status || "Pending";
 
 
 const amount =
@@ -1631,21 +1434,12 @@ order.amount || 0
 
 const orderNumber =
 order.order_number ||
-order.id.substring(
-0,
-8
-);
+String(order.id).substring(0,8);
 
 
 const service =
 order.service_name ||
 "Print Service";
-
-
-const date =
-formatDate(
-order.order_date
-);
 
 
 item.innerHTML = `
@@ -1669,7 +1463,7 @@ ${escapeHTML(service)}
 </span>
 
 <span>
-${escapeHTML(date)}
+${formatDate(order.order_date)}
 </span>
 
 </div>
@@ -1680,12 +1474,10 @@ ${escapeHTML(date)}
 <div class="recent-order-right">
 
 <span class="recent-order-amount">
-
 ₹${amount}
-
 </span>
 
-<span class="recent-order-status ${statusClass}">
+<span class="recent-order-status ${getStatusClass(status)}">
 
 ${escapeHTML(status)}
 
@@ -1696,9 +1488,7 @@ ${escapeHTML(status)}
 `;
 
 
-recentOrders.appendChild(
-item
-);
+recentOrders.appendChild(item);
 
 }
 );
@@ -1706,46 +1496,26 @@ item
 }
 
 
-/* =========================
+/* ==========================================
    SERVICE ICON
-========================= */
+========================================== */
 
-function getServiceIcon(
-service
-){
+function getServiceIcon(service){
 
 const value =
-String(
-service || ""
-)
-.toLowerCase();
+String(service || "").toLowerCase();
 
 
-if(
-value.includes("photo")
-){
-
+if(value.includes("photo"))
 return "🖼️";
 
-}
 
-
-if(
-value.includes("id")
-){
-
+if(value.includes("id"))
 return "🪪";
 
-}
 
-
-if(
-value.includes("pdf")
-){
-
+if(value.includes("pdf"))
 return "📑";
-
-}
 
 
 return "📄";
@@ -1753,46 +1523,28 @@ return "📄";
 }
 
 
-/* =========================
-   STATUS CLASS
-========================= */
+/* ==========================================
+   STATUS
+========================================== */
 
-function getStatusClass(
-status
-){
+function getStatusClass(status){
 
 const value =
 String(
-status || "Pending"
-)
-.toLowerCase();
+status || "pending"
+).toLowerCase();
 
 
-if(
-value === "processing"
-){
-
+if(value === "processing")
 return "processing";
 
-}
 
-
-if(
-value === "completed"
-){
-
+if(value === "completed")
 return "completed";
 
-}
 
-
-if(
-value === "cancelled"
-){
-
+if(value === "cancelled")
 return "cancelled";
-
-}
 
 
 return "pending";
@@ -1800,36 +1552,26 @@ return "pending";
 }
 
 
-/* =========================
+/* ==========================================
    DATE
-========================= */
+========================================== */
 
-function formatDate(
-value
-){
+function formatDate(value){
 
-if(!value){
-
+if(!value)
 return "-";
-
-}
 
 
 const date =
-new Date(
-value
-);
+new Date(value);
 
 
 if(
 Number.isNaN(
 date.getTime()
 )
-){
-
+)
 return "-";
-
-}
 
 
 return date.toLocaleDateString(
@@ -1844,37 +1586,20 @@ year:"numeric"
 }
 
 
-/* =========================
+/* ==========================================
    ESCAPE HTML
-========================= */
+========================================== */
 
-function escapeHTML(
-value
-){
+function escapeHTML(value){
 
 return String(
 value ?? ""
 )
-.replace(
-/&/g,
-"&amp;"
-)
-.replace(
-/</g,
-"&lt;"
-)
-.replace(
-/>/g,
-"&gt;"
-)
-.replace(
-/"/g,
-"&quot;"
-)
-.replace(
-/'/g,
-"&#039;"
-);
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
@@ -1885,3 +1610,4 @@ value ?? ""
 </body>
 
 </html>
+```
