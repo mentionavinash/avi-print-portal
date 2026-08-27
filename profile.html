@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-          content="Manage your AviPrint profile and account information.">
+          content="Manage your AviPrint Portal profile">
 
     <title>My Profile | AviPrint Portal</title>
 
@@ -18,353 +18,222 @@
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- AviPrint Supabase Config -->
     <script src="config.js"></script>
 
     <style>
 
         .profile-page {
-            min-height: calc(100vh - 72px);
-            background: #f8fafc;
-            padding: 45px 0 70px;
+            padding: 50px 20px;
+            min-height: calc(100vh - 80px);
+            background: #f4f6f9;
         }
 
-        .profile-heading {
-            margin-bottom: 28px;
+        .profile-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .profile-heading h1 {
-            margin: 10px 0 8px;
-            font-size: 36px;
+        .profile-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,.08);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .profile-avatar {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .profile-header h1 {
+            margin: 0 0 5px;
+            font-size: 25px;
             color: #111827;
         }
 
-        .profile-heading p {
+        .profile-header p {
+            margin: 0;
             color: #6b7280;
             font-size: 14px;
         }
 
-        .profile-grid {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 24px;
+        .profile-message {
+            display: none;
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
 
-        .profile-card {
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 18px;
-            box-shadow: 0 8px 30px rgba(15, 23, 42, .05);
-        }
-
-        .profile-summary {
-            padding: 30px 25px;
-            text-align: center;
-        }
-
-        .profile-avatar {
-            width: 95px;
-            height: 95px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 35px;
-            font-weight: 800;
-            box-shadow: 0 12px 30px rgba(37, 99, 235, .25);
-        }
-
-        .profile-summary h2 {
-            font-size: 21px;
-            color: #111827;
-            margin-bottom: 6px;
-        }
-
-        .profile-summary p {
-            color: #6b7280;
-            font-size: 13px;
-            word-break: break-word;
-        }
-
-        .profile-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 15px;
-            padding: 6px 11px;
-            border-radius: 20px;
+        .profile-success {
             background: #dcfce7;
             color: #166534;
-            font-size: 11px;
-            font-weight: 700;
         }
 
-        .profile-status::before {
-            content: "";
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #16a34a;
+        .profile-error {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
-        .profile-summary-divider {
-            height: 1px;
-            background: #f1f5f9;
-            margin: 25px 0;
-        }
-
-        .profile-stat {
-            display: flex;
-            justify-content: space-between;
-            padding: 11px 0;
-            font-size: 13px;
-        }
-
-        .profile-stat span {
-            color: #6b7280;
-        }
-
-        .profile-stat strong {
-            color: #111827;
-        }
-
-        .profile-details {
-            padding: 32px;
-        }
-
-        .profile-section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .profile-section-title h2 {
-            color: #111827;
-            font-size: 21px;
-            margin-bottom: 5px;
-        }
-
-        .profile-section-title p {
-            color: #9ca3af;
-            font-size: 12px;
-        }
-
-        .edit-btn {
-            border: 1px solid #bfdbfe;
-            background: #eff6ff;
-            color: #2563eb;
-            padding: 9px 15px;
-            border-radius: 9px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .edit-btn:hover {
-            background: #dbeafe;
-        }
-
-        .profile-form {
+        .profile-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
+        .profile-field {
+            margin-bottom: 5px;
         }
 
-        .form-group.full {
+        .profile-field.full {
             grid-column: 1 / -1;
         }
 
-        .form-group label {
-            font-size: 12px;
+        .profile-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
             font-weight: 700;
             color: #374151;
-            margin-bottom: 8px;
         }
 
-        .form-input {
+        .profile-field input {
             width: 100%;
             height: 46px;
-            border: 1px solid #d1d5db;
-            border-radius: 9px;
             padding: 0 13px;
-            font-size: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
             outline: none;
-            color: #111827;
-            background: #f9fafb;
+            font-size: 14px;
+            background: white;
         }
 
-        .form-input:focus {
+        .profile-field input:focus {
             border-color: #2563eb;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, .08);
+            box-shadow: 0 0 0 3px rgba(37,99,235,.10);
         }
 
-        .form-input:disabled {
-            cursor: not-allowed;
+        .profile-field input:disabled {
+            background: #f3f4f6;
             color: #6b7280;
+            cursor: not-allowed;
         }
 
-        textarea.form-input {
-            height: 90px;
-            padding-top: 12px;
-            resize: vertical;
+        .field-note {
+            display: block;
+            margin-top: 6px;
+            font-size: 11px;
+            color: #9ca3af;
         }
 
-        .save-area {
-            display: none;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .save-area.show {
+        .profile-actions {
             display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
         }
 
         .save-btn {
-            border: none;
+            border: 0;
             background: #2563eb;
             color: white;
-            padding: 11px 20px;
-            border-radius: 9px;
-            font-size: 12px;
-            font-weight: 700;
+            padding: 12px 22px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .save-btn:hover {
+            background: #1d4ed8;
         }
 
         .save-btn:disabled {
-            opacity: .7;
-            cursor: not-allowed;
+            opacity: .6;
+            cursor: wait;
         }
 
-        .cancel-btn {
-            border: 1px solid #d1d5db;
-            background: #fff;
-            color: #374151;
-            padding: 11px 20px;
-            border-radius: 9px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .message {
-            display: none;
-            margin-top: 18px;
-            padding: 11px 13px;
-            border-radius: 9px;
-            font-size: 12px;
-        }
-
-        .message.show {
-            display: block;
-        }
-
-        .message.success {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #15803d;
-        }
-
-        .message.error {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #b91c1c;
-        }
-
-        .security-section {
-            margin-top: 24px;
-            padding: 25px 32px;
-        }
-
-        .security-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            padding: 17px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .security-item:last-child {
-            border-bottom: none;
-        }
-
-        .security-item strong {
-            display: block;
-            color: #111827;
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
-
-        .security-item span {
-            color: #9ca3af;
-            font-size: 11px;
-        }
-
-        .security-btn {
-            border: 1px solid #d1d5db;
-            background: #fff;
-            color: #374151;
-            padding: 8px 13px;
+        .logout-profile-btn {
+            border: 0;
+            background: #ef4444;
+            color: white;
+            padding: 12px 22px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 11px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .logout-profile-btn:hover {
+            background: #dc2626;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 22px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
             font-weight: 700;
         }
 
-        .security-btn:hover {
-            border-color: #2563eb;
-            color: #2563eb;
+        .loading-profile {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
         }
 
-        @media (max-width: 800px) {
+        @media(max-width:700px) {
+
+            .profile-page {
+                padding: 25px 15px;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
 
             .profile-grid {
                 grid-template-columns: 1fr;
             }
 
-        }
-
-        @media (max-width: 600px) {
-
-            .profile-page {
-                padding: 30px 0 50px;
-            }
-
-            .profile-heading h1 {
-                font-size: 29px;
-            }
-
-            .profile-details,
-            .security-section {
-                padding: 23px;
-            }
-
-            .profile-form {
-                grid-template-columns: 1fr;
-            }
-
-            .form-group.full {
+            .profile-field.full {
                 grid-column: auto;
             }
 
-            .profile-section-title {
+            .profile-header {
                 align-items: flex-start;
-                flex-direction: column;
             }
 
-            .security-item {
-                align-items: flex-start;
-                flex-direction: column;
+            .profile-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            .profile-header h1 {
+                font-size: 21px;
             }
 
         }
@@ -377,12 +246,16 @@
 <body>
 
 
+<!-- =========================
+     NAVBAR
+========================= -->
+
 <header class="navbar">
 
     <div class="container nav-container">
 
-
-        <a href="index.html" class="logo">
+        <a href="index.html"
+           class="logo">
 
             <span class="logo-icon">
                 A
@@ -394,82 +267,26 @@
 
         </a>
 
-
-        <nav class="nav-menu">
-
-            <a href="dashboard.html">
-                Dashboard
-            </a>
-
-            <a href="services.html">
-                Services
-            </a>
-
-            <a href="orders.html">
-                My Orders
-            </a>
-
-            <a href="profile.html"
-               style="color:#2563eb;">
-                Profile
-            </a>
-
-        </nav>
-
-
-        <div class="nav-buttons">
-
-            <button
-                type="button"
-                id="logoutButton"
-                class="login-btn"
-                style="
-                    border:none;
-                    background:transparent;
-                    cursor:pointer;
-                ">
-
-                Logout
-
-            </button>
-
-        </div>
-
     </div>
 
 </header>
 
 
 
+<!-- =========================
+     PROFILE
+========================= -->
+
 <main class="profile-page">
 
-    <div class="container">
+    <div class="profile-container">
+
+        <div class="profile-card">
 
 
-        <div class="profile-heading">
+            <!-- HEADER -->
 
-            <span class="section-label">
-                ACCOUNT SETTINGS
-            </span>
-
-            <h1>
-                My Profile
-            </h1>
-
-            <p>
-                Manage your personal information and account settings.
-            </p>
-
-        </div>
-
-
-
-        <div class="profile-grid">
-
-
-            <!-- PROFILE SUMMARY -->
-
-            <aside class="profile-card profile-summary">
+            <div class="profile-header">
 
                 <div
                     class="profile-avatar"
@@ -480,228 +297,95 @@
                 </div>
 
 
-                <h2 id="profileName">
-                    Loading...
-                </h2>
+                <div>
 
+                    <h1>
+                        My Profile
+                    </h1>
 
-                <p id="profileEmail">
-                    Loading...
-                </p>
-
-
-                <span class="profile-status">
-                    Active Account
-                </span>
-
-
-                <div class="profile-summary-divider"></div>
-
-
-                <div class="profile-stat">
-
-                    <span>
-                        Total Orders
-                    </span>
-
-                    <strong id="profileTotalOrders">
-                        0
-                    </strong>
+                    <p id="profileEmailText">
+                        Loading profile...
+                    </p>
 
                 </div>
 
-
-                <div class="profile-stat">
-
-                    <span>
-                        Completed
-                    </span>
-
-                    <strong id="profileCompletedOrders">
-                        0
-                    </strong>
-
-                </div>
+            </div>
 
 
-                <div class="profile-stat">
+            <!-- MESSAGES -->
 
-                    <span>
-                        Wallet
-                    </span>
-
-                    <strong>
-                        ₹0.00
-                    </strong>
-
-                </div>
-
-            </aside>
+            <div
+                id="successMessage"
+                class="profile-message profile-success">
+            </div>
 
 
-
-            <!-- PROFILE DETAILS -->
-
-            <section>
-
-
-                <div class="profile-card profile-details">
+            <div
+                id="errorMessage"
+                class="profile-message profile-error">
+            </div>
 
 
-                    <div class="profile-section-title">
+            <!-- FORM -->
 
-                        <div>
+            <form id="profileForm">
 
-                            <h2>
-                                Personal Information
-                            </h2>
-
-                            <p>
-                                Update your account details.
-                            </p>
-
-                        </div>
+                <div class="profile-grid">
 
 
-                        <button
-                            type="button"
-                            class="edit-btn"
-                            id="editBtn">
+                    <!-- FULL NAME -->
 
-                            ✏ Edit Profile
+                    <div class="profile-field">
 
-                        </button>
+                        <label for="fullName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required>
 
                     </div>
 
 
+                    <!-- MOBILE -->
 
-                    <form id="profileForm"
-                          class="profile-form">
+                    <div class="profile-field">
 
+                        <label for="mobile">
+                            Mobile Number
+                        </label>
 
-                        <div class="form-group">
-
-                            <label for="fullName">
-                                Full Name
-                            </label>
-
-                            <input
-                                type="text"
-                                id="fullName"
-                                class="form-input"
-                                disabled>
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-                            <label for="email">
-                                Email Address
-                            </label>
-
-                            <input
-                                type="email"
-                                id="email"
-                                class="form-input"
-                                disabled>
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-                            <label for="phone">
-                                Mobile Number
-                            </label>
-
-                            <input
-                                type="tel"
-                                id="phone"
-                                class="form-input"
-                                maxlength="10"
-                                inputmode="numeric"
-                                placeholder="Enter mobile number"
-                                disabled>
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-                            <label for="city">
-                                City
-                            </label>
-
-                            <input
-                                type="text"
-                                id="city"
-                                class="form-input"
-                                placeholder="Enter city"
-                                disabled>
-
-                        </div>
-
-
-
-                        <div class="form-group full">
-
-                            <label for="address">
-                                Address
-                            </label>
-
-                            <textarea
-                                id="address"
-                                class="form-input"
-                                placeholder="Enter your address"
-                                disabled></textarea>
-
-                        </div>
-
-
-                    </form>
-
-
-
-                    <div
-                        class="save-area"
-                        id="saveArea">
-
-                        <button
-                            type="button"
-                            class="save-btn"
-                            id="saveButton">
-
-                            Save Changes
-
-                        </button>
-
-                        <button
-                            type="button"
-                            class="cancel-btn"
-                            id="cancelButton">
-
-                            Cancel
-
-                        </button>
+                        <input
+                            type="tel"
+                            id="mobile"
+                            placeholder="Enter your 10-digit mobile number"
+                            inputmode="numeric"
+                            maxlength="10"
+                            autocomplete="tel">
 
                     </div>
 
 
-                    <div
-                        class="message success"
-                        id="successMessage">
+                    <!-- EMAIL -->
 
-                    </div>
+                    <div class="profile-field full">
 
+                        <label for="email">
+                            Email Address
+                        </label>
 
-                    <div
-                        class="message error"
-                        id="errorMessage">
+                        <input
+                            type="email"
+                            id="email"
+                            disabled>
+
+                        <small class="field-note">
+                            Email is connected to your login account and cannot be changed here.
+                        </small>
 
                     </div>
 
@@ -709,81 +393,42 @@
                 </div>
 
 
+                <!-- ACTIONS -->
 
-                <!-- SECURITY -->
+                <div class="profile-actions">
 
-                <div class="profile-card security-section">
+                    <button
+                        type="submit"
+                        class="save-btn"
+                        id="saveButton">
 
+                        💾 Save Changes
 
-                    <div class="profile-section-title">
-
-                        <div>
-
-                            <h2>
-                                Account Security
-                            </h2>
-
-                            <p>
-                                Manage your password and security.
-                            </p>
-
-                        </div>
-
-                    </div>
+                    </button>
 
 
-                    <div class="security-item">
+                    <button
+                        type="button"
+                        class="logout-profile-btn"
+                        id="logoutButton">
 
-                        <div>
+                        🚪 Logout
 
-                            <strong>
-                                Password
-                            </strong>
-
-                            <span>
-                                Send a secure password reset link to your email.
-                            </span>
-
-                        </div>
-
-
-                        <button
-                            type="button"
-                            class="security-btn"
-                            id="changePasswordButton">
-
-                            Change Password
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="security-item">
-
-                        <div>
-
-                            <strong>
-                                Account Status
-                            </strong>
-
-                            <span>
-                                Your AviPrint account is currently active.
-                            </span>
-
-                        </div>
-
-
-                        <span class="profile-status">
-                            Active
-                        </span>
-
-                    </div>
+                    </button>
 
                 </div>
 
+            </form>
 
-            </section>
+
+            <a
+                href="dashboard.html"
+                class="back-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
 
         </div>
 
@@ -795,149 +440,383 @@
 
 <script>
 
+/* =========================================================
+   SUPABASE CHECK
+========================================================= */
+
+if (
+    typeof window.supabase === "undefined"
+) {
+
+    alert(
+        "Supabase library could not be loaded."
+    );
+
+}
+
+
+if (
+    typeof supabaseClient === "undefined" ||
+    !supabaseClient
+) {
+
+    alert(
+        "Supabase configuration could not be loaded."
+    );
+
+}
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const profileForm =
+    document.getElementById(
+        "profileForm"
+    );
+
+
+const saveButton =
+    document.getElementById(
+        "saveButton"
+    );
+
+
+const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
+
+
+const fullNameInput =
+    document.getElementById(
+        "fullName"
+    );
+
+
+const mobileInput =
+    document.getElementById(
+        "mobile"
+    );
+
+
+const emailInput =
+    document.getElementById(
+        "email"
+    );
+
+
+const profileAvatar =
+    document.getElementById(
+        "profileAvatar"
+    );
+
+
+const profileEmailText =
+    document.getElementById(
+        "profileEmailText"
+    );
+
+
+/* =========================================================
+   PAGE LOAD
+========================================================= */
+
 document.addEventListener(
     "DOMContentLoaded",
-    async function () {
+    loadProfile
+);
 
-        const profileName =
-            document.getElementById("profileName");
 
-        const profileEmail =
-            document.getElementById("profileEmail");
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
 
-        const profileAvatar =
-            document.getElementById("profileAvatar");
+async function loadProfile() {
 
-        const fullNameInput =
-            document.getElementById("fullName");
+    try {
 
-        const emailInput =
-            document.getElementById("email");
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .auth
+        .getSession();
 
-        const phoneInput =
-            document.getElementById("phone");
 
-        const cityInput =
-            document.getElementById("city");
+        if (error) {
 
-        const addressInput =
-            document.getElementById("address");
+            throw error;
 
-        const editBtn =
-            document.getElementById("editBtn");
+        }
 
-        const saveArea =
-            document.getElementById("saveArea");
 
-        const saveButton =
-            document.getElementById("saveButton");
+        const session =
+            data.session;
 
-        const cancelButton =
-            document.getElementById("cancelButton");
 
-        const successMessage =
-            document.getElementById("successMessage");
-
-        const errorMessage =
-            document.getElementById("errorMessage");
-
-        const totalOrdersElement =
-            document.getElementById("profileTotalOrders");
-
-        const completedOrdersElement =
-            document.getElementById("profileCompletedOrders");
-
-        const logoutButton =
-            document.getElementById("logoutButton");
-
-        const changePasswordButton =
-            document.getElementById("changePasswordButton");
-
+        /* =========================
+           NOT LOGGED IN
+        ========================= */
 
         if (
-            typeof window.supabase === "undefined" ||
-            typeof supabaseClient === "undefined" ||
-            !supabaseClient
+            !session ||
+            !session.user
         ) {
 
-            window.location.href = "login.html";
+            window.location.href =
+                "login.html";
+
             return;
 
         }
 
 
-        let currentUser = null;
+        const user =
+            session.user;
 
-        let originalProfile = null;
+
+        const userId =
+            user.id;
 
 
-        function showSuccess(text) {
+        const userEmail =
+            user.email || "";
 
-            successMessage.textContent =
-                "✓ " + text;
 
-            successMessage.classList.add("show");
+        /* =========================
+           EMAIL
+        ========================= */
 
-            errorMessage.classList.remove("show");
+        emailInput.value =
+            userEmail;
+
+
+        profileEmailText.textContent =
+            userEmail;
+
+
+        /* =========================
+           PROFILE
+        ========================= */
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
+        .from("profiles")
+        .select(
+            "id,email,full_name,role,created_at"
+        )
+        .eq(
+            "id",
+            userId
+        )
+        .maybeSingle();
+
+
+        if (profileError) {
+
+            throw profileError;
 
         }
 
 
-        function showError(text) {
+        /* =========================
+           NAME
+        ========================= */
 
-            errorMessage.textContent = text;
-
-            errorMessage.classList.add("show");
-
-            successMessage.classList.remove("show");
-
-        }
+        let name = "";
 
 
-        function clearMessages() {
+        if (
+            profile &&
+            profile.full_name
+        ) {
 
-            successMessage.classList.remove("show");
-
-            errorMessage.classList.remove("show");
+            name =
+                profile.full_name;
 
         }
 
 
-        function setEditing(enabled) {
+        /* =========================
+           FALLBACK TO AUTH
+        ========================= */
 
-            fullNameInput.disabled = !enabled;
+        if (!name) {
 
-            phoneInput.disabled = !enabled;
+            name =
+                user.user_metadata?.full_name ||
+                "";
 
-            cityInput.disabled = !enabled;
-
-            addressInput.disabled = !enabled;
+        }
 
 
-            if (enabled) {
+        fullNameInput.value =
+            name;
 
-                saveArea.classList.add("show");
 
-                editBtn.style.display = "none";
+        /* =========================
+           AVATAR
+        ========================= */
 
-            } else {
+        updateAvatar(name);
 
-                saveArea.classList.remove("show");
 
-                editBtn.style.display = "block";
+        /* =========================
+           MOBILE
+           
+           If your profiles table
+           does not yet have mobile,
+           this remains blank.
+        ========================= */
+
+        try {
+
+            const {
+                data:mobileProfile
+            } =
+            await supabaseClient
+            .from("profiles")
+            .select("mobile")
+            .eq(
+                "id",
+                userId
+            )
+            .maybeSingle();
+
+
+            if (
+                mobileProfile &&
+                mobileProfile.mobile
+            ) {
+
+                mobileInput.value =
+                    mobileProfile.mobile;
+
+            }
+            else if (
+                user.user_metadata?.mobile
+            ) {
+
+                mobileInput.value =
+                    user.user_metadata.mobile;
 
             }
 
         }
 
+        catch(mobileError) {
 
-        async function loadProfile() {
+            console.log(
+                "Mobile field not available yet:",
+                mobileError
+            );
+
+        }
+
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Profile loading error:",
+            error
+        );
+
+
+        showError(
+            "Unable to load profile: " +
+            (
+                error.message ||
+                "Unknown error"
+            )
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE PROFILE
+========================================================= */
+
+profileForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        hideMessages();
+
+
+        const name =
+            fullNameInput.value
+            .trim();
+
+
+        const mobile =
+            mobileInput.value
+            .trim();
+
+
+        /* =========================
+           VALIDATION
+        ========================= */
+
+        if (!name) {
+
+            showError(
+                "Please enter your full name."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            mobile &&
+            !/^[0-9]{10}$/.test(mobile)
+        ) {
+
+            showError(
+                "Please enter a valid 10-digit mobile number."
+            );
+
+            return;
+
+        }
+
+
+        saveButton.disabled =
+            true;
+
+
+        saveButton.textContent =
+            "Saving...";
+
+
+        try {
+
+            /* =========================
+               GET SESSION
+            ========================= */
 
             const {
                 data,
                 error
             } =
-                await supabaseClient.auth.getSession();
+            await supabaseClient
+            .auth
+            .getSession();
 
 
             if (error) {
@@ -947,450 +826,243 @@ document.addEventListener(
             }
 
 
+            const session =
+                data.session;
+
+
             if (
-                !data.session ||
-                !data.session.user
+                !session ||
+                !session.user
             ) {
 
-                window.location.href = "login.html";
+                window.location.href =
+                    "login.html";
 
                 return;
 
             }
 
 
-            currentUser = data.session.user;
+            const user =
+                session.user;
 
 
-            const metadata =
-                currentUser.user_metadata || {};
-
-
-            const userName =
-                metadata.full_name ||
-                currentUser.email?.split("@")[0] ||
-                "AviPrint User";
-
-
-            const userEmail =
-                currentUser.email || "";
-
-
-            const userPhone =
-                metadata.mobile || "";
-
-
-            const userCity =
-                metadata.city || "";
-
-
-            const userAddress =
-                metadata.address || "";
-
-
-            originalProfile = {
-
-                full_name: userName,
-                mobile: userPhone,
-                city: userCity,
-                address: userAddress
-
-            };
-
-
-            profileName.textContent =
-                userName;
-
-            profileEmail.textContent =
-                userEmail;
-
-            profileAvatar.textContent =
-                userName.charAt(0).toUpperCase();
-
-            fullNameInput.value =
-                userName;
-
-            emailInput.value =
-                userEmail;
-
-            phoneInput.value =
-                userPhone;
-
-            cityInput.value =
-                userCity;
-
-            addressInput.value =
-                userAddress;
-
+            /* =========================
+               UPDATE AUTH METADATA
+            ========================= */
 
             const {
-                data: orders,
-                error: ordersError
+                error:authError
             } =
-                await supabaseClient
-                    .from("orders")
-                    .select("id,status")
-                    .eq("user_id", currentUser.id);
+            await supabaseClient
+            .auth
+            .updateUser({
+
+                data: {
+
+                    full_name:
+                        name,
+
+                    mobile:
+                        mobile
+
+                }
+
+            });
 
 
-            if (!ordersError) {
+            if (authError) {
 
-                const userOrders =
-                    orders || [];
-
-
-                const completed =
-                    userOrders.filter(
-                        order =>
-                            String(order.status || "")
-                                .toLowerCase() ===
-                            "completed"
-                    );
-
-
-                totalOrdersElement.textContent =
-                    userOrders.length;
-
-                completedOrdersElement.textContent =
-                    completed.length;
+                console.warn(
+                    "Auth metadata update warning:",
+                    authError
+                );
 
             }
+
+
+            /* =========================
+               UPDATE PROFILE
+            ========================= */
+
+            const {
+                data:profileData,
+                error:profileError
+            } =
+            await supabaseClient
+            .from("profiles")
+            .upsert(
+
+                {
+
+                    id:
+                        user.id,
+
+                    email:
+                        user.email,
+
+                    full_name:
+                        name,
+
+                    mobile:
+                        mobile,
+
+                    role:
+                        "user"
+
+                },
+
+                {
+
+                    onConflict:
+                        "id"
+
+                }
+
+            );
+
+
+            if (profileError) {
+
+                throw profileError;
+
+            }
+
+
+            /* =========================
+               UPDATE AVATAR
+            ========================= */
+
+            updateAvatar(name);
+
+
+            /* =========================
+               SUCCESS
+            ========================= */
+
+            showSuccess(
+                "Profile updated successfully."
+            );
+
 
         }
 
+        catch(error) {
 
-        editBtn.addEventListener(
-            "click",
-            function () {
+            console.error(
+                "Profile update error:",
+                error
+            );
 
-                clearMessages();
 
-                setEditing(true);
+            showError(
+                "Failed to update profile: " +
+                (
+                    error.message ||
+                    "Unknown error"
+                )
+            );
 
-            }
-        );
+        }
 
+        finally {
 
-        cancelButton.addEventListener(
-            "click",
-            function () {
+            saveButton.disabled =
+                false;
 
-                clearMessages();
+            saveButton.textContent =
+                "💾 Save Changes";
 
-                if (originalProfile) {
+        }
 
-                    fullNameInput.value =
-                        originalProfile.full_name;
+    }
+);
 
-                    phoneInput.value =
-                        originalProfile.mobile;
 
-                    cityInput.value =
-                        originalProfile.city;
+/* =========================================================
+   UPDATE AVATAR
+========================================================= */
 
-                    addressInput.value =
-                        originalProfile.address;
+function updateAvatar(name) {
 
-                }
+    const cleanName =
+        String(name || "").trim();
 
-                setEditing(false);
 
-            }
-        );
+    if (!cleanName) {
 
+        profileAvatar.textContent =
+            "A";
 
-        saveButton.addEventListener(
-            "click",
-            async function () {
+        return;
 
-                clearMessages();
+    }
 
 
-                const name =
-                    fullNameInput.value.trim();
+    const firstLetter =
+        cleanName
+        .charAt(0)
+        .toUpperCase();
 
-                const mobile =
-                    phoneInput.value.trim();
 
-                const city =
-                    cityInput.value.trim();
+    profileAvatar.textContent =
+        firstLetter;
 
-                const address =
-                    addressInput.value.trim();
+}
 
 
-                if (!name) {
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-                    showError(
-                        "Please enter your full name."
-                    );
+logoutButton.addEventListener(
+    "click",
+    async function() {
 
-                    return;
+        logoutButton.disabled =
+            true;
 
-                }
-
-
-                if (
-                    mobile &&
-                    !/^[0-9]{10}$/.test(mobile)
-                ) {
-
-                    showError(
-                        "Please enter a valid 10-digit mobile number."
-                    );
-
-                    return;
-
-                }
-
-
-                saveButton.disabled = true;
-
-                saveButton.textContent =
-                    "Saving...";
-
-
-                try {
-
-                    const {
-                        data,
-                        error
-                    } =
-                        await supabaseClient.auth.updateUser({
-
-                            data: {
-
-                                full_name: name,
-                                mobile: mobile,
-                                city: city,
-                                address: address
-
-                            }
-
-                        });
-
-
-                    if (error) {
-
-                        throw error;
-
-                    }
-
-
-                    currentUser =
-                        data.user;
-
-
-                    originalProfile = {
-
-                        full_name: name,
-                        mobile: mobile,
-                        city: city,
-                        address: address
-
-                    };
-
-
-                    profileName.textContent =
-                        name;
-
-                    profileEmail.textContent =
-                        currentUser.email || "";
-
-                    profileAvatar.textContent =
-                        name.charAt(0).toUpperCase();
-
-
-                    showSuccess(
-                        "Profile updated successfully."
-                    );
-
-
-                    setEditing(false);
-
-                }
-
-
-                catch (error) {
-
-                    console.error(
-                        "Profile update error:",
-                        error
-                    );
-
-
-                    showError(
-                        error.message ||
-                        "Unable to update profile."
-                    );
-
-                }
-
-
-                finally {
-
-                    saveButton.disabled = false;
-
-                    saveButton.textContent =
-                        "Save Changes";
-
-                }
-
-            }
-        );
-
-
-        changePasswordButton.addEventListener(
-            "click",
-            async function () {
-
-                clearMessages();
-
-
-                if (!currentUser?.email) {
-
-                    showError(
-                        "Your email address could not be found."
-                    );
-
-                    return;
-
-                }
-
-
-                changePasswordButton.disabled = true;
-
-                changePasswordButton.textContent =
-                    "Sending...";
-
-
-                try {
-
-                    const {
-                        error
-                    } =
-                        await supabaseClient.auth
-                            .resetPasswordForEmail(
-                                currentUser.email,
-                                {
-                                    redirectTo:
-                                        window.location.origin +
-                                        "/reset-password.html"
-                                }
-                            );
-
-
-                    if (error) {
-
-                        throw error;
-
-                    }
-
-
-                    showSuccess(
-                        "Password reset email sent to " +
-                        currentUser.email
-                    );
-
-                }
-
-
-                catch (error) {
-
-                    console.error(
-                        "Password reset error:",
-                        error
-                    );
-
-
-                    showError(
-                        error.message ||
-                        "Unable to send password reset email."
-                    );
-
-                }
-
-
-                finally {
-
-                    changePasswordButton.disabled = false;
-
-                    changePasswordButton.textContent =
-                        "Change Password";
-
-                }
-
-            }
-        );
-
-
-        logoutButton.addEventListener(
-            "click",
-            async function () {
-
-                logoutButton.disabled = true;
-
-                logoutButton.textContent =
-                    "Logging out...";
-
-
-                try {
-
-                    const {
-                        error
-                    } =
-                        await supabaseClient.auth.signOut();
-
-
-                    if (error) {
-
-                        throw error;
-
-                    }
-
-
-                    window.location.href =
-                        "login.html";
-
-                }
-
-
-                catch (error) {
-
-                    console.error(
-                        "Logout error:",
-                        error
-                    );
-
-
-                    alert(
-                        "Logout failed. Please try again."
-                    );
-
-
-                    logoutButton.disabled = false;
-
-                    logoutButton.textContent =
-                        "Logout";
-
-                }
-
-            }
-        );
+        logoutButton.textContent =
+            "Logging out...";
 
 
         try {
 
-            await loadProfile();
+            await supabaseClient
+                .auth
+                .signOut();
 
         }
 
-        catch (error) {
+        catch(error) {
 
             console.error(
-                "Profile loading error:",
+                "Logout error:",
                 error
             );
+
+        }
+
+
+        window.location.href =
+            "login.html";
+
+    }
+);
+
+
+/* =========================================================
+   AUTH LISTENER
+========================================================= */
+
+supabaseClient
+.auth
+.onAuthStateChange(
+    function(event) {
+
+        if (
+            event === "SIGNED_OUT"
+        ) {
 
             window.location.href =
                 "login.html";
@@ -1398,8 +1070,82 @@ document.addEventListener(
         }
 
     }
-
 );
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+========================================================= */
+
+function showSuccess(message) {
+
+    const box =
+        document.getElementById(
+            "successMessage"
+        );
+
+
+    box.textContent =
+        message;
+
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        function() {
+
+            box.style.display =
+                "none";
+
+        },
+        4000
+    );
+
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+function showError(message) {
+
+    const box =
+        document.getElementById(
+            "errorMessage"
+        );
+
+
+    box.textContent =
+        message;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   HIDE MESSAGES
+========================================================= */
+
+function hideMessages() {
+
+    document.getElementById(
+        "successMessage"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "errorMessage"
+    ).style.display =
+        "none";
+
+}
 
 </script>
 
