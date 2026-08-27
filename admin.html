@@ -2,496 +2,485 @@
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>AviPrint Admin Panel</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f4f6f9;
-    color:#111827;
-}
-
-/* =========================
-   TOPBAR
-========================= */
-
-.topbar{
-    background:#111827;
-    color:white;
-    padding:18px 25px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-.topbar h1{
-    font-size:22px;
-}
-
-.admin-info{
-    margin-top:5px;
-    font-size:13px;
-    color:#d1d5db;
-}
-
-.logout-btn{
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:10px 18px;
-    border-radius:7px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.logout-btn:hover{
-    background:#dc2626;
-}
-
-/* =========================
-   CONTAINER
-========================= */
-
-.container{
-    width:95%;
-    max-width:1500px;
-    margin:25px auto;
-}
-
-/* =========================
-   MESSAGES
-========================= */
-
-.message{
-    display:none;
-    padding:14px 18px;
-    border-radius:8px;
-    margin-bottom:20px;
-    font-size:14px;
-}
-
-.success{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.error{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-bottom:25px;
-}
-
-.card{
-    background:white;
-    padding:22px;
-    border-radius:12px;
-
-    box-shadow:
-    0 2px 10px rgba(0,0,0,.07);
-}
-
-.card h3{
-    font-size:14px;
-    color:#6b7280;
-    margin-bottom:10px;
-}
-
-.number{
-    font-size:30px;
-    font-weight:bold;
-}
-
-.blue{
-    color:#2563eb;
-}
-
-.orange{
-    color:#d97706;
-}
-
-.purple{
-    color:#7c3aed;
-}
-
-.green{
-    color:#16a34a;
-}
-
-/* =========================
-   SECTION
-========================= */
-
-.section{
-    background:white;
-    border-radius:12px;
-    padding:22px;
-
-    box-shadow:
-    0 2px 10px rgba(0,0,0,.07);
-}
-
-.section-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    flex-wrap:wrap;
-
-    margin-bottom:20px;
-}
-
-.section-header h2{
-    font-size:20px;
-}
-
-.refresh-btn{
-    background:#2563eb;
-    color:white;
-    border:none;
-
-    padding:10px 17px;
-
-    border-radius:7px;
-
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.refresh-btn:hover{
-    background:#1d4ed8;
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-area{
-    margin-bottom:20px;
-}
-
-.search-input{
-    width:100%;
-    height:48px;
-
-    border:
-    1px solid #d1d5db;
-
-    border-radius:9px;
-
-    padding:
-    0 16px;
-
-    font-size:14px;
-
-    outline:none;
-}
-
-.search-input:focus{
-    border-color:#2563eb;
-
-    box-shadow:
-    0 0 0 3px
-    rgba(37,99,235,.1);
-}
-
-.search-info{
-    margin-top:7px;
-    color:#6b7280;
-    font-size:12px;
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.table-wrapper{
-    width:100%;
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    min-width:1250px;
-    border-collapse:collapse;
-}
-
-th{
-    background:#f3f4f6;
-
-    text-align:left;
-
-    padding:13px;
-
-    font-size:13px;
-
-    white-space:nowrap;
-}
-
-td{
-    padding:13px;
-
-    border-bottom:
-    1px solid #e5e7eb;
-
-    font-size:13px;
-
-    vertical-align:middle;
-}
-
-tr:hover{
-    background:#fafafa;
-}
-
-/* =========================
-   ORDER
-========================= */
-
-.order-id{
-    color:#2563eb;
-    font-weight:bold;
-}
-
-.customer-name{
-    font-weight:bold;
-    color:#111827;
-}
-
-.email{
-    color:#374151;
-    word-break:break-word;
-}
-
-.service{
-    font-weight:600;
-}
-
-.details{
-    color:#4b5563;
-    max-width:220px;
-    line-height:1.4;
-}
-
-.amount{
-    font-weight:bold;
-    color:#15803d;
-    white-space:nowrap;
-}
-
-.file-name{
-    max-width:200px;
-    word-break:break-word;
-    color:#374151;
-}
-
-.date{
-    color:#6b7280;
-    white-space:nowrap;
-}
-
-/* =========================
-   STATUS
-========================= */
-
-select{
-    padding:8px 10px;
-
-    border:
-    1px solid #d1d5db;
-
-    border-radius:6px;
-
-    background:white;
-
-    cursor:pointer;
-
-    min-width:130px;
-}
-
-select:disabled{
-    opacity:.6;
-    cursor:wait;
-}
-
-.status-pending{
-    color:#c2410c;
-    background:#fff7ed;
-}
-
-.status-processing{
-    color:#6d28d9;
-    background:#f5f3ff;
-}
-
-.status-printing{
-    color:#1d4ed8;
-    background:#eff6ff;
-}
-
-.status-ready{
-    color:#0e7490;
-    background:#ecfeff;
-}
-
-.status-completed{
-    color:#15803d;
-    background:#f0fdf4;
-}
-
-.status-cancelled{
-    color:#b91c1c;
-    background:#fef2f2;
-}
-
-/* =========================
-   FILE BUTTONS
-========================= */
-
-.file-buttons{
-    display:flex;
-    gap:7px;
-    flex-wrap:wrap;
-}
-
-.file-btn{
-    border:none;
-    border-radius:6px;
-
-    padding:8px 10px;
-
-    cursor:pointer;
-
-    font-size:12px;
-    font-weight:bold;
-
-    white-space:nowrap;
-}
-
-.view-btn{
-    background:#eff6ff;
-    color:#1d4ed8;
-}
-
-.view-btn:hover{
-    background:#dbeafe;
-}
-
-.download-btn{
-    background:#f0fdf4;
-    color:#15803d;
-}
-
-.download-btn:hover{
-    background:#dcfce7;
-}
-
-.file-btn:disabled{
-    opacity:.6;
-    cursor:wait;
-}
-
-/* =========================
-   EMAIL STATUS
-========================= */
-
-.email-status{
-    font-size:11px;
-    margin-top:5px;
-}
-
-.email-sending{
-    color:#d97706;
-}
-
-.email-success{
-    color:#15803d;
-}
-
-.email-failed{
-    color:#dc2626;
-}
-
-/* =========================
-   LOADING EMPTY
-========================= */
-
-.loading,
-.empty{
-    text-align:center;
-    padding:40px;
-    color:#6b7280;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1000px){
-
-    .cards{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-}
-
-@media(max-width:600px){
-
-    .cards{
-        grid-template-columns:1fr;
-    }
-
-    .container{
-        width:94%;
-    }
-
-    .section{
-        padding:15px;
-    }
-
-    .topbar{
-        padding:15px;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AviPrint Admin Panel</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #111827;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            background: #111827;
+            color: white;
+            padding: 18px 25px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+        }
+
+        .admin-info {
+            margin-top: 5px;
+            font-size: 13px;
+            opacity: .85;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 95%;
+            max-width: 1500px;
+            margin: 25px auto;
+        }
+
+        /* =========================
+           MESSAGES
+        ========================= */
+
+        .message {
+            display: none;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,.07);
+        }
+
+        .card h3 {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .blue {
+            color: #2563eb;
+        }
+
+        .orange {
+            color: #d97706;
+        }
+
+        .purple {
+            color: #7c3aed;
+        }
+
+        .green {
+            color: #16a34a;
+        }
+
+        /* =========================
+           SECTION
+        ========================= */
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,.07);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            flex-wrap: wrap;
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+        }
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-area {
+            display: grid;
+            grid-template-columns: 1fr 180px auto;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            height: 44px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+
+            padding: 0 14px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37,99,235,.1);
+        }
+
+        .search-select {
+            height: 44px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 0 10px;
+            background: white;
+        }
+
+        .search-btn,
+        .clear-btn,
+        .refresh-btn {
+            height: 44px;
+            border: none;
+            border-radius: 8px;
+            padding: 0 17px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .clear-btn {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .refresh-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1350px;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f3f4f6;
+            padding: 13px;
+            text-align: left;
+
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .order-id {
+            color: #2563eb;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .customer-name {
+            font-weight: bold;
+        }
+
+        .email {
+            color: #374151;
+            word-break: break-word;
+        }
+
+        .service {
+            font-weight: 600;
+        }
+
+        .quantity {
+            text-align: center;
+        }
+
+        .date {
+            color: #6b7280;
+            white-space: nowrap;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        select.status-select {
+            padding: 8px 10px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+
+            background: white;
+            cursor: pointer;
+
+            min-width: 130px;
+            font-weight: 600;
+        }
+
+        select:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        .status-pending {
+            color: #c2410c;
+            background: #fff7ed !important;
+        }
+
+        .status-processing {
+            color: #6d28d9;
+            background: #f5f3ff !important;
+        }
+
+        .status-printing {
+            color: #1d4ed8;
+            background: #eff6ff !important;
+        }
+
+        .status-ready {
+            color: #0e7490;
+            background: #ecfeff !important;
+        }
+
+        .status-completed {
+            color: #15803d;
+            background: #f0fdf4 !important;
+        }
+
+        .status-cancelled {
+            color: #b91c1c;
+            background: #fef2f2 !important;
+        }
+
+        /* =========================
+           FILE BUTTONS
+        ========================= */
+
+        .file-name {
+            display: block;
+            max-width: 220px;
+            word-break: break-word;
+
+            color: #374151;
+            margin-bottom: 7px;
+        }
+
+        .file-buttons {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .file-btn {
+            border: none;
+            border-radius: 6px;
+            padding: 7px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .view-btn {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .download-btn {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .file-btn:hover {
+            opacity: .8;
+        }
+
+        /* =========================
+           EMAIL STATUS
+        ========================= */
+
+        .email-status {
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .email-sending {
+            color: #d97706;
+        }
+
+        .email-success {
+            color: #15803d;
+        }
+
+        .email-failed {
+            color: #dc2626;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading,
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+        }
+
+        .results-count {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-area {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .topbar {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 
 <body>
-
-<!-- =========================
-     TOPBAR
-========================= -->
 
 <header class="topbar">
 
@@ -502,8 +491,8 @@ select:disabled{
         </h1>
 
         <div
-            id="adminInfo"
-            class="admin-info">
+            class="admin-info"
+            id="adminInfo">
 
             Checking admin session...
 
@@ -526,216 +515,249 @@ select:disabled{
 <main class="container">
 
 
-<!-- =========================
-     MESSAGES
-========================= -->
-
-<div
-    id="successMessage"
-    class="message success">
-</div>
-
-<div
-    id="errorMessage"
-    class="message error">
-</div>
-
-
-<!-- =========================
-     DASHBOARD
-========================= -->
-
-<div class="cards">
-
-
-    <div class="card">
-
-        <h3>
-            Total Orders
-        </h3>
-
-        <div
-            id="totalOrders"
-            class="number blue">
-
-            0
-
-        </div>
-
+    <div
+        id="successMessage"
+        class="message success">
     </div>
 
-
-    <div class="card">
-
-        <h3>
-            Pending Orders
-        </h3>
-
-        <div
-            id="pendingOrders"
-            class="number orange">
-
-            0
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            Processing / Printing
-        </h3>
-
-        <div
-            id="processingOrders"
-            class="number purple">
-
-            0
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            Completed Orders
-        </h3>
-
-        <div
-            id="completedOrders"
-            class="number green">
-
-            0
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     ORDERS
-========================= -->
-
-<section class="section">
-
-
-<div class="section-header">
-
-    <h2>
-        📦 Customer Orders
-    </h2>
-
-
-    <button
-        class="refresh-btn"
-        onclick="loadOrders()">
-
-        🔄 Refresh
-
-    </button>
-
-</div>
-
-
-<!-- SEARCH -->
-
-<div class="search-area">
-
-    <input
-        type="text"
-        id="searchInput"
-        class="search-input"
-        placeholder="🔎 Search by Customer Name, Email or Order Number...">
 
     <div
-        id="searchInfo"
-        class="search-info">
+        id="errorMessage"
+        class="message error">
+    </div>
 
-        Showing all orders
+
+    <!-- =========================
+         DASHBOARD CARDS
+    ========================= -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>
+                Total Orders
+            </h3>
+
+            <div
+                id="totalOrders"
+                class="number blue">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Pending Orders
+            </h3>
+
+            <div
+                id="pendingOrders"
+                class="number orange">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Processing / Printing
+            </h3>
+
+            <div
+                id="processingOrders"
+                class="number purple">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Completed Orders
+            </h3>
+
+            <div
+                id="completedOrders"
+                class="number green">
+
+                0
+
+            </div>
+
+        </div>
 
     </div>
 
-</div>
+
+    <!-- =========================
+         ORDERS SECTION
+    ========================= -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <h2>
+                📦 Customer Orders
+            </h2>
+
+            <button
+                class="refresh-btn"
+                onclick="loadOrders()">
+
+                🔄 Refresh
+
+            </button>
+
+        </div>
 
 
-<!-- TABLE -->
+        <!-- SEARCH -->
 
-<div class="table-wrapper">
+        <div class="search-area">
 
-<table>
-
-<thead>
-
-<tr>
-
-<th>
-Order ID
-</th>
-
-<th>
-Customer Name
-</th>
-
-<th>
-Email
-</th>
-
-<th>
-Service
-</th>
-
-<th>
-Details
-</th>
-
-<th>
-Amount
-</th>
-
-<th>
-File
-</th>
-
-<th>
-Status
-</th>
-
-<th>
-Date
-</th>
-
-</tr>
-
-</thead>
+            <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search customer name, email or order number...">
 
 
-<tbody id="ordersTableBody">
+            <select
+                id="searchType"
+                class="search-select">
 
-<tr>
+                <option value="all">
+                    Search All
+                </option>
 
-<td
-colspan="9"
-class="loading">
+                <option value="name">
+                    Customer Name
+                </option>
 
-Loading orders...
+                <option value="email">
+                    Customer Email
+                </option>
 
-</td>
+                <option value="order">
+                    Order Number
+                </option>
 
-</tr>
+            </select>
 
-</tbody>
 
-</table>
+            <div>
 
-</div>
+                <button
+                    class="search-btn"
+                    onclick="applySearch()">
 
-</section>
+                    🔍 Search
+
+                </button>
+
+                <button
+                    class="clear-btn"
+                    onclick="clearSearch()">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="resultsCount"
+            class="results-count">
+
+            Loading orders...
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Order ID
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Service
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            File
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="ordersTableBody">
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="loading">
+
+                            Loading orders...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
 
 </main>
 
@@ -748,6 +770,7 @@ Loading orders...
 
 const SUPABASE_URL =
     "https://pmqmewceqnxsvlhceeef.supabase.co";
+
 
 const SUPABASE_ANON_KEY =
     "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
@@ -762,7 +785,15 @@ const ADMIN_EMAIL =
 
 
 /* =========================================================
-   STORAGE
+   EDGE FUNCTION
+========================================================= */
+
+const EDGE_FUNCTION_NAME =
+    "smart-task";
+
+
+/* =========================================================
+   STORAGE BUCKET
 ========================================================= */
 
 const STORAGE_BUCKET =
@@ -770,19 +801,11 @@ const STORAGE_BUCKET =
 
 
 /* =========================================================
-   EDGE FUNCTION
-========================================================= */
-
-const EDGE_FUNCTION_NAME =
-    "dynamic-function";
-
-
-/* =========================================================
    SUPABASE CLIENT
 ========================================================= */
 
 const supabaseClient =
-    supabase.createClient(
+    window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
@@ -796,14 +819,12 @@ let allOrders = [];
 
 
 /* =========================================================
-   PAGE LOAD
+   PAGE START
 ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
-    async function(){
-
-        setupSearch();
+    async function () {
 
         await checkAdmin();
 
@@ -815,20 +836,18 @@ document.addEventListener(
    CHECK ADMIN
 ========================================================= */
 
-async function checkAdmin(){
+async function checkAdmin() {
 
-    try{
+    try {
 
         const {
             data,
             error
         } =
-        await supabaseClient
-        .auth
-        .getSession();
+        await supabaseClient.auth.getSession();
 
 
-        if(error){
+        if (error) {
 
             throw error;
 
@@ -839,10 +858,10 @@ async function checkAdmin(){
             data.session;
 
 
-        if(
+        if (
             !session ||
             !session.user
-        ){
+        ) {
 
             window.location.href =
                 "login.html";
@@ -856,23 +875,22 @@ async function checkAdmin(){
             session.user.email || "";
 
 
-        if(
+        if (
             email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
-        ){
+        ) {
 
             alert(
                 "Access denied. Admin account required."
             );
 
 
-            await supabaseClient
-                .auth
-                .signOut();
+            await supabaseClient.auth.signOut();
 
 
             window.location.href =
                 "login.html";
+
 
             return;
 
@@ -889,7 +907,7 @@ async function checkAdmin(){
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Admin check error:",
@@ -898,8 +916,11 @@ async function checkAdmin(){
 
 
         showError(
-            error.message ||
-            "Unable to verify admin."
+            "Unable to verify admin: " +
+            (
+                error.message ||
+                error
+            )
         );
 
     }
@@ -911,7 +932,7 @@ async function checkAdmin(){
    LOAD ORDERS
 ========================================================= */
 
-async function loadOrders(){
+async function loadOrders() {
 
     const tbody =
         document.getElementById(
@@ -921,48 +942,44 @@ async function loadOrders(){
 
     tbody.innerHTML = `
         <tr>
-            <td colspan="9" class="loading">
+            <td colspan="8" class="loading">
                 Loading orders...
             </td>
         </tr>
     `;
 
 
-    hideMessages();
-
-
-    try{
+    try {
 
         const {
             data,
             error
         } =
         await supabaseClient
-        .from("orders")
-        .select(`
-            id,
-            order_number,
-            user_id,
-            customer_name,
-            customer_email,
-            service_name,
-            service_details,
-            order_date,
-            status,
-            amount,
-            file_path,
-            file_name,
-            created_at
-        `)
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+            .from("orders")
+            .select(`
+                id,
+                order_number,
+                user_id,
+                service_name,
+                service_details,
+                order_date,
+                status,
+                amount,
+                file_path,
+                file_name,
+                created_at,
+                customer_email
+            `)
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
 
 
-        if(error){
+        if (error) {
 
             throw error;
 
@@ -984,7 +1001,7 @@ async function loadOrders(){
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Load orders error:",
@@ -994,7 +1011,7 @@ async function loadOrders(){
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="9" class="empty">
+                <td colspan="8" class="empty">
                     Failed to load orders.
                 </td>
             </tr>
@@ -1020,7 +1037,7 @@ async function loadOrders(){
 
 function renderOrders(
     orders
-){
+) {
 
     const tbody =
         document.getElementById(
@@ -1028,21 +1045,25 @@ function renderOrders(
         );
 
 
-    if(!orders.length){
+    document.getElementById(
+        "resultsCount"
+    ).textContent =
+        orders.length +
+        " order(s) found";
+
+
+    if (
+        !orders ||
+        orders.length === 0
+    ) {
 
         tbody.innerHTML = `
             <tr>
-                <td
-                    colspan="9"
-                    class="empty">
-
+                <td colspan="8" class="empty">
                     No orders found.
-
                 </td>
             </tr>
         `;
-
-        updateSearchInfo(0);
 
         return;
 
@@ -1053,18 +1074,13 @@ function renderOrders(
 
 
     orders.forEach(
-        function(order){
+        function (order) {
 
             tbody.appendChild(
                 createOrderRow(order)
             );
 
         }
-    );
-
-
-    updateSearchInfo(
-        orders.length
     );
 
 }
@@ -1076,7 +1092,7 @@ function renderOrders(
 
 function createOrderRow(
     order
-){
+) {
 
     const tr =
         document.createElement("tr");
@@ -1088,18 +1104,26 @@ function createOrderRow(
 
     const orderNumber =
         order.order_number ||
-        orderId ||
+        orderId;
+
+
+    /*
+     * Customer name is not present
+     * in the orders table.
+     *
+     * We therefore show a safe
+     * fallback based on email.
+     */
+
+    const customerEmail =
+        order.customer_email ||
         "-";
 
 
     const customerName =
-        order.customer_name ||
-        "Customer";
-
-
-    const email =
-        order.customer_email ||
-        "-";
+        getCustomerName(
+            order
+        );
 
 
     const service =
@@ -1107,28 +1131,9 @@ function createOrderRow(
         "-";
 
 
-    const details =
-        order.service_details ||
-        "-";
-
-
-    const amount =
-        order.amount !== null &&
-        order.amount !== undefined
-            ? "₹" +
-              Number(order.amount)
-              .toFixed(2)
-            : "₹0.00";
-
-
-    const fileName =
-        order.file_name ||
-        "-";
-
-
-    const filePath =
-        order.file_path ||
-        "";
+    const quantity =
+        order.quantity ||
+        1;
 
 
     const status =
@@ -1138,9 +1143,9 @@ function createOrderRow(
         ).toLowerCase();
 
 
-    const date =
-        order.order_date ||
+    const createdAt =
         order.created_at ||
+        order.order_date ||
         "";
 
 
@@ -1157,27 +1162,7 @@ function createOrderRow(
 
 
     tr.dataset.email =
-        email;
-
-
-    tr.dataset.service =
-        service;
-
-
-    tr.dataset.details =
-        details;
-
-
-    tr.dataset.amount =
-        amount;
-
-
-    tr.dataset.fileName =
-        fileName;
-
-
-    tr.dataset.filePath =
-        filePath;
+        customerEmail;
 
 
     tr.innerHTML = `
@@ -1187,7 +1172,7 @@ function createOrderRow(
             <span class="order-id">
 
                 ${escapeHTML(
-                    String(orderNumber)
+                    orderNumber
                 )}
 
             </span>
@@ -1200,7 +1185,7 @@ function createOrderRow(
             <span class="customer-name">
 
                 ${escapeHTML(
-                    String(customerName)
+                    customerName
                 )}
 
             </span>
@@ -1213,7 +1198,7 @@ function createOrderRow(
             <span class="email">
 
                 ${escapeHTML(
-                    String(email)
+                    customerEmail
                 )}
 
             </span>
@@ -1221,7 +1206,7 @@ function createOrderRow(
 
             <div
                 id="email-status-${escapeHTML(
-                    String(orderId)
+                    orderId
                 )}"
                 class="email-status">
 
@@ -1235,7 +1220,7 @@ function createOrderRow(
             <span class="service">
 
                 ${escapeHTML(
-                    String(service)
+                    service
                 )}
 
             </span>
@@ -1243,76 +1228,20 @@ function createOrderRow(
         </td>
 
 
-        <td>
+        <td class="quantity">
 
-            <div class="details">
-
-                ${escapeHTML(
-                    String(details)
-                )}
-
-            </div>
+            ${escapeHTML(
+                String(quantity)
+            )}
 
         </td>
 
 
         <td>
 
-            <span class="amount">
-
-                ${escapeHTML(
-                    String(amount)
-                )}
-
-            </span>
-
-        </td>
-
-
-        <td>
-
-            ${
-                filePath
-                ?
-                `
-                <div class="file-buttons">
-
-                    <button
-                        class="file-btn view-btn"
-                        onclick="viewFile(
-                            '${escapeJS(filePath)}',
-                            this
-                        )">
-
-                        👁 View
-
-                    </button>
-
-
-                    <button
-                        class="file-btn download-btn"
-                        onclick="downloadFile(
-                            '${escapeJS(filePath)}',
-                            '${escapeJS(fileName)}',
-                            this
-                        )">
-
-                        ⬇ Download
-
-                    </button>
-
-                </div>
-                `
-                :
-                `
-                <span
-                    style="color:#9ca3af;">
-
-                    No file
-
-                </span>
-                `
-            }
+            ${createFileButtons(
+                order
+            )}
 
         </td>
 
@@ -1320,7 +1249,7 @@ function createOrderRow(
         <td>
 
             <select
-                class="${getStatusClass(status)}"
+                class="status-select ${getStatusClass(status)}"
                 data-old-status="${escapeHTML(status)}"
                 onchange="changeOrderStatus(
                     '${escapeJS(orderId)}',
@@ -1331,37 +1260,54 @@ function createOrderRow(
                 <option
                     value="pending"
                     ${status === "pending" ? "selected" : ""}>
+
                     Pending
+
                 </option>
+
 
                 <option
                     value="processing"
                     ${status === "processing" ? "selected" : ""}>
+
                     Processing
+
                 </option>
+
 
                 <option
                     value="printing"
                     ${status === "printing" ? "selected" : ""}>
+
                     Printing
+
                 </option>
+
 
                 <option
                     value="ready"
                     ${status === "ready" ? "selected" : ""}>
+
                     Ready
+
                 </option>
+
 
                 <option
                     value="completed"
                     ${status === "completed" ? "selected" : ""}>
+
                     Completed
+
                 </option>
+
 
                 <option
                     value="cancelled"
                     ${status === "cancelled" ? "selected" : ""}>
+
                     Cancelled
+
                 </option>
 
             </select>
@@ -1372,7 +1318,7 @@ function createOrderRow(
         <td class="date">
 
             ${escapeHTML(
-                formatDate(date)
+                formatDate(createdAt)
             )}
 
         </td>
@@ -1386,66 +1332,172 @@ function createOrderRow(
 
 
 /* =========================================================
-   VIEW FILE
+   CUSTOMER NAME
 ========================================================= */
 
-async function viewFile(
-    filePath,
-    button
-){
+function getCustomerName(
+    order
+) {
 
-    if(!filePath){
+    /*
+     * Your current orders table
+     * does NOT contain customer_name.
+     */
 
-        showError(
-            "File path is missing."
-        );
+    if (
+        order.customer_name
+    ) {
 
-        return;
+        return order.customer_name;
 
     }
 
 
-    button.disabled =
-        true;
+    if (
+        order.full_name
+    ) {
 
-    button.textContent =
-        "Opening...";
+        return order.full_name;
+
+    }
 
 
-    try{
+    if (
+        order.name
+    ) {
 
-        /*
-         * Create signed URL.
-         *
-         * This works with a private bucket
-         * when the logged-in user has the
-         * required Storage permissions.
-         */
+        return order.name;
+
+    }
+
+
+    /*
+     * Temporary fallback.
+     */
+
+    if (
+        order.customer_email &&
+        order.customer_email !== "-"
+    ) {
+
+        return order.customer_email
+            .split("@")[0];
+
+    }
+
+
+    return "Customer";
+
+}
+
+
+/* =========================================================
+   FILE BUTTONS
+========================================================= */
+
+function createFileButtons(
+    order
+) {
+
+    if (
+        !order.file_path
+    ) {
+
+        return `
+            <span class="file-name">
+                No file
+            </span>
+        `;
+
+    }
+
+
+    const fileName =
+        order.file_name ||
+        "Document";
+
+
+    return `
+
+        <span class="file-name">
+
+            ${escapeHTML(
+                fileName
+            )}
+
+        </span>
+
+
+        <div class="file-buttons">
+
+            <button
+                class="file-btn view-btn"
+                onclick="viewFile(
+                    '${escapeJS(
+                        order.file_path
+                    )}'
+                )">
+
+                👁 View
+
+            </button>
+
+
+            <button
+                class="file-btn download-btn"
+                onclick="downloadFile(
+                    '${escapeJS(
+                        order.file_path
+                    )}',
+                    '${escapeJS(
+                        fileName
+                    )}'
+                )">
+
+                ⬇ Download
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   VIEW FILE
+========================================================= */
+
+async function viewFile(
+    filePath
+) {
+
+    try {
 
         const {
             data,
             error
         } =
-        await supabaseClient
-        .storage
-        .from(STORAGE_BUCKET)
-        .createSignedUrl(
-            filePath,
-            3600
-        );
+        await supabaseClient.storage
+            .from(STORAGE_BUCKET)
+            .createSignedUrl(
+                filePath,
+                300
+            );
 
 
-        if(error){
+        if (error) {
 
             throw error;
 
         }
 
 
-        if(
+        if (
             !data ||
             !data.signedUrl
-        ){
+        ) {
 
             throw new Error(
                 "Unable to create file URL."
@@ -1461,7 +1513,7 @@ async function viewFile(
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "View file error:",
@@ -1479,16 +1531,6 @@ async function viewFile(
 
     }
 
-    finally{
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "👁 View";
-
-    }
-
 }
 
 
@@ -1498,76 +1540,57 @@ async function viewFile(
 
 async function downloadFile(
     filePath,
-    fileName,
-    button
-){
+    fileName
+) {
 
-    if(!filePath){
-
-        showError(
-            "File path is missing."
-        );
-
-        return;
-
-    }
-
-
-    button.disabled =
-        true;
-
-    button.textContent =
-        "Downloading...";
-
-
-    try{
+    try {
 
         const {
             data,
             error
         } =
-        await supabaseClient
-        .storage
-        .from(STORAGE_BUCKET)
-        .download(
-            filePath
-        );
+        await supabaseClient.storage
+            .from(STORAGE_BUCKET)
+            .download(
+                filePath
+            );
 
 
-        if(error){
+        if (error) {
 
             throw error;
 
         }
 
 
-        if(!data){
+        const blob =
+            data;
 
-            throw new Error(
-                "File could not be downloaded."
+
+        const url =
+            URL.createObjectURL(
+                blob
             );
-
-        }
-
-
-        const blobUrl =
-            URL.createObjectURL(data);
 
 
         const a =
-            document.createElement("a");
+            document.createElement(
+                "a"
+            );
 
 
         a.href =
-            blobUrl;
+            url;
 
 
         a.download =
             fileName ||
-            "AviPrint-file";
+            "download";
 
 
-        document.body.appendChild(a);
+        document.body.appendChild(
+            a
+        );
 
 
         a.click();
@@ -1576,24 +1599,16 @@ async function downloadFile(
         a.remove();
 
 
-        setTimeout(
-            function(){
-
-                URL.revokeObjectURL(
-                    blobUrl
-                );
-
-            },
-            1000
+        URL.revokeObjectURL(
+            url
         );
-
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
-            "Download file error:",
+            "Download error:",
             error
         );
 
@@ -1608,16 +1623,6 @@ async function downloadFile(
 
     }
 
-    finally{
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "⬇ Download";
-
-    }
-
 }
 
 
@@ -1629,9 +1634,9 @@ async function changeOrderStatus(
     orderId,
     newStatus,
     selectElement
-){
+) {
 
-    if(!orderId){
+    if (!orderId) {
 
         showError(
             "Order ID is missing."
@@ -1666,26 +1671,6 @@ async function changeOrderStatus(
         "";
 
 
-    const service =
-        row.dataset.service ||
-        "-";
-
-
-    const details =
-        row.dataset.details ||
-        "-";
-
-
-    const amount =
-        row.dataset.amount ||
-        "₹0.00";
-
-
-    const fileName =
-        row.dataset.fileName ||
-        "-";
-
-
     selectElement.disabled =
         true;
 
@@ -1693,7 +1678,7 @@ async function changeOrderStatus(
     hideMessages();
 
 
-    try{
+    try {
 
         /* =========================
            UPDATE DATABASE
@@ -1703,17 +1688,17 @@ async function changeOrderStatus(
             error
         } =
         await supabaseClient
-        .from("orders")
-        .update({
-            status:newStatus
-        })
-        .eq(
-            "id",
-            orderId
-        );
+            .from("orders")
+            .update({
+                status: newStatus
+            })
+            .eq(
+                "id",
+                orderId
+            );
 
 
-        if(error){
+        if (error) {
 
             throw error;
 
@@ -1725,6 +1710,7 @@ async function changeOrderStatus(
 
 
         selectElement.className =
+            "status-select " +
             getStatusClass(
                 newStatus
             );
@@ -1743,10 +1729,10 @@ async function changeOrderStatus(
            SEND EMAIL
         ========================= */
 
-        if(
+        if (
             customerEmail &&
             customerEmail !== "-"
-        ){
+        ) {
 
             setEmailStatus(
                 orderId,
@@ -1755,7 +1741,7 @@ async function changeOrderStatus(
             );
 
 
-            try{
+            try {
 
                 await sendOrderEmail({
 
@@ -1765,28 +1751,30 @@ async function changeOrderStatus(
                     orderNumber:
                         orderNumber,
 
-                    customerName:
-                        customerName,
-
                     service:
-                        service,
+                        getOrderService(
+                            orderId
+                        ),
 
                     details:
-                        details,
+                        getOrderDetails(
+                            orderId
+                        ),
 
                     amount:
-                        amount,
+                        getOrderAmount(
+                            orderId
+                        ),
 
                     status:
-                        capitalizeStatus(
+                        formatStatus(
                             newStatus
                         ),
 
                     fileName:
-                        fileName,
-
-                    orderId:
-                        orderId
+                        getOrderFileName(
+                            orderId
+                        )
 
                 });
 
@@ -1799,7 +1787,7 @@ async function changeOrderStatus(
 
             }
 
-            catch(emailError){
+            catch (emailError) {
 
                 console.error(
                     "Email failed:",
@@ -1826,7 +1814,7 @@ async function changeOrderStatus(
 
         }
 
-        else{
+        else {
 
             setEmailStatus(
                 orderId,
@@ -1841,7 +1829,7 @@ async function changeOrderStatus(
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Status update error:",
@@ -1854,6 +1842,7 @@ async function changeOrderStatus(
 
 
         selectElement.className =
+            "status-select " +
             getStatusClass(
                 oldStatus
             );
@@ -1869,7 +1858,7 @@ async function changeOrderStatus(
 
     }
 
-    finally{
+    finally {
 
         selectElement.disabled =
             false;
@@ -1880,69 +1869,192 @@ async function changeOrderStatus(
 
 
 /* =========================================================
+   GET ORDER SERVICE
+========================================================= */
+
+function getOrderService(
+    orderId
+) {
+
+    const order =
+        allOrders.find(
+            function (item) {
+
+                return String(
+                    item.id
+                ) === String(
+                    orderId
+                );
+
+            }
+        );
+
+
+    return order?.service_name ||
+        "-";
+
+}
+
+
+/* =========================================================
+   GET ORDER DETAILS
+========================================================= */
+
+function getOrderDetails(
+    orderId
+) {
+
+    const order =
+        allOrders.find(
+            function (item) {
+
+                return String(
+                    item.id
+                ) === String(
+                    orderId
+                );
+
+            }
+        );
+
+
+    return order?.service_details ||
+        "-";
+
+}
+
+
+/* =========================================================
+   GET ORDER AMOUNT
+========================================================= */
+
+function getOrderAmount(
+    orderId
+) {
+
+    const order =
+        allOrders.find(
+            function (item) {
+
+                return String(
+                    item.id
+                ) === String(
+                    orderId
+                );
+
+            }
+        );
+
+
+    if (
+        order?.amount !== null &&
+        order?.amount !== undefined
+    ) {
+
+        return "₹" +
+            Number(
+                order.amount
+            ).toFixed(2);
+
+    }
+
+
+    return "₹0.00";
+
+}
+
+
+/* =========================================================
+   GET FILE NAME
+========================================================= */
+
+function getOrderFileName(
+    orderId
+) {
+
+    const order =
+        allOrders.find(
+            function (item) {
+
+                return String(
+                    item.id
+                ) === String(
+                    orderId
+                );
+
+            }
+        );
+
+
+    return order?.file_name ||
+        "-";
+
+}
+
+
+/* =========================================================
    SEND ORDER EMAIL
 ========================================================= */
 
 async function sendOrderEmail(
-    orderData
-){
+    data
+) {
 
     console.log(
-        "Sending order email...",
-        orderData
+        "Calling Edge Function:",
+        EDGE_FUNCTION_NAME
     );
 
 
-    /*
-     * Try the current dynamic-function first.
-     */
-
     const {
-        data,
+        data: result,
         error
     } =
-    await supabaseClient
-    .functions
-    .invoke(
+    await supabaseClient.functions.invoke(
         EDGE_FUNCTION_NAME,
         {
-            body:orderData
+            body: data
         }
     );
 
 
     console.log(
-        "Edge Function response:",
-        data,
-        error
+        "Edge Function result:",
+        result
     );
 
 
-    if(error){
+    if (error) {
+
+        console.error(
+            "Edge Function error:",
+            error
+        );
+
 
         throw new Error(
             error.message ||
-            "Failed to send email."
+            "Failed to call Edge Function."
         );
 
     }
 
 
-    if(
-        data &&
-        data.success === false
-    ){
+    if (
+        result &&
+        result.success === false
+    ) {
 
         throw new Error(
-            data.error ||
-            data.message ||
+            result.error ||
+            result.message ||
             "Email sending failed."
         );
 
     }
 
 
-    return data;
+    return result;
 
 }
 
@@ -1951,20 +2063,20 @@ async function sendOrderEmail(
    LOAD COUNTERS
 ========================================================= */
 
-async function loadCounters(){
+async function loadCounters() {
 
-    try{
+    try {
 
         const {
             data,
             error
         } =
         await supabaseClient
-        .from("orders")
-        .select("status");
+            .from("orders")
+            .select("status");
 
 
-        if(error){
+        if (error) {
 
             console.error(
                 error
@@ -1981,7 +2093,7 @@ async function loadCounters(){
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Counter error:",
@@ -1994,25 +2106,22 @@ async function loadCounters(){
 
 
 /* =========================================================
-   COUNTERS
+   UPDATE COUNTERS
 ========================================================= */
 
 function updateCounters(
     orders
-){
+) {
 
-    let pending =
-        0;
+    let pending = 0;
 
-    let processing =
-        0;
+    let processing = 0;
 
-    let completed =
-        0;
+    let completed = 0;
 
 
     orders.forEach(
-        function(order){
+        function (order) {
 
             const status =
                 String(
@@ -2021,29 +2130,31 @@ function updateCounters(
                 ).toLowerCase();
 
 
-            if(
-                status === "pending"
-            ){
+            if (
+                status ===
+                "pending"
+            ) {
 
                 pending++;
 
             }
 
 
-            if(
+            if (
                 status === "processing" ||
                 status === "printing" ||
                 status === "ready"
-            ){
+            ) {
 
                 processing++;
 
             }
 
 
-            if(
-                status === "completed"
-            ){
+            if (
+                status ===
+                "completed"
+            ) {
 
                 completed++;
 
@@ -2083,117 +2194,151 @@ function updateCounters(
    SEARCH
 ========================================================= */
 
-function setupSearch(){
+function applySearch() {
 
-    const searchInput =
+    const search =
         document.getElementById(
             "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const type =
+        document.getElementById(
+            "searchType"
+        ).value;
+
+
+    if (!search) {
+
+        renderOrders(
+            allOrders
+        );
+
+        return;
+
+    }
+
+
+    const filtered =
+        allOrders.filter(
+            function (order) {
+
+                const name =
+                    getCustomerName(
+                        order
+                    ).toLowerCase();
+
+
+                const email =
+                    String(
+                        order.customer_email ||
+                        ""
+                    ).toLowerCase();
+
+
+                const orderNumber =
+                    String(
+                        order.order_number ||
+                        ""
+                    ).toLowerCase();
+
+
+                if (
+                    type === "name"
+                ) {
+
+                    return name.includes(
+                        search
+                    );
+
+                }
+
+
+                if (
+                    type === "email"
+                ) {
+
+                    return email.includes(
+                        search
+                    );
+
+                }
+
+
+                if (
+                    type === "order"
+                ) {
+
+                    return orderNumber.includes(
+                        search
+                    );
+
+                }
+
+
+                return (
+                    name.includes(search) ||
+                    email.includes(search) ||
+                    orderNumber.includes(search)
+                );
+
+            }
         );
 
 
-    searchInput.addEventListener(
-        "input",
-        function(){
-
-            const search =
-                searchInput.value
-                .trim()
-                .toLowerCase();
-
-
-            if(!search){
-
-                renderOrders(
-                    allOrders
-                );
-
-                return;
-
-            }
-
-
-            const filtered =
-                allOrders.filter(
-                    function(order){
-
-                        const name =
-                            String(
-                                order.customer_name ||
-                                ""
-                            ).toLowerCase();
-
-
-                        const email =
-                            String(
-                                order.customer_email ||
-                                ""
-                            ).toLowerCase();
-
-
-                        const orderNumber =
-                            String(
-                                order.order_number ||
-                                ""
-                            ).toLowerCase();
-
-
-                        return (
-                            name.includes(search) ||
-                            email.includes(search) ||
-                            orderNumber.includes(search)
-                        );
-
-                    }
-                );
-
-
-            renderOrders(
-                filtered
-            );
-
-        }
+    renderOrders(
+        filtered
     );
 
 }
 
 
 /* =========================================================
-   SEARCH INFO
+   SEARCH ENTER KEY
 ========================================================= */
 
-function updateSearchInfo(
-    count
-){
+document.getElementById(
+    "searchInput"
+).addEventListener(
+    "keydown",
+    function (event) {
 
-    const search =
-        document.getElementById(
-            "searchInput"
-        ).value.trim();
+        if (
+            event.key ===
+            "Enter"
+        ) {
 
+            applySearch();
 
-    const info =
-        document.getElementById(
-            "searchInfo"
-        );
-
-
-    if(search){
-
-        info.textContent =
-            "Found " +
-            count +
-            " matching order(s)";
+        }
 
     }
+);
 
-    else{
 
-        info.textContent =
-            "Showing all " +
-            allOrders.length +
-            " order(s)";
+/* =========================================================
+   CLEAR SEARCH
+========================================================= */
 
-    }
+function clearSearch() {
+
+    document.getElementById(
+        "searchInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchType"
+    ).value =
+        "all";
+
+
+    renderOrders(
+        allOrders
+    );
 
 }
 
@@ -2204,46 +2349,46 @@ function updateSearchInfo(
 
 function getStatusClass(
     status
-){
+) {
 
     return (
         "status-" +
         String(status)
-        .toLowerCase()
+            .toLowerCase()
     );
 
 }
 
 
 /* =========================================================
-   CAPITALIZE STATUS
+   FORMAT STATUS
 ========================================================= */
 
-function capitalizeStatus(
+function formatStatus(
     status
-){
+) {
 
     const value =
-        String(status || "");
+        String(
+            status || ""
+        ).toLowerCase();
 
 
-    return value
-        .charAt(0)
-        .toUpperCase() +
+    return value.charAt(0).toUpperCase() +
         value.slice(1);
 
 }
 
 
 /* =========================================================
-   DATE
+   FORMAT DATE
 ========================================================= */
 
 function formatDate(
     value
-){
+) {
 
-    if(!value){
+    if (!value) {
 
         return "-";
 
@@ -2254,11 +2399,11 @@ function formatDate(
         new Date(value);
 
 
-    if(
+    if (
         isNaN(
             date.getTime()
         )
-    ){
+    ) {
 
         return String(value);
 
@@ -2268,48 +2413,13 @@ function formatDate(
     return date.toLocaleString(
         "en-IN",
         {
-            day:"2-digit",
-            month:"short",
-            year:"numeric",
-            hour:"2-digit",
-            minute:"2-digit"
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
         }
     );
-
-}
-
-
-/* =========================================================
-   EMAIL STATUS
-========================================================= */
-
-function setEmailStatus(
-    orderId,
-    message,
-    className
-){
-
-    const element =
-        document.getElementById(
-            "email-status-" +
-            orderId
-        );
-
-
-    if(!element){
-
-        return;
-
-    }
-
-
-    element.textContent =
-        message;
-
-
-    element.className =
-        "email-status " +
-        className;
 
 }
 
@@ -2320,30 +2430,25 @@ function setEmailStatus(
 
 function escapeHTML(
     value
-){
+) {
 
     return String(value)
-
         .replace(
             /&/g,
             "&amp;"
         )
-
         .replace(
             /</g,
             "&lt;"
         )
-
         .replace(
             />/g,
             "&gt;"
         )
-
         .replace(
             /"/g,
             "&quot;"
         )
-
         .replace(
             /'/g,
             "&#039;"
@@ -2358,30 +2463,25 @@ function escapeHTML(
 
 function escapeJS(
     value
-){
+) {
 
     return String(value)
-
         .replace(
             /\\/g,
             "\\\\"
         )
-
         .replace(
             /'/g,
             "\\'"
         )
-
         .replace(
             /"/g,
             '\\"'
         )
-
         .replace(
             /\n/g,
             "\\n"
         )
-
         .replace(
             /\r/g,
             "\\r"
@@ -2396,7 +2496,7 @@ function escapeJS(
 
 function showSuccess(
     message
-){
+) {
 
     const box =
         document.getElementById(
@@ -2413,7 +2513,7 @@ function showSuccess(
 
 
     setTimeout(
-        function(){
+        function () {
 
             box.style.display =
                 "none";
@@ -2431,7 +2531,7 @@ function showSuccess(
 
 function showError(
     message
-){
+) {
 
     const box =
         document.getElementById(
@@ -2453,7 +2553,7 @@ function showError(
    HIDE MESSAGES
 ========================================================= */
 
-function hideMessages(){
+function hideMessages() {
 
     document.getElementById(
         "successMessage"
@@ -2473,17 +2573,15 @@ function hideMessages(){
    LOGOUT
 ========================================================= */
 
-async function logout(){
+async function logout() {
 
-    try{
+    try {
 
-        await supabaseClient
-            .auth
-            .signOut();
+        await supabaseClient.auth.signOut();
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Logout error:",
@@ -2503,17 +2601,16 @@ async function logout(){
    AUTH LISTENER
 ========================================================= */
 
-supabaseClient
-.auth
-.onAuthStateChange(
-    function(
+supabaseClient.auth.onAuthStateChange(
+    function (
         event,
         session
-    ){
+    ) {
 
-        if(
-            event === "SIGNED_OUT"
-        ){
+        if (
+            event ===
+            "SIGNED_OUT"
+        ) {
 
             window.location.href =
                 "login.html";
