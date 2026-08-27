@@ -3,437 +3,306 @@
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AviPrint Admin Panel</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f4f6f9;
-    color:#111827;
-}
-
-/* =========================
-   TOPBAR
-========================= */
-
-.topbar{
-    background:#111827;
-    color:white;
-    padding:18px 25px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-.topbar h1{
-    font-size:22px;
-}
-
-.admin-info{
-    margin-top:5px;
-    font-size:13px;
-    color:#d1d5db;
-}
-
-.logout-btn{
-    border:0;
-    background:#ef4444;
-    color:white;
-    padding:10px 18px;
-    border-radius:7px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.logout-btn:hover{
-    background:#dc2626;
-}
-
-/* =========================
-   CONTAINER
-========================= */
-
-.container{
-    width:95%;
-    max-width:1500px;
-    margin:25px auto;
-}
-
-/* =========================
-   MESSAGES
-========================= */
-
-.message{
-    display:none;
-    padding:14px 18px;
-    border-radius:8px;
-    margin-bottom:20px;
-    font-size:14px;
-}
-
-.success{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.error{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-bottom:25px;
-}
-
-.card{
-    background:white;
-    padding:22px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,.07);
-}
-
-.card h3{
-    font-size:14px;
-    color:#6b7280;
-    margin-bottom:10px;
-}
-
-.number{
-    font-size:30px;
-    font-weight:bold;
-}
-
-.blue{
-    color:#2563eb;
-}
-
-.orange{
-    color:#d97706;
-}
-
-.purple{
-    color:#7c3aed;
-}
-
-.green{
-    color:#16a34a;
-}
-
-/* =========================
-   SECTION
-========================= */
-
-.section{
-    background:white;
-    border-radius:12px;
-    padding:22px;
-    box-shadow:0 2px 10px rgba(0,0,0,.07);
-}
-
-.section-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
-}
-
-.section-header h2{
-    font-size:20px;
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-box{
-    display:flex;
-    gap:10px;
-    margin-bottom:20px;
-}
-
-.search-box input{
-    width:100%;
-    height:45px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    padding:0 14px;
-    font-size:14px;
-    outline:none;
-}
-
-.search-box input:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.1);
-}
-
-.refresh-btn{
-    background:#2563eb;
-    border:0;
-    color:white;
-    padding:10px 17px;
-    border-radius:7px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.refresh-btn:hover{
-    background:#1d4ed8;
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.table-wrapper{
-    width:100%;
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    min-width:1250px;
-    border-collapse:collapse;
-}
-
-th{
-    background:#f3f4f6;
-    text-align:left;
-    padding:13px;
-    font-size:13px;
-    white-space:nowrap;
-}
-
-td{
-    padding:13px;
-    border-bottom:1px solid #e5e7eb;
-    font-size:13px;
-    vertical-align:middle;
-}
-
-tr:hover{
-    background:#fafafa;
-}
-
-.order-id{
-    color:#2563eb;
-    font-weight:bold;
-}
-
-.customer-name{
-    font-weight:bold;
-}
-
-.email{
-    color:#374151;
-    word-break:break-word;
-}
-
-.service{
-    font-weight:600;
-}
-
-.details{
-    max-width:220px;
-    color:#6b7280;
-    line-height:1.4;
-}
-
-.amount{
-    font-weight:bold;
-}
-
-.date{
-    color:#6b7280;
-    white-space:nowrap;
-}
-
-/* =========================
-   STATUS
-========================= */
-
-select{
-    padding:8px 10px;
-    border:1px solid #d1d5db;
-    border-radius:6px;
-    background:white;
-    cursor:pointer;
-    min-width:130px;
-    font-weight:600;
-}
-
-select:disabled{
-    opacity:.6;
-    cursor:wait;
-}
-
-.status-pending{
-    color:#c2410c;
-    background:#fff7ed;
-}
-
-.status-processing{
-    color:#6d28d9;
-    background:#f5f3ff;
-}
-
-.status-printing{
-    color:#1d4ed8;
-    background:#eff6ff;
-}
-
-.status-ready{
-    color:#0e7490;
-    background:#ecfeff;
-}
-
-.status-completed{
-    color:#15803d;
-    background:#f0fdf4;
-}
-
-.status-cancelled{
-    color:#b91c1c;
-    background:#fef2f2;
-}
-
-/* =========================
-   FILE BUTTONS
-========================= */
-
-.file-name{
-    max-width:220px;
-    word-break:break-word;
-    font-weight:600;
-}
-
-.file-buttons{
-    display:flex;
-    gap:7px;
-    margin-top:8px;
-    flex-wrap:wrap;
-}
-
-.file-btn{
-    border:0;
-    border-radius:6px;
-    padding:7px 10px;
-    font-size:12px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.view-btn{
-    background:#eff6ff;
-    color:#1d4ed8;
-}
-
-.download-btn{
-    background:#f0fdf4;
-    color:#15803d;
-}
-
-.file-btn:hover{
-    opacity:.8;
-}
-
-/* =========================
-   EMAIL STATUS
-========================= */
-
-.email-status{
-    font-size:11px;
-    margin-top:5px;
-}
-
-.email-sending{
-    color:#d97706;
-}
-
-.email-success{
-    color:#15803d;
-}
-
-.email-failed{
-    color:#dc2626;
-}
-
-/* =========================
-   LOADING
-========================= */
-
-.loading,
-.empty{
-    text-align:center;
-    padding:40px;
-    color:#6b7280;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:900px){
-
-    .cards{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-}
-
-@media(max-width:600px){
-
-    .cards{
-        grid-template-columns:1fr;
-    }
-
-    .container{
-        width:94%;
-    }
-
-    .section{
-        padding:15px;
-    }
-
-    .topbar{
-        padding:15px;
-    }
-
-    .search-box{
-        flex-direction:column;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AviPrint Admin Panel</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #111827;
+        }
+
+        .topbar {
+            background: #111827;
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+        }
+
+        .admin-info {
+            margin-top: 6px;
+            font-size: 13px;
+            opacity: .85;
+        }
+
+        .logout-btn,
+        .refresh-btn {
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        .refresh-btn {
+            background: #2563eb;
+        }
+
+        .refresh-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 25px auto;
+        }
+
+        .message {
+            display: none;
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.07);
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .blue { color: #2563eb; }
+        .orange { color: #d97706; }
+        .purple { color: #7c3aed; }
+        .green { color: #16a34a; }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.07);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1200px;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f3f4f6;
+            text-align: left;
+            padding: 13px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .order-id {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .customer-name {
+            font-weight: bold;
+        }
+
+        .email {
+            color: #374151;
+            word-break: break-word;
+        }
+
+        .service {
+            font-weight: 600;
+        }
+
+        .quantity {
+            text-align: center;
+        }
+
+        .date {
+            color: #6b7280;
+            white-space: nowrap;
+        }
+
+        select {
+            padding: 8px 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            min-width: 130px;
+        }
+
+        select:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
+        .status-pending {
+            color: #c2410c;
+            background: #fff7ed;
+        }
+
+        .status-processing {
+            color: #6d28d9;
+            background: #f5f3ff;
+        }
+
+        .status-printing {
+            color: #1d4ed8;
+            background: #eff6ff;
+        }
+
+        .status-ready {
+            color: #0e7490;
+            background: #ecfeff;
+        }
+
+        .status-completed {
+            color: #15803d;
+            background: #f0fdf4;
+        }
+
+        .status-cancelled {
+            color: #b91c1c;
+            background: #fef2f2;
+        }
+
+        .email-status {
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .email-sending {
+            color: #d97706;
+        }
+
+        .email-success {
+            color: #15803d;
+        }
+
+        .email-failed {
+            color: #dc2626;
+        }
+
+        .loading,
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 
 <body>
+
 
 <header class="topbar">
 
@@ -444,9 +313,7 @@ select:disabled{
         <div
             class="admin-info"
             id="adminInfo">
-
             Checking admin session...
-
         </div>
 
     </div>
@@ -454,9 +321,7 @@ select:disabled{
     <button
         class="logout-btn"
         onclick="logout()">
-
         Logout
-
     </button>
 
 </header>
@@ -470,16 +335,11 @@ select:disabled{
         class="message success">
     </div>
 
-
     <div
         id="errorMessage"
         class="message error">
     </div>
 
-
-    <!-- =========================
-         DASHBOARD CARDS
-    ========================= -->
 
     <div class="cards">
 
@@ -490,9 +350,7 @@ select:disabled{
             <div
                 id="totalOrders"
                 class="number blue">
-
                 0
-
             </div>
 
         </div>
@@ -505,9 +363,7 @@ select:disabled{
             <div
                 id="pendingOrders"
                 class="number orange">
-
                 0
-
             </div>
 
         </div>
@@ -520,9 +376,7 @@ select:disabled{
             <div
                 id="processingOrders"
                 class="number purple">
-
                 0
-
             </div>
 
         </div>
@@ -535,9 +389,7 @@ select:disabled{
             <div
                 id="completedOrders"
                 class="number green">
-
                 0
-
             </div>
 
         </div>
@@ -545,12 +397,7 @@ select:disabled{
     </div>
 
 
-    <!-- =========================
-         ORDERS SECTION
-    ========================= -->
-
     <section class="section">
-
 
         <div class="section-header">
 
@@ -559,23 +406,8 @@ select:disabled{
             <button
                 class="refresh-btn"
                 onclick="loadOrders()">
-
                 🔄 Refresh
-
             </button>
-
-        </div>
-
-
-        <!-- SEARCH -->
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="🔍 Search Order ID, Customer Name or Email..."
-                oninput="filterOrders()">
 
         </div>
 
@@ -589,21 +421,14 @@ select:disabled{
                     <tr>
 
                         <th>Order ID</th>
-
                         <th>Customer</th>
-
                         <th>Email</th>
-
                         <th>Service</th>
-
                         <th>Details</th>
-
+                        <th>Quantity</th>
                         <th>Amount</th>
-
-                        <th>File</th>
-
                         <th>Status</th>
-
+                        <th>File</th>
                         <th>Date</th>
 
                     </tr>
@@ -616,11 +441,9 @@ select:disabled{
                     <tr>
 
                         <td
-                            colspan="9"
+                            colspan="10"
                             class="loading">
-
                             Loading orders...
-
                         </td>
 
                     </tr>
@@ -638,13 +461,13 @@ select:disabled{
 
 <script>
 
+
 /* =========================================================
    SUPABASE CONFIG
 ========================================================= */
 
 const SUPABASE_URL =
     "https://pmqmewceqnxsvlhceeef.supabase.co";
-
 
 const SUPABASE_ANON_KEY =
     "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
@@ -659,20 +482,17 @@ const ADMIN_EMAIL =
 
 
 /* =========================================================
-   IMPORTANT:
-   YOUR CURRENT EDGE FUNCTION NAME
+   EDGE FUNCTION
 ========================================================= */
 
 const EDGE_FUNCTION_NAME =
     "smart-service";
 
 
-/* =========================================================
-   STORAGE BUCKET
-========================================================= */
-
-const STORAGE_BUCKET =
-    "print-files";
+const EDGE_FUNCTION_URL =
+    SUPABASE_URL +
+    "/functions/v1/" +
+    EDGE_FUNCTION_NAME;
 
 
 /* =========================================================
@@ -680,26 +500,19 @@ const STORAGE_BUCKET =
 ========================================================= */
 
 const supabaseClient =
-    supabase.createClient(
+    window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
 
 
 /* =========================================================
-   GLOBAL ORDERS
-========================================================= */
-
-let allOrders = [];
-
-
-/* =========================================================
-   PAGE START
+   START
 ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
-    async function(){
+    async function () {
 
         await checkAdmin();
 
@@ -711,9 +524,9 @@ document.addEventListener(
    CHECK ADMIN
 ========================================================= */
 
-async function checkAdmin(){
+async function checkAdmin() {
 
-    try{
+    try {
 
         const {
             data,
@@ -724,10 +537,8 @@ async function checkAdmin(){
             .getSession();
 
 
-        if(error){
-
+        if (error) {
             throw error;
-
         }
 
 
@@ -735,10 +546,10 @@ async function checkAdmin(){
             data.session;
 
 
-        if(
+        if (
             !session ||
             !session.user
-        ){
+        ) {
 
             window.location.href =
                 "login.html";
@@ -752,24 +563,21 @@ async function checkAdmin(){
             session.user.email || "";
 
 
-        if(
+        if (
             email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
-        ){
+        ) {
 
             alert(
                 "Access denied. Admin account required."
             );
 
-
             await supabaseClient
                 .auth
                 .signOut();
 
-
             window.location.href =
                 "login.html";
-
 
             return;
 
@@ -786,13 +594,12 @@ async function checkAdmin(){
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Admin check error:",
             error
         );
-
 
         showError(
             error.message ||
@@ -808,7 +615,7 @@ async function checkAdmin(){
    LOAD ORDERS
 ========================================================= */
 
-async function loadOrders(){
+async function loadOrders() {
 
     const tbody =
         document.getElementById(
@@ -818,7 +625,7 @@ async function loadOrders(){
 
     tbody.innerHTML = `
         <tr>
-            <td colspan="9" class="loading">
+            <td colspan="10" class="loading">
                 Loading orders...
             </td>
         </tr>
@@ -828,7 +635,7 @@ async function loadOrders(){
     hideMessages();
 
 
-    try{
+    try {
 
         const {
             data,
@@ -853,34 +660,54 @@ async function loadOrders(){
             .order(
                 "created_at",
                 {
-                    ascending:false
+                    ascending: false
                 }
             );
 
 
-        if(error){
-
+        if (error) {
             throw error;
+        }
+
+
+        const orders =
+            data || [];
+
+
+        updateCounters(orders);
+
+
+        if (!orders.length) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="10" class="empty">
+                        No orders found.
+                    </td>
+                </tr>
+            `;
+
+            return;
 
         }
 
 
-        allOrders =
-            data || [];
+        tbody.innerHTML = "";
 
 
-        updateCounters(
-            allOrders
-        );
+        orders.forEach(
+            function (order) {
 
+                tbody.appendChild(
+                    createOrderRow(order)
+                );
 
-        renderOrders(
-            allOrders
+            }
         );
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Load orders error:",
@@ -890,7 +717,7 @@ async function loadOrders(){
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="9" class="empty">
+                <td colspan="10" class="empty">
                     Failed to load orders.
                 </td>
             </tr>
@@ -911,60 +738,10 @@ async function loadOrders(){
 
 
 /* =========================================================
-   RENDER ORDERS
-========================================================= */
-
-function renderOrders(orders){
-
-    const tbody =
-        document.getElementById(
-            "ordersTableBody"
-        );
-
-
-    if(
-        !orders ||
-        orders.length === 0
-    ){
-
-        tbody.innerHTML = `
-            <tr>
-                <td
-                    colspan="9"
-                    class="empty">
-
-                    No orders found.
-
-                </td>
-            </tr>
-        `;
-
-        return;
-
-    }
-
-
-    tbody.innerHTML = "";
-
-
-    orders.forEach(
-        function(order){
-
-            tbody.appendChild(
-                createOrderRow(order)
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
    CREATE ROW
 ========================================================= */
 
-function createOrderRow(order){
+function createOrderRow(order) {
 
     const tr =
         document.createElement("tr");
@@ -979,39 +756,16 @@ function createOrderRow(order){
         orderId;
 
 
-    const email =
-        order.customer_email ||
-        "-";
-
-
-    /*
-     * Customer name is not currently stored
-     * in your orders table.
-     *
-     * So we create a useful fallback:
-     * email username.
-     */
-
-    let customerName =
+    const customerName =
+        order.customer_name ||
+        order.full_name ||
+        order.name ||
         "Customer";
 
 
-    if(
-        email &&
-        email !== "-"
-    ){
-
-        customerName =
-            email
-                .split("@")[0]
-                .replace(/[._-]+/g," ")
-                .replace(/\b\w/g,
-                    function(letter){
-                        return letter.toUpperCase();
-                    }
-                );
-
-    }
+    const email =
+        order.customer_email ||
+        "-";
 
 
     const service =
@@ -1027,10 +781,8 @@ function createOrderRow(order){
     const amount =
         order.amount !== null &&
         order.amount !== undefined
-            ? "₹" +
-              Number(order.amount)
-                .toFixed(2)
-            : "₹0.00";
+        ? "₹" + Number(order.amount).toFixed(2)
+        : "-";
 
 
     const status =
@@ -1040,186 +792,89 @@ function createOrderRow(order){
         ).toLowerCase();
 
 
-    const fileName =
-        order.file_name ||
-        "-";
-
-
     const createdAt =
         order.created_at ||
         order.order_date ||
         "";
 
 
+    const fileName =
+        order.file_name ||
+        "";
+
+
     tr.dataset.orderId =
         orderId;
-
 
     tr.dataset.orderNumber =
         orderNumber;
 
-
     tr.dataset.customerName =
         customerName;
-
 
     tr.dataset.email =
         email;
 
-
     tr.dataset.service =
         service;
-
 
     tr.dataset.details =
         details;
 
-
     tr.dataset.amount =
         amount;
 
-
     tr.dataset.fileName =
         fileName;
+
+    tr.dataset.filePath =
+        order.file_path || "";
 
 
     tr.innerHTML = `
 
         <td>
-
             <span class="order-id">
-
-                ${escapeHTML(
-                    String(orderNumber)
-                )}
-
+                ${escapeHTML(orderNumber)}
             </span>
-
         </td>
-
 
         <td>
-
             <span class="customer-name">
-
-                ${escapeHTML(
-                    String(customerName)
-                )}
-
+                ${escapeHTML(customerName)}
             </span>
-
         </td>
-
 
         <td>
 
             <span class="email">
-
-                ${escapeHTML(
-                    String(email)
-                )}
-
+                ${escapeHTML(email)}
             </span>
 
-
             <div
-                id="email-status-${escapeHTML(
-                    String(orderId)
-                )}"
+                id="email-status-${escapeHTML(orderId)}"
                 class="email-status">
             </div>
 
         </td>
 
-
         <td>
-
             <span class="service">
-
-                ${escapeHTML(
-                    String(service)
-                )}
-
+                ${escapeHTML(service)}
             </span>
-
         </td>
-
 
         <td>
-
-            <div class="details">
-
-                ${escapeHTML(
-                    String(details)
-                )}
-
-            </div>
-
+            ${escapeHTML(details)}
         </td>
 
+        <td class="quantity">
+            1
+        </td>
 
         <td>
-
-            <span class="amount">
-
-                ${escapeHTML(
-                    amount
-                )}
-
-            </span>
-
+            ${escapeHTML(amount)}
         </td>
-
-
-        <td>
-
-            <div class="file-name">
-
-                ${escapeHTML(
-                    String(fileName)
-                )}
-
-            </div>
-
-
-            ${
-                order.file_path
-                ?
-                `
-
-                <div class="file-buttons">
-
-                    <button
-                        class="file-btn view-btn"
-                        onclick="viewFile(
-                            '${escapeJS(order.file_path)}'
-                        )">
-
-                        👁 View
-
-                    </button>
-
-
-                    <button
-                        class="file-btn download-btn"
-                        onclick="downloadFile(
-                            '${escapeJS(order.file_path)}',
-                            '${escapeJS(order.file_name || "file")}'
-                        )">
-
-                        ⬇ Download
-
-                    </button>
-
-                </div>
-
-                `
-                :
-                ""
-            }
-
-        </td>
-
 
         <td>
 
@@ -1232,71 +887,71 @@ function createOrderRow(order){
                     this
                 )">
 
-
-                <option
-                    value="pending"
+                <option value="pending"
                     ${status === "pending" ? "selected" : ""}>
-
                     Pending
-
                 </option>
 
-
-                <option
-                    value="processing"
+                <option value="processing"
                     ${status === "processing" ? "selected" : ""}>
-
                     Processing
-
                 </option>
 
-
-                <option
-                    value="printing"
+                <option value="printing"
                     ${status === "printing" ? "selected" : ""}>
-
                     Printing
-
                 </option>
 
-
-                <option
-                    value="ready"
+                <option value="ready"
                     ${status === "ready" ? "selected" : ""}>
-
                     Ready
-
                 </option>
 
-
-                <option
-                    value="completed"
+                <option value="completed"
                     ${status === "completed" ? "selected" : ""}>
-
                     Completed
-
                 </option>
 
-
-                <option
-                    value="cancelled"
+                <option value="cancelled"
                     ${status === "cancelled" ? "selected" : ""}>
-
                     Cancelled
-
                 </option>
 
             </select>
 
         </td>
 
+        <td>
+
+            ${
+                fileName
+                ?
+                `
+                <button
+                    type="button"
+                    onclick="downloadFile(
+                        '${escapeJS(order.file_path || "")}',
+                        '${escapeJS(fileName)}'
+                    )"
+                    style="
+                        border:none;
+                        background:#2563eb;
+                        color:white;
+                        padding:7px 10px;
+                        border-radius:6px;
+                        cursor:pointer;
+                    ">
+                    📥 Download
+                </button>
+                `
+                :
+                "No file"
+            }
+
+        </td>
 
         <td class="date">
-
-            ${escapeHTML(
-                formatDate(createdAt)
-            )}
-
+            ${escapeHTML(formatDate(createdAt))}
         </td>
 
     `;
@@ -1308,25 +963,14 @@ function createOrderRow(order){
 
 
 /* =========================================================
-   CHANGE ORDER STATUS
+   CHANGE STATUS
 ========================================================= */
 
 async function changeOrderStatus(
     orderId,
     newStatus,
     selectElement
-){
-
-    if(!orderId){
-
-        showError(
-            "Order ID is missing."
-        );
-
-        return;
-
-    }
-
+) {
 
     const oldStatus =
         selectElement.dataset.oldStatus ||
@@ -1335,6 +979,11 @@ async function changeOrderStatus(
 
     const row =
         selectElement.closest("tr");
+
+
+    if (!row) {
+        return;
+    }
 
 
     const orderNumber =
@@ -1379,11 +1028,12 @@ async function changeOrderStatus(
     hideMessages();
 
 
-    try{
+    try {
 
-        /* =========================
+
+        /* =========================================
            UPDATE DATABASE
-        ========================= */
+        ========================================= */
 
         const {
             error
@@ -1391,7 +1041,7 @@ async function changeOrderStatus(
         await supabaseClient
             .from("orders")
             .update({
-                status:newStatus
+                status: newStatus
             })
             .eq(
                 "id",
@@ -1399,10 +1049,8 @@ async function changeOrderStatus(
             );
 
 
-        if(error){
-
+        if (error) {
             throw error;
-
         }
 
 
@@ -1411,9 +1059,7 @@ async function changeOrderStatus(
 
 
         selectElement.className =
-            getStatusClass(
-                newStatus
-            );
+            getStatusClass(newStatus);
 
 
         showSuccess(
@@ -1425,14 +1071,14 @@ async function changeOrderStatus(
         );
 
 
-        /* =========================
+        /* =========================================
            SEND EMAIL
-        ========================= */
+        ========================================= */
 
-        if(
+        if (
             customerEmail &&
             customerEmail !== "-"
-        ){
+        ) {
 
             setEmailStatus(
                 orderId,
@@ -1441,7 +1087,7 @@ async function changeOrderStatus(
             );
 
 
-            try{
+            try {
 
                 await sendOrderEmail({
 
@@ -1450,9 +1096,6 @@ async function changeOrderStatus(
 
                     orderNumber:
                         orderNumber,
-
-                    customerName:
-                        customerName,
 
                     service:
                         service,
@@ -1483,10 +1126,10 @@ async function changeOrderStatus(
 
             }
 
-            catch(emailError){
+            catch (emailError) {
 
                 console.error(
-                    "Email error:",
+                    "EMAIL ERROR:",
                     emailError
                 );
 
@@ -1502,7 +1145,7 @@ async function changeOrderStatus(
                     "Order updated, but customer email failed: " +
                     (
                         emailError.message ||
-                        "Email service error"
+                        "Email request failed."
                     )
                 );
 
@@ -1510,26 +1153,22 @@ async function changeOrderStatus(
 
         }
 
-        else{
+        else {
 
             setEmailStatus(
                 orderId,
-                "No customer email",
+                "No email available",
                 "email-failed"
             );
 
         }
 
 
-        /* =========================
-           UPDATE COUNTERS
-        ========================= */
-
         await loadCounters();
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Status update error:",
@@ -1542,9 +1181,7 @@ async function changeOrderStatus(
 
 
         selectElement.className =
-            getStatusClass(
-                oldStatus
-            );
+            getStatusClass(oldStatus);
 
 
         showError(
@@ -1557,7 +1194,7 @@ async function changeOrderStatus(
 
     }
 
-    finally{
+    finally {
 
         selectElement.disabled =
             false;
@@ -1568,70 +1205,245 @@ async function changeOrderStatus(
 
 
 /* =========================================================
-   SEND EMAIL THROUGH SMART-SERVICE
+   SEND EMAIL USING DIRECT FETCH
 ========================================================= */
 
-async function sendOrderEmail(data){
+async function sendOrderEmail(data) {
 
     console.log(
-        "Calling Edge Function:",
-        EDGE_FUNCTION_NAME
+        "Calling:",
+        EDGE_FUNCTION_URL
     );
 
 
-    const result =
+    const sessionResult =
         await supabaseClient
-            .functions
-            .invoke(
-                EDGE_FUNCTION_NAME,
-                {
-                    body:data
-                }
-            );
+            .auth
+            .getSession();
+
+
+    const session =
+        sessionResult.data.session;
+
+
+    const accessToken =
+        session &&
+        session.access_token
+        ?
+        session.access_token
+        :
+        SUPABASE_ANON_KEY;
+
+
+    const response =
+        await fetch(
+            EDGE_FUNCTION_URL,
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json",
+
+                    "apikey":
+                        SUPABASE_ANON_KEY,
+
+                    "Authorization":
+                        "Bearer " +
+                        accessToken
+
+                },
+
+                body:
+                    JSON.stringify(data)
+
+            }
+        );
+
+
+    const text =
+        await response.text();
 
 
     console.log(
-        "Edge Function result:",
-        result
+        "Function HTTP status:",
+        response.status
     );
 
 
-    if(result.error){
+    console.log(
+        "Function response:",
+        text
+    );
+
+
+    let result;
+
+
+    try {
+
+        result =
+            JSON.parse(text);
+
+    }
+
+    catch {
+
+        result = {
+            raw: text
+        };
+
+    }
+
+
+    if (!response.ok) {
 
         throw new Error(
-            result.error.message ||
-            "Failed to call smart-service Edge Function."
+            result.error ||
+            result.message ||
+            result.raw ||
+            "Edge Function returned HTTP " +
+            response.status
         );
 
     }
 
 
-    if(
-        result.data &&
-        result.data.success === false
-    ){
+    if (
+        result.success === false
+    ) {
 
         throw new Error(
-            result.data.error ||
-            result.data.message ||
+            result.error ||
+            result.message ||
             "Email sending failed."
         );
 
     }
 
 
-    return result.data;
+    return result;
 
 }
 
 
 /* =========================================================
-   LOAD COUNTERS
+   DOWNLOAD FILE
 ========================================================= */
 
-async function loadCounters(){
+async function downloadFile(
+    filePath,
+    fileName
+) {
 
-    try{
+    if (!filePath) {
+
+        showError(
+            "File path is missing."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        /*
+         * Create signed URL.
+         * This works for private bucket.
+         */
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .storage
+            .from("print-files")
+            .createSignedUrl(
+                filePath,
+                300
+            );
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        if (
+            !data ||
+            !data.signedUrl
+        ) {
+
+            throw new Error(
+                "Could not create file URL."
+            );
+
+        }
+
+
+        const link =
+            document.createElement("a");
+
+
+        link.href =
+            data.signedUrl;
+
+
+        link.download =
+            fileName ||
+            "download";
+
+
+        link.target =
+            "_blank";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        link.remove();
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Download error:",
+            error
+        );
+
+
+        showError(
+            "Unable to download file: " +
+            (
+                error.message ||
+                error
+            )
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   COUNTERS
+========================================================= */
+
+async function loadCounters() {
+
+    try {
 
         const {
             data,
@@ -1642,15 +1454,8 @@ async function loadCounters(){
             .select("status");
 
 
-        if(error){
-
-            console.error(
-                "Counter error:",
-                error
-            );
-
-            return;
-
+        if (error) {
+            throw error;
         }
 
 
@@ -1660,7 +1465,7 @@ async function loadCounters(){
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(
             "Counter error:",
@@ -1672,11 +1477,7 @@ async function loadCounters(){
 }
 
 
-/* =========================================================
-   UPDATE COUNTERS
-========================================================= */
-
-function updateCounters(orders){
+function updateCounters(orders) {
 
     let pending = 0;
 
@@ -1686,37 +1487,38 @@ function updateCounters(orders){
 
 
     orders.forEach(
-        function(order){
+        function (order) {
 
             const status =
                 String(
-                    order.status || ""
+                    order.status ||
+                    ""
                 ).toLowerCase();
 
 
-            if(
+            if (
                 status === "pending"
-            ){
+            ) {
 
                 pending++;
 
             }
 
 
-            if(
+            if (
                 status === "processing" ||
                 status === "printing" ||
                 status === "ready"
-            ){
+            ) {
 
                 processing++;
 
             }
 
 
-            if(
+            if (
                 status === "completed"
-            ){
+            ) {
 
                 completed++;
 
@@ -1753,301 +1555,34 @@ function updateCounters(orders){
 
 
 /* =========================================================
-   SEARCH
+   HELPERS
 ========================================================= */
 
-function filterOrders(){
+function capitalizeStatus(status) {
 
-    const search =
-        document
-            .getElementById(
-                "searchInput"
-            )
-            .value
-            .trim()
+    return String(status)
+        .charAt(0)
+        .toUpperCase() +
+        String(status)
+            .slice(1);
+
+}
+
+
+function getStatusClass(status) {
+
+    return "status-" +
+        String(status)
             .toLowerCase();
 
-
-    if(!search){
-
-        renderOrders(
-            allOrders
-        );
-
-        return;
-
-    }
-
-
-    const filtered =
-        allOrders.filter(
-            function(order){
-
-                const orderNumber =
-                    String(
-                        order.order_number ||
-                        ""
-                    ).toLowerCase();
-
-
-                const email =
-                    String(
-                        order.customer_email ||
-                        ""
-                    ).toLowerCase();
-
-
-                let customerName =
-                    "customer";
-
-
-                if(
-                    order.customer_email
-                ){
-
-                    customerName =
-                        order.customer_email
-                            .split("@")[0]
-                            .replace(
-                                /[._-]+/g,
-                                " "
-                            )
-                            .toLowerCase();
-
-                }
-
-
-                return (
-                    orderNumber.includes(search) ||
-                    email.includes(search) ||
-                    customerName.includes(search)
-                );
-
-            }
-        );
-
-
-    renderOrders(
-        filtered
-    );
-
 }
 
-
-/* =========================================================
-   VIEW FILE
-========================================================= */
-
-async function viewFile(
-    filePath
-){
-
-    if(!filePath){
-
-        showError(
-            "File path is missing."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-            .storage
-            .from(STORAGE_BUCKET)
-            .createSignedUrl(
-                filePath,
-                3600
-            );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        if(
-            !data ||
-            !data.signedUrl
-        ){
-
-            throw new Error(
-                "Could not create file URL."
-            );
-
-        }
-
-
-        window.open(
-            data.signedUrl,
-            "_blank"
-        );
-
-    }
-
-    catch(error){
-
-        console.error(
-            "View file error:",
-            error
-        );
-
-
-        showError(
-            "Unable to view file: " +
-            (
-                error.message ||
-                error
-            )
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   DOWNLOAD FILE
-========================================================= */
-
-async function downloadFile(
-    filePath,
-    fileName
-){
-
-    if(!filePath){
-
-        showError(
-            "File path is missing."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-            .storage
-            .from(STORAGE_BUCKET)
-            .createSignedUrl(
-                filePath,
-                3600,
-                {
-                    download:
-                        fileName || true
-                }
-            );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        if(
-            !data ||
-            !data.signedUrl
-        ){
-
-            throw new Error(
-                "Could not create download URL."
-            );
-
-        }
-
-
-        const link =
-            document.createElement(
-                "a"
-            );
-
-
-        link.href =
-            data.signedUrl;
-
-
-        link.target =
-            "_blank";
-
-
-        link.download =
-            fileName || "file";
-
-
-        document.body.appendChild(
-            link
-        );
-
-
-        link.click();
-
-
-        link.remove();
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Download file error:",
-            error
-        );
-
-
-        showError(
-            "Unable to download file: " +
-            (
-                error.message ||
-                error
-            )
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   STATUS CLASS
-========================================================= */
-
-function getStatusClass(status){
-
-    return (
-        "status-" +
-        String(status)
-            .toLowerCase()
-    );
-
-}
-
-
-/* =========================================================
-   SET EMAIL STATUS
-========================================================= */
 
 function setEmailStatus(
     orderId,
     message,
     className
-){
+) {
 
     const element =
         document.getElementById(
@@ -2056,10 +1591,8 @@ function setEmailStatus(
         );
 
 
-    if(!element){
-
+    if (!element) {
         return;
-
     }
 
 
@@ -2074,31 +1607,10 @@ function setEmailStatus(
 }
 
 
-/* =========================================================
-   CAPITALIZE STATUS
-========================================================= */
+function formatDate(value) {
 
-function capitalizeStatus(status){
-
-    return String(status)
-        .charAt(0)
-        .toUpperCase() +
-        String(status)
-            .slice(1);
-
-}
-
-
-/* =========================================================
-   FORMAT DATE
-========================================================= */
-
-function formatDate(value){
-
-    if(!value){
-
+    if (!value) {
         return "-";
-
     }
 
 
@@ -2106,11 +1618,11 @@ function formatDate(value){
         new Date(value);
 
 
-    if(
+    if (
         isNaN(
             date.getTime()
         )
-    ){
+    ) {
 
         return String(value);
 
@@ -2120,94 +1632,42 @@ function formatDate(value){
     return date.toLocaleString(
         "en-IN",
         {
-            day:"2-digit",
-            month:"short",
-            year:"numeric",
-            hour:"2-digit",
-            minute:"2-digit"
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
         }
     );
 
 }
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(value){
+function escapeHTML(value) {
 
     return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
-/* =========================================================
-   ESCAPE JS
-========================================================= */
-
-function escapeJS(value){
+function escapeJS(value) {
 
     return String(value)
-
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-
-        .replace(
-            /'/g,
-            "\\'"
-        )
-
-        .replace(
-            /"/g,
-            '\\"'
-        )
-
-        .replace(
-            /\n/g,
-            "\\n"
-        )
-
-        .replace(
-            /\r/g,
-            "\\r"
-        );
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r");
 
 }
 
 
-/* =========================================================
-   SUCCESS
-========================================================= */
-
-function showSuccess(message){
+function showSuccess(message) {
 
     const box =
         document.getElementById(
@@ -2224,7 +1684,7 @@ function showSuccess(message){
 
 
     setTimeout(
-        function(){
+        function () {
 
             box.style.display =
                 "none";
@@ -2236,11 +1696,7 @@ function showSuccess(message){
 }
 
 
-/* =========================================================
-   ERROR
-========================================================= */
-
-function showError(message){
+function showError(message) {
 
     const box =
         document.getElementById(
@@ -2258,11 +1714,7 @@ function showError(message){
 }
 
 
-/* =========================================================
-   HIDE MESSAGES
-========================================================= */
-
-function hideMessages(){
+function hideMessages() {
 
     document.getElementById(
         "successMessage"
@@ -2282,24 +1734,11 @@ function hideMessages(){
    LOGOUT
 ========================================================= */
 
-async function logout(){
+async function logout() {
 
-    try{
-
-        await supabaseClient
-            .auth
-            .signOut();
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Logout error:",
-            error
-        );
-
-    }
+    await supabaseClient
+        .auth
+        .signOut();
 
 
     window.location.href =
@@ -2312,22 +1751,23 @@ async function logout(){
    AUTH LISTENER
 ========================================================= */
 
-supabaseClient
-    .auth
-    .onAuthStateChange(
-        function(event,session){
+supabaseClient.auth.onAuthStateChange(
+    function (
+        event,
+        session
+    ) {
 
-            if(
-                event === "SIGNED_OUT"
-            ){
+        if (
+            event === "SIGNED_OUT"
+        ) {
 
-                window.location.href =
-                    "login.html";
-
-            }
+            window.location.href =
+                "login.html";
 
         }
-    );
+
+    }
+);
 
 </script>
 
