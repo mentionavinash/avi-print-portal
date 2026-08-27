@@ -20,11 +20,10 @@
 
 <script src="config.js"></script>
 
-
 <style>
 
 /* =========================
-   RECENT ORDERS
+   DASHBOARD EXTRA STYLES
 ========================= */
 
 .dashboard-recent-orders{
@@ -52,14 +51,15 @@
 }
 
 .recent-order-icon{
-    width:40px;
-    height:40px;
+    width:42px;
+    height:42px;
     border-radius:10px;
     background:#eff6ff;
     display:flex;
     align-items:center;
     justify-content:center;
     flex-shrink:0;
+    font-size:20px;
 }
 
 .recent-order-info{
@@ -75,8 +75,9 @@
 
 .recent-order-info span{
     display:block;
-    color:#9ca3af;
+    color:#6b7280;
     font-size:11px;
+    margin-top:3px;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -97,10 +98,11 @@
 
 .recent-order-status{
     display:inline-block;
-    padding:4px 8px;
+    padding:4px 9px;
     border-radius:20px;
     font-size:10px;
     font-weight:700;
+    text-transform:capitalize;
 }
 
 .recent-order-status.pending{
@@ -114,8 +116,8 @@
 }
 
 .recent-order-status.printing{
-    background:#dbeafe;
-    color:#1d4ed8;
+    background:#ede9fe;
+    color:#6d28d9;
 }
 
 .recent-order-status.ready{
@@ -146,29 +148,14 @@
     color:#b91c1c;
 }
 
-
-/* =========================
-   NAV LINKS
-========================= */
-
-.nav-menu a,
-.sidebar-nav a{
+.profile-link{
     cursor:pointer;
 }
-
-
-/* =========================
-   MOBILE
-========================= */
 
 @media(max-width:600px){
 
     .recent-order-item{
         align-items:flex-start;
-    }
-
-    .recent-order-right{
-        text-align:right;
     }
 
 }
@@ -181,20 +168,17 @@
 <body class="dashboard-page">
 
 
-<!-- =====================================================
+<!-- =========================
      TOP NAVBAR
-===================================================== -->
+========================= -->
 
 <header class="navbar">
 
 <div class="container nav-container">
 
 
-<!-- LOGO -->
-
-<a
-href="dashboard.html"
-class="logo">
+<a href="dashboard.html"
+   class="logo">
 
 <span class="logo-icon">
 A
@@ -207,38 +191,28 @@ Avi<span>Print</span>
 </a>
 
 
-
-<!-- NAVIGATION -->
-
 <nav class="nav-menu">
 
-<a
-href="dashboard.html"
-style="color:#2563eb;">
+<a href="dashboard.html"
+   style="color:#2563eb;">
 
 Dashboard
 
 </a>
 
-
-<a
-href="services.html">
+<a href="services.html">
 
 Services
 
 </a>
 
-
-<a
-href="orders.html">
+<a href="orders.html">
 
 My Orders
 
 </a>
 
-
-<a
-href="profile.html">
+<a href="profile.html">
 
 Profile
 
@@ -246,9 +220,6 @@ Profile
 
 </nav>
 
-
-
-<!-- LOGOUT -->
 
 <div class="nav-buttons">
 
@@ -269,9 +240,6 @@ Logout
 </div>
 
 
-
-<!-- MOBILE MENU -->
-
 <button
 class="mobile-menu-btn"
 id="mobileMenuBtn"
@@ -288,21 +256,19 @@ type="button">
 
 
 
-<!-- =====================================================
-     DASHBOARD
-===================================================== -->
+<!-- =========================
+     MAIN DASHBOARD
+========================= -->
 
 <main class="dashboard-container">
 
 
-<!-- =====================================================
+<!-- =========================
      SIDEBAR
-===================================================== -->
+========================= -->
 
 <aside class="dashboard-sidebar">
 
-
-<!-- USER -->
 
 <div class="sidebar-user">
 
@@ -318,18 +284,16 @@ A
 
 <div>
 
-<strong
-id="sidebarUserName">
+<strong id="sidebarUserName">
 
 Welcome, User
 
 </strong>
 
 
-<span
-id="sidebarUserEmail">
+<span id="sidebarUserEmail">
 
-user@example.com
+Loading...
 
 </span>
 
@@ -339,8 +303,6 @@ user@example.com
 </div>
 
 
-
-<!-- SIDEBAR NAV -->
 
 <nav class="sidebar-nav">
 
@@ -349,78 +311,44 @@ user@example.com
 href="dashboard.html"
 class="active">
 
-<span>
-▦
-</span>
+<span>▦</span>
 
 Dashboard
 
 </a>
 
 
+<a href="services.html">
 
-<a
-href="services.html">
-
-<span>
-🖨️
-</span>
+<span>🖨️</span>
 
 Print Services
 
 </a>
 
 
+<a href="orders.html">
 
-<a
-href="orders.html">
-
-<span>
-📦
-</span>
+<span>📦</span>
 
 My Orders
 
 </a>
 
 
+<a href="profile.html"
+   class="profile-link">
 
-<a
-href="#wallet"
-onclick="return false;">
-
-<span>
-💰
-</span>
-
-Wallet
-
-</a>
-
-
-
-<!-- IMPORTANT PROFILE LINK -->
-
-<a
-href="profile.html">
-
-<span>
-👤
-</span>
+<span>👤</span>
 
 Profile
 
 </a>
 
 
+<a href="index.html">
 
-<a
-href="#support"
-onclick="return false;">
-
-<span>
-❓
-</span>
+<span>❓</span>
 
 Help & Support
 
@@ -431,12 +359,9 @@ Help & Support
 
 
 
-<!-- SIDEBAR BOTTOM -->
-
 <div class="sidebar-bottom">
 
-<a
-href="index.html">
+<a href="index.html">
 
 ← Back to Website
 
@@ -449,9 +374,9 @@ href="index.html">
 
 
 
-<!-- =====================================================
-     MAIN CONTENT
-===================================================== -->
+<!-- =========================
+     DASHBOARD MAIN
+========================= -->
 
 <section class="dashboard-main">
 
@@ -476,9 +401,9 @@ Dashboard
 
 
 
-<!-- =====================================================
+<!-- =========================
      HEADING
-===================================================== -->
+========================= -->
 
 <div class="dashboard-heading">
 
@@ -492,8 +417,7 @@ USER DASHBOARD
 </span>
 
 
-<h1
-id="welcomeHeading">
+<h1 id="welcomeHeading">
 
 Welcome back! 👋
 
@@ -510,7 +434,6 @@ and orders from here.
 </div>
 
 
-
 <a
 href="services.html"
 class="primary-btn">
@@ -524,19 +447,19 @@ class="primary-btn">
 
 
 
-<!-- =====================================================
-     STAT CARDS
-===================================================== -->
+<!-- =========================
+     STATS
+========================= -->
 
 <div class="dashboard-stats">
 
 
-<!-- TOTAL -->
-
 <div class="stat-card">
 
 <div class="stat-icon blue">
+
 📦
+
 </div>
 
 <div>
@@ -555,12 +478,12 @@ Total Orders
 
 
 
-<!-- COMPLETED -->
-
 <div class="stat-card">
 
 <div class="stat-icon green">
+
 ✓
+
 </div>
 
 <div>
@@ -579,12 +502,12 @@ Completed
 
 
 
-<!-- PROCESSING -->
-
 <div class="stat-card">
 
 <div class="stat-icon orange">
+
 ⏳
+
 </div>
 
 <div>
@@ -603,12 +526,12 @@ Processing
 
 
 
-<!-- WALLET -->
-
 <div class="stat-card">
 
 <div class="stat-icon purple">
+
 💰
+
 </div>
 
 <div>
@@ -618,7 +541,9 @@ Wallet Balance
 </span>
 
 <strong id="walletBalance">
+
 ₹0.00
+
 </strong>
 
 </div>
@@ -630,9 +555,9 @@ Wallet Balance
 
 
 
-<!-- =====================================================
-     SERVICES
-===================================================== -->
+<!-- =========================
+     POPULAR SERVICES
+========================= -->
 
 <div class="dashboard-section">
 
@@ -653,8 +578,7 @@ Start a new printing order
 </div>
 
 
-<a
-href="services.html">
+<a href="services.html">
 
 View All →
 
@@ -749,14 +673,13 @@ Fast processing
 
 </div>
 
-
 </div>
 
 
 
-<!-- =====================================================
+<!-- =========================
      RECENT ORDERS
-===================================================== -->
+========================= -->
 
 <div class="dashboard-section">
 
@@ -777,8 +700,7 @@ Track your latest print orders
 </div>
 
 
-<a
-href="orders.html">
+<a href="orders.html">
 
 View All →
 
@@ -786,7 +708,6 @@ View All →
 
 
 </div>
-
 
 
 <div
@@ -805,6 +726,7 @@ Loading recent orders...
 </div>
 
 
+
 </section>
 
 
@@ -812,20 +734,22 @@ Loading recent orders...
 
 
 
-<!-- =====================================================
-     DASHBOARD SCRIPT
-===================================================== -->
-
 <script>
+
+/* =========================================================
+   AVI PRINT DASHBOARD
+========================================================= */
 
 document.addEventListener(
 "DOMContentLoaded",
 async function(){
 
+console.log("AviPrint Dashboard Loaded");
 
-/* =====================================================
+
+/* =========================================================
    SUPABASE CHECK
-===================================================== */
+========================================================= */
 
 if(
 typeof window.supabase === "undefined"
@@ -862,58 +786,49 @@ return;
 }
 
 
-
-/* =====================================================
+/* =========================================================
    ELEMENTS
-===================================================== */
+========================================================= */
 
 const totalOrders =
 document.getElementById(
 "totalOrders"
 );
 
-
 const completedOrders =
 document.getElementById(
 "completedOrders"
 );
-
 
 const processingOrders =
 document.getElementById(
 "processingOrders"
 );
 
-
 const recentOrders =
 document.getElementById(
 "recentOrders"
 );
-
 
 const sidebarUserName =
 document.getElementById(
 "sidebarUserName"
 );
 
-
 const sidebarUserEmail =
 document.getElementById(
 "sidebarUserEmail"
 );
-
 
 const userAvatar =
 document.getElementById(
 "userAvatar"
 );
 
-
 const welcomeHeading =
 document.getElementById(
 "welcomeHeading"
 );
-
 
 const logoutButton =
 document.getElementById(
@@ -921,22 +836,11 @@ document.getElementById(
 );
 
 
-const dashboardButton =
-document.getElementById(
-"sidebarToggle"
-);
-
-
-
-/* =====================================================
-   CHECK LOGIN SESSION
-===================================================== */
-
-let currentUser;
-
+/* =========================================================
+   GET SESSION
+========================================================= */
 
 try{
-
 
 const {
 data,
@@ -958,8 +862,15 @@ const session =
 data.session;
 
 
+console.log(
+"Dashboard session:",
+session
+);
 
-/* NO LOGIN */
+
+/* =========================================================
+   NO SESSION
+========================================================= */
 
 if(
 !session ||
@@ -979,43 +890,33 @@ return;
 }
 
 
-currentUser =
+const user =
 session.user;
 
 
-console.log(
-"Logged in:",
-currentUser.email
-);
-
-
-
-/* =====================================================
-   USER DETAILS
-===================================================== */
+/* =========================================================
+   USER INFORMATION
+========================================================= */
 
 const userEmail =
-currentUser.email ||
-"User";
+user.email || "User";
 
 
 let userName =
-currentUser.user_metadata?.full_name ||
+user.user_metadata?.full_name ||
 "";
 
 
 let userMobile =
-currentUser.user_metadata?.mobile ||
+user.user_metadata?.mobile ||
 "";
 
 
-
-/* =====================================================
+/* =========================================================
    LOAD PROFILE
-===================================================== */
+========================================================= */
 
 try{
-
 
 const {
 data:profile,
@@ -1024,16 +925,18 @@ error:profileError
 await supabaseClient
 .from("profiles")
 .select(
-"full_name,mobile,role"
+"id,email,full_name,mobile,role"
 )
 .eq(
 "id",
-currentUser.id
+user.id
 )
 .maybeSingle();
 
 
-if(profileError){
+if(
+profileError
+){
 
 console.warn(
 "Profile load warning:",
@@ -1044,7 +947,10 @@ profileError
 
 
 if(
-profile &&
+profile
+){
+
+if(
 profile.full_name
 ){
 
@@ -1055,7 +961,6 @@ profile.full_name;
 
 
 if(
-profile &&
 profile.mobile
 ){
 
@@ -1064,6 +969,7 @@ profile.mobile;
 
 }
 
+}
 
 }
 
@@ -1077,24 +983,21 @@ profileError
 }
 
 
-
-/* =====================================================
+/* =========================================================
    FALLBACK NAME
-===================================================== */
+========================================================= */
 
 if(!userName){
 
 userName =
-userEmail
-.split("@")[0];
+userEmail.split("@")[0];
 
 }
 
 
-
-/* =====================================================
-   USER DISPLAY
-===================================================== */
+/* =========================================================
+   DISPLAY USER
+========================================================= */
 
 if(sidebarUserName){
 
@@ -1133,20 +1036,20 @@ userName +
 }
 
 
-
-/* =====================================================
+/* =========================================================
    LOAD ORDERS
-===================================================== */
+========================================================= */
 
 await loadDashboardOrders(
-currentUser.id
+user.id
 );
 
 
-
-/* =====================================================
+/* =========================================================
    LOGOUT
-===================================================== */
+========================================================= */
+
+if(logoutButton){
 
 logoutButton.addEventListener(
 "click",
@@ -1204,29 +1107,33 @@ logoutButton.textContent =
 }
 );
 
+}
+
 
 }
 
 catch(error){
 
 console.error(
-"Dashboard session error:",
+"Dashboard error:",
 error
 );
+
+
+/* =========================================================
+   IMPORTANT
+========================================================= */
 
 window.location.replace(
 "login.html"
 );
 
-return;
-
 }
 
 
-
-/* =====================================================
-   LOAD DASHBOARD ORDERS
-===================================================== */
+/* =========================================================
+   LOAD USER ORDERS
+========================================================= */
 
 async function loadDashboardOrders(
 userId
@@ -1234,25 +1141,22 @@ userId
 
 try{
 
-
 const {
 data:orders,
 error
 } =
 await supabaseClient
 .from("orders")
-.select(
-`
+.select(`
 id,
 order_number,
 service_name,
 service_details,
 order_date,
-created_at,
 status,
-amount
-`
-)
+amount,
+created_at
+`)
 .eq(
 "user_id",
 userId
@@ -1276,19 +1180,23 @@ const userOrders =
 orders || [];
 
 
+console.log(
+"User orders:",
+userOrders
+);
 
-/* =====================================================
+
+/* =========================================================
    TOTAL
-===================================================== */
+========================================================= */
 
 totalOrders.textContent =
 userOrders.length;
 
 
-
-/* =====================================================
+/* =========================================================
    COMPLETED
-===================================================== */
+========================================================= */
 
 const completed =
 userOrders.filter(
@@ -1309,10 +1217,9 @@ completedOrders.textContent =
 completed;
 
 
-
-/* =====================================================
+/* =========================================================
    PROCESSING
-===================================================== */
+========================================================= */
 
 const processing =
 userOrders.filter(
@@ -1339,10 +1246,9 @@ processingOrders.textContent =
 processing;
 
 
-
-/* =====================================================
-   RECENT 5
-===================================================== */
+/* =========================================================
+   RECENT ORDERS
+========================================================= */
 
 const latestOrders =
 userOrders.slice(
@@ -1354,7 +1260,6 @@ userOrders.slice(
 renderRecentOrders(
 latestOrders
 );
-
 
 }
 
@@ -1372,6 +1277,13 @@ recentOrders.innerHTML = `
 
 Unable to load recent orders.
 
+<br><br>
+
+${escapeHTML(
+error.message ||
+"Please try again."
+)}
+
 </div>
 
 `;
@@ -1381,15 +1293,13 @@ Unable to load recent orders.
 }
 
 
-
-/* =====================================================
+/* =========================================================
    RENDER RECENT ORDERS
-===================================================== */
+========================================================= */
 
 function renderRecentOrders(
 orders
 ){
-
 
 if(!orders.length){
 
@@ -1425,6 +1335,14 @@ recentOrders.innerHTML =
 orders.forEach(
 function(order){
 
+const item =
+document.createElement(
+"div"
+);
+
+item.className =
+"recent-order-item";
+
 
 const serviceIcon =
 getServiceIcon(
@@ -1435,8 +1353,8 @@ order.service_name
 const status =
 String(
 order.status ||
-"Pending"
-);
+"pending"
+).toLowerCase();
 
 
 const statusClass =
@@ -1448,38 +1366,20 @@ status
 const amount =
 Number(
 order.amount || 0
-)
-.toFixed(2);
-
-
-const date =
-formatDate(
-order.order_date ||
-order.created_at
-);
+).toFixed(2);
 
 
 const orderNumber =
 order.order_number ||
-(
-order.id
-? order.id.substring(
-0,
-8
-)
-: "Order"
+order.id ||
+"Order";
+
+
+const date =
+formatDate(
+order.created_at ||
+order.order_date
 );
-
-
-
-const item =
-document.createElement(
-"div"
-);
-
-
-item.className =
-"recent-order-item";
 
 
 item.innerHTML = `
@@ -1498,7 +1398,7 @@ ${serviceIcon}
 <strong>
 
 #${escapeHTML(
-orderNumber
+String(orderNumber)
 )}
 
 </strong>
@@ -1511,30 +1411,35 @@ order.service_name ||
 "Print Service"
 )}
 
+</span>
+
+
 ${
 order.service_details
 ?
-" • " +
-escapeHTML(
-order.service_details
-)
+`
+<span>
+${escapeHTML(
+String(order.service_details)
+)}
+</span>
+`
 :
 ""
 }
 
-</span>
-
 
 <span>
 
-${date}
+${escapeHTML(
+date
+)}
 
 </span>
 
 </div>
 
 </div>
-
 
 
 <div class="recent-order-right">
@@ -1550,7 +1455,7 @@ ${date}
 class="recent-order-status ${statusClass}">
 
 ${escapeHTML(
-capitalize(status)
+status
 )}
 
 </span>
@@ -1570,10 +1475,9 @@ item
 }
 
 
-
-/* =====================================================
+/* =========================================================
    SERVICE ICON
-===================================================== */
+========================================================= */
 
 function getServiceIcon(
 service
@@ -1618,10 +1522,9 @@ return "📄";
 }
 
 
-
-/* =====================================================
+/* =========================================================
    STATUS CLASS
-===================================================== */
+========================================================= */
 
 function getStatusClass(
 status
@@ -1629,7 +1532,7 @@ status
 
 const value =
 String(
-status || ""
+status || "pending"
 )
 .toLowerCase();
 
@@ -1684,33 +1587,9 @@ return "pending";
 }
 
 
-
-/* =====================================================
-   CAPITALIZE
-===================================================== */
-
-function capitalize(
-value
-){
-
-const text =
-String(
-value || ""
-);
-
-
-return(
-text.charAt(0).toUpperCase() +
-text.slice(1).toLowerCase()
-);
-
-}
-
-
-
-/* =====================================================
+/* =========================================================
    DATE
-===================================================== */
+========================================================= */
 
 function formatDate(
 value
@@ -1724,9 +1603,7 @@ return "-";
 
 
 const date =
-new Date(
-value
-);
+new Date(value);
 
 
 if(
@@ -1743,23 +1620,18 @@ return "-";
 return date.toLocaleDateString(
 "en-IN",
 {
-
 day:"2-digit",
-
 month:"short",
-
 year:"numeric"
-
 }
 );
 
 }
 
 
-
-/* =====================================================
+/* =========================================================
    ESCAPE HTML
-===================================================== */
+========================================================= */
 
 function escapeHTML(
 value
@@ -1792,16 +1664,14 @@ value ?? ""
 }
 
 
-
-/* =====================================================
+/* =========================================================
    MOBILE SIDEBAR
-===================================================== */
+========================================================= */
 
 const sidebarToggle =
 document.getElementById(
 "sidebarToggle"
 );
-
 
 const sidebar =
 document.querySelector(
@@ -1828,10 +1698,38 @@ sidebar.classList.toggle(
 }
 
 
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
 
-/* =====================================================
+const mobileMenuBtn =
+document.getElementById(
+"mobileMenuBtn"
+);
+
+
+if(
+mobileMenuBtn &&
+sidebar
+){
+
+mobileMenuBtn.addEventListener(
+"click",
+function(){
+
+sidebar.classList.toggle(
+"open"
+);
+
+}
+);
+
+}
+
+
+/* =========================================================
    AUTH STATE LISTENER
-===================================================== */
+========================================================= */
 
 supabaseClient
 .auth
@@ -1863,7 +1761,6 @@ window.location.replace(
 });
 
 </script>
-
 
 </body>
 
