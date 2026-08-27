@@ -19,6 +19,10 @@
 
 <style>
 
+/* =========================================
+   RESET
+========================================= */
+
 *{
     margin:0;
     padding:0;
@@ -31,9 +35,10 @@ body{
     color:#111827;
 }
 
-/* =========================
+
+/* =========================================
    NAVBAR
-========================= */
+========================================= */
 
 .navbar{
     height:72px;
@@ -103,19 +108,21 @@ body{
     background:#f3f4f6;
 }
 
-/* =========================
+
+/* =========================================
    PAGE
-========================= */
+========================================= */
 
 .admin-page{
-    width:min(1400px,94%);
+    width:min(1500px,95%);
     margin:auto;
     padding:35px 0 60px;
 }
 
-/* =========================
+
+/* =========================================
    HEADER
-========================= */
+========================================= */
 
 .page-header{
     display:flex;
@@ -147,9 +154,10 @@ body{
     letter-spacing:1px;
 }
 
-/* =========================
+
+/* =========================================
    STATS
-========================= */
+========================================= */
 
 .stats{
     display:grid;
@@ -177,9 +185,10 @@ body{
     font-size:25px;
 }
 
-/* =========================
+
+/* =========================================
    CARD
-========================= */
+========================================= */
 
 .card{
     background:#fff;
@@ -189,9 +198,10 @@ body{
     box-shadow:0 8px 25px rgba(15,23,42,.04);
 }
 
-/* =========================
+
+/* =========================================
    TOOLBAR
-========================= */
+========================================= */
 
 .toolbar{
     padding:18px;
@@ -218,6 +228,7 @@ body{
 
 .search-box input:focus{
     border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.08);
 }
 
 .refresh-btn{
@@ -235,9 +246,10 @@ body{
     background:#dbeafe;
 }
 
-/* =========================
+
+/* =========================================
    TABLE
-========================= */
+========================================= */
 
 .table-wrapper{
     width:100%;
@@ -246,7 +258,7 @@ body{
 
 .orders-table{
     width:100%;
-    min-width:1200px;
+    min-width:1450px;
     border-collapse:collapse;
 }
 
@@ -259,6 +271,7 @@ body{
     text-align:left;
     padding:16px;
     border-bottom:1px solid #e5e7eb;
+    white-space:nowrap;
 }
 
 .orders-table td{
@@ -272,10 +285,21 @@ body{
     background:#f8fafc;
 }
 
+
+/* =========================================
+   ORDER
+========================================= */
+
 .order-number{
     color:#2563eb;
     font-weight:800;
+    white-space:nowrap;
 }
+
+
+/* =========================================
+   CUSTOMER
+========================================= */
 
 .customer-name{
     font-weight:700;
@@ -288,23 +312,37 @@ body{
     font-size:11px;
 }
 
+
+/* =========================================
+   SERVICE
+========================================= */
+
 .service-name{
     font-weight:700;
+    color:#111827;
 }
 
 .service-details{
     color:#9ca3af;
     font-size:10px;
     margin-top:4px;
+    max-width:220px;
 }
+
+
+/* =========================================
+   AMOUNT
+========================================= */
 
 .amount{
     font-weight:800;
+    white-space:nowrap;
 }
 
-/* =========================
+
+/* =========================================
    STATUS
-========================= */
+========================================= */
 
 .status-select{
     height:36px;
@@ -315,6 +353,11 @@ body{
     font-weight:700;
     background:#fff;
     cursor:pointer;
+    outline:none;
+}
+
+.status-select:focus{
+    border-color:#2563eb;
 }
 
 .status-select.pending{
@@ -337,9 +380,58 @@ body{
     background:#fee2e2;
 }
 
-/* =========================
-   VIEW BUTTON
-========================= */
+
+/* =========================================
+   FILE
+========================================= */
+
+.file-cell{
+    min-width:220px;
+    max-width:280px;
+}
+
+.file-name{
+    color:#374151;
+    font-size:11px;
+    font-weight:700;
+    word-break:break-word;
+    line-height:1.4;
+    margin-bottom:8px;
+}
+
+.no-file{
+    color:#9ca3af;
+    font-size:11px;
+}
+
+.download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    border:1px solid #bbf7d0;
+    background:#f0fdf4;
+    color:#15803d;
+    padding:7px 11px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:700;
+    text-decoration:none;
+}
+
+.download-btn:hover{
+    background:#dcfce7;
+}
+
+.download-btn:disabled{
+    opacity:.6;
+    cursor:wait;
+}
+
+
+/* =========================================
+   VIEW
+========================================= */
 
 .view-btn{
     border:1px solid #dbeafe;
@@ -350,15 +442,17 @@ body{
     cursor:pointer;
     font-size:10px;
     font-weight:700;
+    white-space:nowrap;
 }
 
 .view-btn:hover{
     background:#dbeafe;
 }
 
-/* =========================
-   LOADING / EMPTY / ERROR
-========================= */
+
+/* =========================================
+   LOADING / EMPTY
+========================================= */
 
 .loading,
 .empty{
@@ -367,6 +461,11 @@ body{
     color:#6b7280;
     font-size:13px;
 }
+
+
+/* =========================================
+   ERROR
+========================================= */
 
 .error-box{
     padding:20px;
@@ -378,13 +477,19 @@ body{
     font-size:12px;
 }
 
+
+/* =========================================
+   HIDDEN
+========================================= */
+
 .hidden{
     display:none !important;
 }
 
-/* =========================
+
+/* =========================================
    MODAL
-========================= */
+========================================= */
 
 .modal{
     position:fixed;
@@ -451,51 +556,32 @@ body{
     word-break:break-word;
 }
 
-/* =========================
-   FILE ACTIONS
-========================= */
-
-.file-actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:20px;
-    padding-top:20px;
-    border-top:1px solid #e5e7eb;
+.modal-file{
+    margin-top:18px;
+    padding:15px;
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
 }
 
-.download-btn{
-    border:0;
-    background:#2563eb;
-    color:#fff;
-    padding:11px 16px;
-    border-radius:9px;
-    cursor:pointer;
+.modal-file-title{
+    font-size:11px;
+    color:#6b7280;
+    margin-bottom:7px;
+}
+
+.modal-file-name{
     font-size:12px;
     font-weight:700;
+    color:#111827;
+    word-break:break-word;
+    margin-bottom:12px;
 }
 
-.download-btn:hover{
-    background:#1d4ed8;
-}
 
-.download-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-.no-file{
-    padding:12px;
-    border-radius:9px;
-    background:#fef2f2;
-    border:1px solid #fecaca;
-    color:#b91c1c;
-    font-size:12px;
-}
-
-/* =========================
+/* =========================================
    MOBILE
-========================= */
+========================================= */
 
 @media(max-width:900px){
 
@@ -538,27 +624,19 @@ body{
         width:100%;
     }
 
-    .modal-card{
-        padding:20px;
-    }
-
-    .modal-row{
-        flex-direction:column;
-        gap:5px;
-    }
-
-    .modal-row strong{
-        max-width:100%;
-        text-align:left;
-    }
-
 }
 
 </style>
 
 </head>
 
+
 <body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
 
 <header class="navbar">
 
@@ -594,7 +672,12 @@ Logout
 </header>
 
 
+<!-- =========================================
+     MAIN
+========================================= -->
+
 <main class="admin-page">
+
 
 <div class="page-header">
 
@@ -609,7 +692,7 @@ Order Management
 </h1>
 
 <p>
-Manage customer orders and update their status.
+Manage customer orders, print files and order status.
 </p>
 
 </div>
@@ -625,7 +708,12 @@ Checking admin session...
 </div>
 
 
+<!-- =========================================
+     STATS
+========================================= -->
+
 <div class="stats">
+
 
 <div class="stat-card">
 
@@ -639,6 +727,7 @@ Total Orders
 
 </div>
 
+
 <div class="stat-card">
 
 <span>
@@ -651,6 +740,7 @@ Pending
 
 </div>
 
+
 <div class="stat-card">
 
 <span>
@@ -662,6 +752,7 @@ Processing
 </strong>
 
 </div>
+
 
 <div class="stat-card">
 
@@ -678,7 +769,12 @@ Completed
 </div>
 
 
+<!-- =========================================
+     ORDERS CARD
+========================================= -->
+
 <div class="card">
+
 
 <div class="toolbar">
 
@@ -687,9 +783,10 @@ Completed
 <input
 type="text"
 id="searchInput"
-placeholder="Search order, customer, email or service...">
+placeholder="Search order, customer, email, service or file...">
 
 </div>
+
 
 <button
 type="button"
@@ -733,6 +830,7 @@ id="tableWrapper">
 
 <table class="orders-table">
 
+
 <thead>
 
 <tr>
@@ -747,6 +845,10 @@ Customer
 
 <th>
 Service
+</th>
+
+<th>
+Print File
 </th>
 
 <th>
@@ -769,27 +871,33 @@ Action
 
 </thead>
 
+
 <tbody id="ordersBody">
 </tbody>
+
 
 </table>
 
 </div>
 
+
 </div>
+
 
 </main>
 
 
-<!-- =========================
-     ORDER MODAL
-========================= -->
+<!-- =========================================
+     MODAL
+========================================= -->
 
 <div
 class="modal"
 id="orderModal">
 
+
 <div class="modal-card">
+
 
 <div class="modal-header">
 
@@ -808,8 +916,10 @@ id="closeModal">
 
 </div>
 
+
 <div id="modalDetails">
 </div>
+
 
 </div>
 
@@ -828,18 +938,11 @@ const ADMIN_EMAIL =
 
 /*
  IMPORTANT:
-
-Apne Supabase Storage bucket ka naam
-yahan rakho.
-
-Example:
-
-const STORAGE_BUCKET = "orders";
-
+ Supabase Storage bucket name
 */
 
 const STORAGE_BUCKET =
-"orders";
+"print-files";
 
 
 /* =========================================
@@ -993,7 +1096,7 @@ return true;
 catch(error){
 
 console.error(
-"Admin session error:",
+"ADMIN SESSION ERROR:",
 error
 );
 
@@ -1038,16 +1141,26 @@ try{
 /*
  IMPORTANT:
 
-RPC get_admin_orders() se orders
-load honge.
+We use the existing RPC function:
 
-Ye user_email ko directly query nahi
-kar raha.
+get_admin_orders
+
+Do NOT select user_email because that
+column does not exist.
+
+The actual order data contains:
+
+customer_email
+customer_name
+file_name
+file_path
 */
 
 const result =
 await supabaseClient
-.rpc("get_admin_orders");
+.rpc(
+"get_admin_orders"
+);
 
 
 if(result.error){
@@ -1110,7 +1223,7 @@ errorBox.classList.remove(
 
 
 /* =========================================
-   STATS
+   UPDATE STATS
 ========================================= */
 
 function updateStats(
@@ -1127,8 +1240,7 @@ function(order){
 
 return normalizeStatus(
 order.status
-) ===
-"pending";
+) === "pending";
 
 }
 ).length;
@@ -1140,8 +1252,7 @@ function(order){
 
 return normalizeStatus(
 order.status
-) ===
-"processing";
+) === "processing";
 
 }
 ).length;
@@ -1153,8 +1264,7 @@ function(order){
 
 return normalizeStatus(
 order.status
-) ===
-"completed";
+) === "completed";
 
 }
 ).length;
@@ -1243,10 +1353,7 @@ order.order_number ||
 (
 order.id
 ?
-order.id.substring(
-0,
-8
-)
+order.id.substring(0,8)
 :
 "-"
 );
@@ -1289,6 +1396,11 @@ formatDate(
 order.order_date ||
 order.created_at
 );
+
+
+const fileName =
+order.file_name ||
+"";
 
 
 row.innerHTML = `
@@ -1344,6 +1456,57 @@ details
 )}
 
 </div>
+
+</td>
+
+
+<td class="file-cell">
+
+${
+fileName
+
+?
+
+`
+
+<div class="file-name">
+
+📄 ${escapeHTML(
+fileName
+)}
+
+</div>
+
+
+<button
+type="button"
+class="download-btn"
+data-file-path="${escapeHTML(
+order.file_path || ""
+)}"
+data-file-name="${escapeHTML(
+fileName
+)}">
+
+⬇ Download
+
+</button>
+
+`
+
+:
+
+`
+
+<div class="no-file">
+
+No print file
+
+</div>
+
+`
+
+}
 
 </td>
 
@@ -1459,6 +1622,7 @@ select.getAttribute(
 "data-order-id"
 );
 
+
 const newStatus =
 normalizeStatus(
 select.value
@@ -1468,6 +1632,57 @@ select.value
 await updateOrderStatus(
 orderId,
 newStatus
+);
+
+}
+);
+
+}
+);
+
+
+/* =========================================
+   DOWNLOAD EVENTS
+========================================= */
+
+ordersBody
+.querySelectorAll(
+".download-btn"
+)
+.forEach(
+function(button){
+
+button.addEventListener(
+"click",
+async function(){
+
+const filePath =
+button.getAttribute(
+"data-file-path"
+);
+
+
+const fileName =
+button.getAttribute(
+"data-file-name"
+);
+
+
+if(!filePath){
+
+alert(
+"Print file path is missing."
+);
+
+return;
+
+}
+
+
+await downloadPrintFile(
+filePath,
+fileName,
+button
 );
 
 }
@@ -1526,6 +1741,162 @@ order
 
 
 /* =========================================
+   DOWNLOAD PRINT FILE
+========================================= */
+
+async function downloadPrintFile(
+filePath,
+fileName,
+button
+){
+
+const originalText =
+button.textContent;
+
+
+try{
+
+button.disabled =
+true;
+
+button.textContent =
+"Preparing...";
+
+
+console.log(
+"Storage bucket:",
+STORAGE_BUCKET
+);
+
+console.log(
+"File path:",
+filePath
+);
+
+
+/*
+ Create a temporary signed URL.
+
+This works with private Supabase
+Storage buckets.
+*/
+
+const result =
+await supabaseClient
+.storage
+.from(
+STORAGE_BUCKET
+)
+.createSignedUrl(
+filePath,
+300
+);
+
+
+if(result.error){
+
+throw result.error;
+
+}
+
+
+const signedUrl =
+result.data?.signedUrl;
+
+
+if(!signedUrl){
+
+throw new Error(
+"Could not create download URL."
+);
+
+}
+
+
+/*
+ Open the file.
+
+Using an anchor gives the browser
+a chance to download the file.
+*/
+
+const link =
+document.createElement("a");
+
+
+link.href =
+signedUrl;
+
+
+link.target =
+"_blank";
+
+
+link.rel =
+"noopener noreferrer";
+
+
+link.download =
+fileName ||
+"print-file";
+
+
+document.body.appendChild(
+link
+);
+
+
+link.click();
+
+
+link.remove();
+
+
+button.textContent =
+"✓ Ready";
+
+
+setTimeout(
+function(){
+
+button.textContent =
+originalText;
+
+button.disabled =
+false;
+
+},
+1500
+);
+
+}
+catch(error){
+
+console.error(
+"DOWNLOAD FILE ERROR:",
+error
+);
+
+alert(
+"Failed to download print file: " +
+(
+error.message ||
+"Unknown error"
+)
+);
+
+button.textContent =
+originalText;
+
+button.disabled =
+false;
+
+}
+
+}
+
+
+/* =========================================
    UPDATE ORDER STATUS
 ========================================= */
 
@@ -1535,10 +1906,12 @@ newStatus
 ){
 
 const allowedStatuses = [
+
 "pending",
 "processing",
 "completed",
 "cancelled"
+
 ];
 
 
@@ -1610,6 +1983,10 @@ result.data
 );
 
 
+/*
+ Update local data.
+*/
+
 const index =
 allOrders.findIndex(
 function(order){
@@ -1633,8 +2010,16 @@ allOrders
 );
 
 
-await loadOrders();
+alert(
+"Order status updated successfully."
+);
 
+
+/*
+ Reload data from database.
+*/
+
+await loadOrders();
 
 }
 catch(error){
@@ -1643,6 +2028,11 @@ console.error(
 "STATUS UPDATE ERROR:",
 error
 );
+
+
+/*
+ Reload original value.
+*/
 
 await loadOrders();
 
@@ -1726,6 +2116,13 @@ order.service_details || ""
 .toLowerCase();
 
 
+const fileName =
+String(
+order.file_name || ""
+)
+.toLowerCase();
+
+
 const status =
 normalizeStatus(
 order.status
@@ -1734,29 +2131,19 @@ order.status
 
 return (
 
-orderNumber.includes(
-query
-) ||
+orderNumber.includes(query) ||
 
-name.includes(
-query
-) ||
+name.includes(query) ||
 
-email.includes(
-query
-) ||
+email.includes(query) ||
 
-service.includes(
-query
-) ||
+service.includes(query) ||
 
-details.includes(
-query
-) ||
+details.includes(query) ||
 
-status.includes(
-query
-)
+fileName.includes(query) ||
+
+status.includes(query)
 
 );
 
@@ -1801,7 +2188,7 @@ refreshButton.textContent =
 
 
 /* =========================================
-   SHOW ORDER DETAILS
+   ORDER DETAILS MODAL
 ========================================= */
 
 function showOrderDetails(
@@ -1820,54 +2207,14 @@ order.amount || 0
 ).toFixed(2);
 
 
-let fileSection = "";
+const fileName =
+order.file_name ||
+"";
 
 
-/*
- ========================================
- FILE DOWNLOAD
- ========================================
-*/
-
-if(
-order.file_path
-){
-
-fileSection = `
-
-<div class="file-actions">
-
-<button
-type="button"
-class="download-btn"
-id="downloadFileButton">
-
-⬇ Download File
-
-</button>
-
-</div>
-
-`;
-
-}
-else{
-
-fileSection = `
-
-<div class="file-actions">
-
-<div class="no-file">
-
-No file is attached to this order.
-
-</div>
-
-</div>
-
-`;
-
-}
+const filePath =
+order.file_path ||
+"";
 
 
 modalDetails.innerHTML = `
@@ -2024,41 +2371,53 @@ Amount
 </div>
 
 
-<div class="modal-row">
+<div class="modal-file">
 
-<span>
-File Name
-</span>
+<div class="modal-file-title">
 
-<strong>
-${escapeHTML(
-order.file_name ||
-"-"
-)}
-
-</strong>
+PRINT FILE
 
 </div>
 
 
-<div class="modal-row">
+<div class="modal-file-name">
 
-<span>
-File Path
-</span>
-
-<strong>
-${escapeHTML(
-order.file_path ||
-"-"
-)}
-
-</strong>
+${
+fileName
+?
+"📄 " + escapeHTML(fileName)
+:
+"No print file available"
+}
 
 </div>
 
 
-${fileSection}
+${
+filePath
+
+?
+
+`
+
+<button
+type="button"
+class="download-btn"
+id="modalDownloadButton">
+
+⬇ Download Print File
+
+</button>
+
+`
+
+:
+
+""
+
+}
+
+</div>
 
 `;
 
@@ -2069,222 +2428,28 @@ orderModal.classList.add(
 
 
 /*
- Attach download event
+ Modal download button.
 */
 
-const downloadButton =
+const modalDownloadButton =
 document.getElementById(
-"downloadFileButton"
+"modalDownloadButton"
 );
 
 
-if(downloadButton){
+if(modalDownloadButton){
 
-downloadButton.addEventListener(
+modalDownloadButton.addEventListener(
 "click",
-function(){
+async function(){
 
-downloadOrderFile(
-order,
-downloadButton
+await downloadPrintFile(
+filePath,
+fileName,
+modalDownloadButton
 );
 
 }
-);
-
-}
-
-}
-
-
-/* =========================================
-   DOWNLOAD ORDER FILE
-========================================= */
-
-async function downloadOrderFile(
-order,
-button
-){
-
-if(
-!order.file_path
-){
-
-alert(
-"No file is attached to this order."
-);
-
-return;
-
-}
-
-
-try{
-
-button.disabled =
-true;
-
-button.textContent =
-"Preparing download...";
-
-
-console.log(
-"Downloading file:",
-order.file_path
-);
-
-
-/*
- ========================================
- CREATE SIGNED URL
- ========================================
-
-Private bucket ke liye signed URL
-use kiya ja raha hai.
-
-*/
-
-const result =
-await supabaseClient
-.storage
-.from(
-STORAGE_BUCKET
-)
-.createSignedUrl(
-order.file_path,
-60
-);
-
-
-if(result.error){
-
-throw result.error;
-
-}
-
-
-const signedUrl =
-result.data?.signedUrl;
-
-
-if(!signedUrl){
-
-throw new Error(
-"Could not create file download URL."
-);
-
-}
-
-
-/*
- ========================================
- FORCE DOWNLOAD
- ========================================
-*/
-
-const response =
-await fetch(
-signedUrl
-);
-
-
-if(!response.ok){
-
-throw new Error(
-"Could not access the file."
-);
-
-}
-
-
-const blob =
-await response.blob();
-
-
-const blobUrl =
-window.URL.createObjectURL(
-blob
-);
-
-
-const link =
-document.createElement("a");
-
-
-link.href =
-blobUrl;
-
-
-link.download =
-order.file_name ||
-"aviprint-order-file";
-
-
-document.body.appendChild(
-link
-);
-
-
-link.click();
-
-
-link.remove();
-
-
-window.URL.revokeObjectURL(
-blobUrl
-);
-
-
-button.textContent =
-"✓ Downloaded";
-
-
-setTimeout(
-function(){
-
-if(
-document.body.contains(
-button
-)
-){
-
-button.textContent =
-"⬇ Download File";
-
-button.disabled =
-false;
-
-}
-
-},
-1500
-);
-
-
-}
-catch(error){
-
-console.error(
-"FILE DOWNLOAD ERROR:",
-error
-);
-
-
-button.disabled =
-false;
-
-button.textContent =
-"⬇ Download File";
-
-
-alert(
-"File download failed:\n\n" +
-(
-error.message ||
-"Unknown error"
-) +
-"\n\nCheck Supabase Storage bucket and file path."
 );
 
 }
@@ -2327,13 +2492,16 @@ orderModal.classList.remove(
 );
 
 
+/* =========================================
+   ESCAPE KEY
+========================================= */
+
 document.addEventListener(
 "keydown",
 function(event){
 
 if(
-event.key ===
-"Escape"
+event.key === "Escape"
 ){
 
 orderModal.classList.remove(
@@ -2419,9 +2587,7 @@ return "-";
 
 
 const date =
-new Date(
-value
-);
+new Date(value);
 
 
 if(
@@ -2483,7 +2649,7 @@ value ?? ""
 
 
 /* =========================================
-   START ADMIN PANEL
+   START
 ========================================= */
 
 (async function(){
