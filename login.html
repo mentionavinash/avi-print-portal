@@ -6,13 +6,14 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-        content="Login to your AviPrint account and manage your printing orders.">
+          content="Login to your AviPrint account and manage your printing orders.">
 
     <title>Login | AviPrint</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
 
@@ -47,19 +48,10 @@
             color: inherit;
         }
 
-
-        /* =========================
-           NAVBAR
-        ========================= */
-
         .login-navbar {
             height: 72px;
-
-            background:
-                rgba(255, 255, 255, 0.92);
-
-            border-bottom:
-                1px solid #e5e7eb;
+            background: rgba(255,255,255,0.92);
+            border-bottom: 1px solid #e5e7eb;
 
             display: flex;
             align-items: center;
@@ -83,7 +75,6 @@
 
             font-size: 22px;
             font-weight: 800;
-
             color: #111827;
         }
 
@@ -109,28 +100,18 @@
 
         .back-home {
             color: #4b5563;
-
             font-size: 14px;
             font-weight: 600;
-
-            transition: 0.2s;
         }
 
         .back-home:hover {
             color: #2563eb;
         }
 
-
-        /* =========================
-           LOGIN PAGE
-        ========================= */
-
         .login-page {
-            min-height:
-                calc(100vh - 72px);
+            min-height: calc(100vh - 72px);
 
             display: flex;
-
             align-items: center;
             justify-content: center;
 
@@ -141,28 +122,19 @@
             width: min(1000px, 100%);
 
             display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
+            grid-template-columns: 1fr 1fr;
 
             background: white;
 
-            border:
-                1px solid #e5e7eb;
-
+            border: 1px solid #e5e7eb;
             border-radius: 24px;
 
             overflow: hidden;
 
             box-shadow:
                 0 25px 70px
-                rgba(15, 23, 42, 0.12);
+                rgba(15,23,42,0.12);
         }
-
-
-        /* =========================
-           LEFT SIDE
-        ========================= */
 
         .login-info {
             background:
@@ -177,7 +149,6 @@
             padding: 55px 45px;
 
             position: relative;
-
             overflow: hidden;
         }
 
@@ -235,7 +206,6 @@
                 rgba(255,255,255,0.2);
 
             font-size: 12px;
-
             font-weight: 700;
 
             letter-spacing: 0.5px;
@@ -246,7 +216,6 @@
         .login-info h1 {
             font-size: 42px;
             line-height: 1.08;
-
             margin-bottom: 18px;
         }
 
@@ -254,28 +223,17 @@
             color: #bfdbfe;
         }
 
-        .login-info >
-        .info-content > p {
-
+        .info-description {
             color: #dbeafe;
-
             line-height: 1.7;
-
             font-size: 15px;
-
             max-width: 390px;
         }
-
-
-        /* =========================
-           BENEFITS
-        ========================= */
 
         .benefits {
             margin-top: 35px;
 
             display: flex;
-
             flex-direction: column;
 
             gap: 18px;
@@ -283,14 +241,11 @@
 
         .benefit {
             display: flex;
-
             align-items: center;
-
             gap: 13px;
         }
 
         .benefit-icon {
-
             width: 36px;
             height: 36px;
 
@@ -300,38 +255,25 @@
                 rgba(255,255,255,0.13);
 
             display: flex;
-
             align-items: center;
             justify-content: center;
         }
 
         .benefit-text strong {
-
             display: block;
-
             font-size: 14px;
-
             margin-bottom: 3px;
         }
 
         .benefit-text span {
-
             color: #dbeafe;
-
             font-size: 12px;
         }
 
-
-        /* =========================
-           FORM
-        ========================= */
-
         .login-form-section {
-
             padding: 55px 45px;
 
             display: flex;
-
             align-items: center;
         }
 
@@ -344,36 +286,24 @@
         }
 
         .form-header h2 {
-
             font-size: 30px;
-
             margin-bottom: 8px;
-
             color: #111827;
         }
 
         .form-header p {
-
             color: #6b7280;
-
             font-size: 14px;
         }
-
-
-        /* =========================
-           FORM GROUP
-        ========================= */
 
         .form-group {
             margin-bottom: 20px;
         }
 
         .form-group label {
-
             display: block;
 
             font-size: 13px;
-
             font-weight: 700;
 
             margin-bottom: 8px;
@@ -386,34 +316,26 @@
         }
 
         .input-icon {
-
             position: absolute;
 
             left: 14px;
-
             top: 50%;
 
-            transform:
-                translateY(-50%);
+            transform: translateY(-50%);
 
             color: #9ca3af;
-
             font-size: 16px;
         }
 
         .form-input {
-
             width: 100%;
-
             height: 50px;
 
-            border:
-                1px solid #d1d5db;
+            border: 1px solid #d1d5db;
 
             border-radius: 11px;
 
-            padding:
-                0 45px;
+            padding: 0 45px;
 
             outline: none;
 
@@ -425,7 +347,6 @@
         }
 
         .form-input:focus {
-
             border-color: #2563eb;
 
             box-shadow:
@@ -433,45 +354,27 @@
                 rgba(37,99,235,0.10);
         }
 
-
-        /* =========================
-           PASSWORD
-        ========================= */
-
         .password-toggle {
-
             position: absolute;
 
             right: 13px;
-
             top: 50%;
 
-            transform:
-                translateY(-50%);
+            transform: translateY(-50%);
 
             border: 0;
-
             background: transparent;
 
             cursor: pointer;
 
             color: #6b7280;
-
             font-size: 13px;
         }
 
-
-        /* =========================
-           OPTIONS
-        ========================= */
-
         .form-options {
-
             display: flex;
 
-            justify-content:
-                space-between;
-
+            justify-content: space-between;
             align-items: center;
 
             margin-bottom: 22px;
@@ -480,11 +383,8 @@
         }
 
         .remember {
-
             display: flex;
-
             align-items: center;
-
             gap: 7px;
 
             color: #6b7280;
@@ -495,33 +395,21 @@
         }
 
         .forgot {
-
             color: #2563eb;
-
             font-weight: 600;
         }
 
-
-        /* =========================
-           LOGIN BUTTON
-        ========================= */
-
         .login-button {
-
             width: 100%;
-
             height: 52px;
 
             border: none;
-
             border-radius: 11px;
 
             background: #2563eb;
-
             color: white;
 
             font-size: 15px;
-
             font-weight: 700;
 
             cursor: pointer;
@@ -530,11 +418,9 @@
         }
 
         .login-button:hover {
-
             background: #1d4ed8;
 
-            transform:
-                translateY(-1px);
+            transform: translateY(-1px);
 
             box-shadow:
                 0 10px 25px
@@ -542,21 +428,12 @@
         }
 
         .login-button:disabled {
-
             opacity: 0.7;
-
             cursor: not-allowed;
-
             transform: none;
         }
 
-
-        /* =========================
-           MESSAGE
-        ========================= */
-
         .message {
-
             display: none;
 
             padding: 11px 13px;
@@ -571,36 +448,24 @@
         }
 
         .message.error {
-
             display: block;
 
             background: #fef2f2;
-
             color: #b91c1c;
 
-            border:
-                1px solid #fecaca;
+            border: 1px solid #fecaca;
         }
 
         .message.success {
-
             display: block;
 
             background: #f0fdf4;
-
             color: #15803d;
 
-            border:
-                1px solid #bbf7d0;
+            border: 1px solid #bbf7d0;
         }
 
-
-        /* =========================
-           REGISTER
-        ========================= */
-
         .register-text {
-
             text-align: center;
 
             margin-top: 25px;
@@ -611,14 +476,11 @@
         }
 
         .register-text a {
-
             color: #2563eb;
-
             font-weight: 700;
         }
 
         .security-note {
-
             text-align: center;
 
             margin-top: 25px;
@@ -628,47 +490,32 @@
             font-size: 11px;
         }
 
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
         @media (max-width: 800px) {
 
             .login-wrapper {
-
-                grid-template-columns:
-                    1fr;
-
+                grid-template-columns: 1fr;
                 max-width: 520px;
             }
 
             .login-info {
-
                 padding: 38px 30px;
             }
 
             .login-info h1 {
-
                 font-size: 34px;
             }
 
             .benefits {
-
                 margin-top: 25px;
 
                 display: grid;
-
-                grid-template-columns:
-                    1fr 1fr;
+                grid-template-columns: 1fr 1fr;
             }
 
             .login-form-section {
-
                 padding: 40px 30px;
             }
         }
-
 
         @media (max-width: 500px) {
 
@@ -696,73 +543,49 @@
                 font-size: 30px;
             }
 
-            .login-info >
-            .info-content > p {
-
+            .info-description {
                 font-size: 13px;
             }
 
             .benefits {
-
-                grid-template-columns:
-                    1fr;
-
+                grid-template-columns: 1fr;
                 gap: 13px;
             }
 
             .login-form-section {
-
                 padding: 32px 23px;
             }
 
             .form-header h2 {
-
                 font-size: 26px;
             }
         }
 
     </style>
 
-
-    <!-- =========================
-         SUPABASE
-    ========================= -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script src="config.js"></script>
-
 </head>
 
 
 <body>
 
-
 <header class="login-navbar">
 
     <div class="nav-inner">
 
-        <a href="index.html"
-           class="logo">
+        <a href="index.html" class="logo">
 
             <span class="logo-icon">
                 A
             </span>
 
             <span>
-                Avi<span class="logo-print">
-                    Print
-                </span>
+                Avi<span class="logo-print">Print</span>
             </span>
 
         </a>
 
-
-        <a href="index.html"
-           class="back-home">
-
+        <a href="index.html" class="back-home">
             ← Back to Home
-
         </a>
 
     </div>
@@ -770,50 +593,31 @@
 </header>
 
 
-
 <main class="login-page">
 
     <div class="login-wrapper">
-
-
-        <!-- =========================
-             LEFT SIDE
-        ========================= -->
 
         <section class="login-info">
 
             <div class="info-content">
 
                 <span class="info-badge">
-
                     AVIPRINT PORTAL
-
                 </span>
 
-
                 <h1>
-
                     Welcome<br>
-
-                    <span>
-                        back.
-                    </span>
-
+                    <span>back.</span>
                 </h1>
 
-
-                <p>
-
+                <p class="info-description">
                     Login to manage your printing
                     orders, upload documents and
                     keep track of everything from
                     one simple portal.
-
                 </p>
 
-
                 <div class="benefits">
-
 
                     <div class="benefit">
 
@@ -877,7 +681,6 @@
 
                     </div>
 
-
                 </div>
 
             </div>
@@ -885,21 +688,13 @@
         </section>
 
 
-
-        <!-- =========================
-             LOGIN FORM
-        ========================= -->
-
         <section class="login-form-section">
 
             <div class="form-container">
 
-
                 <div class="form-header">
 
-                    <h2>
-                        Login
-                    </h2>
+                    <h2>Login</h2>
 
                     <p>
                         Enter your account details
@@ -909,15 +704,10 @@
                 </div>
 
 
-                <div id="message"
-                     class="message">
-                </div>
+                <div id="message" class="message"></div>
 
 
                 <form id="loginForm">
-
-
-                    <!-- EMAIL -->
 
                     <div class="form-group">
 
@@ -944,9 +734,6 @@
                     </div>
 
 
-
-                    <!-- PASSWORD -->
-
                     <div class="form-group">
 
                         <label for="password">
@@ -967,7 +754,6 @@
                                 autocomplete="current-password"
                                 required>
 
-
                             <button
                                 type="button"
                                 class="password-toggle"
@@ -981,9 +767,6 @@
 
                     </div>
 
-
-
-                    <!-- OPTIONS -->
 
                     <div class="form-options">
 
@@ -1012,9 +795,6 @@
                     </div>
 
 
-
-                    <!-- LOGIN BUTTON -->
-
                     <button
                         type="submit"
                         class="login-button"
@@ -1024,21 +804,15 @@
 
                     </button>
 
-
                 </form>
 
-
-
-                <!-- REGISTER -->
 
                 <div class="register-text">
 
                     Don't have an account?
 
                     <a href="register.html">
-
                         Create Account
-
                     </a>
 
                 </div>
@@ -1050,7 +824,6 @@
 
                 </div>
 
-
             </div>
 
         </section>
@@ -1060,430 +833,484 @@
 </main>
 
 
-
 <script>
 
-document.addEventListener(
-    "DOMContentLoaded",
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
+const SUPABASE_URL =
+    "https://pmqmewceqnxsvlhceeef.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_mWPszaFzSHbPp-OHlPGWjw_JdrMU6oQ";
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+const ADMIN_EMAIL =
+    "aviinformatics@gmail.com";
+
+
+/* =====================================================
+   CREATE SUPABASE CLIENT
+===================================================== */
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const message =
+    document.getElementById("message");
+
+const passwordInput =
+    document.getElementById("password");
+
+const togglePassword =
+    document.getElementById("togglePassword");
+
+const forgotPassword =
+    document.getElementById("forgotPassword");
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(text, type) {
+
+    message.textContent = text;
+
+    message.className =
+        "message " + type;
+
+}
+
+
+/* =====================================================
+   PASSWORD TOGGLE
+===================================================== */
+
+togglePassword.addEventListener(
+    "click",
     function () {
 
-
-    /* =========================
-       ELEMENTS
-    ========================= */
-
-    const loginForm =
-        document.getElementById(
-            "loginForm"
-        );
-
-    const loginButton =
-        document.getElementById(
-            "loginButton"
-        );
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-    const passwordInput =
-        document.getElementById(
+        if (
+            passwordInput.type ===
             "password"
-        );
+        ) {
 
-    const togglePassword =
-        document.getElementById(
-            "togglePassword"
-        );
+            passwordInput.type =
+                "text";
 
-    const forgotPassword =
-        document.getElementById(
-            "forgotPassword"
-        );
+            togglePassword.textContent =
+                "Hide";
 
+        } else {
 
-    /* =========================
-       CHECK SUPABASE
-    ========================= */
+            passwordInput.type =
+                "password";
 
-    if (
-        typeof window.supabase ===
-        "undefined"
-    ) {
+            togglePassword.textContent =
+                "Show";
 
-        showMessage(
-            "Supabase library could not be loaded.",
-            "error"
-        );
-
-        return;
+        }
 
     }
+);
 
 
-    if (
-        typeof supabaseClient ===
-        "undefined" ||
-        !supabaseClient
-    ) {
+/* =====================================================
+   LOGIN
+===================================================== */
 
-        showMessage(
-            "Supabase configuration could not be loaded.",
-            "error"
-        );
+loginForm.addEventListener(
+    "submit",
+    async function (event) {
 
-        return;
-
-    }
+        event.preventDefault();
 
 
-    /* =========================
-       MESSAGE
-    ========================= */
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
 
-    function showMessage(
-        text,
-        type
-    ) {
+        const password =
+            passwordInput.value;
+
+
+        if (!email || !password) {
+
+            showMessage(
+                "Please enter your email and password.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        loginButton.disabled =
+            true;
+
+        loginButton.textContent =
+            "Logging in...";
 
         message.className =
-            "message " + type;
+            "message";
 
         message.textContent =
-            text;
-
-    }
+            "";
 
 
-    /* =========================
-       PASSWORD SHOW/HIDE
-    ========================= */
+        try {
 
-    togglePassword.addEventListener(
-        "click",
-        function () {
+            console.log(
+                "Attempting Supabase login..."
+            );
+
+
+            const result =
+                await supabaseClient.auth.signInWithPassword({
+
+                    email: email,
+
+                    password: password
+
+                });
+
+
+            console.log(
+                "Supabase login result:",
+                result
+            );
+
+
+            if (result.error) {
+
+                throw result.error;
+
+            }
+
 
             if (
-                passwordInput.type ===
-                "password"
+                !result.data ||
+                !result.data.user
             ) {
 
-                passwordInput.type =
-                    "text";
+                throw new Error(
+                    "Login successful, but no user session was created."
+                );
 
-                togglePassword.textContent =
-                    "Hide";
+            }
+
+
+            const loggedInEmail =
+                (
+                    result.data.user.email ||
+                    email
+                ).toLowerCase();
+
+
+            showMessage(
+                "Login successful! Redirecting...",
+                "success"
+            );
+
+
+            /*
+             * IMPORTANT:
+             * Check the actual authenticated
+             * user's email, not only the
+             * text entered into the form.
+             */
+
+            setTimeout(
+                function () {
+
+                    if (
+                        loggedInEmail ===
+                        ADMIN_EMAIL.toLowerCase()
+                    ) {
+
+                        window.location.replace(
+                            "admin.html"
+                        );
+
+                    } else {
+
+                        window.location.replace(
+                            "dashboard.html"
+                        );
+
+                    }
+
+                },
+                700
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "LOGIN ERROR:",
+                error
+            );
+
+
+            let errorMessage =
+                error?.message ||
+                "Login failed.";
+
+
+            if (
+                errorMessage
+                .toLowerCase()
+                .includes(
+                    "invalid login credentials"
+                )
+            ) {
+
+                errorMessage =
+                    "Invalid email or password.";
+
+            }
+
+
+            if (
+                errorMessage
+                .toLowerCase()
+                .includes(
+                    "email not confirmed"
+                )
+            ) {
+
+                errorMessage =
+                    "Please confirm your email before logging in.";
+
+            }
+
+
+            showMessage(
+                errorMessage,
+                "error"
+            );
+
+        }
+
+        finally {
+
+            loginButton.disabled =
+                false;
+
+            loginButton.textContent =
+                "Login to AviPrint";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+forgotPassword.addEventListener(
+    "click",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+        if (!email) {
+
+            showMessage(
+                "Enter your email address first.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const result =
+                await supabaseClient
+                .auth
+                .resetPasswordForEmail(
+                    email,
+                    {
+                        redirectTo:
+                            window.location.origin +
+                            "/reset-password.html"
+                    }
+                );
+
+
+            if (result.error) {
+
+                throw result.error;
+
+            }
+
+
+            showMessage(
+                "Password reset email sent. Please check your inbox.",
+                "success"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "PASSWORD RESET ERROR:",
+                error
+            );
+
+
+            showMessage(
+                error?.message ||
+                "Unable to send password reset email.",
+                "error"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CHECK EXISTING SESSION
+===================================================== */
+
+async function checkExistingSession() {
+
+    try {
+
+        const result =
+            await supabaseClient.auth.getSession();
+
+
+        if (result.error) {
+
+            console.error(
+                "Session check error:",
+                result.error
+            );
+
+            return;
+
+        }
+
+
+        const session =
+            result.data.session;
+
+
+        if (
+            session &&
+            session.user
+        ) {
+
+            const email =
+                (
+                    session.user.email ||
+                    ""
+                ).toLowerCase();
+
+
+            /*
+             * Already logged in.
+             * Send to correct dashboard.
+             */
+
+            if (
+                email ===
+                ADMIN_EMAIL.toLowerCase()
+            ) {
+
+                window.location.replace(
+                    "admin.html"
+                );
 
             } else {
 
-                passwordInput.type =
-                    "password";
-
-                togglePassword.textContent =
-                    "Show";
+                window.location.replace(
+                    "dashboard.html"
+                );
 
             }
 
         }
-    );
 
+    }
 
-    /* =========================
-       LOGIN
-    ========================= */
+    catch (error) {
 
-    loginForm.addEventListener(
-        "submit",
-        async function (event) {
+        console.error(
+            "Existing session error:",
+            error
+        );
 
-            event.preventDefault();
+    }
 
+}
 
-            const email =
-                document
-                .getElementById("email")
-                .value
-                .trim();
 
+/* =====================================================
+   AUTH STATE LISTENER
+===================================================== */
 
-            const password =
-                passwordInput.value;
+supabaseClient.auth.onAuthStateChange(
+    function (event, session) {
 
+        console.log(
+            "Auth event:",
+            event
+        );
 
-            if (
-                !email ||
-                !password
-            ) {
+    }
+);
 
-                showMessage(
-                    "Please enter your email and password.",
-                    "error"
-                );
 
-                return;
+/* =====================================================
+   PAGE LOAD
+===================================================== */
 
-            }
-
-
-            loginButton.disabled =
-                true;
-
-            loginButton.textContent =
-                "Logging in...";
-
-
-            message.className =
-                "message";
-
-            message.textContent =
-                "";
-
-
-            try {
-
-
-                /* =========================
-                   SUPABASE LOGIN
-                ========================= */
-
-                const {
-                    data,
-                    error
-                } =
-                    await supabaseClient
-                    .auth
-                    .signInWithPassword({
-
-                        email:
-                            email,
-
-                        password:
-                            password
-
-                    });
-
-
-                if (error) {
-
-                    throw error;
-
-                }
-
-
-                if (
-                    !data ||
-                    !data.user
-                ) {
-
-                    throw new Error(
-                        "Login successful, but user session was not created."
-                    );
-
-                }
-
-
-                console.log(
-                    "Login successful:",
-                    data.user.email
-                );
-
-
-                /* =========================
-                   ADMIN CHECK
-                ========================= */
-
-                const ADMIN_EMAIL =
-                    "aviinformatics@gmail.com";
-
-
-                showMessage(
-                    "Login successful. Redirecting...",
-                    "success"
-                );
-
-
-                setTimeout(
-                    function () {
-
-
-                        if (
-                            email
-                            .toLowerCase()
-                            ===
-                            ADMIN_EMAIL
-                            .toLowerCase()
-                        ) {
-
-
-                            /* ADMIN */
-
-                            window.location.href =
-                                "admin.html";
-
-
-                        } else {
-
-
-                            /* NORMAL USER */
-
-                            window.location.href =
-                                "dashboard.html";
-
-                        }
-
-
-                    },
-                    800
-                );
-
-
-            }
-
-
-            catch (error) {
-
-
-                console.error(
-                    "Login Error:",
-                    error
-                );
-
-
-                let errorMessage =
-                    error.message ||
-                    "Login failed.";
-
-
-                if (
-                    errorMessage
-                    .toLowerCase()
-                    .includes(
-                        "invalid login credentials"
-                    )
-                ) {
-
-                    errorMessage =
-                        "Invalid email or password.";
-
-                }
-
-
-                showMessage(
-                    errorMessage,
-                    "error"
-                );
-
-
-            }
-
-
-            finally {
-
-                loginButton.disabled =
-                    false;
-
-                loginButton.textContent =
-                    "Login to AviPrint";
-
-            }
-
-        }
-    );
-
-
-    /* =========================
-       FORGOT PASSWORD
-    ========================= */
-
-    forgotPassword.addEventListener(
-        "click",
-        async function (event) {
-
-            event.preventDefault();
-
-
-            const email =
-                document
-                .getElementById("email")
-                .value
-                .trim();
-
-
-            if (!email) {
-
-                showMessage(
-                    "Enter your email address first, then click Forgot password.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            try {
-
-
-                const {
-                    error
-                } =
-                    await supabaseClient
-                    .auth
-                    .resetPasswordForEmail(
-                        email,
-                        {
-
-                            redirectTo:
-                                window.location.origin +
-                                "/reset-password.html"
-
-                        }
-                    );
-
-
-                if (error) {
-
-                    throw error;
-
-                }
-
-
-                showMessage(
-                    "Password reset email sent. Please check your inbox.",
-                    "success"
-                );
-
-
-            }
-
-
-            catch (error) {
-
-
-                console.error(
-                    "Password Reset Error:",
-                    error
-                );
-
-
-                showMessage(
-                    error.message ||
-                    "Unable to send password reset email.",
-                    "error"
-                );
-
-
-            }
-
-        }
-    );
-
-
-});
+checkExistingSession();
 
 </script>
-
 
 </body>
 
