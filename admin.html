@@ -1,6 +1,7 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -31,11 +32,9 @@ input{
     font-family:inherit;
 }
 
-/* NAVBAR */
-
 .navbar{
     height:72px;
-    background:#ffffff;
+    background:#fff;
     border-bottom:1px solid #e5e7eb;
     display:flex;
     align-items:center;
@@ -65,7 +64,7 @@ input{
     height:38px;
     border-radius:10px;
     background:#2563eb;
-    color:white;
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -88,7 +87,7 @@ input{
 
 .logout-btn{
     border:1px solid #e5e7eb;
-    background:white;
+    background:#fff;
     color:#374151;
     padding:9px 14px;
     border-radius:8px;
@@ -101,15 +100,11 @@ input{
     background:#f3f4f6;
 }
 
-/* PAGE */
-
 .admin-page{
     width:min(1400px,94%);
     margin:auto;
     padding:35px 0 60px;
 }
-
-/* HEADER */
 
 .page-header{
     display:flex;
@@ -141,8 +136,6 @@ input{
     font-size:12px;
 }
 
-/* STATS */
-
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -151,7 +144,7 @@ input{
 }
 
 .stat-card{
-    background:white;
+    background:#fff;
     border:1px solid #e5e7eb;
     border-radius:14px;
     padding:20px;
@@ -169,17 +162,13 @@ input{
     font-size:25px;
 }
 
-/* CARD */
-
 .card{
-    background:white;
+    background:#fff;
     border:1px solid #e5e7eb;
     border-radius:16px;
     overflow:hidden;
     box-shadow:0 8px 25px rgba(15,23,42,.04);
 }
-
-/* TOOLBAR */
 
 .toolbar{
     padding:18px;
@@ -222,8 +211,6 @@ input{
 .refresh-btn:hover{
     background:#dbeafe;
 }
-
-/* TABLE */
 
 .table-wrapper{
     width:100%;
@@ -289,8 +276,6 @@ input{
     font-weight:800;
 }
 
-/* STATUS */
-
 .status-select{
     height:36px;
     border:1px solid #d1d5db;
@@ -299,6 +284,7 @@ input{
     font-size:11px;
     font-weight:700;
     cursor:pointer;
+    background:#fff;
 }
 
 .status-select.pending{
@@ -321,8 +307,6 @@ input{
     background:#fee2e2;
 }
 
-/* ACTION BUTTONS */
-
 .action-buttons{
     display:flex;
     gap:7px;
@@ -342,8 +326,7 @@ input{
     white-space:nowrap;
 }
 
-.view-btn:hover,
-.download-btn:hover{
+.view-btn:hover{
     background:#dbeafe;
 }
 
@@ -357,7 +340,10 @@ input{
     background:#dcfce7;
 }
 
-/* LOADING */
+.download-btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
 
 .loading,
 .empty{
@@ -366,8 +352,6 @@ input{
     color:#6b7280;
     font-size:13px;
 }
-
-/* ERROR */
 
 .error-box{
     padding:20px;
@@ -383,8 +367,6 @@ input{
 .hidden{
     display:none !important;
 }
-
-/* MODAL */
 
 .modal{
     position:fixed;
@@ -468,6 +450,11 @@ input{
     cursor:pointer;
 }
 
+.modal-download:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
 .modal-close{
     flex:1;
     border:0;
@@ -478,8 +465,6 @@ input{
     font-weight:700;
     cursor:pointer;
 }
-
-/* MOBILE */
 
 @media(max-width:900px){
 
@@ -532,6 +517,10 @@ input{
         text-align:left;
     }
 
+    .modal-actions{
+        flex-direction:column;
+    }
+
 }
 
 </style>
@@ -546,9 +535,7 @@ input{
 
 <div class="logo">
 
-<span class="logo-icon">
-A
-</span>
+<span class="logo-icon">A</span>
 
 <span class="logo-text">
 Avi<span>Print</span>
@@ -564,9 +551,7 @@ ADMIN
 type="button"
 class="logout-btn"
 id="logoutButton">
-
 Logout
-
 </button>
 
 </div>
@@ -597,9 +582,7 @@ Manage customer orders, print files and order status.
 <div
 class="admin-email"
 id="adminEmail">
-
 Checking admin session...
-
 </div>
 
 </div>
@@ -608,43 +591,23 @@ Checking admin session...
 <div class="stats">
 
 <div class="stat-card">
-
 <span>Total Orders</span>
-
-<strong id="totalOrders">
-0
-</strong>
-
+<strong id="totalOrders">0</strong>
 </div>
 
 <div class="stat-card">
-
 <span>Pending</span>
-
-<strong id="pendingOrders">
-0
-</strong>
-
+<strong id="pendingOrders">0</strong>
 </div>
 
 <div class="stat-card">
-
 <span>Processing</span>
-
-<strong id="processingOrders">
-0
-</strong>
-
+<strong id="processingOrders">0</strong>
 </div>
 
 <div class="stat-card">
-
 <span>Completed</span>
-
-<strong id="completedOrders">
-0
-</strong>
-
+<strong id="completedOrders">0</strong>
 </div>
 
 </div>
@@ -667,9 +630,7 @@ placeholder="Search order, customer, email or service...">
 type="button"
 class="refresh-btn"
 id="refreshButton">
-
 ↻ Refresh Orders
-
 </button>
 
 </div>
@@ -684,18 +645,14 @@ class="error-box hidden">
 <div
 id="loading"
 class="loading">
-
 Loading orders...
-
 </div>
 
 
 <div
 id="empty"
 class="empty hidden">
-
 No orders found.
-
 </div>
 
 
@@ -708,27 +665,18 @@ id="tableWrapper">
 <thead>
 
 <tr>
-
 <th>Order</th>
-
 <th>Customer</th>
-
 <th>Service</th>
-
 <th>Date</th>
-
 <th>Amount</th>
-
 <th>Status</th>
-
 <th>Action</th>
-
 </tr>
 
 </thead>
 
-<tbody id="ordersBody">
-</tbody>
+<tbody id="ordersBody"></tbody>
 
 </table>
 
@@ -738,8 +686,6 @@ id="tableWrapper">
 
 </main>
 
-
-<!-- MODAL -->
 
 <div
 class="modal"
@@ -757,15 +703,12 @@ Order Details
 type="button"
 class="close-btn"
 id="closeModal">
-
 ×
-
 </button>
 
 </div>
 
-<div id="modalDetails">
-</div>
+<div id="modalDetails"></div>
 
 <div class="modal-actions">
 
@@ -773,18 +716,14 @@ id="closeModal">
 type="button"
 class="modal-download"
 id="modalDownloadButton">
-
 ⬇ Download Print File
-
 </button>
 
 <button
 type="button"
 class="modal-close"
 id="modalCloseButton">
-
 Close
-
 </button>
 
 </div>
@@ -802,7 +741,6 @@ Close
 
 const ADMIN_EMAIL =
 "aviinformatics@gmail.com";
-
 
 const PRINT_BUCKET =
 "print-files";
@@ -880,12 +818,12 @@ if(
 typeof window.supabase === "undefined"
 ){
 
-document.body.innerHTML =
-
-"<div style='padding:40px;font-family:Arial'>" +
-"<h2>Supabase library failed to load.</h2>" +
-"<p>Please check your internet connection.</p>" +
-"</div>";
+document.body.innerHTML = `
+<div style="padding:40px;font-family:Arial">
+<h2>Supabase library failed to load.</h2>
+<p>Please check your internet connection.</p>
+</div>
+`;
 
 throw new Error(
 "Supabase library not loaded."
@@ -899,12 +837,12 @@ typeof supabaseClient === "undefined" ||
 !supabaseClient
 ){
 
-document.body.innerHTML =
-
-"<div style='padding:40px;font-family:Arial'>" +
-"<h2>Supabase configuration error.</h2>" +
-"<p>Check config.js.</p>" +
-"</div>";
+document.body.innerHTML = `
+<div style="padding:40px;font-family:Arial">
+<h2>Supabase configuration error.</h2>
+<p>Please check config.js.</p>
+</div>
+`;
 
 throw new Error(
 "supabaseClient missing."
@@ -924,17 +862,14 @@ try{
 const result =
 await supabaseClient.auth.getSession();
 
-
 if(result.error){
 
 throw result.error;
 
 }
 
-
 const session =
 result.data.session;
-
 
 if(
 !session ||
@@ -948,7 +883,6 @@ window.location.replace(
 return false;
 
 }
-
 
 const email =
 String(
@@ -977,11 +911,9 @@ return false;
 
 }
 
-
 adminEmail.textContent =
 "Logged in as Admin: " +
 session.user.email;
-
 
 return true;
 
@@ -995,7 +927,7 @@ error
 
 adminEmail.textContent =
 "Session error: " +
-error.message;
+(error.message || "Unknown error");
 
 return false;
 
@@ -1010,48 +942,22 @@ return false;
 
 async function loadOrders(){
 
-loading.classList.remove(
-"hidden"
-);
+loading.classList.remove("hidden");
 
-tableWrapper.classList.add(
-"hidden"
-);
+tableWrapper.classList.add("hidden");
 
-empty.classList.add(
-"hidden"
-);
+empty.classList.add("hidden");
 
-errorBox.classList.add(
-"hidden"
-);
+errorBox.classList.add("hidden");
 
-ordersBody.innerHTML =
-"";
+ordersBody.innerHTML = "";
 
 
 try{
 
-/*
- IMPORTANT
-
-Do NOT select user_email.
-
-Your orders table contains:
-
-customer_email
-customer_name
-service_name
-service_details
-file_path
-file_name
-*/
-
 const result =
 await supabaseClient
-.rpc(
-"get_admin_orders"
-);
+.rpc("get_admin_orders");
 
 
 if(result.error){
@@ -1080,10 +986,7 @@ allOrders
 );
 
 
-loading.classList.add(
-"hidden"
-);
-
+loading.classList.add("hidden");
 
 renderOrders(
 allOrders
@@ -1097,9 +1000,7 @@ console.error(
 error
 );
 
-loading.classList.add(
-"hidden"
-);
+loading.classList.add("hidden");
 
 errorBox.innerHTML =
 "Unable to load orders.<br><br>" +
@@ -1108,9 +1009,7 @@ error.message ||
 "Unknown error"
 );
 
-errorBox.classList.remove(
-"hidden"
-);
+errorBox.classList.remove("hidden");
 
 }
 
@@ -1128,34 +1027,22 @@ orders
 totalOrders.textContent =
 orders.length;
 
-
 pendingOrders.textContent =
 orders.filter(
 order =>
-normalizeStatus(
-order.status
-) ===
-"pending"
+normalizeStatus(order.status) === "pending"
 ).length;
-
 
 processingOrders.textContent =
 orders.filter(
 order =>
-normalizeStatus(
-order.status
-) ===
-"processing"
+normalizeStatus(order.status) === "processing"
 ).length;
-
 
 completedOrders.textContent =
 orders.filter(
 order =>
-normalizeStatus(
-order.status
-) ===
-"completed"
+normalizeStatus(order.status) === "completed"
 ).length;
 
 }
@@ -1176,7 +1063,6 @@ status || "pending"
 .trim()
 .toLowerCase();
 
-
 if(
 [
 "pending",
@@ -1189,7 +1075,6 @@ if(
 return value;
 
 }
-
 
 return "pending";
 
@@ -1204,35 +1089,24 @@ function renderOrders(
 orders
 ){
 
-ordersBody.innerHTML =
-"";
-
+ordersBody.innerHTML = "";
 
 if(
 !orders ||
 !orders.length
 ){
 
-tableWrapper.classList.add(
-"hidden"
-);
+tableWrapper.classList.add("hidden");
 
-empty.classList.remove(
-"hidden"
-);
+empty.classList.remove("hidden");
 
 return;
 
 }
 
+empty.classList.add("hidden");
 
-empty.classList.add(
-"hidden"
-);
-
-tableWrapper.classList.remove(
-"hidden"
-);
+tableWrapper.classList.remove("hidden");
 
 
 orders.forEach(
@@ -1247,10 +1121,7 @@ order.order_number ||
 (
 order.id
 ?
-String(order.id).substring(
-0,
-8
-)
+String(order.id).substring(0,8)
 :
 "-"
 );
@@ -1304,124 +1175,78 @@ order.file_path
 row.innerHTML = `
 
 <td>
-
 <span class="order-number">
-
-#${escapeHTML(
-orderNumber
-)}
-
+#${escapeHTML(orderNumber)}
 </span>
-
 </td>
-
 
 <td>
 
 <div class="customer-name">
-
-${escapeHTML(
-customerName
-)}
-
+${escapeHTML(customerName)}
 </div>
 
 <div class="customer-email">
-
-${escapeHTML(
-customerEmail || "-"
-)}
-
+${escapeHTML(customerEmail || "-")}
 </div>
 
 </td>
-
 
 <td>
 
 <div class="service-name">
-
-${escapeHTML(
-service
-)}
-
+${escapeHTML(service)}
 </div>
 
 <div class="service-details">
-
-${escapeHTML(
-details
-)}
-
+${escapeHTML(details)}
 </div>
 
 </td>
 
-
 <td>
-
-${escapeHTML(
-date
-)}
-
+${escapeHTML(date)}
 </td>
 
-
 <td>
-
 <span class="amount">
-
 ₹${amount}
-
 </span>
-
 </td>
-
 
 <td>
 
 <select
 class="status-select ${status}"
-data-order-id="${escapeHTML(
-order.id
-)}">
+data-order-id="${escapeHTML(order.id)}">
 
 <option
 value="pending"
 ${status === "pending" ? "selected" : ""}>
-
 Pending
-
 </option>
 
 <option
 value="processing"
 ${status === "processing" ? "selected" : ""}>
-
 Processing
-
 </option>
 
 <option
 value="completed"
 ${status === "completed" ? "selected" : ""}>
-
 Completed
-
 </option>
 
 <option
 value="cancelled"
 ${status === "cancelled" ? "selected" : ""}>
-
 Cancelled
-
 </option>
 
 </select>
 
 </td>
-
 
 <td>
 
@@ -1430,21 +1255,14 @@ Cancelled
 <button
 type="button"
 class="view-btn"
-data-order-id="${escapeHTML(
-order.id
-)}">
-
+data-order-id="${escapeHTML(order.id)}">
 View
-
 </button>
-
 
 <button
 type="button"
 class="download-btn"
-data-order-id="${escapeHTML(
-order.id
-)}"
+data-order-id="${escapeHTML(order.id)}"
 ${hasFile ? "" : "disabled"}>
 
 ${hasFile ? "⬇ Download" : "No File"}
@@ -1458,20 +1276,18 @@ ${hasFile ? "⬇ Download" : "No File"}
 `;
 
 
-ordersBody.appendChild(
-row
-);
+ordersBody.appendChild(row);
 
 }
 );
 
 
-/* STATUS EVENTS */
+/* =========================================
+   STATUS EVENTS
+========================================= */
 
 ordersBody
-.querySelectorAll(
-".status-select"
-)
+.querySelectorAll(".status-select")
 .forEach(
 function(select){
 
@@ -1499,12 +1315,12 @@ newStatus
 );
 
 
-/* VIEW EVENTS */
+/* =========================================
+   VIEW EVENTS
+========================================= */
 
 ordersBody
-.querySelectorAll(
-".view-btn"
-)
+.querySelectorAll(".view-btn")
 .forEach(
 function(button){
 
@@ -1515,13 +1331,11 @@ function(){
 const orderId =
 button.dataset.orderId;
 
-
 const order =
 allOrders.find(
 item =>
 item.id === orderId
 );
-
 
 if(order){
 
@@ -1538,12 +1352,12 @@ order
 );
 
 
-/* DOWNLOAD EVENTS */
+/* =========================================
+   DOWNLOAD EVENTS
+========================================= */
 
 ordersBody
-.querySelectorAll(
-".download-btn"
-)
+.querySelectorAll(".download-btn")
 .forEach(
 function(button){
 
@@ -1554,24 +1368,19 @@ async function(){
 const orderId =
 button.dataset.orderId;
 
-
 const order =
 allOrders.find(
 item =>
 item.id === orderId
 );
 
-
 if(!order){
 
-alert(
-"Order not found."
-);
+alert("Order not found.");
 
 return;
 
 }
-
 
 await downloadPrintFile(
 order
@@ -1602,7 +1411,6 @@ const allowedStatuses = [
 "cancelled"
 ];
 
-
 const finalStatus =
 String(
 newStatus || ""
@@ -1630,25 +1438,11 @@ return;
 
 try{
 
-console.log(
-"Updating order:",
-orderId
-);
-
-console.log(
-"New status:",
-finalStatus
-);
-
-
 const result =
 await supabaseClient
 .from("orders")
 .update({
-
-status:
-finalStatus
-
+status: finalStatus
 })
 .eq(
 "id",
@@ -1706,9 +1500,7 @@ console.error(
 error
 );
 
-
 await loadOrders();
-
 
 alert(
 "Failed to update order status:\n\n" +
@@ -1719,6 +1511,8 @@ error.message ||
 );
 
 }
+
+} /* IMPORTANT: updateOrderStatus CLOSED HERE */
 
 
 /* =========================================
@@ -1755,37 +1549,27 @@ function(order){
 const orderNumber =
 String(
 order.order_number || ""
-)
-.toLowerCase();
-
+).toLowerCase();
 
 const name =
 String(
 order.customer_name || ""
-)
-.toLowerCase();
-
+).toLowerCase();
 
 const email =
 String(
 order.customer_email || ""
-)
-.toLowerCase();
-
+).toLowerCase();
 
 const service =
 String(
 order.service_name || ""
-)
-.toLowerCase();
-
+).toLowerCase();
 
 const details =
 String(
 order.service_details || ""
-)
-.toLowerCase();
-
+).toLowerCase();
 
 const status =
 normalizeStatus(
@@ -1829,9 +1613,7 @@ async function downloadPrintFile(
 order
 ){
 
-if(
-!order
-){
+if(!order){
 
 alert(
 "Order information missing."
@@ -1849,9 +1631,7 @@ order.file_path || ""
 .trim();
 
 
-if(
-!filePath
-){
+if(!filePath){
 
 alert(
 "No print file is attached to this order."
@@ -1865,33 +1645,21 @@ return;
 try{
 
 console.log(
-"Downloading file:"
-);
-
-console.log(
 "Bucket:",
 PRINT_BUCKET
 );
 
 console.log(
-"Path:",
+"File Path:",
 filePath
 );
 
-
-/*
- Supabase Storage download
-*/
 
 const result =
 await supabaseClient
 .storage
-.from(
-PRINT_BUCKET
-)
-.download(
-filePath
-);
+.from(PRINT_BUCKET)
+.download(filePath);
 
 
 if(result.error){
@@ -1914,14 +1682,8 @@ throw new Error(
 }
 
 
-/*
- Create temporary browser URL
-*/
-
 const url =
-URL.createObjectURL(
-file
-);
+URL.createObjectURL(file);
 
 
 const link =
@@ -1938,9 +1700,7 @@ order.file_name ||
 
 
 filename =
-String(
-filename
-)
+String(filename)
 .split("/")
 .pop();
 
@@ -1953,9 +1713,7 @@ document.body.appendChild(
 link
 );
 
-
 link.click();
-
 
 link.remove();
 
@@ -1983,7 +1741,6 @@ console.error(
 "FILE DOWNLOAD ERROR:",
 error
 );
-
 
 alert(
 "Download failed:\n\n" +
@@ -2040,9 +1797,7 @@ modalDetails.innerHTML = `
 
 <div class="modal-row">
 
-<span>
-Order Number
-</span>
+<span>Order Number</span>
 
 <strong>
 #${escapeHTML(
@@ -2050,7 +1805,6 @@ order.order_number ||
 order.id ||
 "-"
 )}
-
 </strong>
 
 </div>
@@ -2058,16 +1812,13 @@ order.id ||
 
 <div class="modal-row">
 
-<span>
-Customer Name
-</span>
+<span>Customer Name</span>
 
 <strong>
 ${escapeHTML(
 order.customer_name ||
 "-"
 )}
-
 </strong>
 
 </div>
@@ -2075,16 +1826,13 @@ order.customer_name ||
 
 <div class="modal-row">
 
-<span>
-Customer Email
-</span>
+<span>Customer Email</span>
 
 <strong>
 ${escapeHTML(
 order.customer_email ||
 "-"
 )}
-
 </strong>
 
 </div>
@@ -2092,16 +1840,13 @@ order.customer_email ||
 
 <div class="modal-row">
 
-<span>
-User ID
-</span>
+<span>User ID</span>
 
 <strong>
 ${escapeHTML(
 order.user_id ||
 "-"
 )}
-
 </strong>
 
 </div>
@@ -2109,16 +1854,13 @@ order.user_id ||
 
 <div class="modal-row">
 
-<span>
-Service
-</span>
+<span>Service</span>
 
 <strong>
 ${escapeHTML(
 order.service_name ||
 "-"
 )}
-
 </strong>
 
 </div>
@@ -2126,16 +1868,13 @@ order.service_name ||
 
 <div class="modal-row">
 
-<span>
-Details
-</span>
+<span>Details</span>
 
 <strong>
 ${escapeHTML(
 order.service_details ||
 "-"
 )}
-
 </strong>
 
 </div>
@@ -2143,9 +1882,7 @@ order.service_details ||
 
 <div class="modal-row">
 
-<span>
-Order Date
-</span>
+<span>Order Date</span>
 
 <strong>
 ${escapeHTML(
@@ -2154,7 +1891,6 @@ order.order_date ||
 order.created_at
 )
 )}
-
 </strong>
 
 </div>
@@ -2162,15 +1898,10 @@ order.created_at
 
 <div class="modal-row">
 
-<span>
-Status
-</span>
+<span>Status</span>
 
 <strong>
-${escapeHTML(
-status
-)}
-
+${escapeHTML(status)}
 </strong>
 
 </div>
@@ -2178,13 +1909,10 @@ status
 
 <div class="modal-row">
 
-<span>
-Amount
-</span>
+<span>Amount</span>
 
 <strong>
 ₹${amount}
-
 </strong>
 
 </div>
@@ -2192,15 +1920,10 @@ Amount
 
 <div class="modal-row">
 
-<span>
-File Name
-</span>
+<span>File Name</span>
 
 <strong>
-${escapeHTML(
-fileName
-)}
-
+${escapeHTML(fileName)}
 </strong>
 
 </div>
@@ -2208,15 +1931,10 @@ fileName
 
 <div class="modal-row">
 
-<span>
-File Path
-</span>
+<span>File Path</span>
 
 <strong>
-${escapeHTML(
-filePath
-)}
-
+${escapeHTML(filePath)}
 </strong>
 
 </div>
@@ -2251,9 +1969,7 @@ modalDownloadButton.addEventListener(
 "click",
 async function(){
 
-if(
-!selectedOrder
-){
+if(!selectedOrder){
 
 alert(
 "Order not selected."
@@ -2262,7 +1978,6 @@ alert(
 return;
 
 }
-
 
 await downloadPrintFile(
 selectedOrder
@@ -2408,7 +2123,6 @@ error.message ||
 )
 );
 
-
 logoutButton.disabled =
 false;
 
@@ -2436,9 +2150,7 @@ return "-";
 
 
 const date =
-new Date(
-value
-);
+new Date(value);
 
 
 if(
@@ -2500,7 +2212,7 @@ value ?? ""
 
 
 /* =========================================
-   START
+   START ADMIN PANEL
 ========================================= */
 
 (async function(){
