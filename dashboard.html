@@ -8,7 +8,10 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Profile | AviPrint Portal</title>
+<meta name="description"
+      content="AviPrint User Dashboard">
+
+<title>Dashboard | AviPrint Portal</title>
 
 <link rel="stylesheet"
       href="css/style.css">
@@ -17,203 +20,155 @@
 
 <script src="config.js"></script>
 
+
 <style>
 
-.profile-page{
-    max-width:900px;
-    margin:40px auto;
-    padding:0 20px;
+/* =========================
+   RECENT ORDERS
+========================= */
+
+.dashboard-recent-orders{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
 }
 
-.profile-header{
-    margin-bottom:25px;
-}
-
-.profile-header h1{
-    font-size:28px;
-    margin-bottom:8px;
-    color:#111827;
-}
-
-.profile-header p{
-    color:#6b7280;
-}
-
-.profile-card{
-    background:#ffffff;
-    border-radius:16px;
-    padding:30px;
-    box-shadow:0 4px 20px rgba(0,0,0,.08);
-    margin-bottom:25px;
-}
-
-.profile-top{
+.recent-order-item{
     display:flex;
     align-items:center;
-    gap:18px;
-    padding-bottom:25px;
-    border-bottom:1px solid #e5e7eb;
-    margin-bottom:25px;
+    justify-content:space-between;
+    gap:15px;
+    padding:15px;
+    border:1px solid #eef2f7;
+    border-radius:12px;
+    background:#fff;
 }
 
-.profile-avatar{
-    width:75px;
-    height:75px;
-    border-radius:50%;
-    background:#2563eb;
-    color:white;
+.recent-order-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+}
+
+.recent-order-icon{
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    background:#eff6ff;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:30px;
-    font-weight:bold;
+    flex-shrink:0;
 }
 
-.profile-top h2{
-    margin:0 0 5px;
-    color:#111827;
+.recent-order-info{
+    min-width:0;
 }
 
-.profile-top p{
-    margin:0;
-    color:#6b7280;
-    font-size:14px;
-}
-
-.profile-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-}
-
-.form-group{
-    margin-bottom:18px;
-}
-
-.form-group label{
+.recent-order-info strong{
     display:block;
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:7px;
-    color:#374151;
-}
-
-.form-group input{
-    width:100%;
-    height:46px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    padding:0 13px;
-    font-size:14px;
-    outline:none;
-}
-
-.form-group input:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.1);
-}
-
-.form-group input:disabled{
-    background:#f3f4f6;
-    color:#6b7280;
-}
-
-.info-box{
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    padding:15px;
-    margin-top:5px;
-}
-
-.info-row{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    padding:10px 0;
-    border-bottom:1px solid #e5e7eb;
-}
-
-.info-row:last-child{
-    border-bottom:none;
-}
-
-.info-label{
-    color:#6b7280;
-    font-size:13px;
-}
-
-.info-value{
-    font-weight:600;
     color:#111827;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.recent-order-info span{
+    display:block;
+    color:#9ca3af;
+    font-size:11px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.recent-order-right{
     text-align:right;
+    flex-shrink:0;
 }
 
-.save-btn{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:12px 22px;
-    border-radius:8px;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:14px;
+.recent-order-amount{
+    display:block;
+    color:#111827;
+    font-weight:700;
+    font-size:13px;
+    margin-bottom:5px;
 }
 
-.save-btn:hover{
-    background:#1d4ed8;
-}
-
-.save-btn:disabled{
-    opacity:.6;
-    cursor:wait;
-}
-
-.back-btn{
+.recent-order-status{
     display:inline-block;
-    margin-top:5px;
-    color:#2563eb;
-    text-decoration:none;
-    font-weight:600;
-    font-size:14px;
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:700;
 }
 
-.message{
-    display:none;
-    padding:13px 15px;
-    border-radius:8px;
-    margin-bottom:20px;
-    font-size:14px;
+.recent-order-status.pending{
+    background:#fef3c7;
+    color:#92400e;
 }
 
-.success{
+.recent-order-status.processing{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.recent-order-status.printing{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.recent-order-status.ready{
+    background:#cffafe;
+    color:#0e7490;
+}
+
+.recent-order-status.completed{
     background:#dcfce7;
     color:#166534;
 }
 
-.error{
+.recent-order-status.cancelled{
     background:#fee2e2;
     color:#991b1b;
 }
 
-@media(max-width:650px){
+.recent-loading,
+.recent-empty,
+.recent-error{
+    text-align:center;
+    padding:30px 15px;
+    color:#6b7280;
+    font-size:13px;
+}
 
-    .profile-grid{
-        grid-template-columns:1fr;
-    }
+.recent-error{
+    color:#b91c1c;
+}
 
-    .profile-card{
-        padding:20px;
-    }
 
-    .profile-top{
+/* =========================
+   NAV LINKS
+========================= */
+
+.nav-menu a,
+.sidebar-nav a{
+    cursor:pointer;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .recent-order-item{
         align-items:flex-start;
     }
 
-    .profile-avatar{
-        width:60px;
-        height:60px;
-        font-size:24px;
+    .recent-order-right{
+        text-align:right;
     }
 
 }
@@ -223,19 +178,23 @@
 </head>
 
 
-<body>
+<body class="dashboard-page">
 
 
-<!-- =========================
-     NAVBAR
-========================= -->
+<!-- =====================================================
+     TOP NAVBAR
+===================================================== -->
 
 <header class="navbar">
 
 <div class="container nav-container">
 
-<a href="index.html"
-   class="logo">
+
+<!-- LOGO -->
+
+<a
+href="dashboard.html"
+class="logo">
 
 <span class="logo-icon">
 A
@@ -248,27 +207,48 @@ Avi<span>Print</span>
 </a>
 
 
+
+<!-- NAVIGATION -->
+
 <nav class="nav-menu">
 
-<a href="dashboard.html">
+<a
+href="dashboard.html"
+style="color:#2563eb;">
+
 Dashboard
+
 </a>
 
-<a href="services.html">
+
+<a
+href="services.html">
+
 Services
+
 </a>
 
-<a href="orders.html">
+
+<a
+href="orders.html">
+
 My Orders
+
 </a>
 
-<a href="profile.html"
-   style="color:#2563eb;">
+
+<a
+href="profile.html">
+
 Profile
+
 </a>
 
 </nav>
 
+
+
+<!-- LOGOUT -->
 
 <div class="nav-buttons">
 
@@ -288,52 +268,48 @@ Logout
 
 </div>
 
+
+
+<!-- MOBILE MENU -->
+
+<button
+class="mobile-menu-btn"
+id="mobileMenuBtn"
+type="button">
+
+☰
+
+</button>
+
+
 </div>
 
 </header>
 
 
 
-<!-- =========================
-     PROFILE
-========================= -->
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
 
-<main class="profile-page">
-
-
-<div class="profile-header">
-
-<h1>
-👤 My Profile
-</h1>
-
-<p>
-Manage your AviPrint account information.
-</p>
-
-</div>
+<main class="dashboard-container">
 
 
-<div id="successMessage"
-     class="message success">
-</div>
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="dashboard-sidebar">
 
 
-<div id="errorMessage"
-     class="message error">
-</div>
+<!-- USER -->
+
+<div class="sidebar-user">
 
 
-
-<!-- PROFILE CARD -->
-
-<div class="profile-card">
-
-
-<div class="profile-top">
-
-<div id="profileAvatar"
-     class="profile-avatar">
+<div
+class="user-avatar"
+id="userAvatar">
 
 A
 
@@ -342,205 +318,503 @@ A
 
 <div>
 
-<h2 id="profileName">
-Loading...
-</h2>
+<strong
+id="sidebarUserName">
 
-<p id="profileEmail">
-Loading...
+Welcome, User
+
+</strong>
+
+
+<span
+id="sidebarUserEmail">
+
+user@example.com
+
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<!-- SIDEBAR NAV -->
+
+<nav class="sidebar-nav">
+
+
+<a
+href="dashboard.html"
+class="active">
+
+<span>
+▦
+</span>
+
+Dashboard
+
+</a>
+
+
+
+<a
+href="services.html">
+
+<span>
+🖨️
+</span>
+
+Print Services
+
+</a>
+
+
+
+<a
+href="orders.html">
+
+<span>
+📦
+</span>
+
+My Orders
+
+</a>
+
+
+
+<a
+href="#wallet"
+onclick="return false;">
+
+<span>
+💰
+</span>
+
+Wallet
+
+</a>
+
+
+
+<!-- IMPORTANT PROFILE LINK -->
+
+<a
+href="profile.html">
+
+<span>
+👤
+</span>
+
+Profile
+
+</a>
+
+
+
+<a
+href="#support"
+onclick="return false;">
+
+<span>
+❓
+</span>
+
+Help & Support
+
+</a>
+
+
+</nav>
+
+
+
+<!-- SIDEBAR BOTTOM -->
+
+<div class="sidebar-bottom">
+
+<a
+href="index.html">
+
+← Back to Website
+
+</a>
+
+</div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<section class="dashboard-main">
+
+
+<!-- MOBILE HEADER -->
+
+<div class="dashboard-mobile-header">
+
+<button
+id="sidebarToggle"
+type="button">
+
+☰
+
+</button>
+
+<strong>
+Dashboard
+</strong>
+
+</div>
+
+
+
+<!-- =====================================================
+     HEADING
+===================================================== -->
+
+<div class="dashboard-heading">
+
+
+<div>
+
+<span class="section-label">
+
+USER DASHBOARD
+
+</span>
+
+
+<h1
+id="welcomeHeading">
+
+Welcome back! 👋
+
+</h1>
+
+
+<p>
+
+Manage your printing services
+and orders from here.
+
 </p>
 
 </div>
 
-</div>
 
 
+<a
+href="services.html"
+class="primary-btn">
 
-<!-- EDIT FORM -->
-
-<form id="profileForm">
-
-
-<div class="profile-grid">
-
-
-<div class="form-group">
-
-<label for="fullName">
-Full Name
-</label>
-
-<input
-type="text"
-id="fullName"
-placeholder="Enter your full name"
-required>
-
-</div>
-
-
-
-<div class="form-group">
-
-<label for="mobile">
-Mobile Number
-</label>
-
-<input
-type="tel"
-id="mobile"
-placeholder="Enter 10-digit mobile number"
-maxlength="10"
-inputmode="numeric">
-
-</div>
-
-
-
-<div class="form-group">
-
-<label for="email">
-Email Address
-</label>
-
-<input
-type="email"
-id="email"
-disabled>
-
-</div>
-
-
-
-<div class="form-group">
-
-<label for="role">
-Account Role
-</label>
-
-<input
-type="text"
-id="role"
-disabled>
-
-</div>
-
-</div>
-
-
-
-<button
-type="submit"
-id="saveButton"
-class="save-btn">
-
-Save Changes
-
-</button>
-
-
-</form>
-
-</div>
-
-
-
-<!-- ACCOUNT INFORMATION -->
-
-<div class="profile-card">
-
-<h2 style="margin-bottom:18px;">
-Account Information
-</h2>
-
-
-<div class="info-box">
-
-
-<div class="info-row">
-
-<span class="info-label">
-Email
-</span>
-
-<span
-id="infoEmail"
-class="info-value">
-
--
-
-</span>
-
-</div>
-
-
-<div class="info-row">
-
-<span class="info-label">
-Mobile
-</span>
-
-<span
-id="infoMobile"
-class="info-value">
-
--
-
-</span>
-
-</div>
-
-
-<div class="info-row">
-
-<span class="info-label">
-Role
-</span>
-
-<span
-id="infoRole"
-class="info-value">
-
-Customer
-
-</span>
-
-</div>
-
-
-<div class="info-row">
-
-<span class="info-label">
-Account Created
-</span>
-
-<span
-id="infoCreated"
-class="info-value">
-
--
-
-</span>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<a href="dashboard.html"
-   class="back-btn">
-
-← Back to Dashboard
++ New Print
 
 </a>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     STAT CARDS
+===================================================== -->
+
+<div class="dashboard-stats">
+
+
+<!-- TOTAL -->
+
+<div class="stat-card">
+
+<div class="stat-icon blue">
+📦
+</div>
+
+<div>
+
+<span>
+Total Orders
+</span>
+
+<strong id="totalOrders">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+
+<!-- COMPLETED -->
+
+<div class="stat-card">
+
+<div class="stat-icon green">
+✓
+</div>
+
+<div>
+
+<span>
+Completed
+</span>
+
+<strong id="completedOrders">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+
+<!-- PROCESSING -->
+
+<div class="stat-card">
+
+<div class="stat-icon orange">
+⏳
+</div>
+
+<div>
+
+<span>
+Processing
+</span>
+
+<strong id="processingOrders">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+
+<!-- WALLET -->
+
+<div class="stat-card">
+
+<div class="stat-icon purple">
+💰
+</div>
+
+<div>
+
+<span>
+Wallet Balance
+</span>
+
+<strong id="walletBalance">
+₹0.00
+</strong>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<div class="dashboard-section">
+
+
+<div class="section-title-row">
+
+
+<div>
+
+<h2>
+Popular Services
+</h2>
+
+<p>
+Start a new printing order
+</p>
+
+</div>
+
+
+<a
+href="services.html">
+
+View All →
+
+</a>
+
+
+</div>
+
+
+
+<div class="dashboard-service-grid">
+
+
+<a
+href="services.html"
+class="dashboard-service-card">
+
+<div class="dashboard-service-icon">
+📄
+</div>
+
+<strong>
+Document Print
+</strong>
+
+<span>
+PDF & documents
+</span>
+
+</a>
+
+
+
+<a
+href="services.html"
+class="dashboard-service-card">
+
+<div class="dashboard-service-icon">
+🖼️
+</div>
+
+<strong>
+Photo Print
+</strong>
+
+<span>
+Different sizes
+</span>
+
+</a>
+
+
+
+<a
+href="services.html"
+class="dashboard-service-card">
+
+<div class="dashboard-service-icon">
+🪪
+</div>
+
+<strong>
+ID Card Print
+</strong>
+
+<span>
+Eligible documents
+</span>
+
+</a>
+
+
+
+<a
+href="services.html"
+class="dashboard-service-card">
+
+<div class="dashboard-service-icon">
+📑
+</div>
+
+<strong>
+PDF Print
+</strong>
+
+<span>
+Fast processing
+</span>
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     RECENT ORDERS
+===================================================== -->
+
+<div class="dashboard-section">
+
+
+<div class="section-title-row">
+
+
+<div>
+
+<h2>
+Recent Orders
+</h2>
+
+<p>
+Track your latest print orders
+</p>
+
+</div>
+
+
+<a
+href="orders.html">
+
+View All →
+
+</a>
+
+
+</div>
+
+
+
+<div
+id="recentOrders"
+class="dashboard-recent-orders">
+
+<div class="recent-loading">
+
+Loading recent orders...
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</section>
 
 
 </main>
 
 
+
+<!-- =====================================================
+     DASHBOARD SCRIPT
+===================================================== -->
 
 <script>
 
@@ -548,624 +822,1048 @@ document.addEventListener(
 "DOMContentLoaded",
 async function(){
 
-    /* =========================
-       SUPABASE CHECK
-    ========================= */
-
-    if(
-        typeof window.supabase === "undefined" ||
-        typeof supabaseClient === "undefined" ||
-        !supabaseClient
-    ){
-
-        window.location.href =
-        "login.html";
 
-        return;
+/* =====================================================
+   SUPABASE CHECK
+===================================================== */
 
-    }
+if(
+typeof window.supabase === "undefined"
+){
 
+console.error(
+"Supabase library not loaded."
+);
 
-    const fullName =
-    document.getElementById(
-        "fullName"
-    );
+window.location.replace(
+"login.html"
+);
 
-    const mobile =
-    document.getElementById(
-        "mobile"
-    );
+return;
 
-    const email =
-    document.getElementById(
-        "email"
-    );
+}
 
-    const role =
-    document.getElementById(
-        "role"
-    );
 
-    const profileName =
-    document.getElementById(
-        "profileName"
-    );
+if(
+typeof supabaseClient === "undefined" ||
+!supabaseClient
+){
 
-    const profileEmail =
-    document.getElementById(
-        "profileEmail"
-    );
+console.error(
+"supabaseClient not available."
+);
 
-    const profileAvatar =
-    document.getElementById(
-        "profileAvatar"
-    );
+window.location.replace(
+"login.html"
+);
 
-    const infoEmail =
-    document.getElementById(
-        "infoEmail"
-    );
+return;
 
-    const infoMobile =
-    document.getElementById(
-        "infoMobile"
-    );
+}
 
-    const infoRole =
-    document.getElementById(
-        "infoRole"
-    );
 
-    const infoCreated =
-    document.getElementById(
-        "infoCreated"
-    );
 
-    const profileForm =
-    document.getElementById(
-        "profileForm"
-    );
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-    const saveButton =
-    document.getElementById(
-        "saveButton"
-    );
+const totalOrders =
+document.getElementById(
+"totalOrders"
+);
 
-    const logoutButton =
-    document.getElementById(
-        "logoutButton"
-    );
 
+const completedOrders =
+document.getElementById(
+"completedOrders"
+);
 
-    /* =========================
-       SESSION
-    ========================= */
 
-    try{
+const processingOrders =
+document.getElementById(
+"processingOrders"
+);
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .auth
-        .getSession();
 
+const recentOrders =
+document.getElementById(
+"recentOrders"
+);
 
-        if(error){
 
-            throw error;
+const sidebarUserName =
+document.getElementById(
+"sidebarUserName"
+);
 
-        }
 
+const sidebarUserEmail =
+document.getElementById(
+"sidebarUserEmail"
+);
 
-        const session =
-        data.session;
 
+const userAvatar =
+document.getElementById(
+"userAvatar"
+);
 
-        if(
-            !session ||
-            !session.user
-        ){
 
-            window.location.href =
-            "login.html";
+const welcomeHeading =
+document.getElementById(
+"welcomeHeading"
+);
 
-            return;
 
-        }
+const logoutButton =
+document.getElementById(
+"logoutButton"
+);
 
 
-        const user =
-        session.user;
+const dashboardButton =
+document.getElementById(
+"sidebarToggle"
+);
 
 
-        const userId =
-        user.id;
 
+/* =====================================================
+   CHECK LOGIN SESSION
+===================================================== */
 
-        const userEmail =
-        user.email || "";
+let currentUser;
 
 
-        /* =========================
-           GET PROFILE
-        ========================= */
+try{
 
-        let profileData = null;
 
+const {
+data,
+error
+} =
+await supabaseClient
+.auth
+.getSession();
 
-        const {
-            data:profile,
-            error:profileError
-        } =
-        await supabaseClient
-        .from("profiles")
-        .select(
-            `
-            id,
-            email,
-            full_name,
-            mobile,
-            role,
-            created_at
-            `
-        )
-        .eq(
-            "id",
-            userId
-        )
-        .maybeSingle();
 
+if(error){
 
-        if(profileError){
+throw error;
 
-            console.error(
-                "Profile fetch error:",
-                profileError
-            );
+}
 
-        }
-        else{
 
-            profileData =
-            profile;
+const session =
+data.session;
 
-        }
 
 
-        /* =========================
-           NAME
-        ========================= */
+/* NO LOGIN */
 
-        const metadataName =
-        user.user_metadata &&
-        user.user_metadata.full_name
-        ?
-        user.user_metadata.full_name
-        :
-        "";
+if(
+!session ||
+!session.user
+){
 
+console.log(
+"No active session. Going to login."
+);
 
-        const finalName =
-        profileData &&
-        profileData.full_name
-        ?
-        profileData.full_name
-        :
-        metadataName
-        ?
-        metadataName
-        :
-        userEmail.split("@")[0];
+window.location.replace(
+"login.html"
+);
 
+return;
 
-        const finalMobile =
-        profileData &&
-        profileData.mobile
-        ?
-        profileData.mobile
-        :
-        user.user_metadata &&
-        user.user_metadata.mobile
-        ?
-        user.user_metadata.mobile
-        :
-        "";
+}
 
 
-        const finalRole =
-        profileData &&
-        profileData.role
-        ?
-        profileData.role
-        :
-        "customer";
+currentUser =
+session.user;
 
 
-        const createdAt =
-        profileData &&
-        profileData.created_at
-        ?
-        profileData.created_at
-        :
-        user.created_at;
+console.log(
+"Logged in:",
+currentUser.email
+);
 
 
 
-        /* =========================
-           DISPLAY
-        ========================= */
+/* =====================================================
+   USER DETAILS
+===================================================== */
 
-        fullName.value =
-        finalName;
+const userEmail =
+currentUser.email ||
+"User";
 
 
-        mobile.value =
-        finalMobile;
+let userName =
+currentUser.user_metadata?.full_name ||
+"";
 
 
-        email.value =
-        userEmail;
+let userMobile =
+currentUser.user_metadata?.mobile ||
+"";
 
 
-        role.value =
-        finalRole;
 
+/* =====================================================
+   LOAD PROFILE
+===================================================== */
 
-        profileName.textContent =
-        finalName;
+try{
 
 
-        profileEmail.textContent =
-        userEmail;
+const {
+data:profile,
+error:profileError
+} =
+await supabaseClient
+.from("profiles")
+.select(
+"full_name,mobile,role"
+)
+.eq(
+"id",
+currentUser.id
+)
+.maybeSingle();
 
 
-        profileAvatar.textContent =
-        finalName
-        .charAt(0)
-        .toUpperCase();
+if(profileError){
 
+console.warn(
+"Profile load warning:",
+profileError
+);
 
-        infoEmail.textContent =
-        userEmail;
+}
 
 
-        infoMobile.textContent =
-        finalMobile ||
-        "Not added";
+if(
+profile &&
+profile.full_name
+){
 
+userName =
+profile.full_name;
 
-        infoRole.textContent =
-        capitalize(finalRole);
+}
 
 
-        infoCreated.textContent =
-        formatDate(createdAt);
+if(
+profile &&
+profile.mobile
+){
 
+userMobile =
+profile.mobile;
 
+}
 
-        /* =========================
-           SAVE PROFILE
-        ========================= */
 
-        profileForm.addEventListener(
-        "submit",
-        async function(event){
+}
 
-            event.preventDefault();
+catch(profileError){
 
+console.warn(
+"Profile query failed:",
+profileError
+);
 
-            const newName =
-            fullName.value.trim();
+}
 
 
-            const newMobile =
-            mobile.value.trim();
 
+/* =====================================================
+   FALLBACK NAME
+===================================================== */
 
-            if(!newName){
+if(!userName){
 
-                showError(
-                    "Please enter your full name."
-                );
+userName =
+userEmail
+.split("@")[0];
 
-                return;
+}
 
-            }
 
 
-            if(
-                newMobile &&
-                !/^[0-9]{10}$/.test(
-                    newMobile
-                )
-            ){
+/* =====================================================
+   USER DISPLAY
+===================================================== */
 
-                showError(
-                    "Please enter a valid 10-digit mobile number."
-                );
+if(sidebarUserName){
 
-                return;
+sidebarUserName.textContent =
+"Welcome, " +
+userName;
 
-            }
+}
 
 
-            saveButton.disabled =
-            true;
+if(sidebarUserEmail){
 
-            saveButton.textContent =
-            "Saving...";
+sidebarUserEmail.textContent =
+userEmail;
 
+}
 
-            hideMessages();
 
+if(userAvatar){
 
-            try{
+userAvatar.textContent =
+userName
+.charAt(0)
+.toUpperCase();
 
-                /* =========================
-                   UPDATE PROFILES
-                ========================= */
+}
 
-                const {
-                    error:updateError
-                } =
-                await supabaseClient
-                .from("profiles")
-                .upsert({
 
-                    id:userId,
+if(welcomeHeading){
 
-                    email:userEmail,
+welcomeHeading.textContent =
+"Welcome back, " +
+userName +
+"! 👋";
 
-                    full_name:newName,
+}
 
-                    mobile:newMobile,
 
-                    role:finalRole
 
-                });
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
 
+await loadDashboardOrders(
+currentUser.id
+);
 
-                if(updateError){
 
-                    throw updateError;
 
-                }
+/* =====================================================
+   LOGOUT
+===================================================== */
 
+logoutButton.addEventListener(
+"click",
+async function(){
 
-                /* =========================
-                   UPDATE AUTH METADATA
-                ========================= */
+logoutButton.disabled =
+true;
 
-                const {
-                    error:authError
-                } =
-                await supabaseClient
-                .auth
-                .updateUser({
+logoutButton.textContent =
+"Logging out...";
 
-                    data:{
 
-                        full_name:
-                        newName,
+try{
 
-                        mobile:
-                        newMobile
+const {
+error
+} =
+await supabaseClient
+.auth
+.signOut();
 
-                    }
 
-                });
+if(error){
 
+throw error;
 
-                if(authError){
+}
 
-                    console.warn(
-                        "Auth metadata update warning:",
-                        authError
-                    );
 
-                }
+window.location.replace(
+"login.html"
+);
 
+}
 
-                /* =========================
-                   UPDATE SCREEN
-                ========================= */
+catch(error){
 
-                profileName.textContent =
-                newName;
+console.error(
+"Logout error:",
+error
+);
 
+alert(
+"Logout failed. Please try again."
+);
 
-                profileAvatar.textContent =
-                newName
-                .charAt(0)
-                .toUpperCase();
+logoutButton.disabled =
+false;
 
+logoutButton.textContent =
+"Logout";
 
-                infoMobile.textContent =
-                newMobile ||
-                "Not added";
+}
 
+}
+);
 
-                showSuccess(
-                    "Profile updated successfully."
-                );
 
-            }
+}
 
-            catch(updateError){
+catch(error){
 
-                console.error(
-                    "Profile update error:",
-                    updateError
-                );
+console.error(
+"Dashboard session error:",
+error
+);
 
+window.location.replace(
+"login.html"
+);
 
-                showError(
-                    "Profile update failed: " +
-                    (
-                        updateError.message ||
-                        updateError
-                    )
-                );
+return;
 
-            }
+}
 
 
-            finally{
 
-                saveButton.disabled =
-                false;
+/* =====================================================
+   LOAD DASHBOARD ORDERS
+===================================================== */
 
-                saveButton.textContent =
-                "Save Changes";
+async function loadDashboardOrders(
+userId
+){
 
-            }
+try{
 
-        });
 
+const {
+data:orders,
+error
+} =
+await supabaseClient
+.from("orders")
+.select(
+`
+id,
+order_number,
+service_name,
+service_details,
+order_date,
+created_at,
+status,
+amount
+`
+)
+.eq(
+"user_id",
+userId
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
 
-        /* =========================
-           LOGOUT
-        ========================= */
+if(error){
 
-        logoutButton.addEventListener(
-        "click",
-        async function(){
+throw error;
 
-            await supabaseClient
-            .auth
-            .signOut();
+}
 
-            window.location.href =
-            "login.html";
 
-        });
+const userOrders =
+orders || [];
 
 
-    }
 
-    catch(error){
+/* =====================================================
+   TOTAL
+===================================================== */
 
-        console.error(
-            "Profile page error:",
-            error
-        );
+totalOrders.textContent =
+userOrders.length;
 
 
-        window.location.href =
-        "login.html";
 
-    }
+/* =====================================================
+   COMPLETED
+===================================================== */
 
+const completed =
+userOrders.filter(
+function(order){
 
+return String(
+order.status || ""
+)
+.toLowerCase()
+===
+"completed";
 
-    /* =========================
-       FUNCTIONS
-    ========================= */
+}
+).length;
 
-    function capitalize(value){
 
-        const text =
-        String(value || "");
+completedOrders.textContent =
+completed;
 
-        return(
-            text.charAt(0).toUpperCase() +
-            text.slice(1).toLowerCase()
-        );
 
-    }
 
+/* =====================================================
+   PROCESSING
+===================================================== */
 
-    function formatDate(value){
+const processing =
+userOrders.filter(
+function(order){
 
-        if(!value){
+const status =
+String(
+order.status || ""
+)
+.toLowerCase();
 
-            return "-";
 
-        }
+return(
+status === "processing" ||
+status === "printing" ||
+status === "ready"
+);
 
+}
+).length;
 
-        const date =
-        new Date(value);
 
+processingOrders.textContent =
+processing;
 
-        if(
-            Number.isNaN(
-                date.getTime()
-            )
-        ){
 
-            return "-";
 
-        }
+/* =====================================================
+   RECENT 5
+===================================================== */
 
+const latestOrders =
+userOrders.slice(
+0,
+5
+);
 
-        return date.toLocaleString(
-            "en-IN",
-            {
-                day:"2-digit",
-                month:"short",
-                year:"numeric",
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
 
-    }
+renderRecentOrders(
+latestOrders
+);
 
 
-    function showSuccess(message){
+}
 
-        const box =
-        document.getElementById(
-            "successMessage"
-        );
+catch(error){
 
-        box.textContent =
-        message;
+console.error(
+"Order loading error:",
+error
+);
 
-        box.style.display =
-        "block";
 
-    }
+recentOrders.innerHTML = `
 
+<div class="recent-error">
 
-    function showError(message){
+Unable to load recent orders.
 
-        const box =
-        document.getElementById(
-            "errorMessage"
-        );
+</div>
 
-        box.textContent =
-        message;
+`;
 
-        box.style.display =
-        "block";
+}
 
-    }
+}
 
 
-    function hideMessages(){
 
-        document.getElementById(
-            "successMessage"
-        ).style.display =
-        "none";
+/* =====================================================
+   RENDER RECENT ORDERS
+===================================================== */
 
+function renderRecentOrders(
+orders
+){
 
-        document.getElementById(
-            "errorMessage"
-        ).style.display =
-        "none";
 
-    }
+if(!orders.length){
+
+recentOrders.innerHTML = `
+
+<div class="recent-empty">
+
+No orders yet.
+
+<br><br>
+
+<a
+href="services.html"
+class="primary-btn">
+
+Create Your First Order
+
+</a>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+recentOrders.innerHTML =
+"";
+
+
+orders.forEach(
+function(order){
+
+
+const serviceIcon =
+getServiceIcon(
+order.service_name
+);
+
+
+const status =
+String(
+order.status ||
+"Pending"
+);
+
+
+const statusClass =
+getStatusClass(
+status
+);
+
+
+const amount =
+Number(
+order.amount || 0
+)
+.toFixed(2);
+
+
+const date =
+formatDate(
+order.order_date ||
+order.created_at
+);
+
+
+const orderNumber =
+order.order_number ||
+(
+order.id
+? order.id.substring(
+0,
+8
+)
+: "Order"
+);
+
+
+
+const item =
+document.createElement(
+"div"
+);
+
+
+item.className =
+"recent-order-item";
+
+
+item.innerHTML = `
+
+<div class="recent-order-left">
+
+<div class="recent-order-icon">
+
+${serviceIcon}
+
+</div>
+
+
+<div class="recent-order-info">
+
+<strong>
+
+#${escapeHTML(
+orderNumber
+)}
+
+</strong>
+
+
+<span>
+
+${escapeHTML(
+order.service_name ||
+"Print Service"
+)}
+
+${
+order.service_details
+?
+" • " +
+escapeHTML(
+order.service_details
+)
+:
+""
+}
+
+</span>
+
+
+<span>
+
+${date}
+
+</span>
+
+</div>
+
+</div>
+
+
+
+<div class="recent-order-right">
+
+<span class="recent-order-amount">
+
+₹${amount}
+
+</span>
+
+
+<span
+class="recent-order-status ${statusClass}">
+
+${escapeHTML(
+capitalize(status)
+)}
+
+</span>
+
+</div>
+
+`;
+
+
+recentOrders.appendChild(
+item
+);
+
+}
+);
+
+}
+
+
+
+/* =====================================================
+   SERVICE ICON
+===================================================== */
+
+function getServiceIcon(
+service
+){
+
+const value =
+String(
+service || ""
+)
+.toLowerCase();
+
+
+if(
+value.includes("photo")
+){
+
+return "🖼️";
+
+}
+
+
+if(
+value.includes("id")
+){
+
+return "🪪";
+
+}
+
+
+if(
+value.includes("pdf")
+){
+
+return "📑";
+
+}
+
+
+return "📄";
+
+}
+
+
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function getStatusClass(
+status
+){
+
+const value =
+String(
+status || ""
+)
+.toLowerCase();
+
+
+if(
+value === "processing"
+){
+
+return "processing";
+
+}
+
+
+if(
+value === "printing"
+){
+
+return "printing";
+
+}
+
+
+if(
+value === "ready"
+){
+
+return "ready";
+
+}
+
+
+if(
+value === "completed"
+){
+
+return "completed";
+
+}
+
+
+if(
+value === "cancelled"
+){
+
+return "cancelled";
+
+}
+
+
+return "pending";
+
+}
+
+
+
+/* =====================================================
+   CAPITALIZE
+===================================================== */
+
+function capitalize(
+value
+){
+
+const text =
+String(
+value || ""
+);
+
+
+return(
+text.charAt(0).toUpperCase() +
+text.slice(1).toLowerCase()
+);
+
+}
+
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(
+value
+){
+
+if(!value){
+
+return "-";
+
+}
+
+
+const date =
+new Date(
+value
+);
+
+
+if(
+Number.isNaN(
+date.getTime()
+)
+){
+
+return "-";
+
+}
+
+
+return date.toLocaleDateString(
+"en-IN",
+{
+
+day:"2-digit",
+
+month:"short",
+
+year:"numeric"
+
+}
+);
+
+}
+
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(
+value
+){
+
+return String(
+value ?? ""
+)
+.replace(
+/&/g,
+"&amp;"
+)
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+
+
+/* =====================================================
+   MOBILE SIDEBAR
+===================================================== */
+
+const sidebarToggle =
+document.getElementById(
+"sidebarToggle"
+);
+
+
+const sidebar =
+document.querySelector(
+".dashboard-sidebar"
+);
+
+
+if(
+sidebarToggle &&
+sidebar
+){
+
+sidebarToggle.addEventListener(
+"click",
+function(){
+
+sidebar.classList.toggle(
+"open"
+);
+
+}
+);
+
+}
+
+
+
+/* =====================================================
+   AUTH STATE LISTENER
+===================================================== */
+
+supabaseClient
+.auth
+.onAuthStateChange(
+function(
+event,
+session
+){
+
+console.log(
+"Auth event:",
+event
+);
+
+
+if(
+event === "SIGNED_OUT"
+){
+
+window.location.replace(
+"login.html"
+);
+
+}
+
+});
+
 
 });
 
 </script>
+
 
 </body>
 
