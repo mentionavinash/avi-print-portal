@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1476,6 +1475,8 @@ adminEmail.textContent =
 (error.message || "Unknown error");
 
 return false;
+
+}
 
 }
 
@@ -3505,28 +3506,25 @@ value ?? ""
 
 
 /* =========================================
-   START
+   INIT
 ========================================= */
 
-(async function(){
-const profileResult =
-await supabaseClient
-.from("profiles")
-.select("id,email,full_name,role")
-.eq("id", currentUser.id)
-.maybeSingle();
+(async function init(){
 
-const profile = profileResult.data;
+const ok =
+await checkAdmin();
 
-if (
-String(currentUser.email || "").trim().toLowerCase() ===
-ADMIN_EMAIL.toLowerCase()
-){
-    currentRole = "super_admin";
+if(ok){
+
+await loadOrders();
+
 }
-else if(profile){
-    currentRole = String(profile.role || "customer").toLowerCase();
-}
-else{
-    currentRole = "customer";
-}
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
